@@ -37,7 +37,7 @@ const CategoryCard = ({ category }: { category: ICategory }) => {
           <div className="relative">
             <Image
               alt={category.name}
-              src={category.image}
+              src={category.image.trim()}
               width={100}
               height={100}
               className="rounded-[0.4rem] w-full aspect-[160/146] object-cover"
