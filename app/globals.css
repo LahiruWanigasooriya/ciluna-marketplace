@@ -156,6 +156,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Kaisei-Regular";
+  src: url("../public/assets/font/kaisei/Kaisei-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .custom-textfield label {
   color: #ffffff;
   font-weight: 400;

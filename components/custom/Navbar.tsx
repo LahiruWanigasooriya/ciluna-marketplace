@@ -31,6 +31,11 @@ import { ICategory } from "@/types/category";
 import { Skeleton } from "@/components/ui";
 import AuthWrapper from "./AuthWrapper";
 import Cookies from "js-cookie";
+import WomenMenu from "@/components/custom/Submenus/WomenMenu";
+import MenMenu from "@/components/custom/Submenus/MenMenu";
+import JewelleryMenu from "@/components/custom/Submenus/JewelleryMenu";
+import OccasionWearMenu from "@/components/custom/Submenus/OccasionWearMenu";
+import ScentsMenu from "@/components/custom/Submenus/ScentsMenu";
 
 interface NavItem {
   label: string;
@@ -230,6 +235,16 @@ export default function Navbar({ categories }: any) {
 
   const closePopup = () => {
     setAuthPopup(false);
+  };
+
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+
+  const subMenus: Record<string, React.FC> = {
+    Women: WomenMenu,
+    Men: MenMenu,
+    Jewellery: JewelleryMenu,
+    "Occasion Wear": OccasionWearMenu,
+    Scents: ScentsMenu,
   };
 
   return (
@@ -503,7 +518,31 @@ export default function Navbar({ categories }: any) {
           )}
         </div>
         <div className="flex rounded-[9px] items-center justify-between bg-[#FFFFFF0D]/5 h-[48px] px-4">
-          <div className="flex flex-row overflow-x-auto no-scrollbar gap-2 lg:gap-4 ">
+
+        {/* Menu links - visible on md+ */}
+        <div className="flex gap-4 lg:gap-8 xl:gap-10 justify-center w-[60%] font-inter font-semibold text-[12px] lg:text-[14px] xl:text-[16px]">
+          {["Women", "Men", "Jewellery", "Occasion Wear", "Scents"].map(
+            (item) => (
+              <div
+                key={item}
+                className="hover:text-gray-500"
+                onMouseEnter={() => setActiveMenu(item)}
+                onMouseLeave={() => setActiveMenu(null)}
+              >
+                <a href="#" className="text-white">
+                  {item}
+                </a>
+                {activeMenu === item && (
+                  <div className="absolute left-0 shadow-sm w-full py-[40px] px-[16px] sm:px-[56px] md:px-[96px] z-10 bg-white ">
+                    {React.createElement(subMenus[item])}
+                  </div>
+                )}
+              </div>
+            )
+          )}
+        </div>
+
+          {/*<div className="flex flex-row overflow-x-auto no-scrollbar gap-2 lg:gap-4 ">
             {categories.map((data: ICategory) => (
               <Link
                 key={data._id}
@@ -513,7 +552,7 @@ export default function Navbar({ categories }: any) {
                 <p className="text-gray-400 text-xs lg:text-sm">{data?.name}</p>
               </Link>
             ))}
-          </div>
+          </div>*/}
           {/* <SearchField
             aria-label="Search"
             className="text-white w-full custom-textfield"

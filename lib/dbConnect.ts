@@ -1,10 +1,10 @@
 // "use server";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const MONGODB_URL_MARKET_PLACE = process.env.MONGODB_URL_MARKET_PLACE as string;
+const MONGODB_URL_CILUNA = process.env.MONGODB_URL_CILUNA as string;
 
-if (!MONGODB_URL_MARKET_PLACE) {
-  throw new Error('MONGODB_URL_MARKET_PLACE is not defined!');
+if (!MONGODB_URL_CILUNA) {
+  throw new Error("MONGODB_URL_CILUNA is not defined!");
 }
 
 // Singleton for mongoose connection
@@ -17,12 +17,12 @@ export async function dbConnectMarketPlace() {
   }
 
   try {
-    await mongoose.connect(MONGODB_URL_MARKET_PLACE);
+    await mongoose.connect(MONGODB_URL_CILUNA);
     isConnected = true;
     console.log("paw-market-place database connected");
   } catch (error) {
-    console.error('paw-market-place database connection failed!', error);
-    throw new Error('paw-market-place database connection failed!');
+    console.error("paw-market-place database connection failed!", error);
+    throw new Error("paw-market-place database connection failed!");
   }
 }
 
