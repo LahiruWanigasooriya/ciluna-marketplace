@@ -42,7 +42,7 @@ const ProductDetails = async ({
   const product: IProduct = productres.data.product;
   const variants: IProductVariant = productres.data.variants;
 
-  const relatedproduct: IProduct = relatedres?.data?.relatedItems;
+  const relatedproduct: IProduct[] = relatedres?.data?.relatedItems;
 
   const processResponse = (response: any): ProductWishCountResponse => {
     if (typeof response.success !== "boolean") {
@@ -67,7 +67,7 @@ const ProductDetails = async ({
         <Title title="Related Item" className="text-white" />
         <div className="flex flex-wrap gap-4 w-full overflow-y-auto overflow-hidden justify-start">
           {relatedproduct.map((product: IProduct) => (
-            <ProductCard pawPrice={pawPrice} key={product._id} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       </div>
