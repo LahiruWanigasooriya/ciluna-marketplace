@@ -12,14 +12,14 @@ let isConnected = false;
 
 export async function dbConnectMarketPlace() {
   if (isConnected) {
-    console.log("Already connected to the paw-market-place database.");
+    console.log("Already connected to the ciluna database.");
     return;
   }
 
   try {
     await mongoose.connect(MONGODB_URL_CILUNA);
     isConnected = true;
-    console.log("paw-market-place database connected");
+    console.log("ciluna database connected");
   } catch (error) {
     console.error("paw-market-place database connection failed!", error);
     throw new Error("paw-market-place database connection failed!");

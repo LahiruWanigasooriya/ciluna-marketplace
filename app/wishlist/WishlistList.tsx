@@ -22,7 +22,7 @@ const WishlistClient = ({pawPrice}: {pawPrice: number}) => {
             <Title title="Favorite" className="text-white" />
             <div className="grid xl:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-4">
               {wishlist.map((product) => (
-                <ProductCard pawPrice={pawPrice} key={product._id} product={product} />
+                <ProductCard key={product._id} product={product} />
               ))}
             </div>
           </>

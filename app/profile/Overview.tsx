@@ -11,6 +11,12 @@ import ProductCard from "../product/ProductCard";
 import { IProduct } from "@/types/product";
 import Product1 from "@/public/assets/product/product1.webp";
 import Product2 from "@/public/assets/product/product2.webp";
+import Product3 from "@/public/assets/product/product3.webp";
+import Product4 from "@/public/assets/product/product4.webp";
+
+import Product5 from "@/public/assets/product/product5.webp";
+import Arrow from "../assets/profile/arrow.svg";
+import { useRef, useState } from "react";
 
 interface OverviewProps {
   userData?: FormValues;
@@ -23,7 +29,7 @@ const mockProducts: IProduct[] = [
     name: "Product 1",
     price: 1000,
     discount: { percentage: 10 },
-    image: Product1.src,
+    image: Product5.src,
     colors: ["Red", "Blue"],
     color: "Red",
     colorCodes: ["#FF0000", "#0000FF"],
@@ -37,7 +43,7 @@ const mockProducts: IProduct[] = [
     name: "Product 2",
     price: 2000,
     discount: { percentage: 20 },
-    image: Product2.src,
+    image: Product4.src,
     colors: ["Green", "Yellow"],
     color: "Green",
     colorCodes: ["#00FF00", "#FFFF00"],
@@ -51,7 +57,7 @@ const mockProducts: IProduct[] = [
     name: "Product 3",
     price: 3000,
     discount: { percentage: 15 },
-    image: Product1.src,
+    image: Product3.src,
     colors: ["Black", "White"],
     color: "Black",
     colorCodes: ["#000000", "#FFFFFF"],
@@ -60,9 +66,72 @@ const mockProducts: IProduct[] = [
     category: { _id: "cat3", name: "Category 3" },
     createdBy: "Admin",
   },
+  {
+    _id: "4",
+    name: "Product 4",
+    price: 3000,
+    discount: { percentage: 15 },
+    image: Product2.src,
+    colors: ["Black", "White"],
+    color: "Black",
+    colorCodes: ["#000000", "#FFFFFF"],
+    description: "Yet another great product.",
+    stock: 8,
+    category: { _id: "cat4", name: "Category 4" },
+    createdBy: "Admin",
+  },
+  {
+    _id: "5",
+    name: "Product 5",
+    price: 3000,
+    discount: { percentage: 15 },
+    image: Product1.src,
+    colors: ["Black", "White"],
+    color: "Black",
+    colorCodes: ["#000000", "#FFFFFF"],
+    description: "Yet another great product.",
+    stock: 8,
+    category: { _id: "cat5", name: "Category 5" },
+    createdBy: "Admin",
+  },
 ];
 
 const Overview: React.FC<OverviewProps> = ({ userData }) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const updateScrollButtons = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+
+      // If all cards fit within the screen, disable both buttons
+      if (scrollWidth <= clientWidth) {
+        setCanScrollLeft(false);
+        setCanScrollRight(false);
+        return;
+      }
+
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
+      setTimeout(updateScrollButtons, 300); // Update after scroll animation
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
+      setTimeout(updateScrollButtons, 300); // Update after scroll animation
+    }
+  };
+
   // Get profile image with fallback
   const profileImage = userData?.profileImage || User;
 
@@ -75,7 +144,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
   return (
     <>
       {/* Profile Card */}
-      <section className="flex min-w-screen flex-col items-center rounded-xl bg-white px-[16px] py-[16px] shadow md:min-w-[530px] md:flex-row md:justify-between md:px-[24px]">
+      <section className="flex  flex-col items-center rounded-xl bg-white px-[16px] py-[16px] shadow md:min-w-[530px] md:flex-row md:justify-between md:px-[24px]">
         <div className="flex items-center gap-[16px]">
           {" "}
           {/* Profile Image */}
@@ -90,7 +159,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           <div className="py-[14px]">
             <div className="font-kaiseiBold text-[16px]">{fullName}</div>
             <div className="font-lora text-[14px]  text-gray-400">
-              Last login : Yesterday 11.39ams
+              Last login : Yesterday 11.39am
             </div>
           </div>
         </div>
@@ -191,17 +260,49 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         </div>
       </section>
       {/* More to love */}
-      <section className="flex flex-col mb-[158px] gap-[12px]">
-        <div className="font-kaiseiBold text-[24px] text-[#252525]">
-          <span className="hidden md:block">More to love</span>
-          <span className="md:hidden">Recent Viewed</span>
+      <section className="flex flex-col mb-[158px] mt-[48px] gap-[12px] overflow-hidden">
+        <div className="font-kaiseiBold text-[24px] text-[#252525] flex items-center justify-between">
+          <div>
+            <span className="hidden md:block">More to love</span>
+            <span className="md:hidden">Recent Viewed</span>
+          </div>
+          <div className="hidden sm:flex gap-2">
+            <button
+              onClick={scrollLeft}
+              disabled={!canScrollLeft}
+              className={`flex items-center justify-center w-8 h-8 rounded-[8px] bg-transparent border-[1px]  border-[#3D3D3D] ${
+                !canScrollLeft ? "opacity-40 cursor-not-allowed" : ""
+              }`}
+            >
+              <img
+                src={Arrow.src}
+                alt="Previous"
+                className="w-4 rotate-180 h-4"
+              />
+            </button>
+            <button
+              onClick={scrollRight}
+              disabled={!canScrollRight}
+              className={`flex items-center justify-center w-8 h-8 rounded-[8px] bg-transparent border-[1px]  border-[#3D3D3D] ${
+                !canScrollRight ? "opacity-40 cursor-not-allowed" : ""
+              }`}
+            >
+              <img src={Arrow.src} alt="Next" className="w-4 h-4" />
+            </button>
+          </div>
         </div>
         <div className="text-[16px] font-lora text-[#5D5D5D]">
           A fleeting collection of rare beauty.
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[24px] mt-4">
+        <div
+          ref={scrollContainerRef}
+          onScroll={updateScrollButtons}
+          className="grid grid-cols-2 sm:flex sm:overflow-x-auto no-scrollbar gap-[16px] pt-3 w-full min-w-0"
+        >
           {mockProducts.map((product) => (
-            <ProductCard key={product._id} product={product} />
+            <div key={product._id} className="shrink-0">
+              <ProductCard product={product} />
+            </div>
           ))}
         </div>
       </section>

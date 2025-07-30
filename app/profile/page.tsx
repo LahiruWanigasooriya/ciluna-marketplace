@@ -125,45 +125,45 @@ export default function ProfilePage() {
               </button>
               {/* Dropdown List */}
               {mobileOpen && (
-                <nav className="flex flex-col gap-2 px-4 py-4">
-                  {sidebarItems.map((item) => (
-                    <div key={item}>
-                      {item === "Ciluna Wallet" && (
-                        <div className="col-span-2 my-0.5 mb-[12px] h-px w-full bg-gray-200 md:hidden"></div>
-                      )}
-                      <button
-                        className={`w-full cursor-pointer rounded-md px-4 py-2 text-left ${
-                          selected === item
-                            ? "font-loraBold bg-[#252525] text-white"
-                            : "font-lora hover:bg-gray-100"
-                        } ${item === "Ciluna Wallet" ? "my-2" : ""}`}
-                        onClick={() => {
-                          setSelected(item);
-                          setMobileOpen(false);
-                        }}
-                      >
-                        {item}
-                      </button>
-                      {item === "Ciluna Wallet" && (
-                        <div className="col-span-2 my-0.5 h-px w-full bg-gray-200 md:hidden"></div>
-                      )}
-                    </div>
-                  ))}
-                </nav>
+                <div className="absolute inset-0 z-0 flex items-start justify-center bg-black bg-opacity-50">
+                  <nav className="relative z-0 flex w-full max-w-sm flex-col gap-2 bg-white px-4 py-4 shadow-lg">
+                    {sidebarItems.map((item) => (
+                      <div key={item}>
+                        {item === "Ciluna Wallet" && (
+                          <div className="col-span-2 my-0.5  h-px w-full bg-gray-200 md:hidden"></div>
+                        )}
+                        <button
+                          className={`w-full cursor-pointer rounded-md px-4 py-2 text-left ${
+                            selected === item
+                              ? "font-loraBold bg-[#252525] text-white"
+                              : "font-lora hover:bg-gray-100"
+                          } ${item === "Ciluna Wallet" ? "my-2" : ""}`}
+                          onClick={() => {
+                            setSelected(item);
+                            setMobileOpen(false);
+                          }}
+                        >
+                          {item}
+                        </button>
+                        {item === "Ciluna Wallet" && (
+                          <div className="col-span-2 my-0.5 h-px w-full bg-gray-200 md:hidden"></div>
+                        )}
+                      </div>
+                    ))}
+                  </nav>
+                </div>
               )}
             </div>
-            {/* Black line - positioned below the border */}
-            {mobileOpen && (
-              <div className="absolute top-full left-1/2 mt-[32px] h-[5px] w-[135px] -translate-x-1/2 bg-black"></div>
-            )}
           </div>
         </div>
         {/* Main Content */}
-        <main className="flex flex-1 flex-col gap-6">
+        <main className="flex flex-1 flex-col gap-6 overflow-hidden">
           {selected === "Ciluna Wallet" ? (
             <CilunaWallet />
           ) : selected === "Overview" ? (
-            <Overview userData={userData} />
+            <div className="overflow-x-auto">
+              <Overview userData={userData} />
+            </div>
           ) : (
             <section className="flex h-full items-center justify-center text-xl text-gray-400">
               Select a menu item to view details.

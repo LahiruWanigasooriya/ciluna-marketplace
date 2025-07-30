@@ -101,7 +101,6 @@ export default async function SearchResultsPage({
                       <ProductCard
                         key={product._id.toString()}
                         product={product}
-                        pawPrice={0}
                       />
                     ))}
                   </div>
