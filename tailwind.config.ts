@@ -75,6 +75,7 @@ const config = withTV({
         loraBold: ["Lora-Bold", "sans-serif"],
         kaisei: ["KaiseiHarunoUmi", "sans-serif"],
         kaiseiBold: ["KaiseiHarunoUmi-Bold", "sans-serif"],
+        playFairExtraBold: ["PlayFairDisplay-ExtraBold", "sans-serif"],
       },
       fontSize: {
         xxxs: "0.512rem",

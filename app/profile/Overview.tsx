@@ -1,13 +1,13 @@
-import HeartIcon from "../assets/profile/heart.svg";
-import HeartRoundIcon from "../assets/profile/heartround.svg";
-import PurseIcon from "../assets/profile/purse.svg";
-import CouponIcon from "../assets/profile/coupon.svg";
-import ShopCartIcon from "../assets/profile/shopcart.svg";
-import TruckIcon from "../assets/profile/truck.svg";
-import WalletIcon from "../assets/profile/wallet.svg";
+import HeartIcon from "@/public/assets/profile/heart.svg";
+import HeartRoundIcon from "@/public/assets/profile/heartround.svg";
+import PurseIcon from "@/public/assets/profile/purse.svg";
+import CouponIcon from "@/public/assets/profile/coupon.svg";
+import ShopCartIcon from "@/public/assets/profile/shopcart.svg";
+import TruckIcon from "@/public/assets/profile/truck.svg";
+import WalletIcon from "@/public/assets/profile/wallet.svg";
 import { FormValues } from "@/types/profile";
 import User from "@/public/assets/user.jpeg";
-import ProductCard from "../product/ProductCard";
+import ProductCard from "@/app/product/ProductCard";
 import { IProduct } from "@/types/product";
 import Product1 from "@/public/assets/product/product1.webp";
 import Product2 from "@/public/assets/product/product2.webp";
@@ -15,7 +15,7 @@ import Product3 from "@/public/assets/product/product3.webp";
 import Product4 from "@/public/assets/product/product4.webp";
 
 import Product5 from "@/public/assets/product/product5.webp";
-import Arrow from "../assets/profile/arrow.svg";
+import Arrow from "@/public/assets/profile/arrow.svg";
 import { useRef, useState } from "react";
 
 interface OverviewProps {

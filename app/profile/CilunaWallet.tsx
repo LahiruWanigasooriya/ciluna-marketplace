@@ -1,4 +1,4 @@
-import Gold from "../assets/profile/gold.png";
+import Gold from "@/public/assets/profile/gold.png";
 
 const CilunaWallet = () => {
   return (
@@ -11,7 +11,7 @@ const CilunaWallet = () => {
         />
       </div>
       <div className="flex flex-col items-center justify-center px-[16px] pt-[40px] pb-[32px] md:px-[20px] xl:px-[79px]">
-        <div className="font-PlayFairExtraBold mb-[40px] text-center text-[36px] text-[#252525] md:mb-[48px] md:text-[30px] lg:text-[36px]">
+        <div className="font-playFairExtraBold mb-[40px] text-center text-[36px] text-[#252525] md:mb-[48px] md:text-[30px] lg:text-[36px]">
           CILUNA Wallet
         </div>
         <div className="flex w-full flex-col items-center gap-[16px]">
