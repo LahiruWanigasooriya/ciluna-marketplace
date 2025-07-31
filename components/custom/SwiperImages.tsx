@@ -11,7 +11,7 @@ interface SwiperImagesProps {
 
 const SwiperImages: React.FC<SwiperImagesProps> = ({ images }) => {
   return (
-    <div className="w-full max-w-[277px] mt-[24px] md:mt-0">
+    <div className="w-full sm:max-w-[277px] mt-[24px] md:mt-0">
       <div className="rounded-xl overflow-hidden">
         <Swiper
           modules={[Pagination]}

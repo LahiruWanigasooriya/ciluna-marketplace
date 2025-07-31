@@ -69,8 +69,6 @@ const config = withTV({
         inter: ["Inter", "sans-serif"],
         interBold: ["Inter-Bold", "sans-serif"],
         interSemiBold: ["Inter-semiBold", "sans-serif"],
-        lora: ["Lora-Regular", "sans-serif"],
-        kaisei:["Kaisei-Regular","sans-serif"]
       },
       fontSize: {
         xxxs: "0.512rem",

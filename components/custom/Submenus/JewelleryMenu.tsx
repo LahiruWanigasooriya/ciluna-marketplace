@@ -14,52 +14,69 @@ const JewelleryMenu = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-[16px] md:gap-y-[30px] w-full">
         {/* sub menu */}
         <div>
-          <div className="mb-[16px]">
-            <a href="#" className="text-black hover:text-gray-600 font-kaisei text-[16px]">Necklaces</a>
+          <div className="mb-[8px] sm:mb-[12px]">
+            <a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Necklaces</a>
           </div>
-          <div className="flex flex-col gap-[8px] font-lora font-light">
+          <div className="flex flex-col gap-[8px] font-inter font-light">
             <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
             <a href="#" className="text-[#252525] hover:text-gray-600">Pendant Necklaces</a>
             <a href="#" className="text-[#252525] hover:text-gray-600">Chain Necklaces</a>
             <a href="#" className="text-[#252525] hover:text-gray-600">Locket Necklaces</a>
             <a href="#" className="text-[#252525] hover:text-gray-600">Beaded Necklaces</a>
+            <div className='sm:hidden border-b my-[16px]'></div>
           </div>
         </div>
 
         {/* sub menu */}
         <div>
-          <div className="mb-[16px]">
-            <a href="#" className="text-black hover:text-gray-600 font-kaisei text-[16px]">Earrings</a>
+          <div className="mb-[8px] sm:mb-[12px]">
+            <a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Earrings</a>
           </div>
-          <div className="flex flex-col gap-[8px] font-lora font-light">
+          <div className="flex flex-col gap-[8px] font-inter font-light">
             <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
             <a href="#" className="text-[#252525] hover:text-gray-600">Hoop Earrings</a>
             <a href="#" className="text-[#252525] hover:text-gray-600">Drop Earrings</a>
             <a href="#" className="text-[#252525] hover:text-gray-600">Dangle Earrings</a>
+            <div className='sm:hidden border-b my-[16px]'></div>
           </div>
         </div>
 
         {/* sub menu */}
         <div>
-          <div className="mb-[16px]">
-            <a href="#" className="text-black hover:text-gray-600 font-kaisei text-[16px]">Rings</a>
+          <div className="mb-[8px] sm:mb-[12px]">
+            <a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Rings</a>
           </div>
-          <div className="flex flex-col gap-[8px] font-lora font-light">
+          <div className="flex flex-col gap-[8px] font-inter font-light">
             <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
             <a href="#" className="text-[#252525] hover:text-gray-600">Cocktail Rings</a>
             <a href="#" className="text-[#252525] hover:text-gray-600">Engagement Rings</a>
+            <div className='sm:hidden border-b my-[16px]'></div>
           </div>
         </div>
 
-        {/* sub menu (fix typo: "Ringss" to "Rings") */}
+        {/* sub menu */}
         <div>
-          <div className="mb-[16px]">
-            <a href="#" className="text-black hover:text-gray-600 font-kaisei text-[16px]">Rings</a>
+          <div className="mb-[8px] sm:mb-[12px]">
+            <a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Watches & Wearings</a>
           </div>
-          <div className="flex flex-col gap-[8px] font-lora font-light">
+          <div className="flex flex-col gap-[8px] font-inter font-light">
             <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
-            <a href="#" className="text-[#252525] hover:text-gray-600">Cocktail Rings</a>
-            <a href="#" className="text-[#252525] hover:text-gray-600">Engagement Rings</a>
+            <a href="#" className="text-[#252525] hover:text-gray-600">Men’s Watches</a>
+            <a href="#" className="text-[#252525] hover:text-gray-600">Neck Chains</a>
+            <div className='sm:hidden border-b my-[16px]'></div>
+          </div>
+        </div>
+
+        {/* sub menu */}
+        <div>
+          <div className="mb-[8px] sm:mb-[12px]">
+            <a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Grooming & Fragrance</a>
+          </div>
+          <div className="flex flex-col gap-[8px] font-inter font-light">
+            <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
+            <a href="#" className="text-[#252525] hover:text-gray-600">Eau de Toilette</a>
+            <a href="#" className="text-[#252525] hover:text-gray-600">Bath & Body</a>
+            <div className='sm:hidden border-b my-[16px]'></div>
           </div>
         </div>
       </div>

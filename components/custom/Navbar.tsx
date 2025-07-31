@@ -16,6 +16,8 @@ import {
   Tag,
   PhoneCall,
   CircleUser,
+  CircleX,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -67,6 +69,9 @@ export default function Navbar({ categories }: any) {
   const [mobProfileSelect, setmobProfileSelect] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [authPopup, setAuthPopup] = useState(false);
+
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
 
   useEffect(() => {
     if (categories.lenght > 0) {
@@ -518,29 +523,83 @@ export default function Navbar({ categories }: any) {
           )}
         </div>
         <div className="flex rounded-[9px] items-center justify-between bg-[#FFFFFF0D]/5 h-[48px] px-4">
+          {/* Menu links - visible on md+ */}
+          <div className="hidden md:flex gap-4 lg:gap-8 xl:gap-10 justify-center w-[60%] font-inter font-semibold text-[12px] lg:text-[14px] xl:text-[16px]">
+            {["Women", "Men", "Jewellery", "Occasion Wear", "Scents"].map(
+              (item) => (
+                <div
+                  key={item}
+                  className="hover:text-gray-500"
+                  onMouseEnter={() => setActiveMenu(item)}
+                  onMouseLeave={() => setActiveMenu(null)}
+                >
+                  <a href="#" className="text-white">
+                    {item}
+                  </a>
+                  {activeMenu === item && (
+                    <div className="absolute left-0 shadow-sm w-full py-[40px] px-[16px] sm:px-[56px] md:px-[96px] z-10 bg-white ">
+                      {React.createElement(subMenus[item])}
+                    </div>
+                  )}
+                </div>
+              )
+            )}
+          </div>
 
-        {/* Menu links - visible on md+ */}
-        <div className="flex gap-4 lg:gap-8 xl:gap-10 justify-center w-[60%] font-inter font-semibold text-[12px] lg:text-[14px] xl:text-[16px]">
-          {["Women", "Men", "Jewellery", "Occasion Wear", "Scents"].map(
-            (item) => (
-              <div
-                key={item}
-                className="hover:text-gray-500"
-                onMouseEnter={() => setActiveMenu(item)}
-                onMouseLeave={() => setActiveMenu(null)}
-              >
-                <a href="#" className="text-white">
-                  {item}
-                </a>
-                {activeMenu === item && (
-                  <div className="absolute left-0 shadow-sm w-full py-[40px] px-[16px] sm:px-[56px] md:px-[96px] z-10 bg-white ">
-                    {React.createElement(subMenus[item])}
-                  </div>
+          {/* Hamburger for mobile (below md) */}
+          <div className="md:hidden flex justify-end p-4">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="text-black text-2xl"
+            >
+              ☰
+            </button>
+          </div>
+
+          {isMobileMenuOpen && (
+            <div className="md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-6 overflow-y-auto">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                {activeMobileMenu ? (
+                  <button
+                    onClick={() => setActiveMobileMenu(null)}
+                    className="text-[16px] text-gray-600"
+                  >
+                    ❮&nbsp;&nbsp; Back
+                  </button>
+                ) : (
+                  <div />
                 )}
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setActiveMobileMenu(null);
+                  }}
+                >
+                  <CircleX size={32}/>
+                </button>
               </div>
-            )
+
+              {/* Submenu View */}
+              {activeMobileMenu ? (
+                <div>{React.createElement(subMenus[activeMobileMenu])}</div>
+              ) : (
+                // Main Menu View
+                <div className="space-y-6 text-lg font-semibold">
+                  {Object.keys(subMenus).map((item) => (
+                    <div
+                      key={item}
+                      className="flex justify-between items-center border-b pb-4 cursor-pointer"
+                      onClick={() => setActiveMobileMenu(item)}
+                    >
+                      <span>{item}</span>
+                      <span><ChevronRight /></span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
-        </div>
 
           {/*<div className="flex flex-row overflow-x-auto no-scrollbar gap-2 lg:gap-4 ">
             {categories.map((data: ICategory) => (

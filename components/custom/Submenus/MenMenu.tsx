@@ -14,8 +14,8 @@ const MenMenu = () => {
 
   {/*sub menu*/}
   <div>
-    <div className="mb-[16px]"><a href="#" className="text-black hover:text-gray-600 font-kaisei text-[16px]">Cloathing</a></div>    
-    <div className="flex flex-col gap-[8px] font-lora font-light">
+    <div className="mb-[8px] sm:mb-[12px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Cloathing</a></div>    
+    <div className="flex flex-col gap-[8px] font-inter font-light">
       <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">T-Shirts & Polos</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Suits & Blazers</a>
@@ -23,13 +23,14 @@ const MenMenu = () => {
       <a href="#" className="text-[#252525] hover:text-gray-600">Jeans & Chinos</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Shorts</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Sweaters & Hoodies</a>
+      <div className='sm:hidden border-b my-[16px]'></div>
     </div>
   </div>
 
   {/*sub menu*/}
   <div>
-    <div className="mb-[16px]"><a href="#" className="text-black hover:text-gray-600 font-kaisei text-[16px]">Shoes</a></div>    
-    <div className="flex flex-col gap-[8px] font-lora font-light">
+    <div className="mb-[8px] sm:mb-[12px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Shoes</a></div>    
+    <div className="flex flex-col gap-[8px] font-inter font-light">
       <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Sneakers</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Dress Shoes</a>
@@ -37,13 +38,14 @@ const MenMenu = () => {
       <a href="#" className="text-[#252525] hover:text-gray-600">Sandals & Slides</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Athletic Shoes</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Slippers</a>
+      <div className='sm:hidden border-b my-[16px]'></div>
     </div>
   </div>
 
   {/*sub menu*/}
   <div>
-    <div className="mb-[16px]"><a href="#" className="text-black hover:text-gray-600 font-kaisei text-[16px]">Bags & Accessories</a></div>    
-    <div className="flex flex-col gap-[8px] font-lora font-light">
+    <div className="mb-[8px] sm:mb-[12px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Bags & Accessories</a></div>    
+    <div className="flex flex-col gap-[8px] font-inter font-light">
       <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Backpacks</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Duffel Bags</a>
@@ -51,23 +53,25 @@ const MenMenu = () => {
       <a href="#" className="text-[#252525] hover:text-gray-600">Wallets</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Belts</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Sunglasses</a>
+      <div className='sm:hidden border-b my-[16px]'></div>
     </div>
   </div>
 
   {/*sub menu*/}
   <div>
-    <div className="mb-[16px]"><a href="#" className="text-black hover:text-gray-600 font-kaisei text-[16px]">Watches & Wearings</a></div>    
-    <div className="flex flex-col gap-[8px] font-lora font-light">
+    <div className="mb-[8px] sm:mb-[12px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Watches & Wearings</a></div>    
+    <div className="flex flex-col gap-[8px] font-inter font-light">
       <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Men’s Watches</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Neck Chains</a>
+      <div className='sm:hidden border-b my-[16px]'></div>
     </div>
   </div>
 
   {/*sub menu*/}
   <div>
-    <div className="mb-[16px]"><a href="#" className="text-black hover:text-gray-600 font-kaisei text-[16px]">Grooming & Fragrance</a></div>    
-    <div className="flex flex-col gap-[8px] font-lora font-light">
+    <div className="mb-[8px] sm:mb-[12px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Grooming & Fragrance</a></div>    
+    <div className="flex flex-col gap-[8px] font-inter font-light">
       <a href="#" className="text-[#252525] hover:text-gray-600">Eau de Toilette</a>
       <a href="#" className="text-[#252525] hover:text-gray-600">Bath & Body</a>
     </div>
