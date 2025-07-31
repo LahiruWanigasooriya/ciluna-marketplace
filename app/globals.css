@@ -216,6 +216,10 @@
   box-shadow: 0px 0px 0px 3px #000212, 0px 0px 0px 4px #6442c1;
 }
 
+.border-custom {
+  border: 1px solid #e1e1e1;
+}
+
 @property --r2 {
   syntax: "<angle>";
   inherits: false;

@@ -121,14 +121,14 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
-      setTimeout(updateScrollButtons, 300); // Update after scroll animation
+      setTimeout(updateScrollButtons, 300);
     }
   };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
-      setTimeout(updateScrollButtons, 300); // Update after scroll animation
+      setTimeout(updateScrollButtons, 300);
     }
   };
 
@@ -144,7 +144,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
   return (
     <>
       {/* Profile Card */}
-      <section className="flex  flex-col items-center rounded-xl bg-white px-[16px] py-[16px] shadow md:min-w-[530px] md:flex-row md:justify-between md:px-[24px]">
+      <section className="flex  flex-col items-center mb-[16px] rounded-xl bg-white px-[16px] py-[16px] border-custom  md:min-w-[530px] md:flex-row md:justify-between md:px-[24px]">
         <div className="flex items-center gap-[16px]">
           {" "}
           {/* Profile Image */}
@@ -158,7 +158,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           {/* Name */}
           <div className="py-[14px]">
             <div className="font-kaiseiBold text-[16px]">{fullName}</div>
-            <div className="font-lora text-[14px]  text-gray-400">
+            <div className="font-lora text-[14px] lg:text-[14px]  md:text-[12px] lg:min-w-[200px] text-gray-400">
               Last login : Yesterday 11.39am
             </div>
           </div>
@@ -166,7 +166,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
 
         <div className="font-loraBold flex w-full max-w-[400px] justify-center px-[2px] text-center text-[16px] text-neutral-900 md:max-w-[800px] md:justify-end md:px-0">
           {/* Item 1 */}
-          <div className="flex cursor-pointer flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[20px] xl:px-[45px]">
+          <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
             <img
               src={HeartIcon.src}
               alt="Heart"
@@ -179,7 +179,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           <div className="mx-0 h-[80px] w-px bg-gray-200 self-center" />
 
           {/* Item 2 */}
-          <div className="flex cursor-pointer flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[20px] xl:px-[45px]">
+          <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px]  md:px-[10px] lg:px-[20px] xl:px-[30px]">
             <img
               src={WalletIcon.src}
               alt="Wallet"
@@ -192,7 +192,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           <div className="mx-0 h-[80px] w-px bg-gray-200 self-center" />
 
           {/* Item 3 */}
-          <div className="flex cursor-pointer flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[20px] xl:px-[45px]">
+          <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px]  md:px-[10px] lg:px-[20px] xl:px-[30px]">
             <img
               src={CouponIcon.src}
               alt="CouponIcon"
@@ -203,7 +203,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         </div>
       </section>
       {/* Orders Card */}
-      <section className="rounded-xl bg-white px-[16px] text-[#1E1E1E] shadow md:px-[24px]">
+      <section className="rounded-xl border-custom  bg-white px-[16px] text-[#1E1E1E]  md:px-[24px]">
         <div className="flex items-center justify-between border-b border-gray-200 py-[16px]">
           <div className="font-kaiseiBold text-[18px]">My Orders</div>
           <button className="font-lora cursor-pointer text-[16px] hover:underline">
@@ -219,32 +219,38 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
                 className="w-[24px] h-[24px]"
               />
             </span>
-            <div className="cursor-pointer font-medium">Unpaid</div>
+            <div className="cursor-pointer hover:opacity-70 font-medium">
+              Unpaid
+            </div>
           </div>
 
           <div className="flex-1 py-[14px]">
-            <span className="mb-1 flex cursor-pointer items-center justify-center">
+            <span className="mb-1 flex  cursor-pointer items-center justify-center">
               <img
                 src={ShopCartIcon.src}
                 alt="Cart"
-                className="w-[24px] h-[24px]"
+                className="w-[24px]  h-[24px]"
               />
             </span>
-            <div className="cursor-pointer font-medium">To be Shipped</div>
+            <div className="cursor-pointer hover:opacity-70 font-medium">
+              To be Shipped
+            </div>
           </div>
 
           {/* Horizontal divider for mobile view only */}
           <div className="col-span-2 my-0.5 h-px w-full bg-gray-200 md:hidden"></div>
 
-          <div className="flex-1 border-r border-gray-200 py-[14px]">
-            <span className="mb-1 flex items-center justify-center">
+          <div className="flex-1  border-r border-gray-200 py-[14px]">
+            <span className="mb-1  flex items-center cursor-pointer   justify-center">
               <img
                 src={TruckIcon.src}
                 alt="Truck"
                 className="w-[24px] h-[24px]"
               />
             </span>
-            <div className="cursor-pointer font-medium">Shipped</div>
+            <div className="cursor-pointer  hover:opacity-70 font-medium ">
+              Shipped
+            </div>
           </div>
 
           <div className="flex-1 py-[14px]">
@@ -255,7 +261,9 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
                 className="w-[24px] h-[24px]"
               />
             </span>
-            <div className="cursor-pointer font-medium">To be reviewed</div>
+            <div className="cursor-pointer hover:opacity-70 font-medium">
+              To be reviewed
+            </div>
           </div>
         </div>
       </section>

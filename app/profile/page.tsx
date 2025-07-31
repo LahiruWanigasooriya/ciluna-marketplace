@@ -63,16 +63,16 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white ">
+    <div className="min-h-screen  bg-white ">
       {/* Breadcrumb */}
       <div className="font-kaisei flex cursor-pointer gap-[8px] pt-[20px] pb-[16px] text-[14px] text-neutral-900 md:pb-[36px]">
         Home <span>&gt; </span>
         <span className="font-kaiseiBold cursor-pointer">Account</span>
       </div>
-      <div className="flex flex-col gap-[24px] md:flex-row">
+      <div className="flex flex-col  gap-[24px] md:flex-row">
         {/* Sidebar for md and up */}
-        <aside className="hidden w-full max-w-[248px] min-w-[150px] flex-col gap-[32px] rounded-xl bg-white px-[16px] text-[#1E1E1E] shadow md:flex xl:w-[248px]">
-          <div className="font-loraBold mt-[-8px] border-b border-gray-200 py-[24px] text-[18px]">
+        <aside className="hidden w-full h-full max-w-[248px] border-custom min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-white px-[16px] text-[#1E1E1E]  md:flex md:w-[150px] lg:w-[200px] xl:w-[248px]">
+          <div className="font-loraBold  border-b border-gray-200  pb-[16px] text-[18px]">
             Account
           </div>
           <nav className="flex flex-col gap-[12px]">
@@ -102,7 +102,7 @@ export default function ProfilePage() {
         {/* Mobile Dropdown */}
         <div className="flex w-full items-start justify-center md:hidden">
           <div className="relative w-full max-w-sm">
-            <div className="rounded-xl bg-white text-[#1E1E1E] shadow">
+            <div className="rounded-xl bg-white text-[#1E1E1E] ">
               {/* Header */}
               <button
                 className="font-loraBold flex w-full items-center justify-between rounded-xl border-b border-gray-200 bg-transparent px-0 py-4 text-[16px]"
@@ -125,8 +125,8 @@ export default function ProfilePage() {
               </button>
               {/* Dropdown List */}
               {mobileOpen && (
-                <div className="absolute inset-0 z-0 flex items-start justify-center bg-black bg-opacity-50">
-                  <nav className="relative z-0 flex w-full max-w-sm flex-col gap-2 bg-white px-4 py-4 shadow-lg">
+                <div className="absolute inset-0  z-0 flex items-start justify-center bg-black bg-opacity-50">
+                  <nav className="relative z-0 flex w-full border-custom max-w-sm flex-col gap-2 bg-white px-4 py-4 shadow-lg">
                     {sidebarItems.map((item) => (
                       <div key={item}>
                         {item === "Ciluna Wallet" && (

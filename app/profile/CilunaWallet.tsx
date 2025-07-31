@@ -2,7 +2,7 @@ import Gold from "@/public/assets/profile/gold.png";
 
 const CilunaWallet = () => {
   return (
-    <section className="mx-auto flex min-h-[400px] max-w-[976px] flex-col overflow-hidden rounded-3xl bg-white shadow md:flex-row">
+    <section className="mx-auto flex min-h-[400px] border-custom max-w-[976px] flex-col overflow-hidden rounded-3xl bg-white shadow md:flex-row">
       <div className="flex-1">
         <img
           src={Gold.src}
@@ -10,7 +10,7 @@ const CilunaWallet = () => {
           className="h-full w-full max-w-[579px] min-w-[200px] object-cover md:max-h-[555px] lg:max-h-[456px] lg:min-w-[300px]"
         />
       </div>
-      <div className="flex flex-col items-center justify-center px-[16px] pt-[40px] pb-[32px] md:px-[20px] xl:px-[79px]">
+      <div className="flex flex-col items-center  justify-center px-[16px] pt-[40px] pb-[32px] md:px-[20px] xl:px-[79px]">
         <div className="font-playFairExtraBold mb-[40px] text-center text-[36px] text-[#252525] md:mb-[48px] md:text-[30px] lg:text-[36px]">
           CILUNA Wallet
         </div>
