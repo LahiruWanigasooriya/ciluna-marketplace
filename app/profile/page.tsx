@@ -125,12 +125,12 @@ export default function ProfilePage() {
               </button>
               {/* Dropdown List */}
               {mobileOpen && (
-                <div className="absolute inset-0  z-0 flex items-start justify-center bg-black bg-opacity-50">
+                <div className="absolute inset-0 z-0 flex items-start justify-center bg-black bg-opacity-50">
                   <nav className="relative z-0 flex w-full border-custom max-w-sm flex-col gap-2 bg-white px-4 py-4 shadow-lg">
                     {sidebarItems.map((item) => (
                       <div key={item}>
                         {item === "Ciluna Wallet" && (
-                          <div className="col-span-2 my-0.5  h-px w-full bg-gray-200 md:hidden"></div>
+                          <div className="col-span-2 my-0.5 h-px w-full bg-gray-200 md:hidden"></div>
                         )}
                         <button
                           className={`w-full cursor-pointer rounded-md px-4 py-2 text-left ${
@@ -150,6 +150,8 @@ export default function ProfilePage() {
                         )}
                       </div>
                     ))}
+                    {/* Black Line */}
+                    <div className="absolute bottom-[8px] flex left-1/2 -translate-x-1/2 w-[134px] h-[5px] bg-[#2D2D2D]"></div>
                   </nav>
                 </div>
               )}

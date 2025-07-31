@@ -210,59 +210,59 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
             View All
           </button>
         </div>
-        <div className="grid grid-cols-2  font-loraBold justify-between gap-y-[32px] divide-gray-200 py-[16px] text-center md:flex md:gap-y-0 md:divide-x xl:divide-x">
-          <div className="flex-1 border-r border-gray-200 py-[14px]">
-            <span className="mb-1 flex cursor-pointer items-center justify-center">
-              <img
-                src={PurseIcon.src}
-                alt="Purse"
-                className="w-[24px] h-[24px]"
-              />
-            </span>
-            <div className="cursor-pointer hover:opacity-70 font-medium">
-              Unpaid
+        <div className="grid grid-cols-2  font-loraBold justify-between gap-y-[32px] divide-gray-200 py-[16px] text-center md:flex md:gap-y-0 md:divide-x ">
+          <div className="flex-1 border-r flex justify-center border-gray-200 py-[14px]">
+            <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
+              <span className="mb-1 flex cursor-pointer items-center justify-center">
+                <img
+                  src={PurseIcon.src}
+                  alt="Purse"
+                  className="w-[24px] h-[24px]"
+                />
+              </span>
+              <div className="cursor-pointer  font-medium">Unpaid</div>
             </div>
           </div>
 
-          <div className="flex-1 py-[14px]">
-            <span className="mb-1 flex  cursor-pointer items-center justify-center">
-              <img
-                src={ShopCartIcon.src}
-                alt="Cart"
-                className="w-[24px]  h-[24px]"
-              />
-            </span>
-            <div className="cursor-pointer hover:opacity-70 font-medium">
-              To be Shipped
+          <div className="flex-1 flex justify-center py-[14px]">
+            <div className="max-w-[140px]  hover:opacity-70 flex flex-col items-center justify-center">
+              <span className="mb-1 flex  cursor-pointer items-center justify-center">
+                <img
+                  src={ShopCartIcon.src}
+                  alt="Cart"
+                  className="w-[24px]  h-[24px]"
+                />
+              </span>
+              <div className="cursor-pointer font-medium">To be Shipped</div>
             </div>
           </div>
 
           {/* Horizontal divider for mobile view only */}
           <div className="col-span-2 my-0.5 h-px w-full bg-gray-200 md:hidden"></div>
 
-          <div className="flex-1  border-r border-gray-200 py-[14px]">
-            <span className="mb-1  flex items-center cursor-pointer   justify-center">
-              <img
-                src={TruckIcon.src}
-                alt="Truck"
-                className="w-[24px] h-[24px]"
-              />
-            </span>
-            <div className="cursor-pointer  hover:opacity-70 font-medium ">
-              Shipped
+          <div className="flex-1 flex justify-center border-r border-gray-200 py-[14px]">
+            <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
+              <span className="mb-1  flex items-center cursor-pointer   justify-center">
+                <img
+                  src={TruckIcon.src}
+                  alt="Truck"
+                  className="w-[24px] h-[24px]"
+                />
+              </span>
+              <div className="cursor-pointer   font-medium ">Shipped</div>
             </div>
           </div>
 
-          <div className="flex-1 py-[14px]">
-            <span className="mb-1 flex items-center justify-center">
-              <img
-                src={HeartRoundIcon.src}
-                alt="Round Heart"
-                className="w-[24px] h-[24px]"
-              />
-            </span>
-            <div className="cursor-pointer hover:opacity-70 font-medium">
-              To be reviewed
+          <div className="flex-1 flex justify-center py-[14px]">
+            <div className="max-w-[140px] flex   hover:opacity-70 flex-col items-center justify-center">
+              <span className="mb-1 flex items-center justify-center">
+                <img
+                  src={HeartRoundIcon.src}
+                  alt="Round Heart"
+                  className="w-[24px] h-[24px]"
+                />
+              </span>
+              <div className="cursor-pointer font-medium">To be reviewed</div>
             </div>
           </div>
         </div>
