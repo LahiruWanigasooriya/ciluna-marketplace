@@ -70,6 +70,10 @@ const config = withTV({
         interBold: ["Inter-Bold", "sans-serif"],
         interSemiBold: ["Inter-semiBold", "sans-serif"],
         lora: ["Lora-Regular", "sans-serif"],
+        kaiseiHarunoUmi: ['"KaiseiHarunoUmi-Bold"', 'sans-serif'],
+        arial:["Arial-Regular",'sans-serif'],
+        arialBold:["Arial-Bold",'sans-serif']
+
       },
       fontSize: {
         xxxs: "0.512rem",

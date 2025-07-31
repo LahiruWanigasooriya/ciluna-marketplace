@@ -112,12 +112,13 @@
 }
 
 .bgcolor {
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom,
     hsla(258, 52%, 12%, 1) 0%,
     hsla(233, 100%, 4%, 1) 30%,
     hsla(228, 82%, 11%, 1) 70%
-);
+); */
+    background:white;
 
 }
 
@@ -155,7 +156,30 @@
   font-style: normal;
   font-display: swap;
 }
+/* added font */
+@font-face {
+  font-family: "PlayfairDisplay-Bold";
+  src: url("../public/assets/font/playfairdisplay/PlayfairDisplay-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
+@font-face {
+  font-family:" KaiseiHarunoUmi-Bold";
+  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family:" Arial-Regular";
+  src: url("../public/assets/font/Arial/Arial-Regular.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 .custom-textfield label {
   color: #ffffff;
   font-weight: 400;
