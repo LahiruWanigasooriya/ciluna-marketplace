@@ -10,9 +10,10 @@ import accountActive from "@/public/assets/header/accountIconActive.svg";
 import accountIcon from "@/public/assets/header/accountIcon.svg";
 import flag from "@/public/assets/header/flag.svg";
 import hamburgerMenu from "@/public/assets/header/hamburgerMenu.svg";
+import menuActive from "@/public/assets/header/HamburgerMenuActive.svg";
 import cartIcon from "@/public/assets/header/cartIcon.svg";
 import cartActive from "@/public/assets/header/cartIconActive.svg";
-import { Menu, X, PhoneCall, CircleUser } from "lucide-react";
+import { Menu, PhoneCall, CircleUser } from "lucide-react";
 import Link from "next/link";
 import useClickOutside from "@/hooks/useClickOutside";
 import { motion, useTransform, useMotionValue } from "framer-motion";
@@ -20,13 +21,13 @@ import useMenuStore from "@/store/useMenuStore";
 import { SearchField } from "@/components/ui/search-field";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
-import { clearAuthToken } from "@/actions/utils/auth";
+//import { clearAuthToken } from "@/actions/utils/auth";
 import { useAuthStore } from "@/store/authStore";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import { ICategory } from "@/types/category";
-import { Skeleton } from "@/components/ui";
+//import { Skeleton } from "@/components/ui";
 import AuthWrapper from "./AuthWrapper";
-import Cookies from "js-cookie";
+//import Cookies from "js-cookie";
 
 interface NavItem {
   icon: React.ElementType | { src: string };
@@ -320,11 +321,9 @@ export default function Navbar({ categories }: any) {
                     aria-label="Open menu"
                   >
                     <img
-                      src={hamburgerMenu.src}
+                      src={isNavbarActive ? menuActive.src : hamburgerMenu.src}
                       alt="Menu Icon"
-                      className={`${navIconStyle} min-w-[24px] h-[24px] ${
-                        isNavbarActive ? "text-black" : "text-white"
-                      }`}
+                      className={`${navIconStyle} min-w-[24px] h-[24px]`}
                     />
                   </button>
                 </div>
@@ -491,117 +490,6 @@ export default function Navbar({ categories }: any) {
               <div className="fixed inset-0 flex justify-center items-center py-4 bg-fg/80 z-50">
                 <AuthWrapper ref={authRef} closePopup={closePopup} />
               </div>
-            )}
-            {isMenuOpen && (
-              <motion.div
-                ref={menuRef}
-                initial="hidden"
-                animate="visible"
-                variants={popupVariants2}
-                className={`absolute z-10 gap-4 backdrop-blur-sm top-10 right-0 py-4 pr-2 pl-4 flex flex-col w-[155px] md:w-[290px] ${
-                  mobProfileSelect ? "h-[574px]" : "h-[494px]"
-                } rounded-tl-[20px] rounded-bl-[20px] border-t border-l border-solid border-blue bg-[#FFFFFF0D]/5`}
-              >
-                <div className="flex justify-end">
-                  <X
-                    onClick={toggleMenu}
-                    className={`cursor-pointer ${
-                      isNavbarActive ? "text-black" : "text-white"
-                    }`}
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  {navItems.map((item) => (
-                    <div
-                      key={item.label}
-                      onClick={() => {
-                        if (
-                          item.label === "Sign out" ||
-                          item.label === "Sign in"
-                        ) {
-                          handleAuthAction();
-                        } else if (item.label === "Account") {
-                          handleProfile();
-                        } else {
-                          router.push(item.href);
-                          setmobProfileSelect(false);
-                        }
-                        if (item.label !== "Account") {
-                          toggleMenu();
-                        }
-                      }}
-                      className={`cursor-pointer flex flex-col p-[11px] rounded-[10px] ${
-                        item.href === pathname ? "bg-blue" : "bg-transparent"
-                      }`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <item.icon
-                          size={25}
-                          className={
-                            isNavbarActive ? "text-black" : "text-white"
-                          }
-                        />
-                        <p
-                          className={`text-sm leading-[28px] ${
-                            isNavbarActive ? "text-black" : "text-white"
-                          }`}
-                        >
-                          {item.label}
-                        </p>
-                      </div>
-                      {item.label === "Account" && mobProfileSelect && (
-                        <motion.div
-                          initial="hidden"
-                          animate="visible"
-                          variants={popupVariants}
-                          className={`mt-2 p-2 flex flex-col gap-2 border-t border-l border-solid border-blue rounded-[6px] backdrop-blur-sm text-sm ${
-                            isNavbarActive ? "text-black" : "text-white"
-                          }`}
-                        >
-                          <Link href="/profile" onClick={handleProfileClick}>
-                            <p
-                              className={`${
-                                pathname === "/profile"
-                                  ? "text-blue"
-                                  : isNavbarActive
-                                  ? "text-black"
-                                  : "text-white"
-                              }`}
-                            >
-                              Profile
-                            </p>
-                          </Link>
-                          <Link
-                            href="/profile/history"
-                            onClick={handleProfileClick}
-                          >
-                            <p
-                              className={`${
-                                pathname === "/profile/history"
-                                  ? "text-blue"
-                                  : isNavbarActive
-                                  ? "text-black"
-                                  : "text-white"
-                              }`}
-                            >
-                              Order History
-                            </p>
-                          </Link>
-                          <div onClick={handleLogout}>
-                            <p
-                              className={
-                                isNavbarActive ? "text-black" : "text-white"
-                              }
-                            >
-                              Sign out
-                            </p>
-                          </div>
-                        </motion.div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
             )}
           </div>
         </div>
