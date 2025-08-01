@@ -145,7 +145,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     <Link
       key={product._id}
       href={`/product/${product._id}`}
-      className="flex flex-col gap-2 md:gap-5 font-lora border border-[#ffffff00] bg-white hover:border-blue recommend:min-w-[294px] transition-all duration-300 ease-in-out min-w-[164px] sm:w-[calc(33%-0.75rem)] lg:w-[calc(23.33%-0.833rem)] xl:w-[calc(18.33%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
+      className="flex flex-col gap-2 md:gap-5 font-inter border border-[#ffffff00] bg-white hover:border-blue recommend:min-w-[294px] transition-all duration-300 ease-in-out min-w-[164px] sm:w-[calc(33%-0.75rem)] lg:w-[calc(23.33%-0.833rem)] xl:w-[calc(18.33%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
     >
       <div className="h-[177px] recommend:h-[317px]">
         {isLoading ? (
