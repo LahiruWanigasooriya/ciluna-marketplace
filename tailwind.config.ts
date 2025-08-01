@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import { withTV } from "tailwind-variants/transformer";
+import tailwindcssAnimate from "tailwindcss-animate";
+import tailwindcssReactAriaComponents from "tailwindcss-react-aria-components";
 
 const config = withTV({
   darkMode: ["class"],
@@ -73,6 +75,10 @@ const config = withTV({
         interBold: ["Inter-Bold", "sans-serif"],
         interSemiBold: ["Inter-semiBold", "sans-serif"],
         lora: ["Lora-Regular", "sans-serif"],
+        loraBold: ["Lora-Bold", "sans-serif"],
+        kaisei: ["KaiseiHarunoUmi", "sans-serif"],
+        kaiseiBold: ["KaiseiHarunoUmi-Bold", "sans-serif"],
+        playFairExtraBold: ["PlayFairDisplay-ExtraBold", "sans-serif"],
         kaiseiHarunoUmi: ['"KaiseiHarunoUmi-Bold"', 'sans-serif'],
         arial:["Arial-Regular",'sans-serif'],
         arialBold:["Arial-Bold",'sans-serif']
@@ -116,10 +122,7 @@ const config = withTV({
       },
     },
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    require("tailwindcss-react-aria-components"),
-  ],
+  plugins: [tailwindcssAnimate, tailwindcssReactAriaComponents],
 });
 
 export default config;

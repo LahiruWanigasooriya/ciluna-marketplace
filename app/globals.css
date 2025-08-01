@@ -151,6 +151,7 @@
   font-display: swap;
 }
 
+
 @font-face {
   font-family: "Lora-Regular";
   src: url("../public/assets/font/lora/Lora-Regular.otf") format("opentype");
@@ -179,6 +180,38 @@
   font-family:" Arial-Regular";
   src: url("../public/assets/font/Arial/Arial-Regular.otf") format("opentype");
   font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora-Bold";
+  src: url("../public/assets/font/lora/Lora-Bold.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KaiseiHarunoUmi";
+  src: url("../public/assets/font/kaisei/KaiseiHarunoUmi-Regular.ttf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KaiseiHarunoUmi-Bold";
+  src: url("../public/assets/font/kaisei/KaiseiHarunoUmi-Bold.ttf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayFairDisplay-ExtraBold";
+  src: url("../public/assets/font/playfair/PlayfairDisplay-ExtraBold.ttf")
+    format("opentype");
+  font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
@@ -212,6 +245,10 @@
 
 .purchase--btn:hover {
   box-shadow: 0px 0px 0px 3px #000212, 0px 0px 0px 4px #6442c1;
+}
+
+.border-custom {
+  border: 1px solid #e1e1e1;
 }
 
 @property --r2 {

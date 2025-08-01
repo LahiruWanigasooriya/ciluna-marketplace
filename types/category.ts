@@ -2,10 +2,10 @@ export interface ICategory {
   _id?: string;
   name: string;
   description?: string;
-  image: string;
   isActive?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  component: React.FC;
 }
 
 export interface GetCategoriesParams {
