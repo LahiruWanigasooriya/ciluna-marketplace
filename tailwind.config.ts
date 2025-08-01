@@ -79,6 +79,10 @@ const config = withTV({
         kaisei: ["KaiseiHarunoUmi", "sans-serif"],
         kaiseiBold: ["KaiseiHarunoUmi-Bold", "sans-serif"],
         playFairExtraBold: ["PlayFairDisplay-ExtraBold", "sans-serif"],
+        kaiseiHarunoUmi: ['"KaiseiHarunoUmi-Bold"', 'sans-serif'],
+        arial:["Arial-Regular",'sans-serif'],
+        arialBold:["Arial-Bold",'sans-serif']
+
       },
       fontSize: {
         xxxs: "0.512rem",
