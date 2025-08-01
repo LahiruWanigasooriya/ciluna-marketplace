@@ -6,24 +6,28 @@ import { ChevronLeft, Loader2 } from "lucide-react";
 import Logo from "../assets/logo.png";
 import Banner from "../assets/login-banner.webp";
 import Title from "@/components/custom/Title";
-import { TextField, Button } from "@/components/ui";
+import { TextField, Button,DateField } from "@/components/ui";
 import Link from "next/link";
 import Tel from "@/components/custom/Phone";
 import { signupValidationSchema } from "@/schemas/validationSchemas";
 import { createNewUser } from "@/actions/users/user";
 import { useRouter } from "next/navigation";
-import { ValidationError } from "yup";
+import { date, ValidationError } from "yup";
 import BGIMG from "@/public/assets/bglogom.webp";
 import { toast } from "sonner";
+import { DatePicker } from "react-aria-components";
+import { DateValue, parseDate } from "@internationalized/date";
 
 type FormData = {
   firstName: string;
   lastName: string;
+  dateofbirth: DateValue | null;
   email: string;
   phone: string;
   password: string;
   remember: boolean;
 };
+
 
 type FormErrors = {
   [K in keyof FormData]?: string;
@@ -32,8 +36,8 @@ type FormErrors = {
 const useForm = (initialState: FormData) => {
   const [formData, setFormData] = React.useState<FormData>(initialState);
   const [errors, setErrors] = React.useState<FormErrors>({});
-
-  const handleChange = (field: keyof FormData, value: string | boolean) => {
+  
+  const handleChange = (field: keyof FormData, value: string | boolean | DateValue | null) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
@@ -56,31 +60,26 @@ const SignupForm = ({
 }: {
   formData: FormData;
   errors: FormErrors;
-  handleChange: (field: keyof FormData, value: string | boolean) => void;
+  handleChange: (field: keyof FormData, value: string | boolean | DateValue | null) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
   isSuccess: boolean;
 }) => (
   <form
     onSubmit={handleSubmit}
-    className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 border-t border-l border-solid border-[#6B709499] flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
+    className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5  flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]"
   >
-    <div className="flex items-center space-x-2">
-      <Link
-        href="/"
-        className="flex items-start justify-start cursor-pointer hover:opacity-75"
-      >
-        <ChevronLeft className="" size={30} />
-      </Link>
-      <Title title="Let’s get you started" className="lg:text-lg" />
+    <div className="flex items-center justify-center space-x-2">
+
+      <Title title="Create Account" className=" lg:text-lg text-black" />
     </div>
     <div className="flex flex-col space-y-3 lg:space-y-4">
       <div>
         <TextField
-          label="First Name"
-          placeholder="First Name"
+          label="First Name*"
+          placeholder="Enter first name"
           value={formData.firstName}
-          className="custom-textfield w-full"
+          className=" w-full"
           onChange={(value: string) => handleChange("firstName", value)}
         />
         {errors.firstName && (
@@ -90,10 +89,10 @@ const SignupForm = ({
 
       <div>
         <TextField
-          label="Last Name"
-          placeholder="Last Name"
+          label="Last Name*"
+          placeholder="Enter last name"
           value={formData.lastName}
-          className="custom-textfield w-full"
+          className=" w-full"
           onChange={(value: string) => handleChange("lastName", value)}
         />
         {errors.lastName && (
@@ -101,12 +100,24 @@ const SignupForm = ({
         )}
       </div>
 
+        <DatePicker
+          // label="Date of Birth"
+          value={formData.dateofbirth}
+          onChange={(value: DateValue | null) => handleChange("dateofbirth", value)}
+          className="w-full"
+        />
+      
+        {errors.dateofbirth && (
+          <p className="text-red-500 text-xs">{errors.dateofbirth}</p>
+        )}
+      </div>
+
       <div>
         <TextField
           label="Email"
-          placeholder="yourname@email.com"
+          placeholder="Enter email"
           value={formData.email}
-          className="custom-textfield w-full"
+          className=" w-full"
           onChange={(value: string) => handleChange("email", value)}
         />
         {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
@@ -126,7 +137,7 @@ const SignupForm = ({
           isRevealable
           label="Create Password"
           placeholder="********"
-          className="custom-textfield w-full"
+          className="w-full"
           description="Password must contain at least 8 characters."
           value={formData.password}
           onChange={(value: string) => handleChange("password", value)}
@@ -135,7 +146,7 @@ const SignupForm = ({
           <p className="text-red-500 text-xs">{errors.password}</p>
         )}
       </div>
-    </div>
+    
 
     {/* <div className="flex items-center justify-between">
       <Checkbox
@@ -177,19 +188,20 @@ const SignupForm = ({
 
 const SignupPage: React.FC = () => {
   const router = useRouter(); // Initialize the router
-  const [isLoading, setIsLoading] = React.useState(false);
   const { formData, errors, setErrors, handleChange } = useForm({
     firstName: "",
     lastName: "",
+    dateofbirth: null,
     email: "",
     phone: "",
     password: "",
     remember: false,
   });
+
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("loading state");
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -198,6 +210,7 @@ const SignupPage: React.FC = () => {
       const { firstName, lastName, email, password, phone } = formData;
       const contactNo = phone; // This should already include the country code
 
+      // Only send known properties to createNewUser
       const res = await createNewUser({
         firstName,
         lastName,
@@ -214,7 +227,7 @@ const SignupPage: React.FC = () => {
       }
     } catch (error: unknown) {
       if (error instanceof ValidationError) {
-        const newErrors = error.inner.reduce<FormErrors>((acc, err) => {
+        const newErrors = (error as ValidationError).inner.reduce<FormErrors>((acc, err) => {
           if (err.path && typeof err.message === "string") {
             acc[err.path as keyof FormData] = err.message;
           }
@@ -239,9 +252,9 @@ const SignupPage: React.FC = () => {
       </Link>
 
       <div className="flex items-start h-[80vh] xl:h-[100vh] w-full relative">
-        <div className="flex lg:hidden justify-center items-center w-full pt-36">
+        {/* <div className="flex lg:hidden justify-center items-center w-full pt-36">
           <Image src={BGIMG} alt="" className="bg-cover" />
-        </div>
+        </div> */}
 
         <div className="flex items-center justify-between space-x-12 w-full absolute inset-0">
           <SignupForm
@@ -252,13 +265,13 @@ const SignupPage: React.FC = () => {
             isLoading={isLoading}
             isSuccess={isSuccess}
           />
-          <div className="hidden lg:flex lg:flex-1">
+          {/* <div className="hidden lg:flex lg:flex-1">
             <Image
               src={Banner}
               alt="banner"
               className="object-cover w-full h-full 2xl:w-5/6 2xl:h-5/6"
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -93,10 +93,10 @@ const Phone: React.FC<TelProps> = ({ value, onChange }) => {
 
   return (
     <div className="flex flex-col gap-y-2.5 w-full text-white/90">
-      <p className="text-sm font-[400] text-white/90">Phone Number</p>
+      <p className="text-sm font-[400] text-black">Phone Number</p>
       <div className="relative w-full" ref={modalRef}>
         <div
-          className="px-2 h-10 border border-[#00031B] bg-[#00031B] transition duration-200 ease-out rounded-lg flex items-center focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20
+          className="px-2 h-10 border border-[#252525] bg-[#000000] transition duration-200 ease-out rounded-lg flex items-center focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20
           group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
           [&>[role=progressbar]]:mr-2.5
           [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0

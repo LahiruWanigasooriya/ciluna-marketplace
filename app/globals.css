@@ -112,12 +112,14 @@
 }
 
 .bgcolor {
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom,
     hsla(258, 52%, 12%, 1) 0%,
     hsla(233, 100%, 4%, 1) 30%,
-    hsla(228, 82%, 11%, 1) 70%
-);
+    hsla(228, 82%, 11%, 1) 70% 
+   
+);*/
+ background:white;
 
 }
 
