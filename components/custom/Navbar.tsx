@@ -3,6 +3,20 @@
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import {
+  Heart,
+  UserRound,
+  ShoppingCart,
+  Search,
+  Menu,
+  X,
+  House,
+  Tag,
+  PhoneCall,
+  CircleUser,
+  CircleX,
+  ChevronRight,
+} from "lucide-react";
 import Logo from "../../app/assets/logo.svg";
 import MobLogo from "../../app/assets/moblogo.svg";
 import profileIcon from "@/public/assets/header/profileIcon.svg";
@@ -13,7 +27,6 @@ import hamburgerMenu from "@/public/assets/header/hamburgerMenu.svg";
 import menuActive from "@/public/assets/header/HamburgerMenuActive.svg";
 import cartIcon from "@/public/assets/header/cartIcon.svg";
 import cartActive from "@/public/assets/header/cartIconActive.svg";
-import { Menu, PhoneCall, CircleUser } from "lucide-react";
 import Link from "next/link";
 import useClickOutside from "@/hooks/useClickOutside";
 import { motion, useTransform, useMotionValue } from "framer-motion";
@@ -27,6 +40,12 @@ import useDisableScroll from "@/hooks/useDisableScroll";
 import { ICategory } from "@/types/category";
 //import { Skeleton } from "@/components/ui";
 import AuthWrapper from "./AuthWrapper";
+import Cookies from "js-cookie";
+import WomenMenu from "@/components/custom/Submenus/WomenMenu";
+import MenMenu from "@/components/custom/Submenus/MenMenu";
+import JewelleryMenu from "@/components/custom/Submenus/JewelleryMenu";
+import OccasionWearMenu from "@/components/custom/Submenus/OccasionWearMenu";
+import ScentsMenu from "@/components/custom/Submenus/ScentsMenu";
 //import Cookies from "js-cookie";
 
 interface NavItem {
@@ -76,6 +95,9 @@ export default function Navbar({ categories }: any) {
   useEffect(() => {
     setIsHydrated(true);
   }, []);
+
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
 
   useEffect(() => {
     if (categoriesToUse.length > 0) {
@@ -220,6 +242,16 @@ export default function Navbar({ categories }: any) {
   const closePopup = () => {
     setAuthPopup(false);
     setIsNavbarActive(true);
+  };
+
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+
+  const subMenus: Record<string, React.FC> = {
+    Women: WomenMenu,
+    Men: MenMenu,
+    Jewellery: JewelleryMenu,
+    "Occasion Wear": OccasionWearMenu,
+    Scents: ScentsMenu,
   };
 
   return (
