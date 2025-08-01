@@ -11,6 +11,7 @@ const images = [Img1.src, Img2.src, Img3.src, Img4.src];
 const JewelleryMenu = () => {
   return (
     <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 ">
+      <h1 className='sm:hidden font-interBold text-[20px] mb-[16px]'>Jewellery</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-[16px] md:gap-y-[30px] w-full">
         {/* sub menu */}
         <div>

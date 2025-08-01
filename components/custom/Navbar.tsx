@@ -34,11 +34,9 @@ import useMenuStore from "@/store/useMenuStore";
 import { SearchField } from "@/components/ui/search-field";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
-//import { clearAuthToken } from "@/actions/utils/auth";
 import { useAuthStore } from "@/store/authStore";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import { ICategory } from "@/types/category";
-//import { Skeleton } from "@/components/ui";
 import AuthWrapper from "./AuthWrapper";
 import Cookies from "js-cookie";
 import WomenMenu from "@/components/custom/Submenus/WomenMenu";
@@ -46,7 +44,6 @@ import MenMenu from "@/components/custom/Submenus/MenMenu";
 import JewelleryMenu from "@/components/custom/Submenus/JewelleryMenu";
 import OccasionWearMenu from "@/components/custom/Submenus/OccasionWearMenu";
 import ScentsMenu from "@/components/custom/Submenus/ScentsMenu";
-//import Cookies from "js-cookie";
 
 interface NavItem {
   icon: React.ElementType | { src: string };
@@ -59,6 +56,7 @@ export default function Navbar({ categories }: any) {
   const authRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null); // Added ref for mobile menu
   const { isMenuOpen, toggleMenu } = useMenuStore();
   const router = useRouter();
   const pathname = usePathname();
@@ -80,11 +78,11 @@ export default function Navbar({ categories }: any) {
 
   // Dummy data for categories
   const dummyCategories: ICategory[] = [
-    { _id: "1", name: "Women", image: "/images/electronics.png" },
-    { _id: "2", name: "Men", image: "/images/fashion.png" },
-    { _id: "3", name: "Jewellery", image: "/images/home_kitchen.png" },
-    { _id: "4", name: "Occasion Wear", image: "/images/books.png" },
-    { _id: "5", name: "Scents", image: "/images/toys.png" },
+    { _id: "1", name: "Women", component: WomenMenu },
+    { _id: "2", name: "Men", component: MenMenu },
+    { _id: "3", name: "Jewellery", component: JewelleryMenu },
+    { _id: "4", name: "Occasion Wear", component: OccasionWearMenu},
+    { _id: "5", name: "Scents", component: ScentsMenu },
   ];
 
   // Use dummy data if categories prop is empty or undefined
@@ -137,12 +135,13 @@ export default function Navbar({ categories }: any) {
     (value) => `rgba(0, 0, 0, ${value})`
   );
 
+  // Updated useClickOutside to handle mobile menu separately
   useClickOutside(modalRef, () => setSearchOpen(false));
   useClickOutside(authRef, () => setAuthPopup(false));
   useClickOutside(menuRef, () => toggleMenu());
   useClickOutside(profileRef, () => setProfileSelect(false));
-  useDisableScroll(isMenuOpen);
-  useDisableScroll(authPopup);
+  useClickOutside(mobileMenuRef, () => setMobileMenuOpen(false));
+  useDisableScroll(isMenuOpen || isMobileMenuOpen); // Added isMobileMenuOpen to disable scroll
 
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -173,6 +172,7 @@ export default function Navbar({ categories }: any) {
 
   const handleNavigation = (label: string, href: string) => {
     setIsNavbarActive(true);
+    setMobileMenuOpen(false); // Close mobile menu on navigation
     router.push(href);
   };
 
@@ -272,7 +272,7 @@ export default function Navbar({ categories }: any) {
           <div>sign in</div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-between  relative ">
+      <div className="flex flex-col items-center justify-between relative">
         <div className="flex w-full max-w-[1440px] mx-auto md:px-[38px] xl:px-[96px] md:pb-[8px] p-[16px] md:pt-[20px] xl:pt-[24px] gap-4">
           <div
             className="cursor-pointer"
@@ -296,12 +296,12 @@ export default function Navbar({ categories }: any) {
               />
             </div>
 
-            <div className="flex items-center  md:space-x-4 lg:space-x-[24px] max-w-[150px] w-fit md:max-w-fit md:w-full md:min-w-[297px">
+            <div className="flex items-center md:space-x-4 lg:space-x-[24px] max-w-[150px] w-fit md:max-w-fit md:w-full md:min-w-[297px]">
               <div className="flex md:min-w-[77px]">
                 <img
                   src={flag.src}
                   alt="Language Flag"
-                  className="min-w-[24px] flex h-[24px] cursor-pointer mr-[12px] md:mr-[8px] "
+                  className="min-w-[24px] flex h-[24px] cursor-pointer mr-[12px] md:mr-[8px]"
                 />
                 <p
                   className={`text-xs lg:text-sm font-inter hidden md:flex font-light cursor-pointer leading-[24px] ${
@@ -347,13 +347,13 @@ export default function Navbar({ categories }: any) {
                 <div className="flex md:hidden">
                   <button
                     onClick={() => {
-                      toggleMenu();
+                      setMobileMenuOpen(!isMobileMenuOpen);
                       setIsNavbarActive(true);
                     }}
-                    aria-label="Open menu"
+                    aria-label="Toggle mobile menu"
                   >
                     <img
-                      src={isNavbarActive ? menuActive.src : hamburgerMenu.src}
+                      src={isMobileMenuOpen || isNavbarActive ? menuActive.src : hamburgerMenu.src}
                       alt="Menu Icon"
                       className={`${navIconStyle} min-w-[24px] h-[24px]`}
                     />
@@ -537,8 +537,15 @@ export default function Navbar({ categories }: any) {
                   <Link
                     key={data._id}
                     href={`/subcategories/${data._id}`}
-                    className="cursor-pointer border border-transparent hover:border-solid hover:border-gray-300  px-[12px] py-[6px] my-[9px] rounded-[4px]"
+                    className="cursor-pointer border border-transparent hover:border-solid hover:border-gray-300 px-[12px] py-[6px] my-[9px] rounded-[4px]"
+                    onMouseEnter={() => setActiveMenu(data.name)}
+                    onMouseLeave={() => setActiveMenu(null)}
                   >
+                    {activeMenu === data.name && (
+                      <div className="absolute left-0 shadow-sm w-full py-[40px] px-[16px] sm:px-[56px] md:px-[96px] z-10 bg-white mt-8">
+                        {React.createElement(data.component)}
+                      </div>
+                    )}
                     <p
                       className={`text-xs lg:text-[14px] ${
                         isNavbarActive ? "text-lightBlack" : "text-white"
@@ -550,16 +557,57 @@ export default function Navbar({ categories }: any) {
                 ))
               : null}
           </div>
-          {/* <SearchField
-            aria-label="Search"
-            className="text-white w-full custom-textfield"
-          />
-          <div className="w-full justify-end flex" onClick={handleAuthAction}>
-            <p className="text-sm font-[400] cursor-pointer hover:opacity-75 text-white">
-              {token ? "Sign out" : "Sign in"}
-            </p>
-          </div> */}
         </div>
+
+        {isMobileMenuOpen && (
+          <div
+            ref={mobileMenuRef}
+            className="md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-6 overflow-y-auto"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+              {activeMobileMenu ? (
+                <button
+                  onClick={() => setActiveMobileMenu(null)}
+                  className="text-[16px] text-gray-600"
+                >
+                  ❮&nbsp;&nbsp; Back
+                </button>
+              ) : (
+                <div />
+              )}
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setActiveMobileMenu(null);
+                }}
+              >
+                <CircleX size={32} />
+              </button>
+            </div>
+
+            {/* Submenu View */}
+            {activeMobileMenu ? (
+              <div>{React.createElement(subMenus[activeMobileMenu])}</div>
+            ) : (
+              // Main Menu View
+              <div className="space-y-6 text-lg font-semibold">
+                {Object.keys(subMenus).map((item) => (
+                  <div
+                    key={item}
+                    className="flex justify-between items-center border-b pb-4 cursor-pointer"
+                    onClick={() => setActiveMobileMenu(item)}
+                  >
+                    <span>{item}</span>
+                    <span>
+                      <ChevronRight />
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
