@@ -41,6 +41,8 @@
     --highlight-chart: 210 98% 78%;
     --accent-chart: 210 98% 78%;
     --blue: 236 72% 59%;
+    --bg-black: 0 0% 5%;
+    --gray-neutral-fg: 0, 0%, 44%;
   }
 
   .dark {
@@ -117,11 +119,8 @@
     hsla(258, 52%, 12%, 1) 0%,
     hsla(233, 100%, 4%, 1) 30%,
     hsla(228, 82%, 11%, 1) 70%
-);
-
+  );
 }
-
-
 
 @font-face {
   font-family: "Inter";
@@ -130,7 +129,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 
 @font-face {
   font-family: "Inter-Bold";
@@ -168,7 +166,6 @@
   font-size: 0.875rem;
 }
 
-
 .auth-textfield input {
   color: #ffffff;
   background-color: transparent;
@@ -179,7 +176,6 @@
   color: #ffffff;
   background-color: transparent;
   font-size: 0.875rem;
-
 }
 
 .custom-textfield desc {
@@ -247,7 +243,6 @@
   }
 }
 
-
 /* Custom Scrollbar */
 .scrollbar-custom::-webkit-scrollbar {
   width: 4px; /* Width of vertical scrollbar */
@@ -259,16 +254,15 @@
 }
 
 .scrollbar-custom::-webkit-scrollbar-thumb {
-  background-color: #6442C1;
+  background-color: #6442c1;
   border-radius: 6px;
   border: 2px solid transparent; /* Optional: Adds spacing around the thumb */
 }
 
-
 /* Ensure Vertical Scrolling on Mobile */
 @media (max-width: 768px) {
   .scrollbar-custom {
-     /* Limits height on mobile */
+    /* Limits height on mobile */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS */
   }
@@ -283,7 +277,6 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
- 
 
 .messageBox:focus-within {
   border: 1px solid rgb(110, 110, 110);
@@ -321,4 +314,3 @@
   -ms-overflow-style: none; /* Internet Explorer and Edge */
   scrollbar-width: none; /* Firefox */
 }
-

@@ -62,7 +62,9 @@ const config = withTV({
           fg: "hsl(var(--overlay-fg))",
         },
         blue: "hsl(var(--blue))",
-        purple: "#6442C1",
+        purple: "#6442c1",
+        bgBlack: "hsl(var(--bg-black))",
+        grayNeutralFg: "hsl(var(--gray-neutral-fg))",
       },
 
       fontFamily: {
