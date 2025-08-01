@@ -66,6 +66,8 @@ const config = withTV({
         lightGreen: "#BFD5CD",
         lightBlack: "hsl(var(--light-black))",
         neutralGray: "hsl(var(--neutral-gray))",
+        gray: "#252525",
+        "custom-red": "#A70000"
       },
 
       fontFamily: {
@@ -95,6 +97,7 @@ const config = withTV({
         large1: "2rem",
       },
       screens: {
+        xsm: "375px",
         sm: "640px",
         md: "768px",
         lg: "1024px",
