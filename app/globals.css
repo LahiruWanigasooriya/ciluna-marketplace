@@ -48,6 +48,7 @@
     --light-black: 0, 0%, 15%;
     --neutral-gray: 0, 0%, 56%;
     --gray-neutral-fg: 0, 0%, 44%;
+    --gray-border: 0, 0%, 88%;
   }
 
   .dark {
@@ -119,12 +120,13 @@
 }
 
 .bgcolor {
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom,
     hsla(258, 52%, 12%, 1) 0%,
     hsla(233, 100%, 4%, 1) 30%,
     hsla(228, 82%, 11%, 1) 70%
-  );
+); */
+  background: white;
 }
 
 @font-face {
@@ -155,6 +157,30 @@
   font-family: "Lora-Regular";
   src: url("../public/assets/font/lora/Lora-Regular.otf") format("opentype");
   font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+/* added font */
+@font-face {
+  font-family: "PlayfairDisplay-Bold";
+  src: url("../public/assets/font/playfairdisplay/PlayfairDisplay-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family:" KaiseiHarunoUmi-Bold";
+  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family:" Arial-Regular";
+  src: url("../public/assets/font/Arial/Arial-Regular.otf") format("opentype");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -365,4 +391,26 @@
     rgba(61, 61, 61, 1) 52.88%,
     rgba(0, 0, 0, 0) 100%
   );
+}
+
+.line-gradient-header {
+  height: 0.5px;
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(231, 231, 231, 1) 52.88%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.glass-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1;
 }

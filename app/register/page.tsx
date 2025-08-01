@@ -6,7 +6,7 @@ import { ChevronLeft, Loader2 } from "lucide-react";
 import Logo from "../assets/logo.png";
 import Banner from "../assets/login-banner.webp";
 import Title from "@/components/custom/Title";
-import { TextField, Button } from "@/components/ui";
+import { TextField, Button,DatePicker } from "@/components/ui";
 import Link from "next/link";
 import Tel from "@/components/custom/Phone";
 import { signupValidationSchema } from "@/schemas/validationSchemas";
@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { ValidationError } from "yup";
 import BGIMG from "@/public/assets/bglogom.webp";
 import { toast } from "sonner";
+import CountryDropdown from "@/components/custom/CountryDropdown";
 
 type FormData = {
   firstName: string;
@@ -23,6 +24,8 @@ type FormData = {
   phone: string;
   password: string;
   remember: boolean;
+  dateofbirth: Date;
+  country: string;
 };
 
 type FormErrors = {
@@ -63,24 +66,24 @@ const SignupForm = ({
 }) => (
   <form
     onSubmit={handleSubmit}
-    className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 border-t border-l border-solid border-[#6B709499] flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
+    className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
   >
-    <div className="flex items-center space-x-2">
-      <Link
+    <div className="flex items-center justify-center space-x-2 text-[#252525]">
+      {/* <Link
         href="/"
         className="flex items-start justify-start cursor-pointer hover:opacity-75"
       >
         <ChevronLeft className="" size={30} />
-      </Link>
-      <Title title="Let’s get you started" className="lg:text-lg" />
+      </Link> */}
+      <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-lg" />
     </div>
-    <div className="flex flex-col space-y-3 lg:space-y-4">
+    <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
       <div>
         <TextField
-          label="First Name"
-          placeholder="First Name"
+          label="First Name*"
+          placeholder="Enter first name"
           value={formData.firstName}
-          className="custom-textfield w-full"
+          className=" w-full"
           onChange={(value: string) => handleChange("firstName", value)}
         />
         {errors.firstName && (
@@ -90,10 +93,10 @@ const SignupForm = ({
 
       <div>
         <TextField
-          label="Last Name"
-          placeholder="Last Name"
+          label="Last Name*"
+          placeholder="Enter last name"
           value={formData.lastName}
-          className="custom-textfield w-full"
+          className="w-full"
           onChange={(value: string) => handleChange("lastName", value)}
         />
         {errors.lastName && (
@@ -102,11 +105,36 @@ const SignupForm = ({
       </div>
 
       <div>
+        <DatePicker
+        label="Date of Birth"
+        onChange={(value: any) => {
+          if (value) {
+            const date =
+              typeof value === "object" && typeof value.toDate === "function"
+                ? value.toDate()
+                : null;
+            if (date) handleChange("dateofbirth", date);
+          }
+        }}
+        className="w-full text-[#252525]"
+        >
+          
+        </DatePicker>
+      </div>
+
+      <div>
+        <CountryDropdown
+        value={formData.country}
+        onChange={(_field: string, value: string) => handleChange("country", value)}
+        />
+      </div>
+
+      <div>
         <TextField
           label="Email"
           placeholder="yourname@email.com"
           value={formData.email}
-          className="custom-textfield w-full"
+          className=" w-full"
           onChange={(value: string) => handleChange("email", value)}
         />
         {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
@@ -126,7 +154,7 @@ const SignupForm = ({
           isRevealable
           label="Create Password"
           placeholder="********"
-          className="custom-textfield w-full"
+          className=" w-full"
           description="Password must contain at least 8 characters."
           value={formData.password}
           onChange={(value: string) => handleChange("password", value)}
@@ -181,6 +209,8 @@ const SignupPage: React.FC = () => {
   const { formData, errors, setErrors, handleChange } = useForm({
     firstName: "",
     lastName: "",
+    dateofbirth: new Date(),
+    country: "",
     email: "",
     phone: "",
     password: "",
@@ -239,9 +269,6 @@ const SignupPage: React.FC = () => {
       </Link>
 
       <div className="flex items-start h-[80vh] xl:h-[100vh] w-full relative">
-        <div className="flex lg:hidden justify-center items-center w-full pt-36">
-          <Image src={BGIMG} alt="" className="bg-cover" />
-        </div>
 
         <div className="flex items-center justify-between space-x-12 w-full absolute inset-0">
           <SignupForm
@@ -266,3 +293,7 @@ const SignupPage: React.FC = () => {
 };
 
 export default SignupPage;
+function setDate(value: any): void {
+  throw new Error("Function not implemented.");
+}
+

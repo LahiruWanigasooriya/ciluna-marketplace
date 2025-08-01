@@ -159,9 +159,9 @@ const Footer: FC = () => {
         />
       </div>
 
-      <div className="line-gradient mx-auto w-full max-w-[1440px]"></div>
-      <div className="flex flex-col md:flex-row items-center justify-center py-[16px] bg-bgBlack">
-        <p className="text-[14px] font-[400] text-grayNeutralFg leading-[20px] tracking-normal text-center">
+      <div className="flex flex-col items-center justify-center bg-bgBlack">
+        <div className="line-gradient mx-auto w-full max-w-[1440px]"></div>
+        <p className="text-[14px] font-[400] text-grayNeutralFg leading-[20px] tracking-normal text-center  py-[16px]">
           © 2025 CILUNA™. All Rights Reserved.
         </p>
       </div>
