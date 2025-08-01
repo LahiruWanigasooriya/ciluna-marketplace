@@ -65,6 +65,9 @@ const config = withTV({
         },
         blue: "hsl(var(--blue))",
         purple: "#6442C1",
+        lightGreen: "#BFD5CD",
+        lightBlack: "hsl(var(--light-black))",
+        neutralGray: "hsl(var(--neutral-gray))",
       },
 
       fontFamily: {
@@ -119,3 +122,6 @@ const config = withTV({
 });
 
 export default config;
+function hsla(arg0: number, arg1: number, arg2: number, arg3: number): any {
+  throw new Error("Function not implemented.");
+}

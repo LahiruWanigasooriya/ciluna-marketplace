@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -41,6 +43,9 @@
     --highlight-chart: 210 98% 78%;
     --accent-chart: 210 98% 78%;
     --blue: 236 72% 59%;
+    --light-green: 158 21% 79%;
+    --light-black: 0, 0%, 15%;
+    --neutral-gray: 0, 0%, 56%;
   }
 
   .dark {
