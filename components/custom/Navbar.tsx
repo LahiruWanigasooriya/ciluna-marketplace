@@ -273,7 +273,7 @@ export default function Navbar({ categories }: any) {
         </div>
       </div>
       <div className="flex flex-col items-center justify-between relative">
-        <div className="flex w-full max-w-[1440px] mx-auto md:px-[38px] xl:px-[96px] md:pb-[8px] p-[16px] md:pt-[20px] xl:pt-[24px] gap-4">
+        <div className="flex w-full max-w-[1440px] mx-auto md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px] md:pb-[8px] p-[16px] md:pt-[20px] xl:pt-[24px] gap-4">
           <div
             className="cursor-pointer"
             onClick={() => handleNavigation("Home", "/")}
@@ -286,7 +286,7 @@ export default function Navbar({ categories }: any) {
           </div>
 
           <div className="flex items-center justify-end w-full">
-            <div className="flex justify-end w-full md:w-fit md:w- lg:w-[60%]">
+            <div className="flex justify-end w-full md: lg:w-[60%]">
               <SearchField
                 aria-label="Search"
                 isNavbarActive={isNavbarActive}
@@ -296,15 +296,15 @@ export default function Navbar({ categories }: any) {
               />
             </div>
 
-            <div className="flex items-center md:space-x-4 lg:space-x-[24px] max-w-[150px] w-fit md:max-w-fit md:w-full">
-              <div className="flex md:min-w-[77px]">
+            <div className="flex items-center md:space-x-4 lg:space-x-[24px] max-w-[150px] w-fit md:max-w-fit md:w-full md:min-w-[297px">
+              <div className="flex md:min-w-fit">
                 <img
                   src={flag.src}
                   alt="Language Flag"
                   className="min-w-[24px] flex h-[24px] cursor-pointer mx-[12px] lg:ml-[24px] md:mr-[8px]"
                 />
                 <p
-                  className={`text-xs lg:text-sm font-inter hidden md:flex font-light cursor-pointer leading-[24px] ${
+                  className={`text-xs lg:text-sm font-inter hidden lg:flex font-light cursor-pointer leading-[24px] ${
                     isNavbarActive ? "text-black" : "text-white"
                   }`}
                 >
