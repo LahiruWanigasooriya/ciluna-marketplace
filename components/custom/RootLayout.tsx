@@ -73,8 +73,8 @@ export default function ConditionalLayout({
     : "flex-1 pt-[124px] md:pt-[130px] lg:pt-[135px] recommend:pt-[100px] pb-[90px] md:pb-[60px] xl:pb-[50px] recommend:pb-[40px]";
 
   return (
-    <>
-      <div className="flex flex-col min-h-screen relative px-[16px] md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px] ">
+    <div>
+      <div className="flex flex-col max-w-[1440px] mx-auto min-h-screen relative px-[16px] md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px] ">
         {isHomePage && (
           <div className="absolute flex md:left-0 right-0 recommend:pl-24 top-16 md:-top-4 xl:-top-6 justify-center items-center">
             <Image src={HeaderBanner} alt="Header Banner" />
@@ -98,6 +98,6 @@ export default function ConditionalLayout({
         {!isHiddenRoute}
       </div>
       <Footer />
-    </>
+    </div>
   );
 }

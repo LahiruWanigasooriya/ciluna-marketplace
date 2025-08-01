@@ -296,7 +296,7 @@ export default function Navbar({ categories }: any) {
               />
             </div>
 
-            <div className="flex items-center md:space-x-4 lg:space-x-[24px] max-w-[150px] w-fit md:max-w-fit md:w-full md:min-w-[297px]">
+            <div className="flex items-center md:space-x-4 lg:space-x-[24px] max-w-[150px] w-fit md:max-w-fit md:w-full">
               <div className="flex md:min-w-[77px]">
                 <img
                   src={flag.src}

@@ -18,7 +18,8 @@ interface Section {
   title: string;
   links: SectionLink[];
 }
-const legal: Section[] = [
+
+const legalLinks: Section[] = [
   {
     title: "Legal",
     links: [
@@ -28,7 +29,7 @@ const legal: Section[] = [
   },
 ];
 
-const sections: Section[] = [
+const ServicesLinks: Section[] = [
   {
     title: "Client Services",
     links: [
@@ -63,19 +64,22 @@ const Footer: FC = () => {
   }, []);
   return (
     <div
-      className="flex flex-col overflow-visible text-white bg-bgBlack font-[Arial] border w-full mx-auto footerBg md:max-h-[785px] h-full max-h-[960px]"
+      className="flex flex-col overflow-visible text-white bg-bgBlack font-[Arial] w-full mx-auto footerBg md:max-h-[785px] h-full max-h-[960px]"
       style={{
         opacity: isMenuOpen ? 0.5 : 1,
       }}
     >
-      <div className="flex flex-col w-full border px-[16px] xl:pt-[84px] md:pt-[32px] md:px-[32px] lg:px-[72px] xl:px-[84px]  pt-[32px] lg:pt-[72px] recommend:pt-[96px] recommend:px-[96px]">
-        <div className="flex flex-col md:flex md:flex-row justify-between border md:gap-[10px] xl:gap-[21px] pb-[24px] gap-[32px]">
+      <div className="flex flex-col w-full max-w-[1440px] mx-auto px-[16px] xl:pt-[84px] md:pt-[32px] md:px-[32px] lg:px-[72px] xl:px-[84px]  pt-[32px] lg:pt-[72px] recommend:pt-[96px] recommend:px-[96px]">
+        <div className="flex flex-col md:flex md:flex-row justify-between md:gap-[10px] xl:gap-[21px] pb-[24px] gap-[32px]">
           <div className="flex flex-col w-full md:flex md:flex-[570] gap-[32px] md:gap-[24px]">
-            <p className="text-[14px] font-[400] leading-[20px] text-left md:max-w-[436px] w-full md:w-[80%]">
-              {`A house of timeless elegance offering refined jewelry, occasion wear, and signature scents. Rooted in craftsmanship and conscious beauty, CILUNA creates pieces that celebrate emotion, memory, and legacy.`}
+            <p className="text-[14px] font-normal leading-[20px] text-left md:max-w-[436px] w-full md:w-[80%] ">
+              A house of timeless elegance offering refined jewelry, occasion
+              wear, and signature scents. Rooted in craftsmanship and conscious
+              beauty, CILUNA creates pieces that celebrate emotion, memory, and
+              legacy.
             </p>
             <div className="flex flex-col  gap-[16px] w-full">
-              <p>Follow Us On</p>
+              <p className="font-bold">Follow Us On</p>
               <div className="flex gap-[16px] ">
                 {socialIcons.map((Icon, index) => (
                   <div
@@ -91,10 +95,10 @@ const Footer: FC = () => {
             </div>
           </div>
           <div className="flex items-start justify-between w-full md:flex md:flex-[277]">
-            {sections.map((section, index) => (
+            {ServicesLinks.map((section, index) => (
               <div key={index} className="flex flex-col gap-[16px] w-full">
-                <p className="text-base font-interSemiBold">{section.title}</p>
-                <div className="flex flex-col space-y-[12px] text-[14px] leading-[20px] font-[400]">
+                <p className="text-base font-bold">{section.title}</p>
+                <div className="flex flex-col space-y-[12px] text-[14px] leading-[20px] font-normal">
                   {section.links.map((link, linkIndex) => (
                     <Link
                       key={linkIndex}
@@ -109,13 +113,11 @@ const Footer: FC = () => {
             ))}
           </div>
           <div className="flex flex-col space-y-[32px]  w-full md:flex md:flex-[358]">
-            <div className="flex items-center gap-8 md:gap-4 w-full">
-              {legal.map((section, index) => (
+            <div className="flex items-center w-full">
+              {legalLinks.map((section, index) => (
                 <div key={index} className="flex flex-col gap-[16px] w-full">
-                  <p className="text-base font-interSemiBold">
-                    {section.title}
-                  </p>
-                  <div className="flex flex-col space-y-[12px] text-[14px] leading-[20px] font-[400]">
+                  <p className="text-base font-bold">{section.title}</p>
+                  <div className="flex flex-col space-y-[12px] text-[14px] leading-[20px] font-normal">
                     {section.links.map((link, linkIndex) => (
                       <Link
                         key={linkIndex}
@@ -153,11 +155,12 @@ const Footer: FC = () => {
         <Image
           src={isMobile ? MobFooterBg : FooterBg}
           alt="Footer Background"
-          className="w-full object-contain min-h-[159px]"
+          className="w-full max-w-[1440px] mx-auto object-contain min-h-[159px]"
         />
       </div>
 
-      <div className="flex flex-col md:flex-row items-center justify-center border md:py-[16px] bg-bgBlack">
+      <div className="line-gradient mx-auto w-full max-w-[1440px]"></div>
+      <div className="flex flex-col md:flex-row items-center justify-center py-[16px] bg-bgBlack">
         <p className="text-[14px] font-[400] text-grayNeutralFg leading-[20px] tracking-normal text-center">
           © 2025 CILUNA™. All Rights Reserved.
         </p>
