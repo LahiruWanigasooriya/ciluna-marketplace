@@ -17,7 +17,7 @@ export default async function RootLayout({
 }>) {
   const categoriesResponse = await getAllCategories({ page: 1, limit: 12 });
   const categories = categoriesResponse?.data?.categories;
-  
+
   return (
     <html lang="en">
       <head>
@@ -27,7 +27,9 @@ export default async function RootLayout({
         className={`max-w-[1440px] mx-auto flex flex-col font-inter bgcolor`}
       >
         <Toast richColors position="top-right" />
-        <ConditionalLayout categories={categories}>{children}</ConditionalLayout>
+        <ConditionalLayout categories={categories}>
+          {children}
+        </ConditionalLayout>
       </body>
     </html>
   );

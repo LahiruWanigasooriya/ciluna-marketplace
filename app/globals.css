@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -42,6 +44,9 @@
     --accent-chart: 210 98% 78%;
     --blue: 236 72% 59%;
     --bg-black: 0 0% 5%;
+    --light-green: 158 21% 79%;
+    --light-black: 0, 0%, 15%;
+    --neutral-gray: 0, 0%, 56%;
     --gray-neutral-fg: 0, 0%, 44%;
   }
 
@@ -154,6 +159,37 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Lora-Bold";
+  src: url("../public/assets/font/lora/Lora-Bold.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KaiseiHarunoUmi";
+  src: url("../public/assets/font/kaisei/KaiseiHarunoUmi-Regular.ttf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KaiseiHarunoUmi-Bold";
+  src: url("../public/assets/font/kaisei/KaiseiHarunoUmi-Bold.ttf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "PlayFairDisplay-ExtraBold";
+  src: url("../public/assets/font/playfair/PlayfairDisplay-ExtraBold.ttf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 .custom-textfield label {
   color: #ffffff;
   font-weight: 400;
@@ -184,6 +220,10 @@
 
 .purchase--btn:hover {
   box-shadow: 0px 0px 0px 3px #000212, 0px 0px 0px 4px #6442c1;
+}
+
+.border-custom {
+  border: 1px solid #e1e1e1;
 }
 
 @property --r2 {
