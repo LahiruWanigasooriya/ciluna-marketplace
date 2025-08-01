@@ -16,7 +16,7 @@ import Product4 from "@/public/assets/product/product4.webp";
 
 import Product5 from "@/public/assets/product/product5.webp";
 import Arrow from "@/public/assets/profile/arrow.svg";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface OverviewProps {
   userData?: FormValues;
@@ -106,7 +106,6 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
       const { scrollLeft, scrollWidth, clientWidth } =
         scrollContainerRef.current;
 
-      // If all cards fit within the screen, disable both buttons
       if (scrollWidth <= clientWidth) {
         setCanScrollLeft(false);
         setCanScrollRight(false);
@@ -131,6 +130,20 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
       setTimeout(updateScrollButtons, 300);
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      updateScrollButtons();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    updateScrollButtons();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // Get profile image with fallback
   const profileImage = userData?.profileImage || User;
@@ -164,7 +177,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           </div>
         </div>
 
-        <div className="font-loraBold flex w-full max-w-[400px] justify-center px-[2px] text-center text-[16px] text-neutral-900 md:max-w-[800px] md:justify-end md:px-0">
+        <div className="font-loraBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[16px] text-neutral-900 md:max-w-[800px] md:justify-end md:px-0">
           {/* Item 1 */}
           <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
             <img
@@ -305,10 +318,10 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         <div
           ref={scrollContainerRef}
           onScroll={updateScrollButtons}
-          className="grid grid-cols-2 sm:flex sm:overflow-x-auto no-scrollbar gap-[16px] pt-3 w-full min-w-0"
+          className="grid grid-cols-2 sm:flex sm:overflow-x-auto no-scrollbar gap-y-[32px] gap-x-[16px] sm:gap-[16px] md:gap-[24px] pt-[12px] w-full min-w-0"
         >
           {mockProducts.map((product) => (
-            <div key={product._id} className="shrink-0">
+            <div key={product._id}>
               <ProductCard product={product} />
             </div>
           ))}

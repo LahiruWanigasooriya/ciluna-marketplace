@@ -65,7 +65,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen  bg-white ">
       {/* Breadcrumb */}
-      <div className="font-kaisei flex cursor-pointer gap-[8px] pt-[20px] pb-[16px] text-[14px] text-neutral-900 md:pb-[36px]">
+      <div className="font-kaisei flex cursor-pointer gap-[8px]  pb-[16px] text-[14px] text-neutral-900 md:pb-[36px]">
         Home <span>&gt; </span>
         <span className="font-kaiseiBold cursor-pointer">Account</span>
       </div>
