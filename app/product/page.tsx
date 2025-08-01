@@ -142,7 +142,6 @@ const ProductPage = async ({
             <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:justify-start">
               {products.map((product: IProduct) => (
                 <ProductCard
-                  pawPrice={pawPrice}
                   key={product._id.toString()}
                   product={product}
                 />

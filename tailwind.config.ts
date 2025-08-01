@@ -63,6 +63,9 @@ const config = withTV({
         },
         blue: "hsl(var(--blue))",
         purple: "#6442C1",
+        lightGreen: "#BFD5CD",
+        lightBlack: "hsl(var(--light-black))",
+        neutralGray: "hsl(var(--neutral-gray))",
       },
 
       fontFamily: {
@@ -95,12 +98,12 @@ const config = withTV({
         large1: "2rem",
       },
       screens: {
-        sm: '640px',
-        md: '768px', 
-        lg: '1024px', 
-        xl: '1280px',
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
         recommend: "1440px",
-        large: "1700px"
+        large: "1700px",
       },
 
       borderRadius: {
@@ -120,3 +123,6 @@ const config = withTV({
 });
 
 export default config;
+function hsla(arg0: number, arg1: number, arg2: number, arg3: number): any {
+  throw new Error("Function not implemented.");
+}

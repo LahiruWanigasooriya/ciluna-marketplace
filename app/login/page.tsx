@@ -13,7 +13,9 @@ import { checkUserAndGenerateToken } from "@/actions/users/user";
 import { useAuthStore } from "@/store/authStore";
 import BGIMG from "@/public/assets/bglogom.webp";
 import { toast } from "sonner";
-import bgpattern from '@/public/assets/login/bgpattern.png'
+import bgpattern from '@/public/assets/login/bgpattern.png';
+import Footer from "@/components/custom/Footer";
+import Navbar from "@/components/custom/Navbar";
 
 const LoginForm = ({
   formData,
@@ -29,6 +31,7 @@ const LoginForm = ({
   isLoading: boolean;
   isSuccess: boolean;
 }) => (
+  
   <div className="w-full max-w-[598px] mx-auto">
   <form
     onSubmit={handleSubmit}
@@ -165,7 +168,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex items-start flex-col justify-between text-black h-screen overflow-hidden">
-
+      <Navbar />
             <div className="hidden sm:block absolute -right-6 top-10 h-[301px] w-[320px] ]">
           <Image 
           src={bgpattern}
@@ -192,7 +195,10 @@ const LoginPage = () => {
 
         </div>
       </div>
+      
     </div>
+    
+    
   );
 };
 
