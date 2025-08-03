@@ -1,11 +1,17 @@
 import CartItems from "./CartItems";
-import { getPawPrice } from "@/lib/pawService";
-import toFixed from "@/functions/pawPrice";
+import Title from "@/components/custom/Title";
+import { X } from "lucide-react";
 
 const CartPage = async () => {
-  const price = await getPawPrice();
-  const pawPrice = toFixed(Number(price));
-  return <CartItems pawPrice={pawPrice} />;
+  return(
+    <div className="flex flex-col bg-white">
+      <div className="flex items-center justify-between pb-6 md:pb-9">
+        <Title title="Shopping Cart" className="font-lora text-2xl leading-[32px]"/>
+        <p className="text-black"><X size={28} strokeWidth={2}/></p>
+      </div>
+      <CartItems/>;
+    </div>
+  ) 
 };
 
 export default CartPage;
