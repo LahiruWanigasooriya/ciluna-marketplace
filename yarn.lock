@@ -333,11 +333,6 @@
   dependencies:
     fast-glob "3.3.1"
 
-"@next/font@^14.2.15":
-  version "14.2.15"
-  resolved "https://registry.yarnpkg.com/@next/font/-/font-14.2.15.tgz#4e6f0d5b14ecc6b6dea7c1b07e42855e5f14823a"
-  integrity sha512-QopYhBmCDDrNDynbi+ZD1hDZXmQXVFo7TmAFp4DQgO/kogz1OLbQ92hPigJbj572eZ3GaaVxNIyYVn3/eAsehg==
-
 "@next/swc-darwin-arm64@15.2.0":
   version "15.2.0"
   resolved "https://registry.yarnpkg.com/@next/swc-darwin-arm64/-/swc-darwin-arm64-15.2.0.tgz#51ebba2162330ee3e8b3412bf31defd94a7b85e7"
@@ -3836,7 +3831,6 @@ path-scurry@^1.11.1:
 "paw-marketplace@file:.":
   version "0.1.0"
   dependencies:
-    "@next/font" "^14.2.15"
     "@stripe/react-stripe-js" "^3.1.1"
     "@stripe/stripe-js" "^5.6.0"
     bcryptjs "^2.4.3"
@@ -3857,7 +3851,7 @@ path-scurry@^1.11.1:
     motion "^12.0.11"
     next "^15.2.0"
     nodemailer "^6.9.16"
-    paw-marketplace "file:../../../Library/Caches/Yarn/v6/npm-paw-marketplace-0.1.0-71291d5e-ae76-4baf-a8ec-3ffa4c4acb81-1741768284172/node_modules/paw-marketplace"
+    paw-marketplace "file:C:/Users/Dell/AppData/Local/Yarn/Cache/v6/npm-paw-marketplace-0.1.0-570d8a03-7535-4316-baa3-0f7a59f5773e-1754278825686/node_modules/paw-marketplace"
     react "^19.0.0"
     react-aria-components "^1.5.0"
     react-dom "^19.0.0"
@@ -3865,8 +3859,10 @@ path-scurry@^1.11.1:
     react-icons "^5.4.0"
     sonner "^1.7.2"
     stripe "^17.6.0"
+    swiper "^11.2.10"
     tailwind-merge "^2.6.0"
     tailwindcss-animate "^1.0.7"
+    uuid "^11.1.0"
     yup "^1.6.1"
     zustand "^5.0.3"
 
@@ -4593,6 +4589,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
+swiper@^11.2.10:
+  version "11.2.10"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-11.2.10.tgz#ed0b17286b56f7fe8d4b46ed61e6e0bd8daaccad"
+  integrity sha512-RMeVUUjTQH+6N3ckimK93oxz6Sn5la4aDlgPzB+rBrG/smPdCTicXyhxa+woIpopz+jewEloiEE3lKo1h9w2YQ==
+
 tailwind-merge@2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/tailwind-merge/-/tailwind-merge-2.5.4.tgz#4bf574e81fa061adeceba099ae4df56edcee78d1"
@@ -4602,6 +4603,11 @@ tailwind-merge@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/tailwind-merge/-/tailwind-merge-2.6.0.tgz#ac5fb7e227910c038d458f396b7400d93a3142d5"
   integrity sha512-P+Vu1qXfzediirmHOC3xKGAYeZtPcV9g76X+xg2FD4tYgR71ewMA35Y3sCz3zhiN/dwefRpJX0yBcgwi1fXNQA==
+
+tailwind-scrollbar-hide@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/tailwind-scrollbar-hide/-/tailwind-scrollbar-hide-4.0.0.tgz#98ea96fe30980621665e3a3842a0aa004da9dd80"
+  integrity sha512-gobtvVcThB2Dxhy0EeYSS1RKQJ5baDFkamkhwBvzvevwX6L4XQfpZ3me9s25Ss1ecFVT5jPYJ50n+7xTBJG9WQ==
 
 tailwind-variants@^0.3.0:
   version "0.3.1"

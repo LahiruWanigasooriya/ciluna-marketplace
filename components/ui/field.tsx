@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
 import type {
   FieldErrorProps,
@@ -9,26 +9,26 @@ import type {
   LabelProps,
   TextFieldProps as TextFieldPrimitiveProps,
   TextProps,
-  ValidationResult
-} from "react-aria-components"
+  ValidationResult,
+} from "react-aria-components";
 import {
   FieldError as FieldErrorPrimitive,
   Group,
   Input as InputPrimitive,
   Label as LabelPrimitive,
-  Text
-} from "react-aria-components"
-import { tv } from "tailwind-variants"
+  Text,
+} from "react-aria-components";
+import { tv } from "tailwind-variants";
 
-import { cn, ctr } from "./primitive"
+import { cn, ctr } from "./primitive";
 
 interface FieldProps {
-  label?: string
-  placeholder?: string
-  description?: string
-  errorMessage?: string | ((validation: ValidationResult) => string)
-  "aria-label"?: TextFieldPrimitiveProps["aria-label"]
-  "aria-labelledby"?: TextFieldPrimitiveProps["aria-labelledby"]
+  label?: string;
+  placeholder?: string;
+  description?: string;
+  errorMessage?: string | ((validation: ValidationResult) => string);
+  "aria-label"?: TextFieldPrimitiveProps["aria-label"];
+  "aria-labelledby"?: TextFieldPrimitiveProps["aria-labelledby"];
 }
 
 const fieldStyles = tv({
@@ -37,35 +37,39 @@ const fieldStyles = tv({
     label: "w-fit cursor-default font-medium text-secondary-fg text-sm",
     fieldError: "text-sm/6 text-danger forced-colors:text-[Mark]",
     input: [
-      "w-full min-w-0 [&::-ms-reveal]:hidden bg-transparent py-2 px-2.5 text-base text-fg placeholder-muted-fg outline-none focus:outline-none lg:text-sm"
-    ]
-  }
-})
+      "w-full min-w-0 [&::-ms-reveal]:hidden bg-transparent py-2 px-2.5 text-base text-fg placeholder-muted-fg outline-none focus:outline-none lg:text-sm",
+    ],
+  },
+});
 
-const { description, label, fieldError, input } = fieldStyles()
+const { description, label, fieldError, input } = fieldStyles();
 
 const Label = ({ className, ...props }: LabelProps) => {
-  return <LabelPrimitive {...props} className={label({ className })} />
-}
+  return <LabelPrimitive {...props} className={label({ className })} />;
+};
 
 interface DescriptionProps extends TextProps {
-  isWarning?: boolean
+  isWarning?: boolean;
 }
 
 const Description = ({ className, ...props }: DescriptionProps) => {
-  const isWarning = props.isWarning ?? false
+  const isWarning = props.isWarning ?? false;
   return (
     <Text
       {...props}
       slot="description"
-      className={description({ className: isWarning ? "text-warning" : className })}
+      className={description({
+        className: isWarning ? "text-warning" : className,
+      })}
     />
-  )
-}
+  );
+};
 
 const FieldError = ({ className, ...props }: FieldErrorProps) => {
-  return <FieldErrorPrimitive {...props} className={ctr(className, fieldError())} />
-}
+  return (
+    <FieldErrorPrimitive {...props} className={ctr(className, fieldError())} />
+  );
+};
 
 const FieldGroup = ({ className, ...props }: GroupProps) => {
   return (
@@ -73,6 +77,7 @@ const FieldGroup = ({ className, ...props }: GroupProps) => {
       {...props}
       className={cn([
         "border border-[#00031B] bg-[#ffffff] transition duration-200 ease-out rounded-lg flex items-center",
+                // "border border-[#00031B] bg-[#00031B] transition duration-200 ease-out rounded-lg flex items-center",
         "focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20",
         "group-invalid:focus-within:border-danger focus-within:ring-4 group-invalid:focus-within:ring-danger/20",
         "[&>[role=progressbar]]:mr-2.5",
@@ -80,16 +85,24 @@ const FieldGroup = ({ className, ...props }: GroupProps) => {
         "[&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg",
         "[&>[data-slot=prefix]]:ml-2.5 [&>[data-slot=prefix]]:text-muted-fg",
         "group-disabled:opacity-50",
-        className
+        className,
       ])}
     />
-  )
-}
+  );
+};
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...props }, ref) => {
-  return <InputPrimitive ref={ref} {...props} className={ctr(className, input())} />
-})
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <InputPrimitive
+        ref={ref}
+        {...props}
+        className={ctr(className, input())}
+      />
+    );
+  }
+);
 
-Input.displayName = "Input"
+Input.displayName = "Input";
 
-export { Description, FieldError, FieldGroup, Input, Label, type FieldProps }
+export { Description, FieldError, FieldGroup, Input, Label, type FieldProps };

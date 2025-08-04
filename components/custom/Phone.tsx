@@ -92,11 +92,11 @@ const Phone: React.FC<TelProps> = ({ value, onChange }) => {
   };
 
   return (
-    <div className="flex flex-col gap-y-2.5 w-full text-white/90">
+    <div className="flex flex-col gap-y-2.5 w-full text-[#252525]">
       <p className="text-sm font-[400] text-black">Phone Number</p>
       <div className="relative w-full" ref={modalRef}>
         <div
-          className="px-2 h-10 border border-[#252525] bg-[#000000] transition duration-200 ease-out rounded-lg flex items-center focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20
+          className="px-2 h-10 border border-[#252525] bg-[#ffffff] transition duration-200 ease-out rounded-lg flex items-center focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20
           group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
           [&>[role=progressbar]]:mr-2.5
           [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
@@ -114,7 +114,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange }) => {
             value={value.replace(selectedCountry.code, "")} // Strip country code for display
             onChange={(e) => handleInputChange(e.target.value)}
             placeholder="Enter phone number"
-            className="ml-2 flex-grow outline-none text-sm bg-transparent placeholder:font-[400] placeholder-muted-fg"
+            className="ml-2 flex-grow outline-none text-sm bg-white placeholder:font-[400] placeholder-muted-fg"
           />
         </div>
         {/* {!isValidPhoneNumber(value) && value.length > 0 && (
@@ -127,7 +127,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange }) => {
               animate="open"
               exit="closed"
               variants={dropdownVariants}
-              className="absolute top-14 left-0 w-full bg-[#00031B] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10 border border-[#00031B]  transition duration-200 ease-out flex flex-col items-start border-primary/70 ring-4 ring-primary/20
+              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10 border border-[#252525]  transition duration-200 ease-out flex flex-col items-start border-primary/70 ring-4 ring-primary/20
             group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
             [&>[role=progressbar]]:mr-2.5
             [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
@@ -139,7 +139,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange }) => {
                 <li
                   key={country.id}
                   className={`flex items-center p-2 font-[400] text-sm cursor-pointer hover:opacity-75 w-full ${
-                    selectedCountry.id === country.id ? "bg-gray-900" : ""
+                    selectedCountry.id === country.id ? "bg-gray-400" : ""
                   }`}
                   onClick={() => handleCountryChange(country.id)}
                 >
