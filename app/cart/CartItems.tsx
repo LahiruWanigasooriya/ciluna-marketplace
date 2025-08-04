@@ -1,39 +1,38 @@
 "use client";
 
 import Image from "next/image";
-import Title from "@/components/custom/Title";
-import { ChevronLeft, Trash2 } from "lucide-react";
-import { FaHeart, FaRegHeart } from "react-icons/fa6";
-import React, { useState, useMemo, useEffect } from "react";
+import {
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  CircleX,
+  Trash2,
+} from "lucide-react";
+import React, { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import QuantitySelector from "@/app/product/[id]/QuantitySelector";
 import { useCartStore } from "@/store/cart";
-import { useWishlistStore } from "@/store/wishlist";
-import { IProduct } from "@/types/product";
-import Rating from "../product/Ratings";
 import { useAuthStore } from "@/store/authStore";
 import { clearCart, getCart, updateCartItem } from "@/actions/carts/cart";
-import { updateWishlist } from "@/actions/wishlists/wishlist";
-import { jwtDecode } from "jwt-decode";
 import { toast } from "sonner";
 import { UpdateCartItemParams } from "@/types/cart";
+import { getDiscountedPrice } from "@/utils/getDiscountPrice";
+import { Checkbox } from "@/components/ui";
+import amex from "@/public/assets/cart/amex.webp";
+import visa from "@/public/assets/cart/visa.webp";
+import mastercard from "@/public/assets/cart/mastercard.webp";
+import applePay from "@/public/assets/cart/applePay.webp";
+import { RemoveOne, RemoveAll } from "./RemoveItems";
 
-interface DecodedToken {
-  userId: string;
-  exp: number;
-}
-
-interface CartItemsProps {
-  pawPrice: number;
-}
+const paymentOptions = [visa, mastercard, amex, applePay];
 
 // Function to calculate totals based on cart items
 const calculateTotals = (items: any[]) => {
   const totalPrice = items.reduce(
     (acc, item) =>
       acc +
-      (item.price + (item.price * (item.discount || 0)) / 100) * item.quantity,
+      getDiscountedPrice(item.priceUSD.original, item.discount) * item.quantity,
     0
   );
   const discount = totalPrice * 0.1; // 10% discount as per your logic
@@ -42,101 +41,20 @@ const calculateTotals = (items: any[]) => {
   return { totalPrice, discount, finalPrice };
 };
 
-const CartItems: React.FC<CartItemsProps> = ({ pawPrice }) => {
-  const { cart, removeFromCart, setCart, updateQuantity } = useCartStore(); // Use cart directly from store
-  const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
+const CartItems = () => {
+  const { cart, removeFromCart, setCart, updateQuantity } = useCartStore();
   const { token } = useAuthStore();
-  const [userId, setUserId] = useState("");
-  const [hiddenItems, setHiddenItems] = useState<string[]>([]);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const charLimit = 95;
-
-  useEffect(() => {
-    const fetchWishlist = async () => {
-      if (token) {
-        try {
-          const decoded: DecodedToken = jwtDecode(token);
-          setUserId(decoded.userId);
-        } catch (error) {
-          console.error("❌ Error fetching wishlist:", error);
-        }
-      }
-    };
-    fetchWishlist();
-  }, [token]); // Depend on token, not cart
-
-  const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const visibleOrderItems = useMemo(
-    () => cart.filter((item) => !hiddenItems.includes(item._id ?? "")),
-    [cart, hiddenItems]
-  );
+  const [deleteCartItems, setDeleteCartItems] = useState<string[]>([]);
+  const [isAllSelected, setIsAllSelected] = useState(false);
+  const [isOpenSummary, setIsOpenSummary] = useState(false);
+  const [removeProduct, setRemoveProduct] = useState<any>();
+  const [removeAll, setIsRemoveAll] = useState(false);
 
   // Recalculate totals whenever visibleOrderItems changes
   const { totalPrice, discount, finalPrice } = useMemo(
-    () => calculateTotals(visibleOrderItems),
-    [visibleOrderItems]
+    () => calculateTotals(cart),
+    [cart]
   );
-
-  // const toggleWishlist = async (product: any) => {
-  //   const productId =
-  //     typeof product.productId === "object"
-  //       ? product.productId._id
-  //       : product.productId;
-
-  //   if (!productId) return;
-
-  //   const isProductInWishlist = wishlist.some((item) => item._id === productId);
-
-  //   if (isProductInWishlist) {
-  //     if (token) {
-  //       await updateWishlist({ userId, productIds: [productId] });
-  //     }
-  //     removeFromWishlist(productId);
-  //     toast.error(
-  //       `${
-  //         typeof product.productId === "object"
-  //           ? product.productId.name
-  //           : product.name
-  //       } Removed from wishlist!`
-  //     );
-  //   } else {
-  //     if (token) {
-  //       try {
-  //         await updateWishlist({ userId, productIds: [productId] });
-  //         toast.success(
-  //           `${
-  //             typeof product.productId === "object"
-  //               ? product.productId.name
-  //               : product.name
-  //           } Added to wishlist!`
-  //         );
-  //       } catch (error) {
-  //         console.log(error, "wish add error");
-  //       }
-  //     } else {
-  //       addToWishlist(product.product);
-  //       toast.success(
-  //         `${
-  //           typeof product.productId === "object"
-  //             ? product.productId.name
-  //             : product.name
-  //         } Added to wishlist!`
-  //       );
-  //     }
-  //   }
-  // };
-
-  const toggleCartItemVisibility = (productId: string) => {
-    setHiddenItems((prev) =>
-      prev.includes(productId)
-        ? prev.filter((id) => id !== productId)
-        : [...prev, productId]
-    );
-  };
-
 
   const handleQuantityUpdate = async (product: any, newQuantity: number) => {
     const updateParams: UpdateCartItemParams = {
@@ -160,339 +78,491 @@ const CartItems: React.FC<CartItemsProps> = ({ pawPrice }) => {
     }
   };
 
+  const handleDeleteItems = () => {
+    let i = 0;
+    while (i <= deleteCartItems.length) {
+      removeFromCart(deleteCartItems[i]);
+      i++;
+    }
+
+    setDeleteCartItems([]);
+    setIsRemoveAll(false);
+  };
+
+  const handleItemDelete = (product: any) => {
+    if (token) {
+      removeFromCart(product._id);
+      clearCart();
+    } else {
+      removeFromCart(product._id);
+      setDeleteCartItems(
+        deleteCartItems.filter((item) => item !== product._id)
+      );
+    }
+
+    setRemoveProduct(null);
+    toast.error(
+      `${
+        typeof product.productId === "object"
+          ? product.productId.name
+          : product.name
+      } Removed from cart!`
+    );
+  };
+
   return (
     <div className="flex flex-col gap-6 md:gap-8 xl:gap-12 text-white">
       {cart.length > 0 ? (
         <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-1 xl:grid-cols-3 w-full pr-4">
-            <div className="col-span-2">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <Link href="/">
-                    <ChevronLeft />
-                  </Link>
-                  <Title title="Cart" />
+          <div className="flex flex-col lg:flex-row gap-y-4 lg:gap-x-6">
+            <div className="relative h-fit overflow-x-hidden w-full bg-[#F5F5F5] recommend:min-w-[823px] p-4 md:p-6 rounded-[6px]">
+              <div className="pb-4 flex items-center justify-between font-lora gap-2">
+                <div className="flex gap-2">
+                  <Checkbox
+                    isSelected={isAllSelected}
+                    onChange={(isSelected: boolean) => {
+                      if (isSelected) {
+                        setIsAllSelected(true);
+                        setDeleteCartItems([...cart.map((item) => item._id)]);
+                      } else {
+                        setIsAllSelected(false);
+                        setDeleteCartItems([]);
+                      }
+                    }}
+                  />
+                  <h2 className="text-[1.125rem] text-[#1E1E1E] font-bold">
+                    Product ({deleteCartItems.length})
+                  </h2>
                 </div>
-                <div className="text-2xl font-[700]">
-                  {visibleOrderItems.length < 10
-                    ? `0${visibleOrderItems.length}`
-                    : visibleOrderItems.length}
-                  /
-                  <span className="text-base">
-                    {cart.length < 10 ? `0${cart.length}` : cart.length}
-                  </span>
+                <div
+                  onClick={() => {
+                    if (deleteCartItems.length !== 0) {
+                      setIsRemoveAll(true);
+                    } else {
+                      toast.error("No items selected");
+                    }
+                  }}
+                  className="hover:cursor-pointer group flex items-center gap-2 h-6"
+                >
+                  <div className="w-6 h-6 flex items-center justify-center group-hover:opacity-50">
+                    <Trash2 color="#A70000" size={24} />
+                  </div>
+                  <p className="text-[0.875rem] text-[#A70000] underline font-bold group-hover:opacity-70">
+                    Delete Items
+                  </p>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-4 xl:gap-x-2">
-            <div className="col-span-2 pr-2 scrollbar-custom lg:max-h-[434px] overflow-y-auto overflow-x-hidden">
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col">
                 {cart.map((product, index) => {
-                  const isFavorited = wishlist.some((item) =>
-                    typeof product.productId === "object"
-                      ? item?._id === product.productId._id
-                      : item?._id === product.productId
-                  );
-
                   // Calculate discounted price for this product
                   const discountedPrice =
                     product.price -
                     (product.price * (product.discount || 0)) / 100;
-                  const totalItemPrice = discountedPrice * product.quantity;
+
+                  const isSelected =
+                    deleteCartItems.find((item) => item === product._id) !==
+                    undefined;
 
                   return (
                     <React.Fragment key={product._id}>
-                      <div className="grid grid-cols-1 md:grid-cols-4 items-start gap-y-4 md:gap-x-8 p-2 justify-between border-[#6B709499] rounded-[0.888rem] bg-[#FFFFFF0D]/5 border-t-2 border-l-2 relative transition-all duration-300 ease-in-out hover:border-blue">
-                        <div
-                          className="absolute top-4 left-4 flex items-center justify-center rounded-full h-4 w-4 cursor-pointer hover:opacity-75 border border-solid border-blue"
-                          onClick={() =>
-                            product._id && toggleCartItemVisibility(product._id)
-                          }
-                        >
-                          <div
-                            className={`rounded-full w-3 h-3 ${
-                              hiddenItems.includes(product._id)
-                                ? "bg-transparent"
-                                : "bg-[#ED0006]"
-                            }`}
-                          />
-                        </div>
+                      <div className="flex flex-col md:flex-row items-start md:items-center gap-y-6 md:gap-x-8 py-4 justify-between bg-[#FFFFFF0D]/5 border-t-[1px] border-[#E8E8DA] relative transition-all duration-300 ease-in-out">
+                        <div className="flex flex-col md:flex-row gap-[14px] md:gap-[10px]">
+                          <div className="text-black">
+                            <Checkbox
+                              isSelected={isAllSelected || isSelected}
+                              onChange={(isSelected: boolean) => {
+                                if (isSelected) {
+                                  setDeleteCartItems([
+                                    ...deleteCartItems,
+                                    product._id,
+                                  ]);
+                                  if (
+                                    deleteCartItems.length ===
+                                    cart.length - 1
+                                  ) {
+                                    setIsAllSelected(true);
+                                  }
+                                } else {
+                                  setDeleteCartItems(
+                                    deleteCartItems.filter(
+                                      (item) => item !== product._id
+                                    )
+                                  );
+                                  setIsAllSelected(false);
+                                }
+                              }}
+                            />
+                          </div>
 
-                        <Link
-                          href={`/product/${
-                            typeof product.productId === "object"
-                              ? product.productId._id
-                              : product.productId
-                          }`}
-                          className="w-full h-[190px]  recommend:h-[189px] col-span-1 relative"
-                        >
-                          <Image
-                            alt={
-                              typeof product.productId === "object"
-                                ? product.productId.name
-                                : product.name
-                            } 
-                            src={
-                              typeof product.productId === "object"
-                                ? product.productId.image
-                                : product.image
-                            }
-                            fill
-                            className="rounded-[14px] lg:rounded-[15px] object-cover"
-                            sizes="(max-width: 768px) full, 177px" 
-                            placeholder="blur"
-                            blurDataURL="/placeholder-image.jpg"
-                          />
-                        </Link>
-                        <div className="col-span-3">
-                          <div className="grid grid-cols-1 md:grid-cols-7">
-                            <div className="col-span-6">
-                              <div className="flex flex-col gap-4">
-                                <div className="flex items-center justify-between">
-                                  <Link href={`/product/${product._id}`}>
-                                    <p className="font-interSemiBold text-base md:text-lg leading-[30px]">
-                                      {typeof product.productId === "object"
-                                        ? product.productId.name
-                                        : product.name}
-                                    </p>
-                                  </Link>
-                                </div>
+                          <div className="flex gap-5">
+                            <Link
+                              href={`/product/${
+                                typeof product.productId === "object"
+                                  ? product.productId._id
+                                  : product.productId
+                              }`}
+                              className="w-[100px] h-[100px] relative bg-white rounded-[8px]"
+                            >
+                              <Image
+                                alt={
+                                  typeof product.productId === "object"
+                                    ? product.productId.name
+                                    : product.name
+                                }
+                                src={
+                                  typeof product.productId === "object"
+                                    ? product.productId.image
+                                    : product.image
+                                }
+                                fill
+                                className="rounded-[14px] lg:rounded-[15px] object-cover"
+                                sizes="(max-width: 768px) full, 177px"
+                                placeholder="blur"
+                                blurDataURL="/placeholder-image.jpg"
+                              />
+                            </Link>
 
-                                <p className="text-sm md:text-xs xl:text-sm leading-[20px] font-[100]">
-                                  {typeof product.productId === "object"
-                                    ? isExpanded
-                                      ? product.productId.description
-                                      : product?.productId?.description?.slice(
-                                          0,
-                                          charLimit
-                                        )
-                                    : isExpanded
-                                    ? product.description
-                                    : product?.description?.slice(0, charLimit)}
-
-                                  {(product?.description?.length > charLimit ||
-                                    product?.productId?.description?.length >
-                                      charLimit) &&
-                                    !isExpanded &&
-                                    " ..."}
-
-                                  {(product?.description?.length > charLimit ||
-                                    product?.productId?.description?.length >
-                                      charLimit) && (
-                                    <span
-                                      onClick={toggleExpand}
-                                      className="font-medium hover:underline ml-1 font-interSemiBold cursor-pointer"
-                                    >
-                                      {isExpanded ? "Show Less" : "Show More"}
-                                    </span>
-                                  )}
-                                </p>
-                                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-0">
-                                  <div className="flex justify-center gap-4">
-                                    <p className="text-base lg:text-lg font-interSemiBold text-blue leading-[18px] lg:leading-[20px]">
-                                      {pawPrice !== null &&
-                                        Math.floor(
-                                          product.price / pawPrice / 1000
-                                        ).toLocaleString()}
-                                       PAW
-                                    </p>
-                                    <p className="text-base lg:text-lg font-interSemiBold text-white leading-[18px] lg:leading-[20px]">
-                                      ${product.price.toFixed(2)}
-                                    </p>
-                                  </div>
-                                  <div className="flex items-center gap-4">
-                                    <Rating rating={product?.rating || 0} />
-                                    <p className="font-[400] text-sm">
-                                      {product?.sold} Sold
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="flex flex-col gap-3">
-                                  <span className="text-sm font-interSemiBold leading-[20px] md:hidden block">
-                                    Availability:{" "}
-                                    <span className="text-[#2DB224]">
-                                      {product?.isActive
-                                        ? "In Stock"
-                                        : "Sold out"}
-                                    </span>
-                                  </span>
-
-                                  <div className="flex items-center md:items-end justify-between pt-2 md:p-0">
-                                    <QuantitySelector
-                                      productId={product._id}
-                                      initialQuantity={product.quantity}
-                                      countShow={false}
-                                      isCartContext={true}
-                                      onQuantityChange={(newQuantity) =>
-                                        handleQuantityUpdate(
-                                          product,
-                                          newQuantity
-                                        )
-                                      }
-                                    />
-
-                                    <div className="flex items-center gap-4 md:hidden">
-                                      {isFavorited ? (
-                                        <FaHeart className="text-[#ED0006] w-4 h-4" />
-                                      ) : (
-                                        <FaRegHeart className="text-[#ED0006] w-4 h-4" />
-                                      )}
-                                      <Trash2
-                                        className="cursor-pointer h-4 w-4"
-                                        onClick={() => {
-                                          if (token) {
-                                            clearCart(token);
-                                          } else {
-                                            removeFromCart(product._id);
-                                          }
-                                          toast.error(
-                                            `${
-                                              typeof product.productId ===
-                                              "object"
-                                                ? product.productId.name
-                                                : product.name
-                                            } Removed from cart!`
-                                          );
-                                        }}
-                                      />
+                            <div className="col-span-2 font-lora">
+                              <div className="grid grid-cols-1 md:grid-cols-7">
+                                <div className="col-span-6">
+                                  <div className="flex flex-col gap-1">
+                                    <div className="flex items-center justify-between">
+                                      <Link href={`/product/${product._id}`}>
+                                        <p className="font-bold text-base leading-[24px] text-[#1E1E1E]">
+                                          {typeof product.productId === "object"
+                                            ? product.productId.name
+                                            : product.name}
+                                        </p>
+                                      </Link>
                                     </div>
 
-                                    <span className="text-sm font-[600] hidden md:block">
-                                      Availability: 
-                                      <span className="text-[#2DB224]">
-                                        In Stock
-                                      </span>
-                                    </span>
+                                    <div className="flex text-gray">
+                                      <h2>Blue | XL</h2>
+                                      <ChevronRight />
+                                    </div>
+
+                                    <div className="flex flex-col items-start justify-between">
+                                      <div className="flex justify-center items-center gap-4">
+                                        <p className="text-[0.75rem] lg:text-[0.75rem] text-[#909090] line-through leading-[18px] lg:leading-[20px]">
+                                          {product.price.toFixed(2)}LKR
+                                        </p>
+                                        <p className="text-base text-[#252525] font-bold leading-[24px]">
+                                          {getDiscountedPrice(
+                                            product.price,
+                                            product.discount
+                                          ).toFixed(2)}
+                                          LKR
+                                        </p>
+                                      </div>
+                                      <div className="flex justify-center items-center gap-4">
+                                        <p className="text-[0.75rem] text-[#909090] line-through leading-[18px] lg:leading-[20px]">
+                                          {product.priceUSD.original}USD
+                                        </p>
+                                        <p className="text-base text-[#252525] font-bold leading-[24px]">
+                                          {product.priceUSD.discounted}
+                                          USD
+                                        </p>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                            <div className="col-span-1">
-                              <div className="hidden md:flex items-center justify-end gap-4">
-                                {isFavorited ? (
-                                  <FaHeart className="text-[#ED0006] w-4 h-4" />
-                                ) : (
-                                  <FaRegHeart className="text-[#ED0006] w-4 h-4" />
-                                )}
-                                <Trash2
-                                  className="cursor-pointer h-4 w-4"
-                                  onClick={() => {
-                                    if (token) {
-                                      removeFromCart(product._id);
-                                      clearCart();
-                                    } else {
-                                      removeFromCart(product._id);
-                                    }
-                                    toast.error(
-                                      `${
-                                        typeof product.productId === "object"
-                                          ? product.productId.name
-                                          : product.name
-                                      } Removed from cart!`
-                                    );
-                                  }}
-                                />
                               </div>
                             </div>
                           </div>
                         </div>
+
+                        <div className="flex flex-col gap-3">
+                          <div className="flex items-center justify-between gap-8 md:p-0">
+                            <QuantitySelector
+                              productId={product._id}
+                              initialQuantity={product.quantity}
+                              countShow={false}
+                              isCartContext={true}
+                              onQuantityChange={(newQuantity) =>
+                                handleQuantityUpdate(product, newQuantity)
+                              }
+                            />
+
+                            <div className="hidden md:flex items-center justify-end gap-4">
+                              <CircleX
+                                color="black"
+                                strokeWidth={1}
+                                className="cursor-pointer h-6 w-6 hover:opacity-70"
+                                onClick={() => setRemoveProduct(product)}
+                              />
+                            </div>
+
+                            <div className="flex items-center gap-4 md:hidden">
+                              <CircleX
+                                color="black"
+                                className="cursor-pointer h-6 w-6"
+                                onClick={() => setRemoveProduct(product)}
+                              />
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      {index < cart.length - 1 && (
-                        <hr className="border-t border-[#4A55E2]" />
-                      )}
                     </React.Fragment>
                   );
                 })}
               </div>
+              {removeProduct && (
+                <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
+                  <RemoveOne
+                    removeOne={handleItemDelete}
+                    setIsRemoveProduct={setRemoveProduct}
+                    product={removeProduct}
+                  />
+                </div>
+              )}
+              {removeAll && (
+                <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
+                  <RemoveAll
+                    removeAll={handleDeleteItems}
+                    setIsRemoveAll={setIsRemoveAll}
+                    product={removeProduct}
+                  />
+                </div>
+              )}
             </div>
 
-            <div className="flex flex-col py-8 xl:py-4 px-6 border-[#6B709499] rounded-[0.888rem] justify-between bg-[#FFFFFF0D]/5 border-t-2 border-l-2 gap-4 w-full">
-              {visibleOrderItems.length > 0 ? (
-                <>
-                  <div className="flex flex-col gap-4">
-                    <p className="text-lg md:text-xl font-interSemiBold leading-[32px] md:leading-[43px]">
-                      Order Summary
-                    </p>
-                    <div className="flex flex-col gap-3">
-                      <div className="flex items-center justify-between">
-                        <p className="font-[400] text-sm leading-[24px] md:leading-[32px]">
-                          Price
+            <div className="flex flex-col w-full lg:max-w-[400px] gap-3">
+              <div className="hidden lg:flex flex-col p-6 rounded-[6px] justify-between bg-[#F5F5F5] gap-4">
+                {cart.length > 0 ? (
+                  <>
+                    <div className="flex flex-col text-gray">
+                      <div className="flex flex-col gap-6">
+                        <p className="text-lg md:text-xl font-lora font-bold leading-[px] md:leading-[24px]">
+                          Summary
                         </p>
-                        <div className="flex flex-col items-end">
-                          <p className="font-[400] text-sm leading-[24px] md:leading-[32px]">
-                            {pawPrice !== null &&
-                              Math.floor(
-                                totalPrice / pawPrice / 1000
-                              ).toLocaleString()}
-                             PAW
-                          </p>
-                          <p className="font-[400] text-xxs">
-                            ${totalPrice.toFixed(2)}
-                          </p>
+                        <div className="flex gap-2">
+                          {cart.map((product, index) => {
+                            return (
+                              <div className="w-[60px] h-[60px] relative bg-white rounded-[8px]">
+                                <Image
+                                  alt={
+                                    typeof product.productId === "object"
+                                      ? product.productId.name
+                                      : product.name
+                                  }
+                                  src={
+                                    typeof product.productId === "object"
+                                      ? product.productId.image
+                                      : product.image
+                                  }
+                                  fill
+                                  className="object-cover"
+                                  placeholder="blur"
+                                  blurDataURL="/placeholder-image.jpg"
+                                />
+                              </div>
+                            );
+                          })}
                         </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <p className="font-[400] text-sm leading-[24px] md:leading-[32px]">
-                          Discount
-                        </p>
-                        <div className="flex flex-col items-end">
-                          <p className="font-[400] text-sm leading-[24px] md:leading-[32px]">
-                            -
-                            {pawPrice !== null &&
-                              Math.floor(
-                                discount / pawPrice / 1000
-                              ).toLocaleString()}
-                             PAW
-                          </p>
-                          <p className="font-[400] text-xxs">
-                            ${discount.toFixed(2)}
-                          </p>
-                        </div>
-                      </div>
-                      <hr className="border-t border-[#4A55E2]" />
-                      <div className="flex flex-col gap-4">
-                        <div className="flex items-center justify-between">
-                          <p className="font-[400] text-sm leading-[24px] md:leading-[32px]">
-                            Shipping Fee
-                          </p>
-                          <div className="flex flex-col items-end">
-                            <p className="font-[400] text-sm leading-[24px] md:leading-[32px]">
-                              0 PAW
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center justify-between h-6 font-lora">
+                            <p className="font-[400] leading-[24px] md:leading-[32px]">
+                              Total Bill
                             </p>
-                            <p className="font-[400] text-xxs">($0.00)</p>
+                            <div className="flex flex-col items-end">
+                              <p className="font-[400]">
+                                ${totalPrice.toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between h-6 font-lora">
+                            <p className="font-[400] leading-[24px] md:leading-[32px]">
+                              Discount
+                            </p>
+                            <div className="flex flex-col items-end">
+                              <p className="font-[400]">
+                                - ${discount.toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between h-6 font-lora">
+                            <p className="font-[400] leading-[24px] md:leading-[32px]">
+                              Shipping
+                            </p>
+                            <div className="flex flex-col items-end">
+                              <p className="font-[400]">($0.00)</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between h-8 font-lora">
+                            <p className="leading-[24px] md:leading-[32px] font-bold">
+                              Estimated Total
+                            </p>
+                            <div className="flex flex-col items-end">
+                              <p className="font-bold text-[1.75rem]">
+                                ${finalPrice.toFixed(2)}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex items-center justify-between">
-                          <p className="font-[400] text-sm leading-[24px] md:leading-[32px]">
-                            Total
+                        <hr className="border-t border-[#E8E8DA]" />{" "}
+                        <Link href="/checkout" className="w-full">
+                          <Button
+                            className="w-full bg-gray text-white text-lg font-lora"
+                            size="extra-large"
+                          >
+                            Checkout
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-gray-400 text-center flex justify-center items-center">
+                    No items selected.
+                  </p>
+                )}
+              </div>
+
+              <div className="flex flex-col p-6 gap-4 text-gray font-lora bg-[#F5F5F5] rounded-[6px]">
+                <h2 className="text-xl leading-6 font-bold">Pay With</h2>
+                <div className="flex gap-2 pb-2">
+                  {paymentOptions.map((option) => (
+                    <div className="w-[40px] h-[24px] relative bg-[#F5F5F5] rounded-[8px]">
+                      <Image
+                        alt="option"
+                        src={option.src}
+                        fill
+                        className="object-cover"
+                        placeholder="blur"
+                        blurDataURL="/placeholder-image.jpg"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <hr className="border-t border-[#E8E8DA]" />{" "}
+                <h2 className="text-xl leading-6 font-bold">
+                  Buyer protection
+                </h2>
+                <p>
+                  Get a full refund if the item is not as described or not
+                  deliverd
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="z-10 flex lg:hidden fixed w-full left-0 bottom-0 flex-col p-4 border-[#E1E1E1] rounded-tl-[8px] rounded-tr-[8px] justify-between bg-white border gap-4">
+            {cart.length > 0 ? (
+              <>
+                <div className="flex flex-col text-gray relative">
+                  <div className="flex flex-col gap-6">
+                    <div
+                      className="absolute top-0 w-full flex justify-end"
+                      onClick={() => setIsOpenSummary(!isOpenSummary)}
+                    >
+                      {isOpenSummary ? (
+                        <ChevronDown />
+                      ) : (
+                        <ChevronUp className="mt-2" />
+                      )}
+                    </div>
+                    <div>
+                      {isOpenSummary ? (
+                        <p className="text-lg md:text-xl font-lora font-bold leading-[32px] md:leading-[24px]">
+                          Summary
+                        </p>
+                      ) : (
+                        <div className="flex justify-between items-center">
+                          <p className="font-lora font-bold leading-[32px] md:leading-[24px]">
+                            Estimated Total
                           </p>
                           <div className="flex flex-col items-end">
-                            <p className="font-[400] text-sm leading-[24px] md:leading-[32px]">
-                              {pawPrice !== null &&
-                                Math.floor(
-                                  finalPrice / pawPrice / 1000
-                                ).toLocaleString()}
-                               PAW
-                            </p>
-                            <p className="font-[400] text-xxs">
+                            <p className="font-bold text-[1.75rem] mr-8 font-lora">
                               ${finalPrice.toFixed(2)}
                             </p>
                           </div>
                         </div>
-                      </div>
+                      )}
                     </div>
+                    {isOpenSummary && (
+                      <div className="flex flex-col gap-6">
+                        <div className="flex gap-2">
+                          {cart.map((product, index) => {
+                            return (
+                              <div className="w-[60px] h-[60px] relative bg-[#F5F5F5] rounded-[8px]">
+                                <Image
+                                  alt={
+                                    typeof product.productId === "object"
+                                      ? product.productId.name
+                                      : product.name
+                                  }
+                                  src={
+                                    typeof product.productId === "object"
+                                      ? product.productId.image
+                                      : product.image
+                                  }
+                                  fill
+                                  className="object-cover"
+                                  placeholder="blur"
+                                  blurDataURL="/placeholder-image.jpg"
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div className="flex flex-col gap-4">
+                          <div className="flex items-center justify-between h-6 font-lora">
+                            <p className="font-[400] leading-[24px] md:leading-[32px]">
+                              Total Bill
+                            </p>
+                            <div className="flex flex-col items-end">
+                              <p className="font-[400]">
+                                ${totalPrice.toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between h-6 font-lora">
+                            <p className="font-[400] leading-[24px] md:leading-[32px]">
+                              Discount
+                            </p>
+                            <div className="flex flex-col items-end">
+                              <p className="font-[400]">
+                                - ${discount.toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between h-6 font-lora">
+                            <p className="font-[400] leading-[24px] md:leading-[32px]">
+                              Shipping
+                            </p>
+                            <div className="flex flex-col items-end">
+                              <p className="font-[400]">($0.00)</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between h-8 font-lora">
+                            <p className="leading-[24px] md:leading-[32px] font-bold">
+                              Estimated Total
+                            </p>
+                            <div className="flex flex-col items-end">
+                              <p className="font-bold text-[1.75rem]">
+                                ${finalPrice.toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <hr className="border-t border-[#E8E8DA]" />{" "}
+                    <Link href="/checkout" className="w-full">
+                      <Button
+                        className="w-full bg-gray text-white text-lg font-lora"
+                        size="extra-large"
+                      >
+                        Checkout
+                      </Button>
+                    </Link>
                   </div>
-                  <Link href="/checkout" className="w-full">
-                    <Button className="w-full bg-purple">Checkout</Button>
-                  </Link>
-                </>
-              ) : (
-                <p className="text-gray-400 text-center flex justify-center items-center">
-                  No items selected.
-                </p>
-              )}
-            </div>
+                </div>
+              </>
+            ) : (
+              <p className="text-gray-400 text-center flex justify-center items-center">
+                No items selected.
+              </p>
+            )}
           </div>
         </div>
       ) : (
