@@ -254,7 +254,7 @@
 
 .custom-container {
   width: 100%;
-  max-width: 1248px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 .custom-container {
@@ -262,34 +262,29 @@
 }
 
 @media (min-width: 640px) {
-  /* sm */
   .custom-container {
     padding: 0px;
   }
 }
 
 @media (min-width: 768px) {
-  /* md */
   .custom-container {
     padding: 32px;
   }
 }
 
 @media (min-width: 1024px) {
-  /* lg */
   .custom-container {
-    padding: 72px;
+    padding: 68px;
   }
 }
 
 @media (min-width: 1280px) {
-  /* xl */
   .custom-container {
     padding: 84px;
   }
 }
 @media (min-width: 1440px) {
-  /* xl */
   .custom-container {
     padding: 96px;
   }

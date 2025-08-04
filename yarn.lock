@@ -333,11 +333,6 @@
   dependencies:
     fast-glob "3.3.1"
 
-"@next/font@^14.2.15":
-  version "14.2.15"
-  resolved "https://registry.yarnpkg.com/@next/font/-/font-14.2.15.tgz#4e6f0d5b14ecc6b6dea7c1b07e42855e5f14823a"
-  integrity sha512-QopYhBmCDDrNDynbi+ZD1hDZXmQXVFo7TmAFp4DQgO/kogz1OLbQ92hPigJbj572eZ3GaaVxNIyYVn3/eAsehg==
-
 "@next/swc-darwin-arm64@15.2.0":
   version "15.2.0"
   resolved "https://registry.yarnpkg.com/@next/swc-darwin-arm64/-/swc-darwin-arm64-15.2.0.tgz#51ebba2162330ee3e8b3412bf31defd94a7b85e7"
@@ -3836,7 +3831,6 @@ path-scurry@^1.11.1:
 "paw-marketplace@file:.":
   version "0.1.0"
   dependencies:
-    "@next/font" "^14.2.15"
     "@stripe/react-stripe-js" "^3.1.1"
     "@stripe/stripe-js" "^5.6.0"
     bcryptjs "^2.4.3"
@@ -3857,7 +3851,7 @@ path-scurry@^1.11.1:
     motion "^12.0.11"
     next "^15.2.0"
     nodemailer "^6.9.16"
-    paw-marketplace "file:../../../../Users/lahir/AppData/Local/Yarn/Cache/v6/npm-paw-marketplace-0.1.0-91fcf784-bcd2-480f-9bb9-e19baff91a96-1753782918971/node_modules/paw-marketplace"
+    paw-marketplace "file:C:/Users/Govindu/AppData/Local/Yarn/Cache/v6/npm-paw-marketplace-0.1.0-a463f607-c425-4ec6-8c80-185a4e19615a-1754299877464/node_modules/paw-marketplace"
     react "^19.0.0"
     react-aria-components "^1.5.0"
     react-dom "^19.0.0"
@@ -3865,6 +3859,7 @@ path-scurry@^1.11.1:
     react-icons "^5.4.0"
     sonner "^1.7.2"
     stripe "^17.6.0"
+    swiper "^11.2.10"
     tailwind-merge "^2.6.0"
     tailwindcss-animate "^1.0.7"
     uuid "^11.1.0"

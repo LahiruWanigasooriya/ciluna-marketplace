@@ -3,8 +3,8 @@ import ImageSlider from "./ImageSlider";
 
 const Page = async () => {
   return (
-    <div className="flex flex-col relative gap-12 recommend:gap-[76px] bg-red-200">
-      <div className="flex flex-col w-full text-white">
+    <div className="flex flex-col relative gap-[24px] recommend:gap-[76px] w-full h-full">
+      <div className="flex flex-col w-full h-full">
         <ImageSlider />
       </div>
 
