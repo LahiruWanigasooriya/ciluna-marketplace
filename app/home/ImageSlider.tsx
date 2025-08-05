@@ -5,7 +5,6 @@ import Frock from "@/public/assets/home/Frame 37.svg";
 import MobFrock from "@/public/assets/home/MobFrock.webp";
 import MobScent from "@/public/assets/home/MobScent.webp";
 import MobHairloom from "@/public/assets/home/MobHairloom.webp";
-import BlurImg from "@/public/assets/home/BlurImg.webp";
 
 import Hairloom from "@/public/assets/home/Hairloom.svg";
 import Scent from "@/public/assets/home/Scent.svg";
@@ -30,7 +29,7 @@ interface HeroItem {
 
 export default function Hero() {
   const [currentHero, setCurrentHero] = useState<number>(0);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 767px)");
   const heroes: HeroItem[] = [
     {
       image: FashionableFrock,
@@ -63,27 +62,18 @@ export default function Hero() {
 
   const handleThumbnailClick = (index: number) => {
     setCurrentHero(index);
-    setCurrentHero((prev) => prev % heroes.length);
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHero((prev) => (prev + 1) % heroes.length);
-    }, 50000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [heroes.length]);
 
   return (
     <div className="relative w-full h-[372px] md:h-screen overflow-hidden flex justify-center mt-[40px] md:mt-0">
       <div className="relative w-full h-full">
-        <Image
-          src={BlurImg}
-          alt="Background Blur"
-          fill
-          className="bottom-0 absolute border-4 border-white w-full h-full opacity-50"
-          priority
-        />
-
         {heroes.map((hero, index) => {
           const imgSrc = isMobile ? hero.mobImg : hero.image;
           return (
@@ -100,6 +90,17 @@ export default function Hero() {
             />
           );
         })}
+      </div>
+
+      <div className="absolute hidden md:flex flex-col gap-[8px] w-full text-white text-left top-0 z-9 h-full md:top-1/4 lg:top-[12%] items-start px-[16px] custom-container">
+        <p className="font-kaisei text-[28px] leading-[32px] tracking-normal md:text-[34px] md:leading-[38px] lg:text-[48px] lg:leading-[48px] xl:text-[58px] recommend:text-[68px] recommend:leading-[60px]">
+          Where Grace Becomes Legacy
+        </p>
+        <p className="font-[Arial] font-normal text-[16px] text-left leading-[24px] tracking-normal lg:text-[16px] lg:leading-[24px]">
+          Luxury heirlooms rooted in Sri Lanka’s royal past, crafted for today’s
+          <br />
+          soulful elegance.
+        </p>
       </div>
 
       <div className="absolute flex justify-between w-full z-10 bottom-0 md:pb-[16px] xl:pb-[32px] md:pt-0 custom-container items-center md:backdrop-blur-sm">
