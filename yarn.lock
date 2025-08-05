@@ -3851,6 +3851,12 @@ path-scurry@^1.11.1:
     motion "^12.0.11"
     next "^15.2.0"
     nodemailer "^6.9.16"
+
+
+
+    paw-marketplace "file:C:/Users/Dell/AppData/Local/Yarn/Cache/v6/npm-paw-marketplace-0.1.0-570d8a03-7535-4316-baa3-0f7a59f5773e-1754278825686/node_modules/paw-marketplace"
+
+
     react "^19.0.0"
     react-aria-components "^1.5.0"
     react-dom "^19.0.0"
