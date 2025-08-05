@@ -178,11 +178,6 @@ export default function ProfilePage() {
           )}
         </main>
       </div>
-      {/* Google Material Icons CDN */}
-      <link
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet"
-      />
     </div>
   );
 }

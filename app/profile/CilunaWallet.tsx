@@ -1,5 +1,6 @@
 import Gold from "@/public/assets/profile/gold.png";
 import Goldmb from "@/public/assets/profile/goldmb.png";
+import { CirclePlus } from "lucide-react";
 
 const CilunaWallet = () => {
   return (
@@ -47,7 +48,7 @@ const CilunaWallet = () => {
           </div>
 
           <button className="font-kaiseiBold mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#252525] py-[16px] text-[18px] text-white  hover:bg-gray-800">
-            <span className="material-icons text-base">add_circle_outline</span>
+            <CirclePlus />
             Top-up
           </button>
         </div>

@@ -17,6 +17,7 @@ import Product4 from "@/public/assets/product/product4.webp";
 import Product5 from "@/public/assets/product/product5.webp";
 import Arrow from "@/public/assets/profile/arrow.svg";
 import { useEffect, useRef, useState } from "react";
+import React from "react";
 
 interface OverviewProps {
   userData?: FormValues;
@@ -178,41 +179,25 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         </div>
 
         <div className="font-interSemiBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[16px] text-neutral-900 md:max-w-[800px] md:justify-end md:px-0">
-          {/* Item 1 */}
-          <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
-            <img
-              src={HeartIcon.src}
-              alt="Heart"
-              className="h-[24px] w-[24px]"
-            />
-            Wish List
-          </div>
-
-          {/* Divider */}
-          <div className="mx-0 h-[80px] w-px line-color self-center" />
-
-          {/* Item 2 */}
-          <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px]  md:px-[10px] lg:px-[20px] xl:px-[30px]">
-            <img
-              src={WalletIcon.src}
-              alt="Wallet"
-              className="h-[24px] w-[24px]"
-            />
-            Ciluna Wallet
-          </div>
-
-          {/* Divider */}
-          <div className="mx-0 h-[80px] w-px line-color self-center" />
-
-          {/* Item 3 */}
-          <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px]  md:px-[10px] lg:px-[20px] xl:px-[30px]">
-            <img
-              src={CouponIcon.src}
-              alt="CouponIcon"
-              className="h-[24px] w-[24px]"
-            />
-            Coupons
-          </div>
+          {[
+            { icon: HeartIcon.src, alt: "Heart", label: "Wish List" },
+            { icon: WalletIcon.src, alt: "Wallet", label: "Ciluna Wallet" },
+            { icon: CouponIcon.src, alt: "CouponIcon", label: "Coupons" },
+          ].map((item, index) => (
+            <React.Fragment key={index}>
+              <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
+                <img
+                  src={item.icon}
+                  alt={item.alt}
+                  className="h-[24px] w-[24px]"
+                />
+                {item.label}
+              </div>
+              {index < 2 && (
+                <div className="mx-0 h-[80px] w-px line-color self-center" />
+              )}
+            </React.Fragment>
+          ))}
         </div>
       </section>
       {/* Orders Card */}
@@ -223,61 +208,38 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
             View All
           </button>
         </div>
-        <div className="grid grid-cols-2  font-interSemiBold justify-between gap-y-[32px] divide-[#E1E1E1] py-[16px] text-center md:flex md:gap-y-0 md:divide-x ">
-          <div className="flex-1 border-r flex justify-center border-[#E1E1E1] py-[14px]">
-            <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
-              <span className="mb-1 flex cursor-pointer items-center justify-center">
-                <img
-                  src={PurseIcon.src}
-                  alt="Purse"
-                  className="w-[24px] h-[24px]"
-                />
-              </span>
-              <div className="cursor-pointer  font-medium">Unpaid</div>
+        <div className="grid grid-cols-2 font-interSemiBold justify-between gap-y-[32px] divide-[#E1E1E1] py-[16px] text-center md:flex md:gap-y-0 md:divide-x">
+          {[
+            { icon: PurseIcon.src, alt: "Purse", label: "Unpaid" },
+            { icon: ShopCartIcon.src, alt: "Cart", label: "To be Shipped" },
+            { icon: TruckIcon.src, alt: "Truck", label: "Shipped" },
+            {
+              icon: HeartRoundIcon.src,
+              alt: "Round Heart",
+              label: "To be reviewed",
+            },
+          ].map((item, index) => (
+            <div
+              key={index}
+              className={`flex-1 flex justify-center py-[14px] ${
+                index % 2 === 0 ? "border-r border-[#E1E1E1]" : ""
+              }`}
+            >
+              <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
+                <span className="mb-1 flex cursor-pointer items-center justify-center">
+                  <img
+                    src={item.icon}
+                    alt={item.alt}
+                    className="w-[24px] h-[24px]"
+                  />
+                </span>
+                <div className="cursor-pointer font-medium">{item.label}</div>
+              </div>
             </div>
-          </div>
-
-          <div className="flex-1 flex justify-center py-[14px]">
-            <div className="max-w-[140px]  hover:opacity-70 flex flex-col items-center justify-center">
-              <span className="mb-1 flex  cursor-pointer items-center justify-center">
-                <img
-                  src={ShopCartIcon.src}
-                  alt="Cart"
-                  className="w-[24px]  h-[24px]"
-                />
-              </span>
-              <div className="cursor-pointer font-medium">To be Shipped</div>
-            </div>
-          </div>
+          ))}
 
           {/* Horizontal divider for mobile view only */}
           <div className="col-span-2 my-0.5 h-px w-full line-color md:hidden"></div>
-
-          <div className="flex-1 flex justify-center border-r border-[#E1E1E1] py-[14px]">
-            <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
-              <span className="mb-1  flex items-center cursor-pointer   justify-center">
-                <img
-                  src={TruckIcon.src}
-                  alt="Truck"
-                  className="w-[24px] h-[24px]"
-                />
-              </span>
-              <div className="cursor-pointer font-medium ">Shipped</div>
-            </div>
-          </div>
-
-          <div className="flex-1 flex justify-center py-[14px]">
-            <div className="max-w-[140px] flex   hover:opacity-70 flex-col items-center justify-center">
-              <span className="mb-1 flex items-center justify-center">
-                <img
-                  src={HeartRoundIcon.src}
-                  alt="Round Heart"
-                  className="w-[24px] h-[24px]"
-                />
-              </span>
-              <div className="cursor-pointer font-medium">To be reviewed</div>
-            </div>
-          </div>
         </div>
       </section>
       {/* More to love */}
