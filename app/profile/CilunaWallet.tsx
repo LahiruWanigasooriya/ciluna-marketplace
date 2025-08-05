@@ -5,7 +5,7 @@ import { CirclePlus } from "lucide-react";
 const CilunaWallet = () => {
   return (
     <section className="mx-auto mb-[759px] flex min-h-[328px] border-custom max-w-[976px]  flex-col overflow-hidden rounded-3xl bg-white  md:flex-row">
-      <div className="flex-1 relative">
+      <div className="flex-1 relative z-0">
         <img
           src={Gold.src}
           alt="wallet"

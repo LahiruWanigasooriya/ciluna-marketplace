@@ -101,7 +101,7 @@ export default function ProfilePage() {
 
         {/* Mobile Dropdown */}
         <div className="flex w-full items-start justify-center md:hidden">
-          <div className="relative w-full max-w-sm">
+          <div className="relative z-10 w-full max-w-sm">
             {/* Header */}
             <div
               className={` bg-[#F5F5F5] text-[#1E1E1E] ${
