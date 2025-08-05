@@ -58,7 +58,7 @@ const ContactPage = () => {
           <p className="text-sm font-[400] leading-[30px] md:leading-[24px] text-center md:text-start">
             Get help from us. Our personel can assist with product information,
             technical assistance, and order processing. Since customer
-            satisfaction is our top priority, PAW POS wants you to have the
+            satisfaction is our top priority, CILUNA POS wants you to have the
             finest shopping experience.
           </p>
         </div>

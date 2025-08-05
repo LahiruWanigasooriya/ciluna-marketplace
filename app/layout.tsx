@@ -6,8 +6,8 @@ import { getAllCategories } from "@/actions/categories/category";
 import { isUndefined } from "util";
 
 export const metadata: Metadata = {
-  title: "Paw Marketplace",
-  description: "Paw Marketplace",
+  title: "Ciluna Marketplace",
+  description: "Ciluna Marketplace",
 };
 
 export default async function RootLayout({

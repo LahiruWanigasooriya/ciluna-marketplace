@@ -9,8 +9,8 @@ const orders = [
   {
     _id: "ordercan1",
     title: "Mac 12 Pro",
-    pawPrice: "18",
-    originalPawPrice: "21",
+    cilunaPrice: "18",
+    originalCilunaPrice: "21",
     quantity: 1,
     color: "Royal Brown",
     description:
@@ -22,8 +22,8 @@ const orders = [
   {
     _id: "ordercan2",
     title: "MacBook Air 13",
-    pawPrice: "15",
-    originalPawPrice: "18",
+    cilunaPrice: "15",
+    originalCilunaPrice: "18",
     quantity: 2,
     color: "Silver",
     description:
@@ -35,8 +35,8 @@ const orders = [
   {
     _id: "ordercan3",
     title: "MacBook Air 13",
-    pawPrice: "15",
-    originalPawPrice: "18",
+    cilunaPrice: "15",
+    originalCilunaPrice: "18",
     quantity: 2,
     color: "Silver",
     description:
@@ -48,8 +48,8 @@ const orders = [
   {
     _id: "ordercan4",
     title: "Mac 12 Pro",
-    pawPrice: "18",
-    originalPawPrice: "21",
+    cilunaPrice: "18",
+    originalCilunaPrice: "21",
     quantity: 1,
     color: "Royal Brown",
     description:
@@ -61,8 +61,8 @@ const orders = [
   {
     _id: "ordercan5",
     title: "MacBook Air 13",
-    pawPrice: "15",
-    originalPawPrice: "18",
+    cilunaPrice: "15",
+    originalCilunaPrice: "18",
     quantity: 2,
     color: "Silver",
     description:
@@ -74,8 +74,8 @@ const orders = [
   {
     _id: "ordercan6",
     title: "MacBook Air 13",
-    pawPrice: "15",
-    originalPawPrice: "18",
+    cilunaPrice: "15",
+    originalCilunaPrice: "18",
     quantity: 2,
     color: "Silver",
     description:

@@ -84,10 +84,10 @@ const Footer: FC = () => {
                 className="w-[306px] h-[42px] md:w-[224px] md:h-[30px]"
               />
               <p className="text-sm font-[400] leading-[24px]">
-                {`PAW Marketplace, a new pet-focused e-commerce site, sells a broad
-              variety of items and services. The site will include PAW Pay, a
+                {`CILUNA Marketplace, a new pet-focused e-commerce site, sells a broad
+              variety of items and services. The site will include CILUNA Pay, a
               secure payment method, providing a smooth purchasing experience.
-              The design should match PAW's brand.`}
+              The design should match CILUNA's brand.`}
               </p>
             </div>
             <div className="flex flex-col md:flex-row items-center gap-2">
@@ -152,7 +152,7 @@ const Footer: FC = () => {
           </div>
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-xxs md:text-sm text-white text-center">
-              Copyright © 2025 PAW LLC All Rights Reserved.
+              Copyright © 2025 CILUNA LLC All Rights Reserved.
             </p>
             <div className="flex items-center">
               <Link
