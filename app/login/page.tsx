@@ -39,7 +39,7 @@ const LoginForm = ({
   >
     <div className="flex items-center justify-center space-x-3">
   
-      <Title title="Login" className="text-2xl lg:text-3xl font-kaiseiHarunoUmi font-bold text-[#252525]" />
+      <Title title="Login" className="text-2xl lg:text-3xl font-kaiseiBold font-bold text-[#252525]" />
     </div>
 
     <div className="flex flex-col space-y-3 lg:space-y-4">

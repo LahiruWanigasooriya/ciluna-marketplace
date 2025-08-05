@@ -4,9 +4,9 @@ interface LabelProps {
   title: string;
 }
 
-const Title: React.FC<LabelProps> = ({ className='text-base lg:text-2xl', title }) => {
+const Title: React.FC<LabelProps> = ({ className='lg:text-[52px]', title }) => {
   return (
-    <span className={cn(" font-interSemiBold font-[700] text-base lg:text-2xl", className)}>
+    <span className={cn(" font-kaiseiBold font-[700] lg:text-[52px]", className)}>
       {title}
     </span>
   );

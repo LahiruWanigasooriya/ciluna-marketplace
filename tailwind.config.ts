@@ -78,10 +78,9 @@ const config = withTV({
         interSemiBold: ["Inter-semiBold", "sans-serif"],
         lora: ["Lora-Regular", "sans-serif"],
         loraBold: ["Lora-Bold", "sans-serif"],
-        kaisei: ["KaiseiHarunoUmi", "sans-serif"],
+        kaisei: ["KaiseiHarunoUmi-Regular", "sans-serif"],
         kaiseiBold: ["KaiseiHarunoUmi-Bold", "sans-serif"],
         playFairExtraBold: ["PlayFairDisplay-ExtraBold", "sans-serif"],
-        kaiseiHarunoUmi: ['"KaiseiHarunoUmi-Bold"', 'sans-serif'],
         arial:["Arial-Regular",'sans-serif'],
         arialBold:["Arial-Bold",'sans-serif']
 

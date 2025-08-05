@@ -93,9 +93,9 @@ const BestSelling = async () => {
   ];
 
   return (
-    <div className="flex flex-col gap-3 items-center text-white ">
+    <div className="flex flex-col gap-3 items-center text-black ">
       <Title title="Best Selling" />
-      <p className="text-sm font-normal text-center leading-[24px] md:px-[30px] lg:px-[59px]">
+      <p className="text-sm font-normal text-center leading-[24px] md:px-[30px] lg:px-[59px] bg-blue ">
         {`Upgrade your tech setup with our top-selling computer accessories!
       These must-have products are trusted by tech enthusiasts and
       professionals alike, offering superior performance, durability, and

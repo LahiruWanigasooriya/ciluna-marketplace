@@ -7,10 +7,13 @@ import BGIMG from "@/public/assets/bglogo.webp";
 import Link from "next/link";
 import Partners from "./Partners";
 import ImageSlider from "./ImageSlider";
+import QuietBrilliance from "./QuietBrilliance";
+import TimelessExpressions from "./TimelessExpressions";
+import NewCollection from "./NewCollection";
 
 const Page = async () => {
   return (
-    <div className="flex flex-col relative gap-12 recommend:gap-[76px]">
+    <div className="flex flex-col relative gap-12 recommend:gap-[76px] ">
       <div className="flex flex-col md:flex-row justify-between gap-2 md:gap-4 lg:gap-8  xl:gap-36 w-full items-center xl:items-start recommend:items-center text-white">
         <p className="font-[700] leading-[32px] xl:leading-tight text-center md:text-start text-[1.375rem] md:text-[1.5rem] lg:text-[1.8rem] xl:text-[2.5rem] w-full xl:max-w-2xl font-interSemiBold block md:hidden">
           The Ultimate E-Commerce Platform for computer accessories
@@ -38,8 +41,12 @@ const Page = async () => {
         </div>
       </div>
 
-      <div className="recommend:gap-[76px] flex flex-col gap-12">
+      <div className="recommend:gap-[76px] flex flex-col gap-12 ">
+        <QuietBrilliance/>
+        <TimelessExpressions/>
+        <NewCollection/>
         <BestSelling />
+        
         <div className="relative flex flex-col gap-12 recommend:gap-[76px]">
           <div
             className="hidden lg:block absolute inset-0 -z-10"

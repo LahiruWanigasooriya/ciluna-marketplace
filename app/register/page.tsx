@@ -75,7 +75,7 @@ const SignupForm = ({
       >
         <ChevronLeft className="" size={30} />
       </Link> */}
-      <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-lg" />
+      <Title title="Create Account" className="font-kaiseiBold font-bold  text-2xl lg:text-lg" />
     </div>
     <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
       <div>
