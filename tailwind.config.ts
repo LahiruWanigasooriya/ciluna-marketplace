@@ -126,7 +126,9 @@ const config = withTV({
       },
     },
   },
-  plugins: [tailwindcssAnimate, tailwindcssReactAriaComponents],
+  plugins: [tailwindcssAnimate, tailwindcssReactAriaComponents,
+    require("tailwind-scrollbar-hide"),
+  ],
 });
 
 export default config;
