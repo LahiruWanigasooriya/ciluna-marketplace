@@ -2,29 +2,34 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, Loader2 } from "lucide-react";
-import Logo from "../assets/logo.png";
-import Banner from "../assets/login-banner.webp";
+import { ChevronLeft, Loader2,Info } from "lucide-react";
 import Title from "@/components/custom/Title";
-import { TextField, Button,DatePicker } from "@/components/ui";
+import { TextField, Button, DatePicker,Checkbox } from "@/components/ui";
 import Link from "next/link";
 import Tel from "@/components/custom/Phone";
 import { signupValidationSchema } from "@/schemas/validationSchemas";
 import { createNewUser } from "@/actions/users/user";
 import { useRouter } from "next/navigation";
 import { ValidationError } from "yup";
-import BGIMG from "@/public/assets/bglogom.webp";
 import { toast } from "sonner";
 import CountryDropdown from "@/components/custom/CountryDropdown";
+import { DateField } from "react-aria-components";
+import type {DateValue} from "react-aria-components";
+import Navbar from "@/components/custom/Navbar";
+import { policyConfig } from "@/config/policy";
+import {parseDate} from "@internationalized/date";
+import bgpattern from "@/public/assets/login/bgpattern.png";
 
 type FormData = {
   firstName: string;
   lastName: string;
   email: string;
+  confirmemail:string;
   phone: string;
   password: string;
+  confirmpassword: string;
   remember: boolean;
-  dateofbirth: Date;
+  dateofbirth: DateValue | null;
   country: string;
 };
 
@@ -36,8 +41,12 @@ const useForm = (initialState: FormData) => {
   const [formData, setFormData] = React.useState<FormData>(initialState);
   const [errors, setErrors] = React.useState<FormErrors>({});
 
-  const handleChange = (field: keyof FormData, value: string | boolean) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const handleChange = (field: keyof FormData, value: string | boolean | Date | DateValue | null) => {
+    let actualValue = value;
+    if (field === "dateofbirth" && value instanceof Date) {
+      actualValue = parseDate(value.toISOString().split("T")[0]);
+    }
+    setFormData((prev) => ({ ...prev, [field]: actualValue }));
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
@@ -59,192 +68,224 @@ const SignupForm = ({
 }: {
   formData: FormData;
   errors: FormErrors;
-  handleChange: (field: keyof FormData, value: string | boolean) => void;
+  handleChange: (field: keyof FormData, value: string | boolean | Date | null) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
   isSuccess: boolean;
-}) => (
-  <form
-    onSubmit={handleSubmit}
-    className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
-  >
-    <div className="flex items-center justify-center space-x-2 text-[#252525]">
-      {/* <Link
-        href="/"
-        className="flex items-start justify-start cursor-pointer hover:opacity-75"
-      >
-        <ChevronLeft className="" size={30} />
-      </Link> */}
-      <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-lg" />
-    </div>
-    <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
-      <div>
-        <TextField
-          label="First Name*"
-          placeholder="Enter first name"
-          value={formData.firstName}
-          className=" w-full"
-          onChange={(value: string) => handleChange("firstName", value)}
-        />
-        {errors.firstName && (
-          <p className="text-red-500 text-xs">{errors.firstName}</p>
-        )}
+
+}) => {
+  return (
+    <div className="w-full max-w-[598px]  mx-auto">
+
+    <form
+      onSubmit={handleSubmit}
+      className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
+    >
+      <div className="flex items-center justify-center space-x-2 text-[#252525]">
+        
+        <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-lg" />
       </div>
 
-      <div>
-        <TextField
-          label="Last Name*"
-          placeholder="Enter last name"
-          value={formData.lastName}
-          className="w-full"
-          onChange={(value: string) => handleChange("lastName", value)}
-        />
-        {errors.lastName && (
-          <p className="text-red-500 text-xs">{errors.lastName}</p>
-        )}
-      </div>
+      <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
+        <div>
+          <TextField
+            label="First Name*"
+            placeholder="Enter first name"
+            value={formData.firstName}
+            className="w-full"
+            onChange={(value: string) => handleChange("firstName", value)}
+          />
+          {errors.firstName && <p className="text-red-500 text-xs">{errors.firstName}</p>}
+        </div>
 
-      <div>
+        <div>
+          <TextField
+            label="Last Name*"
+            placeholder="Enter last name"
+            value={formData.lastName}
+            className="w-full"
+            onChange={(value: string) => handleChange("lastName", value)}
+          />
+          {errors.lastName && <p className="text-red-500 text-xs">{errors.lastName}</p>}
+        </div>
+
+
+<div className="w-full">
+        <label className="text-sm text-[#252525] font-medium mb-1 block">
+          Date of Birth*
+        </label>
         <DatePicker
-        label="Date of Birth"
-        onChange={(value: any) => {
-          if (value) {
-            const date =
-              typeof value === "object" && typeof value.toDate === "function"
-                ? value.toDate()
-                : null;
-            if (date) handleChange("dateofbirth", date);
-          }
-        }}
-        className="w-full text-[#252525]"
-        >
-          
-        </DatePicker>
-      </div>
-
-      <div>
-        <CountryDropdown
-        value={formData.country}
-        onChange={(_field: string, value: string) => handleChange("country", value)}
+          className="w-full"
+          onChange={(value) => {
+            const date = value ? value.toDate("UTC") : null;
+            handleChange("dateofbirth", date);
+          }}
+          value={formData.dateofbirth instanceof Date ? parseDate(formData.dateofbirth.toISOString().split("T")[0]) : formData.dateofbirth}
         />
-      </div>
-
-      <div>
-        <TextField
-          label="Email"
-          placeholder="yourname@email.com"
-          value={formData.email}
-          className=" w-full"
-          onChange={(value: string) => handleChange("email", value)}
-        />
-        {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
-      </div>
-
-      <div>
-        <Tel
-          value={formData.phone}
-          onChange={(phone: string) => handleChange("phone", phone)}
-        />
-        {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
-      </div>
-
-      <div>
-        <TextField
-          type="password"
-          isRevealable
-          label="Create Password"
-          placeholder="********"
-          className=" w-full"
-          description="Password must contain at least 8 characters."
-          value={formData.password}
-          onChange={(value: string) => handleChange("password", value)}
-        />
-        {errors.password && (
-          <p className="text-red-500 text-xs">{errors.password}</p>
+        {errors.dateofbirth && (
+          <p className="text-red-500 text-xs mt-1">{errors.dateofbirth}</p>
         )}
       </div>
-    </div>
+        <div>
+          <CountryDropdown
+            value={formData.country}
+            onChange={(_field: string, value: string) => handleChange("country", value)}
+          />
+        </div>
 
-    {/* <div className="flex items-center justify-between">
-      <Checkbox
-        isSelected={formData.remember}
-        onChange={(isSelected: boolean) => handleChange("remember", isSelected)}
-      >
-        Remember me
-      </Checkbox>
+        <div>
+          <TextField
+            label="Email"
+            placeholder="Enter email"
+            value={formData.email}
+            className="w-full"
+            onChange={(value: string) => handleChange("email", value)}
+          />
+          {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+        </div>
 
-      <Link href="/forgotpw">
-        <p className="text-blue cursor-pointer underline text-sm hover:opacity-75 font-interSemiBold">
-          Forgot your password?
-        </p>
-      </Link>
-    </div> */}
-    <div className="flex flex-col gap-2">
-      <Button
-        type="submit"
-        className={`w-full font-interSemiBold bg-purple transition-opacity duration-300 ${
-          isLoading ? "opacity-80" : ""
-        }`}
-        isDisabled={isLoading || isSuccess}
-      >
-        {isLoading && <Loader2 size={16} className="animate-spin mr-1" />}
-        Sign Up
-      </Button>
+        <div>
+          <TextField
+            label="Confirm Email*"
+            placeholder="Enter email again"
+            value={formData.confirmemail}
+            className="w-full"
+            onChange={(value: string) => handleChange("confirmemail", value)}
+          />
+          {errors.confirmemail && <p className="text-red-500 text-xs">{errors.confirmemail}</p>}
+        </div>
 
-      <div className="flex items-center justify-center space-x-2 font-interSemiBold">
-        <p className="text-white text-sm">Already a user?</p>
-        <Link href="/login">
-          <p className="text-blue cursor-pointer underline text-sm hover:opacity-75">
-            Sign In
-          </p>
-        </Link>
+        <div>
+          <Tel value={formData.phone} onChange={(phone: string) => handleChange("phone", phone)} />
+          {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
+        </div>
+
+        <div className="relative w-full">
+          <label className="text-sm text-[#252525] font-arial flex items-center gap-1 mb-1">
+            Password* 
+            <div className="relative group cursor-pointer">  
+              <Info  className="h-4 w-4 text-black" />
+              <div className="absolute left-6 top-1/2 -translate-y-1/2 bg-gray-500 text-black text-xs px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+              Password must contain 8 characters.
+              </div>
+              </div>
+          
+          </label>
+          <TextField
+            type="password"
+            isRevealable
+            placeholder="Enter your password"
+            className="w-full"
+            description="Password must contain at least 8 characters."
+            value={formData.password}
+            onChange={(value: string) => handleChange("password", value)}
+          
+          />
+
+          {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
+        </div>
+
+          <div>
+          <TextField
+            type="password"
+            isRevealable
+            label="Confirm Password*"
+            placeholder="Confirm  your password"
+            value={formData.confirmpassword}
+            className="w-full"
+            onChange={(value: string) => handleChange("confirmpassword", value)}
+          />
+          {errors.confirmpassword && <p className="text-red-500 text-xs">{errors.confirmpassword}</p>}
+        </div>
+        
+        <div className="flex flex-col gap-[16px]">
+            <Checkbox
+              isSelected={formData.remember}
+              onChange={(isSelected: boolean) =>
+                  handleChange("remember", isSelected)
+                  }
+                    >
+              <p className="font-arial text-[#252525] text-sm">I agree to receive CILUNA updates and promotions as per the Privacy Policy.</p>
+            </Checkbox>
+
+           <Checkbox
+              isSelected={formData.remember}
+              onChange={(isSelected: boolean) =>
+                  handleChange("remember", isSelected)
+                  }
+                    >
+              <p className="font-arial text-[#252525] text-sm">I consent to personalized offers from CILUNA based on my preferences.</p>
+            </Checkbox>
+            <Link href="/policyConfig">
+                        <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-lora"> Privacy Policy.</span></p>
+
+            </Link>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <Button
+            type="submit"
+            className={`w-full font-interSemiBold bg-black text-white transition-opacity duration-300 ${
+              isLoading ? "opacity-80" : ""
+            }`}
+            isDisabled={isLoading || isSuccess}
+          >
+            {isLoading && <Loader2 size={16} className="animate-spin mr-1 " />}
+            Create Account
+          </Button>
+
+          <div className="flex items-center justify-center space-x-2 mt-5">
+            <p className="text-[#252525] font-arial text-sm">Already have a CILUNA account? </p>
+            <Link href="/login">
+              <p className="text-[#252525] cursor-pointer font-lora font-bold text-sm hover:opacity-75">Login</p>
+            </Link>
+          </div>
+        </div>
       </div>
+    </form>
     </div>
-  </form>
-);
+  );
+};
 
 const SignupPage: React.FC = () => {
-  const router = useRouter(); // Initialize the router
-  const [isLoading, setIsLoading] = React.useState(false);
+  const router = useRouter();
+
   const { formData, errors, setErrors, handleChange } = useForm({
     firstName: "",
     lastName: "",
-    dateofbirth: new Date(),
+     dateofbirth:null,
     country: "",
     email: "",
+    confirmemail:"",
     phone: "",
     password: "",
+    confirmpassword:"",
     remember: false,
   });
+
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("loading state");
     e.preventDefault();
     setIsLoading(true);
     try {
       await signupValidationSchema.validate(formData, { abortEarly: false });
 
       const { firstName, lastName, email, password, phone } = formData;
-      const contactNo = phone; // This should already include the country code
+      const contactNo = phone;
 
-      const res = await createNewUser({
-        firstName,
-        lastName,
-        email,
-        password,
-        contactNo,
-      });
+      const res = await createNewUser({ firstName, lastName, email, password, contactNo });
 
       if (res.success) {
         setIsSuccess(true);
-        router.push("/"); // Redirect to the home page
+        router.push("/");
       } else {
         toast.error(res.message || "Failed to create user.");
       }
     } catch (error: unknown) {
       if (error instanceof ValidationError) {
-        const newErrors = error.inner.reduce<FormErrors>((acc, err) => {
+        const newErrors = (error as ValidationError).inner.reduce<FormErrors>((acc, err) => {
           if (err.path && typeof err.message === "string") {
             acc[err.path as keyof FormData] = err.message;
           }
@@ -255,45 +296,45 @@ const SignupPage: React.FC = () => {
         console.error("Unexpected error:", error);
       }
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-start justify-between text-white h-screen overflow-hidden">
-      <Link
-        href="/"
-        className="w-[169px] h-[22px] md:w-[224px] md:h-[30px] mb-6"
-      >
-        <Image src={Logo} alt="logo" />
-      </Link>
 
-      <div className="flex items-start h-[80vh] xl:h-[100vh] w-full relative">
-
-        <div className="flex items-center justify-between space-x-12 w-full absolute inset-0">
-          <SignupForm
-            formData={formData}
-            errors={errors}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            isLoading={isLoading}
-            isSuccess={isSuccess}
-          />
-          <div className="hidden lg:flex lg:flex-1">
-            <Image
-              src={Banner}
-              alt="banner"
-              className="object-cover w-full h-full 2xl:w-5/6 2xl:h-5/6"
-            />
+    <div className="flex flex-col h-screen bg-white text-black ">
+            <div className="hidden sm:block absolute -right-24 top-10 h-[301px] w-[320px] ]">
+                <Image 
+                src={bgpattern}
+                alt="background pattern"
+                fill
+                className="object-cover bg-[#e8e8da"
+                priority
+                />
           </div>
-        </div>
+           <div className="hidden sm:block  fixed -left-24 bottom-0 h-[301px] w-[320px] ]">
+                        <Image 
+                        src={bgpattern}
+                        alt="background pattern"
+                        fill
+                        className="object-cover bg-[#e8e8da rotate-180"
+                        priority
+                        />
+            </div>
+      <Navbar />
+
+      <div className="flex-1  flex justify-center pt-20 px-4 py-10 overflow-y-auto scrollbar-hide  ">
+        <SignupForm
+          formData={formData}
+          errors={errors}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          isLoading={isLoading}
+          isSuccess={isSuccess}
+        />
       </div>
     </div>
   );
-};
-
-export default SignupPage;
-function setDate(value: any): void {
-  throw new Error("Function not implemented.");
 }
 
+export default SignupPage;
