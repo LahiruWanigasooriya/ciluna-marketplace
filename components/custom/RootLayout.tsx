@@ -69,8 +69,8 @@ export default function ConditionalLayout({
   const mainClasses = isHiddenRoute
     ? "md:overflow-hidden h-screen"
     : isLogoPages
-    ? "flex-1 pt-[124px] md:pt-[130px] lg:pt-[135px] recommend:pt-[138px] pb-[90px] md:pb-[60px] xl:pb-[50px] recommend:pb-[40px]"
-    : "flex-1 pt-[124px] md:pt-[130px] lg:pt-[135px] recommend:pt-[100px] pb-[90px] md:pb-[60px] xl:pb-[50px] recommend:pb-[40px]";
+    ? "flex-1 "
+    : "flex-1 ";
 
   return (
     <div>
