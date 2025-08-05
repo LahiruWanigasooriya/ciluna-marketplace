@@ -18,7 +18,7 @@ const searchFieldStyles = tv({
   slots: {
     base: "group flex flex-col gap-y-1.5 focus:outline-none ",
     searchIcon:
-      "mr-[12px] lg:mr-[24px] size-[24px] shrink-0 text-white group-disabled:text-muted-fg forced-colors:group-disabled:text-[GrayText]",
+      "mr-[2px] size-[24px] shrink-0 text-white group-disabled:text-muted-fg forced-colors:group-disabled:text-[GrayText]",
     clearButton: [
       "mr-1 size- h-[26px] text-muted-fg group-empty:invisible pressed:bg-transparent hover:bg-transparent pressed:text-fg ",
     ],
@@ -67,8 +67,10 @@ const SearchField = ({
       onSubmit={handleSubmit}
     >
       {label && <Label>{label}</Label>}
-      <FieldGroup>
-        <Input placeholder={placeholder ?? ""} className={input()} />
+      <FieldGroup
+        className="border-none"
+      >
+        <Input placeholder={placeholder ?? ""} className={input() } />
         {isPending ? (
           <Loader variant="spin" className="mr-2.5" />
         ) : (

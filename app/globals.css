@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+HarunoUmi&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -43,9 +44,12 @@
     --highlight-chart: 210 98% 78%;
     --accent-chart: 210 98% 78%;
     --blue: 236 72% 59%;
+    --bg-black: 0 0% 5%;
     --light-green: 158 21% 79%;
     --light-black: 0, 0%, 15%;
     --neutral-gray: 0, 0%, 56%;
+    --gray-neutral-fg: 0, 0%, 44%;
+    --gray-border: 0, 0%, 88%;
   }
 
   .dark {
@@ -251,6 +255,44 @@
   border: 1px solid #e1e1e1;
 }
 
+.custom-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.custom-container {
+  padding: 0px;
+}
+
+@media (min-width: 640px) {
+  .custom-container {
+    padding: 0px;
+  }
+}
+
+@media (min-width: 768px) {
+  .custom-container {
+    padding: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .custom-container {
+    padding: 68px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .custom-container {
+    padding: 84px;
+  }
+}
+@media (min-width: 1440px) {
+  .custom-container {
+    padding: 96px;
+  }
+}
+
 @property --r2 {
   syntax: "<angle>";
   inherits: false;
@@ -387,4 +429,37 @@
 .line-color {
   background-color: #e1e1e1;
   border-color: #e1e1e1;
+
+.line-gradient {
+  height: 1px;
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(61, 61, 61, 1) 52.88%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.line-gradient-header {
+  height: 0.5px;
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(231, 231, 231, 1) 52.88%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.glass-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1;
 }
