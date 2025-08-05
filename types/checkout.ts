@@ -1,15 +1,17 @@
 export interface Checkout {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address1: string;
-  address2: string;
-  city: string;
-  state: string;
+  country:string;
+  contactName: string;
+  mobileNumber: string;
+  street: string;
+  province: string;
+  district: string;
+  town: string;
   zip: string;
-  country: string;
   holderName: string;
   cardNumber: string;
-  csv: string;
+  expireMonth: string;
+  expireYear: string;
+  cvv: string;
+  rememberShippingAddress: boolean;
+  rememberCardDetails: boolean;
 }

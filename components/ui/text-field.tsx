@@ -22,6 +22,7 @@ interface BaseTextFieldProps extends TextFieldPrimitiveProps, FieldProps {
   suffix?: React.ReactNode
   isPending?: boolean
   className?: string
+  inputClassName?: string
 }
 
 interface RevealableTextFieldProps extends BaseTextFieldProps {
@@ -45,6 +46,7 @@ const TextField = ({
   suffix,
   isPending,
   className,
+  inputClassName,
   isRevealable,
   type,
   ...props
@@ -65,11 +67,11 @@ const TextField = ({
       <FieldGroup data-loading={isPending ? "true" : undefined}
       className="relative">
         {prefix ? (
-          <span data-slot="prefix" className="atrs x2e2">
+          <span data-slot="prefix" className="atrs x2e2 !ml-0">
             {prefix}
           </span>
         ) : null}
-        <Input placeholder={placeholder} />
+        <Input placeholder={placeholder} className={inputClassName}/>
         {isRevealable ? (
           <ButtonPrimitive
             type="button"
@@ -82,7 +84,7 @@ const TextField = ({
         ) : isPending ? (
           <Loader variant="spin" data-slot="suffix" />
         ) : suffix ? (
-          <span data-slot="suffix">{suffix}</span>
+          <span data-slot="suffix" className="!mr-0">{suffix}</span>
         ) : null}
       </FieldGroup>
       {description && <Description className="text-[#FFFFFF] font-[400] text-sm">{description}</Description>}
