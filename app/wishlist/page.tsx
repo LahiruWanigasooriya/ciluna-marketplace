@@ -12,7 +12,7 @@ const WishlistPage = async () => {
   return (
     <div className="flex flex-col gap-6 md:gap-8 xl:gap-12">
       {/* Wishlist Client Component */}
-      <WishlistList pawPrice={cilunaPrice} />
+      <WishlistList cilunaPrice={cilunaPrice} />
 
       {/* Image Section */}
       <div>

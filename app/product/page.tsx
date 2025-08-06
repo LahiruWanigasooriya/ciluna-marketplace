@@ -9,7 +9,7 @@ import { IProduct } from "@/types/product";
 import Sort from "./Sort";
 import Filter from "./Filter";
 import Pagination from "./Pagination";
-import { getPawPrice } from "@/lib/pawService";
+import { getCilunaPrice } from "@/lib/pawService";
 import toFixed from "@/functions/pawPrice";
 import { getSubcategoryById } from "@/actions/subcategories/subcategory";
 import { getAllBrands } from "@/actions/brands/brand";
@@ -21,8 +21,8 @@ const ProductPage = async ({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) => {
   const searchParams = await searchParamsPromise;
-  const price = await getPawPrice();
-  const pawPrice = toFixed(Number(price));
+  const price = await getCilunaPrice();
+  const cilunaPrice = toFixed(Number(price));
   const currentPage = parseInt(searchParams.page || "1", 10);
   const search = searchParams.search || "";
   const sortByParam = searchParams.sortBy || "default";
@@ -141,10 +141,7 @@ const ProductPage = async ({
           <>
             <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:justify-start">
               {products.map((product: IProduct) => (
-                <ProductCard
-                  key={product._id.toString()}
-                  product={product}
-                />
+                <ProductCard key={product._id.toString()} product={product} />
               ))}
             </div>
             <Pagination currentPage={currentPage} totalPages={totalPages} />
