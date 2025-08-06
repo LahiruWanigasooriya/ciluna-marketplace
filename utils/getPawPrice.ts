@@ -1,6 +1,6 @@
 export const getCilunaPrice = async (): Promise<number | null> => {
   try {
-    const response = await fetch("https://wallet1.pawchain.net/api/pawPrice", {
+    const response = await fetch("https://wallet1.pawchain.net/api/cilunaPrice", {
       cache: "no-store", // Ensure fresh data
     });
 

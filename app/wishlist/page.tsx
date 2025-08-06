@@ -3,8 +3,8 @@ import Image from "next/image";
 import Img from "@/public/assets/wishlist/img.png";
 import ImgM from "@/public/assets/wishlist/imgm.jpg";
 import WishlistList from "./WishlistList";
-import { getCilunaPrice } from "@/lib/pawService";
-import toFixed from "@/functions/pawPrice";
+import { getCilunaPrice } from "@/lib/cilunaServics";
+import toFixed from "@/functions/cilunaPrice";
 
 const WishlistPage = async () => {
   const price = await getCilunaPrice();

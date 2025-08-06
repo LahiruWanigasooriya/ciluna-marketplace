@@ -10,8 +10,8 @@ import Product from "./Product";
 import { getProductWishCount } from "@/actions/wishlists/wishlist";
 import { ProductWishCountResponse } from "@/types/wishlist";
 import { IProductVariant } from "@/types/productVariant";
-import { getCilunaPrice } from "@/lib/pawService";
-import toFixed from "@/functions/pawPrice";
+import { getCilunaPrice } from "@/lib/cilunaServics";
+import toFixed from "@/functions/cilunaPrice";
 
 interface Pro {
   product: IProduct;

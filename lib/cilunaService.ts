@@ -2,9 +2,12 @@
 
 export const getCilunaPrice = async () => {
   try {
-    const response = await fetch("https://wallet.pawchain.net/api/pawPrice", {
-      cache: "no-store",
-    });
+    const response = await fetch(
+      "https://wallet.pawchain.net/api/cilunaPrice",
+      {
+        cache: "no-store",
+      }
+    );
 
     if (response.status !== 200) {
       throw new Error(`Error fetching CILUNA price:`);
