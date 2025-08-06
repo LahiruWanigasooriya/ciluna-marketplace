@@ -64,12 +64,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen  bg-white ">
-      {/* Breadcrumb */}
-      <div className="font-kaisei flex cursor-pointer gap-[8px]  pb-[16px] text-[14px] text-neutral-900 md:pb-[36px]">
-        Home <span>&gt; </span>
-        <span className="font-kaiseiBold cursor-pointer">Account</span>
-      </div>
-      <div className="flex flex-col  gap-[24px] md:flex-row">
+      <div className="flex flex-col mt-[132px]  gap-[24px] md:flex-row">
         {/* Sidebar for md and up */}
         <aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-[#F5F5F5] px-[16px] text-[#1E1E1E]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
           <div className="font-interBold  border-b border-[#E1E1E1]  pb-[16px] text-[16px]">
