@@ -15,7 +15,7 @@ const orders = [
     color: "Royal Brown",
     description:
       "2020 Apple MacBook 12 Pro with Apple M1 Chip (13-inch, 8GB RAM, 256GB SSD Storage) - Space Gray",
-    imageUrl: "/assets/product/lap.webp",
+    imageUrl: "/assets/product/product1.webp",
     status: "Cancelled",
     price: "123",
   },
@@ -28,7 +28,7 @@ const orders = [
     color: "Silver",
     description:
       "Apple MacBook Air with Apple M1 Chip (13-inch, 8GB RAM, 256GB SSD Storage) - Silver",
-    imageUrl: "/assets/product/lap.webp",
+    imageUrl: "/assets/product/product1.webp",
     status: "Shipped",
     price: "123",
   },
@@ -41,7 +41,7 @@ const orders = [
     color: "Silver",
     description:
       "Apple MacBook Air with Apple M1 Chip (13-inch, 8GB RAM, 256GB SSD Storage) - Silver",
-    imageUrl: "/assets/product/lap.webp",
+    imageUrl: "/assets/product/product1.webp",
     status: "Delivered",
     price: "123",
   },
@@ -54,7 +54,7 @@ const orders = [
     color: "Royal Brown",
     description:
       "2020 Apple MacBook 12 Pro with Apple M1 Chip (13-inch, 8GB RAM, 256GB SSD Storage) - Space Gray",
-    imageUrl: "/assets/product/lap.webp",
+    imageUrl: "/assets/product/product1.webp",
     status: "Cancelled",
     price: "123",
   },
@@ -67,7 +67,7 @@ const orders = [
     color: "Silver",
     description:
       "Apple MacBook Air with Apple M1 Chip (13-inch, 8GB RAM, 256GB SSD Storage) - Silver",
-    imageUrl: "/assets/product/lap.webp",
+    imageUrl: "/assets/product/product1.webp",
     status: "Delivered",
     price: "123",
   },
@@ -80,7 +80,7 @@ const orders = [
     color: "Silver",
     description:
       "Apple MacBook Air with Apple M1 Chip (13-inch, 8GB RAM, 256GB SSD Storage) - Silver",
-    imageUrl: "/assets/product/lap.webp",
+    imageUrl: "/assets/product/product1.webp",
     status: "Shipped",
     price: "123",
   },

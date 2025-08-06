@@ -2,8 +2,8 @@
 import React from "react";
 import Image from "next/image";
 import ProductCard from "./ProductCard";
-import Img from "@/public/assets/product/img.webp";
-import ImgM from "@/public/assets/product/imgm.webp";
+import Img from "@/public/assets/product/img.png";
+import ImgM from "@/public/assets/product/imgm.jpg";
 import { getAllProducts } from "@/actions/products/product";
 import { IProduct } from "@/types/product";
 import Sort from "./Sort";

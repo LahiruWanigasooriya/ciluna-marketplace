@@ -8,7 +8,7 @@ import Tel from "@/components/custom/Phone";
 import Country from "@/components/custom/CountryDropdown";
 import GenderDropdown from "@/components/custom/GenderDropdown";
 import { Button } from "@/components/ui/button";
-import User from "@/public/assets/user.jpeg";
+import User from "@/public/assets/user.png";
 import { FileTrigger } from "@/components/custom/FileTrigger";
 import { uploadImage } from "@/actions/utils/cloudinary";
 import { toast } from "sonner";
@@ -76,7 +76,6 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ initialData }) => {
     try {
       // ✅ Validate form data
       await profileValidationSchema.validate(values, { abortEarly: false });
-
 
       // ✅ Call API
       const response: UpdateUserResponse = await updateUserProfile(values);
