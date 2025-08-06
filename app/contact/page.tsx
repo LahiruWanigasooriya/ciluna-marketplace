@@ -2,8 +2,8 @@ import React from "react";
 import Image from "next/image";
 import Title from "@/components/custom/Title";
 import { Phone, Mail } from "lucide-react";
-import Contact from "@/public/assets/contact.png";
-import ContactM from "@/public/assets/contactm.png";
+// import Contact from "@/public/assets/contact.png";
+// import ContactM from "@/public/assets/contactm.png";
 import ContactForm from "./ContactForm";
 
 const contactMethods = [
@@ -67,12 +67,12 @@ const ContactPage = () => {
           <ContactForm />
           <div className="flex flex-col items-center gap-[30px] xl:gap-8 w-full">
             <div className="flex w-full">
-              <Image alt="Contact" src={Contact} className="hidden md:block" />
+              {/* <Image alt="Contact" src={Contact} className="hidden md:block" />
               <Image
                 alt="Contact Mobile"
                 src={ContactM}
                 className="block md:hidden"
-              />
+              /> */}
             </div>
             <div className="flex flex-col md:flex-row items-start lg:items-center lg:justify-between gap-[41px] recommend:gap-[47px] px-[27px] recommend:px-[38px]">
               {contactMethods.map((method, index) => (

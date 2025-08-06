@@ -9,17 +9,17 @@ export const emailTemplates = {
         <p style="font-size: 18px; font-weight: bold; color: #555;">${tempPassword}</p>
         <p>Please use this password to log in to your account and update your password in the profile section as soon as possible.</p>
         <p>If you did not request a password reset, please ignore this email.</p>
-        <p>Best Regards,<br />The PawMarket Place Team</p>
+        <p>Best Regards,<br />The CilunaMarket Place Team</p>
       </div>
     `,
   }),
 
   welcomeEmail: (userName: string) => ({
-    subject: "Welcome to PawMarket Place!",
+    subject: "Welcome to CilunaMarket Place!",
     html: `
       <div style="font-family: Arial, sans-serif; color: #333;">
-        <h2 style="color: #4CAF50;">Welcome to PawMarket Place, ${userName}!</h2>
-        <p>We're thrilled to have you as part of our community. PawMarket Place is your go-to marketplace for all things pet-related.</p>
+        <h2 style="color: #4CAF50;">Welcome to CilunaMarket Place, ${userName}!</h2>
+        <p>We're thrilled to have you as part of our community. CilunaMarket Place is your go-to marketplace for all things pet-related.</p>
         <p>Here's what you can do:</p>
         <ul>
           <li>Explore a wide range of pet products.</li>
@@ -28,7 +28,7 @@ export const emailTemplates = {
         </ul>
         <p>Start shopping now and enjoy exclusive deals just for you!</p>
         <p>If you have any questions, feel free to reach out to our support team.</p>
-        <p>Best Regards,<br /><strong>The PawMarket Place Team</strong></p>
+        <p>Best Regards,<br /><strong>The CilunaMarket Place Team</strong></p>
       </div>
     `,
   }),

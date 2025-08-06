@@ -14,7 +14,7 @@ import Visa from "@/public/assets/checkout/visa.png";
 import CILUNApay from "@/public/assets/checkout/cilunapay.png";
 import Master from "@/public/assets/checkout/master.png";
 import Stripe from "@/public/assets/checkout/stripe.png";
-import QR from "@/public/assets/checkout/qr.png";
+// import QR from "@/public/assets/checkout/qr.png";
 import Country from "@/components/custom/CountryDropdown";
 import { fadeInOut } from "@/utils/animations";
 import { Checkout } from "@/types/checkout";
@@ -242,7 +242,7 @@ const CheckoutPage: React.FC = () => {
                 {...fadeInOut}
                 className="flex md:w-full items-center md:items-start"
               >
-                <Image alt="qr" src={QR} className="w-[273px] h-[273px]" />
+                {/* <Image alt="qr" src={QR} className="w-[273px] h-[273px]" /> */}
               </motion.div>
             )}
           </AnimatePresence>
