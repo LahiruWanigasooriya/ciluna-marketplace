@@ -3,7 +3,7 @@ import Image from "next/image";
 import Img from "@/public/assets/wishlist/img.png";
 import ImgM from "@/public/assets/wishlist/imgm.jpg";
 import WishlistList from "./WishlistList";
-import { getCilunaPrice } from "@/lib/cilunaServics";
+import { getCilunaPrice } from "@/lib/cilunaService";
 import toFixed from "@/functions/cilunaPrice";
 
 const WishlistPage = async () => {

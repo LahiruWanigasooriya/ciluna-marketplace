@@ -9,7 +9,7 @@ import { IProduct } from "@/types/product";
 import Sort from "./Sort";
 import Filter from "./Filter";
 import Pagination from "./Pagination";
-import { getCilunaPrice } from "@/lib/cilunaServics";
+import { getCilunaPrice } from "@/lib/cilunaService";
 import toFixed from "@/functions/cilunaPrice";
 import { getSubcategoryById } from "@/actions/subcategories/subcategory";
 import { getAllBrands } from "@/actions/brands/brand";
