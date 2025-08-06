@@ -81,7 +81,7 @@ export default function Navbar({ categories }: any) {
     { _id: "1", name: "Women", component: WomenMenu },
     { _id: "2", name: "Men", component: MenMenu },
     { _id: "3", name: "Jewellery", component: JewelleryMenu },
-    { _id: "4", name: "Occasion Wear", component: OccasionWearMenu},
+    { _id: "4", name: "Occasion Wear", component: OccasionWearMenu },
     { _id: "5", name: "Scents", component: ScentsMenu },
   ];
 
@@ -256,10 +256,10 @@ export default function Navbar({ categories }: any) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full z-30 transition-all duration-50000 ${
+      className={`fixed top-0 left-0 w-full z-30 transition-all duration-50000 font-arial leading-[20px] border border-gray-border ${
         isNavbarActive
           ? "bg-white transition-all duration-50000"
-          : "bg-[rgba(255,255,255,0.02)]"
+          : "bg-[rgba(255,255,255,0.02)] glass-navbar"
       } ${shadow ? "shadow-md" : ""}`}
       style={{ boxShadow: shadow ? shadowStyle.get() : "none" }}
     >
@@ -273,7 +273,7 @@ export default function Navbar({ categories }: any) {
         </div>
       </div>
       <div className="flex flex-col items-center justify-between relative">
-        <div className="flex w-full max-w-[1440px] mx-auto md:px-[38px] xl:px-[96px] md:pb-[8px] p-[16px] md:pt-[20px] xl:pt-[24px] gap-4">
+        <div className="flex w-full max-w-[1440px] mx-auto md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px] md:pb-[8px] p-[16px] md:pt-[20px] xl:pt-[24px] gap-4">
           <div
             className="cursor-pointer"
             onClick={() => handleNavigation("Home", "/")}
@@ -286,7 +286,7 @@ export default function Navbar({ categories }: any) {
           </div>
 
           <div className="flex items-center justify-end w-full">
-            <div className="flex justify-end w-full md:w-fit md:w- lg:w-[60%]">
+            <div className="flex justify-end w-full md: lg:w-[60%]">
               <SearchField
                 aria-label="Search"
                 isNavbarActive={isNavbarActive}
@@ -296,15 +296,15 @@ export default function Navbar({ categories }: any) {
               />
             </div>
 
-            <div className="flex items-center md:space-x-4 lg:space-x-[24px] max-w-[150px] w-fit md:max-w-fit md:w-full md:min-w-[297px]">
-              <div className="flex md:min-w-[77px]">
+            <div className="flex items-center md:space-x-4 lg:space-x-[24px] max-w-[150px] w-fit md:max-w-fit md:w-full md:min-w-[297px">
+              <div className="flex md:min-w-fit">
                 <img
                   src={flag.src}
                   alt="Language Flag"
-                  className="min-w-[24px] flex h-[24px] cursor-pointer mr-[12px] md:mr-[8px]"
+                  className="min-w-[24px] flex h-[24px] cursor-pointer mx-[12px] lg:ml-[24px] md:mr-[8px]"
                 />
                 <p
-                  className={`text-xs lg:text-sm font-inter hidden md:flex font-light cursor-pointer leading-[24px] ${
+                  className={`text-xs lg:text-sm font-inter hidden lg:flex font-light cursor-pointer leading-[24px] ${
                     isNavbarActive ? "text-black" : "text-white"
                   }`}
                 >
@@ -353,7 +353,11 @@ export default function Navbar({ categories }: any) {
                     aria-label="Toggle mobile menu"
                   >
                     <img
-                      src={isMobileMenuOpen || isNavbarActive ? menuActive.src : hamburgerMenu.src}
+                      src={
+                        isMobileMenuOpen || isNavbarActive
+                          ? menuActive.src
+                          : hamburgerMenu.src
+                      }
                       alt="Menu Icon"
                       className={`${navIconStyle} min-w-[24px] h-[24px]`}
                     />
@@ -365,7 +369,7 @@ export default function Navbar({ categories }: any) {
                       <>
                         <div
                           onClick={handleProfile}
-                          className="flex items-center cursor-pointer justify-center rounded-full bg-lightGreen text-black font-loraBold text-sm uppercase w-[24px] aspect-square"
+                          className="flex items-center relative cursor-pointer justify-center rounded-full bg-lightGreen text-black font-arial text-sm w-[24px] aspect-square"
                         >
                           <Image
                             src={profileIcon}
@@ -374,6 +378,52 @@ export default function Navbar({ categories }: any) {
                             width={24}
                             height={24}
                           />
+                          {profileSelect && (
+                            <motion.div
+                              ref={profileRef}
+                              initial="hidden"
+                              animate="visible"
+                              variants={popupVariants}
+                              className={`flex flex-col items-start backdrop-blur-md z-10 cursor-pointer bg-[#FFFFFF]/90 py-[13px] w-[188px] rounded-[10px] text-sm absolute top-7 left-[0px] border border-gray-border ${
+                                isNavbarActive ? "text-black" : "text-white"
+                              }`}
+                            >
+                              <Link
+                                href="/profile"
+                                className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
+                                  pathname === "/profile"
+                                    ? "text-blue"
+                                    : isNavbarActive
+                                    ? "text-black"
+                                    : "text-white"
+                                }`}
+                                onClick={() => setProfileSelect(false)}
+                              >
+                                Profile
+                              </Link>
+                              <Link
+                                href="/profile/history"
+                                className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
+                                  pathname === "/profile/history"
+                                    ? "text-blue"
+                                    : isNavbarActive
+                                    ? "text-black"
+                                    : "text-white"
+                                }`}
+                                onClick={() => setProfileSelect(false)}
+                              >
+                                Order History
+                              </Link>
+                              <div
+                                onClick={handleLogout}
+                                className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
+                                  isNavbarActive ? "text-black" : "text-white"
+                                }`}
+                              >
+                                Sign out
+                              </div>
+                            </motion.div>
+                          )}
                         </div>
                         <div
                           className={`h-[24px] w-[1px] ml-[16px] flex justify-center items-center ${
@@ -412,53 +462,6 @@ export default function Navbar({ categories }: any) {
                     )}
                   </div>
                 </div>
-
-                {profileSelect && (
-                  <motion.div
-                    ref={profileRef}
-                    initial="hidden"
-                    animate="visible"
-                    variants={popupVariants}
-                    className={`flex flex-col items-start backdrop-blur-md z-10 cursor-pointer bg-[#FFFFFF]/90 py-[13px] w-[188px] rounded-[10px] text-sm absolute top-11 right-[150px] ${
-                      isNavbarActive ? "text-black" : "text-white"
-                    }`}
-                  >
-                    <Link
-                      href="/profile"
-                      className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
-                        pathname === "/profile"
-                          ? "text-blue"
-                          : isNavbarActive
-                          ? "text-black"
-                          : "text-white"
-                      }`}
-                      onClick={() => setProfileSelect(false)}
-                    >
-                      Profile
-                    </Link>
-                    <Link
-                      href="/profile/history"
-                      className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
-                        pathname === "/profile/history"
-                          ? "text-blue"
-                          : isNavbarActive
-                          ? "text-black"
-                          : "text-white"
-                      }`}
-                      onClick={() => setProfileSelect(false)}
-                    >
-                      Order History
-                    </Link>
-                    <div
-                      onClick={handleLogout}
-                      className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
-                        isNavbarActive ? "text-black" : "text-white"
-                      }`}
-                    >
-                      Sign out
-                    </div>
-                  </motion.div>
-                )}
               </div>
             </div>
             <div className="hidden items-center gap-4">
@@ -525,6 +528,11 @@ export default function Navbar({ categories }: any) {
             )}
           </div>
         </div>
+        <div
+          className={` mx-auto w-[80%] max-w-[1248px] ${
+            isNavbarActive ? "line-gradient-header " : "line-gradient-header"
+          }`}
+        ></div>
 
         <div
           className={`rounded-[9px] items-center justify-between border-none h-[50px] px-4 md:flex hidden ${
@@ -537,7 +545,7 @@ export default function Navbar({ categories }: any) {
                   <Link
                     key={data._id}
                     href={`/subcategories/${data._id}`}
-                    className="cursor-pointer border border-transparent hover:border-solid hover:border-gray-300 px-[12px] py-[6px] my-[9px] rounded-[4px]"
+                    className="cursor-pointer border border-transparent hover:border-solid hover:border-gray-300 px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px] "
                     onMouseEnter={() => setActiveMenu(data.name)}
                     onMouseLeave={() => setActiveMenu(null)}
                   >

@@ -78,11 +78,11 @@ const SignupForm = ({
 
 }) => {
   return (
-    
     <div className="w-full max-w-[598px]  mx-auto">
 
     <form
       onSubmit={handleSubmit}
+
       className="max-w-[598px]  mx-auto rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
     >
       <div className="flex items-center justify-center space-x-2 text-[#252525]">
@@ -99,31 +99,44 @@ const SignupForm = ({
       <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
         <div className="flex flex-col sm:gap-2  sm:flex-row sm:items-center sm:justify-between">
         <div className="flex-1">
+=======
+      className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
+    >
+      <div className="flex items-center justify-center space-x-2 text-[#252525]">
+        
+        <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-lg" />
+      </div>
+
+      <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
+        <div>
+
           <TextField
             label="First Name*"
             placeholder="Enter first name"
             value={formData.firstName}
-            className="w-full  "
+            className="w-full"
             onChange={(value: string) => handleChange("firstName", value)}
           />
           {errors.firstName && <p className="text-red-500 text-xs">{errors.firstName}</p>}
         </div>
+
 
         <div className="flex-1">
           <TextField
             label="Last Name*"
             placeholder="Enter last name"
             value={formData.lastName}
+
             className="w-full "
             onChange={(value: string) => handleChange("lastName", value)}
           />
           {errors.lastName && <p className="text-red-500 text-xs">{errors.lastName}</p>}
         </div>
+
         </div>
-       
 
+<div className="w-full">
 
-      <div className="w-full">
         <label className="text-sm text-[#252525] font-medium mb-1 block">
           Date of Birth*
         </label>
@@ -257,6 +270,7 @@ const SignupForm = ({
       </div>
     </form>
      </div>
+
   );
 };
 
@@ -315,6 +329,7 @@ const SignupPage: React.FC = () => {
   };
 
   return (
+
 <>
     <div className="flex flex-col h-screen bg-white text-black ">
 
