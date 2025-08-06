@@ -20,6 +20,7 @@ import { policyConfig } from "@/config/policy";
 import {parseDate} from "@internationalized/date";
 import bgpattern from "@/public/assets/login/bgpattern.png";
 import TitleLabelDropdown from "@/components/TitleDropDown";
+import Footer from "@/components/custom/Footer";
 
 type FormData = {
   titlelabel:string;
@@ -77,6 +78,7 @@ const SignupForm = ({
 
 }) => {
   return (
+    
     <div className="w-full max-w-[598px]  mx-auto">
 
     <form
@@ -313,7 +315,7 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-
+<>
     <div className="flex flex-col h-screen bg-white text-black ">
 
            
@@ -336,7 +338,7 @@ const SignupPage: React.FC = () => {
                         src={bgpattern}
                         alt="background pattern"
                         fill
-                        className="object-cover bg-[#e8e8da rotate-180"
+                        className="object-cover bg-[#e8e8da transform scale-x-[-1]"
                         priority
                         />
             </div>
@@ -352,9 +354,9 @@ const SignupPage: React.FC = () => {
       
      
     </div>
+    <div className="w-full absolute items-end justify-center"><Footer/></div>
     
-    
-    
+    </>
   );
 }
 
