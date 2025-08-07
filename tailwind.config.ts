@@ -71,6 +71,7 @@ const config = withTV({
         neutralGray: "hsl(var(--neutral-gray))",
         grayNeutralFg: "hsl(var(--gray-neutral-fg))",
         gray: "#252525",
+        lightgray: "#F5F5F5",
         "custom-red": "#A70000",
       },
 
@@ -126,7 +127,9 @@ const config = withTV({
       },
     },
   },
-  plugins: [tailwindcssAnimate, tailwindcssReactAriaComponents,
+  plugins: [
+    tailwindcssAnimate,
+    tailwindcssReactAriaComponents,
     require("tailwind-scrollbar-hide"),
   ],
 });

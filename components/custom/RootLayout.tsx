@@ -74,7 +74,7 @@ export default function ConditionalLayout({
 
   return (
     <div>
-      <div className="flex flex-col max-w-[1440px] mx-auto min-h-screen relative px-[16px] md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px] ">
+      <div className="flex flex-col max-w-[1920px] mx-auto min-h-screen relative">
         {isHomePage && (
           <div className="absolute flex md:left-0 right-0 recommend:pl-24 top-16 md:-top-4 xl:-top-6 justify-center items-center">
             <Image src={HeaderBanner} alt="Header Banner" />

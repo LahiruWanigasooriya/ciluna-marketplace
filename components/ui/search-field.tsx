@@ -67,20 +67,26 @@ const SearchField = ({
       onSubmit={handleSubmit}
     >
       {label && <Label>{label}</Label>}
-      <FieldGroup
-        className="border-none"
-      >
-        <Input placeholder={placeholder ?? ""} className={input() } />
+      <FieldGroup className="border-none bg-transparent focus-within:border-none focus-within:ring-0">
+        <Input
+          placeholder={placeholder ?? ""}
+          className={input() + " border-none"}
+        />
         {isPending ? (
           <Loader variant="spin" className="mr-2.5" />
         ) : (
-          <Button
-            size="square-petite"
-            appearance="plain"
-            className={clearButton() + (isNavbarActive ? " text-black" : "text-white")}
+          <button
+            className={
+              clearButton() +
+              (isNavbarActive ? " text-black" : "text-white") +
+              "p-0"
+            }
           >
-            <IconX aria-hidden className="text-white"/>
-          </Button>
+            <IconX
+              aria-hidden
+              className={`p-0${isNavbarActive ? " text-black" : " text-white"}`}
+            />
+          </button>
         )}
         <img
           src={
