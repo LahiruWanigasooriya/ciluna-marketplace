@@ -87,7 +87,7 @@ export const conditionConfig: {
     items: [
       {
         description:
-          "In no event shall PAW Marketplace be liable for any indirect, incidental, or consequential damages arising from your use of our website or services.",
+          "In no event shall CILUNA Marketplace be liable for any indirect, incidental, or consequential damages arising from your use of our website or services.",
       },
     ],
   },
