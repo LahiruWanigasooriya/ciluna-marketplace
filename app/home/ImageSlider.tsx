@@ -62,11 +62,7 @@ export default function Hero() {
   const handleThumbnailClick = (index: number) => {
     setCurrentHero(index);
   };
-  const { checkAuth } = useAuthStore();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    setIsLoggedIn(checkAuth());
-  }, [checkAuth]);
+  const { token } = useAuthStore();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -78,7 +74,7 @@ export default function Hero() {
   return (
     <div
       className={`relative w-full h-[372px] md:h-screen overflow-hidden flex justify-center md:mt-0 ${
-        isLoggedIn ? "mt-0" : "mt-[40px]"
+        token ? "mt-0" : "mt-[40px]"
       }`}
     >
       {/* Background Image */}

@@ -48,18 +48,13 @@ export default function Navbar({ categories }: any) {
   const wishlist = useWishlistStore((state) => state.wishlist);
   const { cart, setCart } = useCartStore();
   const { setWishlist } = useWishlistStore();
-  const { token, setAuth, clearAuth } = useAuthStore();
+  const { token, setAuth, clearAuth, isAuthenticated } = useAuthStore();
   const [profileSelect, setProfileSelect] = useState(false);
   const [mobProfileSelect, setmobProfileSelect] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [authPopup, setAuthPopup] = useState(false);
   const [isNavbarActive, setIsNavbarActive] = useState(false);
-  const { checkAuth } = useAuthStore();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    setIsLoggedIn(checkAuth());
-  }, [checkAuth]);
   // Dummy data for categories
   const dummyCategories: ICategory[] = [
     { _id: "1", name: "Women", component: WomenMenu },
@@ -220,7 +215,7 @@ export default function Navbar({ categories }: any) {
     >
       <div
         className={`items-center justify-between w-full bg-lightBlack h-[40px] pt-[7px] pb-[12px] px-[24px] flex md:hidden ${
-          isLoggedIn ? "hidden" : "flex"
+          isAuthenticated ? "hidden" : "flex"
         }`}
       >
         <span className="text-neutralGray font-[400] font-[Arial] text-[14px] leading-[20px] tracking-[0%]">
@@ -343,7 +338,7 @@ export default function Navbar({ categories }: any) {
               </div>
             </div>
             <div className="items-center justify-center hidden md:flex md:ml-[12px] lg:ml-[16px] ">
-              {isLoggedIn ? (
+              {isAuthenticated ? (
                 <>
                   <div className="flex items-center w-full">
                     <span
@@ -377,7 +372,7 @@ export default function Navbar({ categories }: any) {
                         initial="hidden"
                         animate="visible"
                         variants={popupVariants}
-                        className={`flex flex-col items-start backdrop-blur-md z-10 cursor-pointer bg-[#FFFFFF]/90 py-[13px] w-[188px] rounded-[10px] text-sm absolute top-7 left-[0px] border border-lightgray ${
+                        className={`flex flex-col items-start backdrop-blur-md z-10 cursor-pointer bg-[#FFFFFF]/90 py-[13px] w-[188px] rounded-[10px] text-sm absolute top-7 right-[0px] border border-lightgray ${
                           isNavbarActive ? "text-gray" : "text-white"
                         }`}
                       >
@@ -439,7 +434,7 @@ export default function Navbar({ categories }: any) {
                   isNavbarActive ? "text-gray" : "text-white"
                 }`}
               >
-                {token ? "Sign out" : "Sign in"}
+                {isAuthenticated ? "Sign out" : "Sign in"}
               </p>
               <Menu
                 onClick={() => {
@@ -543,12 +538,12 @@ export default function Navbar({ categories }: any) {
           <div
             ref={mobileMenuRef}
             className={`md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-[16px] overflow-y-auto ${
-              isLoggedIn ? "mt-0" : "mt-[40px]"
+              isAuthenticated ? "mt-0" : "mt-[40px]"
             }`}
           >
             {/* Header */}
             <div className="flex items-center justify-between mb- gap-[16px]">
-              {isLoggedIn && !activeMobileMenu ? (
+              {isAuthenticated && !activeMobileMenu ? (
                 <>
                   <Link
                     href="/profile"
@@ -592,7 +587,7 @@ export default function Navbar({ categories }: any) {
                 <div />
               )}
               <button
-              className="pb-[8px] "
+                className="pb-[8px] "
                 onClick={() => {
                   setMobileMenuOpen(false);
                   setActiveMobileMenu(null);
@@ -608,7 +603,7 @@ export default function Navbar({ categories }: any) {
             ) : (
               // Main Menu View
               <div className="space-y-[24px] text-lg font-semibold mt-[16px]">
-                {isLoggedIn ? (
+                {isAuthenticated ? (
                   <div className="flex flex-col gap-[8px] bg-lightgray p-[8px] rounded-[8px]">
                     <span className="flex justify-between font-[Arial] font-normal text-[16px] leading-[24px]">
                       C Cash <span className="font-bold"> 1,209,436.26 </span>
