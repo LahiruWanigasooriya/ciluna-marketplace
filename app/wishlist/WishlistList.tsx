@@ -6,7 +6,7 @@ import ProductCard from "@/app/product/ProductCard";
 import { useWishlistStore } from "@/store/wishlist";
 import Title from "@/components/custom/Title";
 
-const WishlistClient = ({pawPrice}: {pawPrice: number}) => {
+const WishlistClient = ({ cilunaPrice }: { cilunaPrice: number }) => {
   const { wishlist } = useWishlistStore();
   const router = useRouter();
 

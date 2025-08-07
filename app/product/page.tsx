@@ -2,15 +2,15 @@
 import React from "react";
 import Image from "next/image";
 import ProductCard from "./ProductCard";
-import Img from "@/public/assets/product/img.webp";
-import ImgM from "@/public/assets/product/imgm.webp";
+import Img from "@/public/assets/product/img.png";
+import ImgM from "@/public/assets/product/imgm.jpg";
 import { getAllProducts } from "@/actions/products/product";
 import { IProduct } from "@/types/product";
 import Sort from "./Sort";
 import Filter from "./Filter";
 import Pagination from "./Pagination";
-import { getPawPrice } from "@/lib/pawService";
-import toFixed from "@/functions/pawPrice";
+import { getCilunaPrice } from "@/lib/cilunaService";
+import toFixed from "@/functions/cilunaPrice";
 import { getSubcategoryById } from "@/actions/subcategories/subcategory";
 import { getAllBrands } from "@/actions/brands/brand";
 import { getAllModels } from "@/actions/model/model";
@@ -21,8 +21,8 @@ const ProductPage = async ({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) => {
   const searchParams = await searchParamsPromise;
-  const price = await getPawPrice();
-  const pawPrice = toFixed(Number(price));
+  const price = await getCilunaPrice();
+  const cilunaPrice = toFixed(Number(price));
   const currentPage = parseInt(searchParams.page || "1", 10);
   const search = searchParams.search || "";
   const sortByParam = searchParams.sortBy || "default";
@@ -141,10 +141,7 @@ const ProductPage = async ({
           <>
             <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:justify-start">
               {products.map((product: IProduct) => (
-                <ProductCard
-                  key={product._id.toString()}
-                  product={product}
-                />
+                <ProductCard key={product._id.toString()} product={product} />
               ))}
             </div>
             <Pagination currentPage={currentPage} totalPages={totalPages} />

@@ -1,7 +1,7 @@
 // app/search/page.tsx
 import Image from "next/image";
-import Img from "@/public/assets/product/img.webp";
-import ImgM from "@/public/assets/product/imgm.webp";
+import Img from "@/public/assets/product/img.png";
+import ImgM from "@/public/assets/product/imgm.jpg";
 import ProductCard from "../product/ProductCard";
 import CategoryCard from "../category/CategoryCard";
 import { searchItems } from "@/actions/search/search";

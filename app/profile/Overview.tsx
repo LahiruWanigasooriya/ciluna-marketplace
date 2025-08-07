@@ -6,7 +6,7 @@ import ShopCartIcon from "@/public/assets/profile/shopcart.svg";
 import TruckIcon from "@/public/assets/profile/truck.svg";
 import WalletIcon from "@/public/assets/profile/wallet.svg";
 import { FormValues } from "@/types/profile";
-import User from "@/public/assets/user.jpeg";
+import User from "@/public/assets/user.png";
 import ProductCard from "@/app/product/ProductCard";
 import { IProduct } from "@/types/product";
 import Product1 from "@/public/assets/product/product1.webp";

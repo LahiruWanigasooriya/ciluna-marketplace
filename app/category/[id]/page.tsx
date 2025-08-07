@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Img from "@/public/assets/product/img.webp";
-import ImgM from "@/public/assets/product/imgm.webp";
+import Img from "@/public/assets/product/img.png";
+import ImgM from "@/public/assets/product/imgm.jpg";
 import { getAllSubCategories } from "@/actions/subcategories/subcategory";
 import { ISubCategory } from "@/types/subcategory";
 import SubCategoryCard from "@/app/category/SubCategotyCard";

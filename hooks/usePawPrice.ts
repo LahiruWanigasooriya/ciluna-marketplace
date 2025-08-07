@@ -2,18 +2,18 @@
 
 import { useState, useEffect } from "react";
 
-interface PawPriceResponse {
-  price?: number; 
+interface CilunaPriceResponse {
+  price?: number;
 }
 
-const usePawPrice = () => {
-  const [pawPrice, setPawPrice] = useState<number | null>(null);
+const useCilunaPrice = () => {
+  const [CilunaPrice, setCilunaPrice] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchPrice = async () => {
       try {
         const response = await fetch(
-          `https://wallet1.pawchain.net/api/pawPrice`
+          `https://wallet1.pawchain.net/api/cilunaPrice`
         );
 
         if (!response.ok) {
@@ -23,32 +23,32 @@ const usePawPrice = () => {
         const text = await response.text();
 
         try {
-          const data: PawPriceResponse = JSON.parse(text);
+          const data: CilunaPriceResponse = JSON.parse(text);
 
           if (typeof data.price === "number") {
-            setPawPrice(data.price);
+            setCilunaPrice(data.price);
           } else {
             console.error("Price not found in response:", data);
-            setPawPrice(null);
+            setCilunaPrice(null);
           }
         } catch (jsonError) {
           console.error("Failed to parse JSON:", text);
-          setPawPrice(null);
+          setCilunaPrice(null);
         }
       } catch (error) {
-        console.error("Error fetching PAW price:", error);
-        setPawPrice(null);
+        console.error("Error fetching Ciluna price:", error);
+        setCilunaPrice(null);
       }
     };
 
     fetchPrice();
   }, []);
 
-  const convertToPaw = (usd: number): string => {
-    return pawPrice ? (usd / pawPrice).toFixed(2) : "Loading...";
+  const convertToCiluna = (usd: number): string => {
+    return CilunaPrice ? (usd / CilunaPrice).toFixed(2) : "Loading...";
   };
 
-  return { pawPrice, convertToPaw };
+  return { CilunaPrice, convertToCiluna };
 };
 
-export default usePawPrice;
+export default useCilunaPrice;

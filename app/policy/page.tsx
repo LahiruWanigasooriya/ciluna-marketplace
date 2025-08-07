@@ -10,8 +10,8 @@ const page = () => {
         <div className="flex flex-col gap-3 items-center md:items-start">
           <Title title="Privacy Policy" />
           <p className="text-sm font-[400] leading-[30px] md:leading-[24px] text-center md:text-start">
-            At PAW Marketplace, your privacy is paramount. This Privacy Policy
-            explains how we collect, use, and safeguard your personal
+            At CILUNA Marketplace, your privacy is paramount. This Privacy
+            Policy explains how we collect, use, and safeguard your personal
             information in connection with our services.
           </p>
         </div>
