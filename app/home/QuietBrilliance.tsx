@@ -10,7 +10,7 @@ const QuietBrilliance: React.FC = () => {
     <>
     {/* Bg Image */}
     <div className="hidden md:flex absolute w-full h-auto item-center justify-center overflow-hidden mt-60"><Image src={BgImg} alt="Play" className="w-[26%]"/></div>
-    <div className="hidden md:flex absolute w-full h-auto item-end overflow-hidden recommend:ml-40 -mt-40 -rotate-180 scale-y-[-1]"><Image src={BgImg} alt="Play" className="w-[26%]"/></div>
+    <div className="hidden md:flex absolute w-full h-auto item-end -mt-40 -rotate-180 scale-y-[-1]"><Image src={BgImg} alt="Play" className=" w-[26%] recommend:-ml-[80px]"/></div>
     
     <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 xl:gap-[103px] max-w-[1920px] mx-auto font-inter z-10">
       {/* Text Content */}
@@ -19,7 +19,7 @@ const QuietBrilliance: React.FC = () => {
         <h2 className="text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-gray-900 mb-6">
           Quiet Brilliance
         </h2>
-        <p className="text-[16px] text-[#707070] leading-relaxed md:mb-4">
+        <p className="text-[14px] sm:text-[16px] text-[#707070] font-inter leading-relaxed md:mb-4">
           CILUNA emerged from the balance between tradition and vision, earth
           and ether, self and story.<br/> With every creation, we seek to awaken what
           is eternal. Not trends, but truths. Not noise, but nuance. We do not
