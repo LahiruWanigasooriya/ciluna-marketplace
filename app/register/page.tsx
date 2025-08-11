@@ -27,7 +27,7 @@ type FormData = {
   firstName: string;
   lastName: string;
   email: string;
-  confirmemail:string;
+  confirmemail:string; 
   phone: string;
   password: string;
   confirmpassword: string;
@@ -129,6 +129,7 @@ const SignupForm = ({
         </label>
         <DatePicker
           className="w-full"
+          placeholder="Select date od birth"
           onChange={(value) => {
             const date = value ? value.toDate("UTC") : null;
             handleChange("dateofbirth", date);
