@@ -8,10 +8,7 @@ import BgImg from "@/public/assets/home/quiet-brillience-bg.png";
 const QuietBrilliance: React.FC = () => {
   return (
     <>
-    {/* Bg Image */}
-    <div className="hidden md:flex absolute w-full h-auto item-center justify-center overflow-hidden mt-60"><Image src={BgImg} alt="Play" className="w-[26%]"/></div>
-    <div className="hidden md:flex absolute w-full h-auto item-end -mt-40 -rotate-180 scale-y-[-1]"><Image src={BgImg} alt="Play" className=" w-[26%] recommend:-ml-[80px]"/></div>
-    
+      
     <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 xl:gap-[103px] max-w-[1920px] mx-auto font-inter z-10">
       {/* Text Content */}
       <div className="flex-1 text-center md:text-start">

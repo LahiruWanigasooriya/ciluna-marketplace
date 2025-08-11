@@ -16,9 +16,17 @@ export const signupValidationSchema = Yup.object().shape({
   lastName: Yup.string()
     .min(3, "Last Name must be at least 3 characters long")
     .required("Last Name is required"),
+  dateofbirth:Yup.date()
+  .nullable()
+  .required("Date of Birth is required"),
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
+    confirmemail:Yup.string()
+    .oneOf([Yup.ref("email")],"Emails do not match")
+    .required("Please confirm your email"),
+  country: Yup.string()
+  .required("Country is required"),
   phone: Yup.string()
     .matches(/^\+\d{1,4}\d{7,11}$/, "Phone number must include a valid country code and contain 7 to 11 digits")
     .required("Phone number is required"),
@@ -29,6 +37,9 @@ export const signupValidationSchema = Yup.object().shape({
     .matches(/[0-9]/, "Contain at least one number")
     .matches(/[@$!%*?&#]/, "Contain at least one special character")
     .required("Password is required"),
+    confirmpassword:Yup.string()
+    .oneOf([Yup.ref("password")],"Passwords do not match")
+    .required("Please confirm your password"),
 });
 
 

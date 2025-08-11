@@ -64,12 +64,14 @@ const config = withTV({
           fg: "hsl(var(--overlay-fg))",
         },
         blue: "hsl(var(--blue))",
-        purple: "#6442C1",
+        purple: "#6442c1",
+        bgBlack: "hsl(var(--bg-black))",
         lightGreen: "#BFD5CD",
         lightBlack: "hsl(var(--light-black))",
         neutralGray: "hsl(var(--neutral-gray))",
+        grayNeutralFg: "hsl(var(--gray-neutral-fg))",
         gray: "#252525",
-        "custom-red": "#A70000"
+        "custom-red": "#A70000",
       },
 
       fontFamily: {
@@ -82,8 +84,8 @@ const config = withTV({
         kaiseiBold: ["KaiseiHarunoUmi-Bold", "sans-serif"],
         playFairExtraBold: ["PlayFairDisplay-ExtraBold", "sans-serif"],
         arial:["Arial-Regular",'sans-serif'],
-        arialBold:["Arial-Bold",'sans-serif']
-
+        arialBold:["Arial-Bold",'sans-serif'],
+        kaiseiHarunoUmi: ['"KaiseiHarunoUmi-Bold"', "sans-serif"],
       },
       fontSize: {
         xxxs: "0.512rem",
@@ -124,7 +126,9 @@ const config = withTV({
       },
     },
   },
-  plugins: [tailwindcssAnimate, tailwindcssReactAriaComponents],
+  plugins: [tailwindcssAnimate, tailwindcssReactAriaComponents,
+    require("tailwind-scrollbar-hide"),
+  ],
 });
 
 export default config;

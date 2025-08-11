@@ -26,9 +26,9 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "example.com"
+        hostname: "example.com",
       },
-   
+
       {
         protocol: "https",
         hostname: "http://localhost:3000", // Add the external domain you're using
@@ -48,6 +48,5 @@ const nextConfig: NextConfig = {
     ],
   },
 };
-
 
 export default nextConfig;

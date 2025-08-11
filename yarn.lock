@@ -333,11 +333,6 @@
   dependencies:
     fast-glob "3.3.1"
 
-"@next/font@^14.2.15":
-  version "14.2.15"
-  resolved "https://registry.yarnpkg.com/@next/font/-/font-14.2.15.tgz#4e6f0d5b14ecc6b6dea7c1b07e42855e5f14823a"
-  integrity sha512-QopYhBmCDDrNDynbi+ZD1hDZXmQXVFo7TmAFp4DQgO/kogz1OLbQ92hPigJbj572eZ3GaaVxNIyYVn3/eAsehg==
-
 "@next/swc-darwin-arm64@15.2.0":
   version "15.2.0"
   resolved "https://registry.yarnpkg.com/@next/swc-darwin-arm64/-/swc-darwin-arm64-15.2.0.tgz#51ebba2162330ee3e8b3412bf31defd94a7b85e7"
@@ -3833,10 +3828,9 @@ path-scurry@^1.11.1:
     lru-cache "^10.2.0"
     minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
 
-"paw-marketplace@file:.":
+"ciluna-marketplace@file:.":
   version "0.1.0"
   dependencies:
-    "@next/font" "^14.2.15"
     "@stripe/react-stripe-js" "^3.1.1"
     "@stripe/stripe-js" "^5.6.0"
     bcryptjs "^2.4.3"
@@ -3857,7 +3851,7 @@ path-scurry@^1.11.1:
     motion "^12.0.11"
     next "^15.2.0"
     nodemailer "^6.9.16"
-    paw-marketplace "file:../../../../Users/lahir/AppData/Local/Yarn/Cache/v6/npm-paw-marketplace-0.1.0-91fcf784-bcd2-480f-9bb9-e19baff91a96-1753782918971/node_modules/paw-marketplace"
+    ciluna-marketplace "file:C:/Users/Dell/AppData/Local/Yarn/Cache/v6/npm-ciluna-marketplace-0.1.0-570d8a03-7535-4316-baa3-0f7a59f5773e-1754278825686/node_modules/ciluna-marketplace"
     react "^19.0.0"
     react-aria-components "^1.5.0"
     react-dom "^19.0.0"
@@ -3865,6 +3859,7 @@ path-scurry@^1.11.1:
     react-icons "^5.4.0"
     sonner "^1.7.2"
     stripe "^17.6.0"
+    swiper "^11.2.10"
     tailwind-merge "^2.6.0"
     tailwindcss-animate "^1.0.7"
     uuid "^11.1.0"
@@ -4443,16 +4438,8 @@ streamsearch@^1.1.0:
   resolved "https://registry.yarnpkg.com/streamsearch/-/streamsearch-1.1.0.tgz#404dd1e2247ca94af554e841a8ef0eaa238da764"
   integrity sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==
 
-"string-width-cjs@npm:string-width@^4.2.0":
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
-  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
-  dependencies:
-    emoji-regex "^8.0.0"
-    is-fullwidth-code-point "^3.0.0"
-    strip-ansi "^6.0.1"
-
-string-width@^4.1.0:
+"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -4538,14 +4525,7 @@ string.prototype.trimstart@^1.0.8:
     define-properties "^1.2.1"
     es-object-atoms "^1.0.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
-  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
-  dependencies:
-    ansi-regex "^5.0.1"
-
-strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -4623,6 +4603,11 @@ tailwind-merge@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/tailwind-merge/-/tailwind-merge-2.6.0.tgz#ac5fb7e227910c038d458f396b7400d93a3142d5"
   integrity sha512-P+Vu1qXfzediirmHOC3xKGAYeZtPcV9g76X+xg2FD4tYgR71ewMA35Y3sCz3zhiN/dwefRpJX0yBcgwi1fXNQA==
+
+tailwind-scrollbar-hide@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/tailwind-scrollbar-hide/-/tailwind-scrollbar-hide-4.0.0.tgz#98ea96fe30980621665e3a3842a0aa004da9dd80"
+  integrity sha512-gobtvVcThB2Dxhy0EeYSS1RKQJ5baDFkamkhwBvzvevwX6L4XQfpZ3me9s25Ss1ecFVT5jPYJ50n+7xTBJG9WQ==
 
 tailwind-variants@^0.3.0:
   version "0.3.1"

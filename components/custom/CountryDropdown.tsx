@@ -126,7 +126,7 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
                 .map((country) => (
                   <div
                     key={country.name}
-                    className="px-3 py-2 hover:bg-gray-900 w-full flex items-center text-sm font-[400]"
+                    className="px-3 py-2 text-black hover:bg-gray-500 w-full flex items-center text-sm font-[400]"
                     onClick={() => handleSelectCountry(country)}
                   >
                     {country.name}

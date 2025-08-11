@@ -1,5 +1,5 @@
 {
-  "name": "paw-marketplace",
+  "name": "ciluna-marketplace",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -29,7 +29,7 @@
     "motion": "^12.0.11",
     "next": "^15.2.0",
     "nodemailer": "^6.9.16",
-    "paw-marketplace": "file:",
+    "ciluna-marketplace": "file:",
     "react": "^19.0.0",
     "react-aria-components": "^1.5.0",
     "react-dom": "^19.0.0",
@@ -39,6 +39,7 @@
     "stripe": "^17.6.0",
     "swiper": "^11.2.10",
     "tailwind-merge": "^2.6.0",
+    "tailwind-scrollbar-hide": "^4.0.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.1.0",
     "yup": "^1.6.1",

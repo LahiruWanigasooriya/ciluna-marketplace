@@ -11,15 +11,14 @@ import useForm from "@/hooks/useForm";
 import Gpay from "@/public/assets/checkout/gpay.png";
 import Paypal from "@/public/assets/checkout/paypal.png";
 import Visa from "@/public/assets/checkout/visa.png";
-import Pawpay from "@/public/assets/checkout/pawpay.png";
+import CILUNApay from "@/public/assets/checkout/cilunapay.png";
 import Master from "@/public/assets/checkout/master.png";
 import Stripe from "@/public/assets/checkout/stripe.png";
-import QR from "@/public/assets/checkout/qr.png";
+// import QR from "@/public/assets/checkout/qr.png";
 import Country from "@/components/custom/CountryDropdown";
 import { fadeInOut } from "@/utils/animations";
 import { Checkout } from "@/types/checkout";
 import Tel from "@/components/custom/Phone";
-
 
 const CheckoutPage: React.FC = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
@@ -58,10 +57,11 @@ const CheckoutPage: React.FC = () => {
         <Title title="Checkout" />
         <p className="font-[400] text-sm text-center md:text-start">
           Complete your purchase with ease. Our checkout process is designed to
-          be simple and secure, ensuring your information is protected. At PAW
-          POS, we prioritize your satisfaction, making your shopping experience
-          seamless from start to finish. If you need any assistance, our team is
-          here to help with payment options, order review, and delivery details.
+          be simple and secure, ensuring your information is protected. At
+          CILUNA POS, we prioritize your satisfaction, making your shopping
+          experience seamless from start to finish. If you need any assistance,
+          our team is here to help with payment options, order review, and
+          delivery details.
         </p>
       </div>
 
@@ -119,14 +119,14 @@ const CheckoutPage: React.FC = () => {
                     Logitech MX Master 3 Wir... Price
                   </p>
                   <div className="flex flex-col items-end ">
-                    <p className={summaryCard}>40 PAW</p>
+                    <p className={summaryCard}>40 CILUNA</p>
                     <p className="font-[400] text-xxs">($0.00)</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className={summaryCard}>Discount</p>
                   <div className="flex flex-col items-end">
-                    <p className={summaryCard}>100.00 PAW</p>
+                    <p className={summaryCard}>100.00 CILUNA</p>
                     <p className="font-[400] text-xxs">($0.00)</p>
                   </div>
                 </div>
@@ -135,14 +135,14 @@ const CheckoutPage: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <p className={summaryCard}>Shipping Fee</p>
                   <div className="flex flex-col items-end">
-                    <p className={summaryCard}>0 PAW</p>
+                    <p className={summaryCard}>0 CILUNA</p>
                     <p className="font-[400] text-xxs">($0.00)</p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className={summaryCard}>Total</p>
                   <div className="flex flex-col items-end">
-                    <p className={summaryCard}>300.00 PAW</p>
+                    <p className={summaryCard}>300.00 CILUNA</p>
                     <p className="font-[400] text-xxs">($0.00)</p>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ const CheckoutPage: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between gap-6">
           <div className="flex flex-col gap-6 w-full items-start">
             <div className="flex flex-col gap-y-[18px] items-start">
-              <Title title="Payment Details" className="text-lg"  />
+              <Title title="Payment Details" className="text-lg" />
               <div className="flex items-center gap-2">
                 {[
                   { src: Visa, name: "Visa" },
@@ -162,7 +162,7 @@ const CheckoutPage: React.FC = () => {
                   { src: Paypal, name: "PayPal" },
                   { src: Master, name: "MasterCard" },
                   { src: Gpay, name: "Gpay" },
-                  { src: Pawpay, name: "Pawpay" },
+                  { src: CILUNApay, name: "CILUNApay" },
                 ].map((payment) => (
                   <Image
                     key={payment.name}
@@ -223,26 +223,26 @@ const CheckoutPage: React.FC = () => {
             </AnimatePresence>
 
             <AnimatePresence>
-              {selectedPaymentMethod === "Pawpay" && (
+              {selectedPaymentMethod === "Cilunapay" && (
                 <motion.div
                   {...fadeInOut}
                   className="flex flex-col text-xs md:text-sm items-center md:items-start"
                 >
                   <p className="font-[500]">Wallet Address:</p>
                   <p className="font-[600]">
-                    pawx90vcICw1igsdfgdsftsdfbvgfggfdsgewvilywlab22
+                    cilunax90vcICw1igsdfgdsftsdfbvgfggfdsgewvilywlab22
                   </p>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
           <AnimatePresence>
-            {selectedPaymentMethod === "Pawpay" && (
+            {selectedPaymentMethod === "Cilunapay" && (
               <motion.div
                 {...fadeInOut}
                 className="flex md:w-full items-center md:items-start"
               >
-                <Image alt="qr" src={QR} className="w-[273px] h-[273px]" />
+                {/* <Image alt="qr" src={QR} className="w-[273px] h-[273px]" /> */}
               </motion.div>
             )}
           </AnimatePresence>
@@ -270,8 +270,8 @@ const CheckoutPage: React.FC = () => {
               value={values.address2}
               onChange={(value: string) => handleChange("address2", value)}
             />
-                   </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-4">
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-4">
             <TextField
               label="City"
               className="custom-textfield"
@@ -308,9 +308,7 @@ const CheckoutPage: React.FC = () => {
               value={values.zip}
               onChange={(value: string) => handleChange("zip", value)}
             />
-            </div>
-        
-   
+          </div>
         </div>
 
         {/* Form Actions */}

@@ -1,18 +1,18 @@
 import React from "react";
 import Image from "next/image";
-import Img from "@/public/assets/wishlist/img.webp";
-import ImgM from "@/public/assets/wishlist/imgm.webp";
+import Img from "@/public/assets/wishlist/img.png";
+import ImgM from "@/public/assets/wishlist/imgm.jpg";
 import WishlistList from "./WishlistList";
-import { getPawPrice } from "@/lib/pawService";
-import toFixed from "@/functions/pawPrice";
+import { getCilunaPrice } from "@/lib/cilunaService";
+import toFixed from "@/functions/cilunaPrice";
 
 const WishlistPage = async () => {
-  const price = await getPawPrice()
-  const pawPrice = toFixed(Number(price))
+  const price = await getCilunaPrice();
+  const cilunaPrice = toFixed(Number(price));
   return (
     <div className="flex flex-col gap-6 md:gap-8 xl:gap-12">
       {/* Wishlist Client Component */}
-      <WishlistList pawPrice={pawPrice} />
+      <WishlistList cilunaPrice={cilunaPrice} />
 
       {/* Image Section */}
       <div>

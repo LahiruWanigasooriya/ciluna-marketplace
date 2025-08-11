@@ -32,14 +32,14 @@ interface ProductProps {
   product: IProduct;
   variants: IProductVariant;
   wishCount: ProductWishCountResponse;
-  pawPrice: number;
+  cilunaPrice: number;
 }
 
 const Product: React.FC<ProductProps> = ({
   product,
   variants,
   wishCount,
-  pawPrice,
+  cilunaPrice,
 }) => {
   // Combine the main image and additional images
   const initialImages = useRef<string[]>([
@@ -231,7 +231,6 @@ const Product: React.FC<ProductProps> = ({
     }
   };
 
-
   return (
     <div className="flex flex-col md:flex-row justify-between gap-8 md:gap-[24px] lg:gap-[48px] xl:gap-[64px] recommend:gap-[72px] items-start md:items-center text-white">
       <div className="flex flex-col gap-[12px] lg:gap-4 w-full">
@@ -358,10 +357,12 @@ const Product: React.FC<ProductProps> = ({
           ) : (
             <p className="text-sm leading-[16px]">{product?.category?.name}</p>
           )}
-            {isLoading ? (
+          {isLoading ? (
             <Skeleton className="w-full h-5 bg-[#FFFFFF]/10" />
           ) : (
-            <p className="text-sm leading-[16px]">{product?.subcategory?.name}</p>
+            <p className="text-sm leading-[16px]">
+              {product?.subcategory?.name}
+            </p>
           )}
         </div>
         <div className="hidden md:flex justify-between items-center w-full">
@@ -395,11 +396,11 @@ const Product: React.FC<ProductProps> = ({
               <Skeleton className="w-full h-5 bg-[#FFFFFF]/10" />
             ) : (
               <p className="text-xl font-interSemiBold text-[#8640FF]">
-                {pawPrice !== null &&
+                {cilunaPrice !== null &&
                   Math.floor(
-                    discountedPrice / pawPrice / 1000
+                    discountedPrice / cilunaPrice / 1000
                   ).toLocaleString()}
-                &nbsp;PAW
+                &nbsp;CILUNA
               </p>
             )}
             {isLoading ? (
@@ -414,9 +415,9 @@ const Product: React.FC<ProductProps> = ({
             ) : (
               <div className="flex items-end line-through decoration-1">
                 <p className="text-xl font-[400] leading-[24px]">
-                  {pawPrice !== null &&
-                    Math.floor(price / pawPrice / 1000).toLocaleString()}
-                  &nbsp;PAW
+                  {cilunaPrice !== null &&
+                    Math.floor(price / cilunaPrice / 1000).toLocaleString()}
+                  &nbsp;CILUNA
                 </p>
                 <p className="text-sm">
                   (${selectedVariant ? selectedVariant.price : product.price})
