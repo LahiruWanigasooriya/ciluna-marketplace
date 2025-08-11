@@ -78,7 +78,7 @@ export default function Hero() {
   return (
     <div
       className={`relative w-full h-[372px] md:h-screen overflow-hidden flex justify-center md:mt-0 ${
-        mounted && isAuthenticated ? "mt-0" : "mt-[0px]"
+        mounted && isAuthenticated ? "mt-0" : "mt-[40px] md:mt-0"
       }`}
     >
       {/* Background Image */}

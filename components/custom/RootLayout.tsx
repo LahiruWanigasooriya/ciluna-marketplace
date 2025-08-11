@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Image from "next/image";
+//import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/custom/Navbar";
 import Footer from "@/components/custom/Footer";

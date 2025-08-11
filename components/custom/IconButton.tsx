@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/utils/classes"
-import { IconCircleCheckFill, IconArrowRight } from "justd-icons";
+import { IconCircleCheckFill} from "justd-icons";
 import { Button, Loader } from "ui";
 
 interface IconButtonProps {
@@ -50,7 +50,7 @@ export function IconButton({
   return (
     <Button
       isPending={loading === "loading"}
-      className={cn("w-52", className)}
+      className={cn("w-50", className)}
       onPress={pressHandler}
       intent="primary"
       isDisabled={isDisabled}
@@ -61,9 +61,7 @@ export function IconButton({
         <IconCircleCheckFill />
       ) : loading === "loading" ? (
         <Loader variant="spin" />
-      ) : (
-        <IconArrowRight />
-      )}
+      ) : null}
     </Button>
   );
 }
