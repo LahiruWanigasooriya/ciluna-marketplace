@@ -62,8 +62,12 @@ export default function Hero() {
   const handleThumbnailClick = (index: number) => {
     setCurrentHero(index);
   };
-  const { token } = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHero((prev) => (prev + 1) % heroes.length);
@@ -74,7 +78,7 @@ export default function Hero() {
   return (
     <div
       className={`relative w-full h-[372px] md:h-screen overflow-hidden flex justify-center md:mt-0 ${
-        token ? "mt-0" : "mt-[40px]"
+        mounted && isAuthenticated ? "mt-0" : "mt-[0px]"
       }`}
     >
       {/* Background Image */}
@@ -97,7 +101,7 @@ export default function Hero() {
         })}
       </div>
 
-      <div className="absolute hidden md:flex flex-col gap-[8px] w-full text-white text-left top-0 z-9 h-full md:top-1/4 lg:top-[12%] items-start px-[16px] custom-container">
+      <div className="absolute hidden md:flex flex-col gap-[8px] w-full text-white text-left top-0 z-9 h-fit md:top-1/4 lg:top-[12%] items-start px-[16px] custom-container">
         <p className="font-kaisei text-[28px] leading-[32px] tracking-normal md:text-[42px] md:leading-[48px] lg:text-[48px] lg:leading-[48px] xl:text-[58px] recommend:text-[68px] recommend:leading-[60px]">
           Where Grace Becomes Legacy
         </p>

@@ -52,6 +52,11 @@ export default function Navbar({ categories }: any) {
   const [profileSelect, setProfileSelect] = useState(false);
   const [mobProfileSelect, setmobProfileSelect] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const [authPopup, setAuthPopup] = useState(false);
   const [isNavbarActive, setIsNavbarActive] = useState(false);
 
@@ -94,6 +99,7 @@ export default function Navbar({ categories }: any) {
   useDisableScroll(isMenuOpen || isMobileMenuOpen); // Added isMobileMenuOpen to disable scroll
 
   const [isAnimating, setIsAnimating] = useState(false);
+  const scrolled = window.scrollY > 10;
 
   useEffect(() => {
     if (wishlist.length > 0) {
@@ -215,7 +221,7 @@ export default function Navbar({ categories }: any) {
     >
       <div
         className={`items-center justify-between w-full bg-lightBlack h-[40px] pt-[7px] pb-[12px] px-[24px] flex md:hidden ${
-          isAuthenticated ? "hidden" : "flex"
+          mounted && isAuthenticated ? "hidden" : "flex"
         }`}
       >
         <span className="text-neutralGray font-[400] font-[Arial] text-[14px] leading-[20px] tracking-[0%]">
@@ -338,7 +344,7 @@ export default function Navbar({ categories }: any) {
               </div>
             </div>
             <div className="items-center justify-center hidden md:flex md:ml-[12px] lg:ml-[16px] ">
-              {isAuthenticated ? (
+              {mounted && isAuthenticated ? (
                 <>
                   <div className="flex items-center w-full">
                     <span
@@ -380,7 +386,7 @@ export default function Navbar({ categories }: any) {
                           href="/profile"
                           className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
                             pathname === "/profile"
-                              ? "text-blue"
+                              ? "font-bold"
                               : isNavbarActive
                               ? "text-gray"
                               : "text-white"
@@ -417,7 +423,7 @@ export default function Navbar({ categories }: any) {
               ) : (
                 <>
                   <span
-                    onClick={handleAuthPopup}
+                    onClick={() => router.push("/login")}
                     className={`text-xs md:text-sm cursor-pointer hidden md:flex ${
                       isNavbarActive ? "text-gray" : "text-white"
                     }`}
@@ -434,7 +440,7 @@ export default function Navbar({ categories }: any) {
                   isNavbarActive ? "text-gray" : "text-white"
                 }`}
               >
-                {isAuthenticated ? "Sign out" : "Sign in"}
+                {mounted && isAuthenticated ? "Sign out" : "Sign in"}
               </p>
               <Menu
                 onClick={() => {
@@ -501,7 +507,7 @@ export default function Navbar({ categories }: any) {
           className={`rounded-[9px] items-center justify-between border-none h-[50px] px-4 md:flex hidden`}
         >
           <div className="flex flex-row overflow-x-auto no-scrollbar md:gap-[16px] lg:gap-[24px]">
-            {categoriesToUse && categoriesToUse.length > 0
+            {categoriesToUse && categoriesToUse.length > 0 && mounted
               ? categoriesToUse.map((data: ICategory) => (
                   <Link
                     key={data._id}
@@ -513,7 +519,9 @@ export default function Navbar({ categories }: any) {
                     }}
                     onMouseLeave={() => {
                       setActiveMenu(null);
-                      setIsNavbarActive(false);
+                      if (isHomePage && !scrolled) {
+                        setIsNavbarActive(false);
+                      }
                     }}
                   >
                     {activeMenu === data.name && (
@@ -538,12 +546,12 @@ export default function Navbar({ categories }: any) {
           <div
             ref={mobileMenuRef}
             className={`md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-[16px] overflow-y-auto ${
-              isAuthenticated ? "mt-0" : "mt-[40px]"
+              mounted && isAuthenticated ? "mt-0" : "mt-[40px]"
             }`}
           >
             {/* Header */}
             <div className="flex items-center justify-between mb- gap-[16px]">
-              {isAuthenticated && !activeMobileMenu ? (
+              {mounted && isAuthenticated && !activeMobileMenu ? (
                 <>
                   <Link
                     href="/profile"
@@ -603,7 +611,7 @@ export default function Navbar({ categories }: any) {
             ) : (
               // Main Menu View
               <div className="space-y-[24px] text-lg font-semibold mt-[16px]">
-                {isAuthenticated ? (
+                {mounted && isAuthenticated ? (
                   <div className="flex flex-col gap-[8px] bg-lightgray p-[8px] rounded-[8px]">
                     <span className="flex justify-between font-[Arial] font-normal text-[16px] leading-[24px]">
                       C Cash <span className="font-bold"> 1,209,436.26 </span>
