@@ -100,7 +100,6 @@ export default function Navbar({ categories }: any) {
   useDisableScroll(isMenuOpen || isMobileMenuOpen); // Added isMobileMenuOpen to disable scroll
 
   const [isAnimating, setIsAnimating] = useState(false);
-  const scrolled = window.scrollY > 10;
 
   useEffect(() => {
     if (wishlist.length > 0) {
@@ -530,7 +529,7 @@ export default function Navbar({ categories }: any) {
                     onMouseLeave={() => {
                       setActiveMenu(null);
                       setIsMainMenuActive(false);
-                      if (!profileSelect && isHomePage && !scrolled) {
+                      if (!profileSelect && isHomePage) {
                         setIsNavbarActive(false);
                       }
                     }}
