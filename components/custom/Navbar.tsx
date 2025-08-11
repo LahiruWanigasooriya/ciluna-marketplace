@@ -52,6 +52,7 @@ export default function Navbar({ categories }: any) {
   const [profileSelect, setProfileSelect] = useState(false);
   const [mobProfileSelect, setmobProfileSelect] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isMainMenuActive, setIsMainMenuActive] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -111,7 +112,13 @@ export default function Navbar({ categories }: any) {
   useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.scrollY > 10;
-      if (scrolled || !isHomePage || isMenuOpen || profileSelect) {
+      if (
+        scrolled ||
+        !isHomePage ||
+        isMenuOpen ||
+        profileSelect ||
+        isMainMenuActive
+      ) {
         setIsNavbarActive(true);
       } else {
         setIsNavbarActive(false);
@@ -124,7 +131,7 @@ export default function Navbar({ categories }: any) {
     handleScroll(); // Initial check
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage, isMenuOpen, profileSelect]);
+  }, [isHomePage, isMenuOpen, profileSelect, isMainMenuActive]);
 
   const handleNavigation = (label: string, href: string) => {
     setIsNavbarActive(true);
@@ -386,7 +393,7 @@ export default function Navbar({ categories }: any) {
                           href="/profile"
                           className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
                             pathname === "/profile"
-                              ? "font-bold"
+                              ? "font-[Arial] font-bold"
                               : isNavbarActive
                               ? "text-gray"
                               : "text-white"
@@ -399,7 +406,7 @@ export default function Navbar({ categories }: any) {
                           href="/profile/history"
                           className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
                             pathname === "/profile/history"
-                              ? "text-blue"
+                              ? "font-[Arial] font-bold"
                               : isNavbarActive
                               ? "text-gray"
                               : "text-white"
@@ -514,12 +521,16 @@ export default function Navbar({ categories }: any) {
                     href={`/subcategories/${data._id}`}
                     className="cursor-pointer border border-transparent hover:border-solid hover:border-gray-300 px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px] "
                     onMouseEnter={() => {
-                      setActiveMenu(data.name);
-                      setIsNavbarActive(true);
+                      if (!profileSelect) {
+                        setActiveMenu(data.name);
+                        setIsMainMenuActive(true);
+                        setIsNavbarActive(true);
+                      }
                     }}
                     onMouseLeave={() => {
                       setActiveMenu(null);
-                      if (isHomePage && !scrolled) {
+                      setIsMainMenuActive(false);
+                      if (!profileSelect && isHomePage && !scrolled) {
                         setIsNavbarActive(false);
                       }
                     }}
