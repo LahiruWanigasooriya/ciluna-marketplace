@@ -3828,7 +3828,7 @@ path-scurry@^1.11.1:
     lru-cache "^10.2.0"
     minipass "^5.0.0 || ^6.0.2 || ^7.0.0"
 
-"paw-marketplace@file:.":
+"ciluna-marketplace@file:.":
   version "0.1.0"
   dependencies:
     "@stripe/react-stripe-js" "^3.1.1"
@@ -3852,7 +3852,8 @@ path-scurry@^1.11.1:
     next "^15.2.0"
     nodemailer "^6.9.16"
 
-    paw-marketplace "file:C:/Users/Dell/AppData/Local/Yarn/Cache/v6/npm-paw-marketplace-0.1.0-570d8a03-7535-4316-baa3-0f7a59f5773e-1754278825686/node_modules/paw-marketplace"
+    ciluna-marketplace "file:C:/Users/Dell/AppData/Local/Yarn/Cache/v6/npm-ciluna-marketplace-0.1.0-570d8a03-7535-4316-baa3-0f7a59f5773e-1754278825686/node_modules/ciluna-marketplace"
+
     react "^19.0.0"
     react-aria-components "^1.5.0"
     react-dom "^19.0.0"

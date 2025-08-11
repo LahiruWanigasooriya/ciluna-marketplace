@@ -68,7 +68,7 @@ const LoginForm = ({
     className="flex flex-col space-y-3 lg:space-y-4 w-full items-center"
   >
     <Title
-      title="Welcome to PAW MARKETPLACE"
+      title="Welcome to CILUNA MARKETPLACE"
       className="lg:text-lg text-white/90"
     />
     <div className="flex flex-col space-y-3 lg:space-y-4 w-full">
@@ -170,7 +170,10 @@ const SignUpForm = ({
     onSubmit={handleSubmit}
     className="flex flex-col space-y-3 lg:space-y-4 w-full items-center"
   >
-    <Title title="Join PAW MARKETPLACE" className="lg:text-lg text-white/90" />
+    <Title
+      title="Join CILUNA MARKETPLACE"
+      className="lg:text-lg text-white/90"
+    />
     <div className="flex flex-col space-y-3 lg:space-y-4 w-full">
       <div className="flex items-start gap-2 w-full">
         <div className="w-full">
@@ -424,10 +427,12 @@ const AuthWrapper = ({ ref, closePopup }: AuthWrapperProps) => {
           router.refresh();
           closePopup();
         } else if (view === "signup") {
-          toast.success("Welcome to PAW Marketplace! Please log in to continue.");
+          toast.success(
+            "Welcome to CILUNA Marketplace! Please log in to continue."
+          );
           setTimeout(() => {
-            setView("login"); 
-            resetForm(); 
+            setView("login");
+            resetForm();
             setIsSuccess(false);
           }, 1000);
         } else if (view === "forgot") {

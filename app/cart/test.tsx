@@ -139,11 +139,11 @@ const CartPage = () => {
                               <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
                                 <div className="flex justify-center gap-4">
                                   <p className="text-xl font-[700] text-blue">
-                                    {product.price} PAW
+                                    {product.price} CILUNA
                                   </p>
                                   <div className="flex items-center font-[400]">
                                     <p className="text-xl">
-                                      {(product.price * 1.1).toFixed(2)} PAW
+                                      {(product.price * 1.1).toFixed(2)} CILUNA
                                     </p>
                                     <p className="text-xxs">
                                       (${(product.price * 1.1).toFixed(2)})
@@ -239,7 +239,7 @@ const CartPage = () => {
                         <p className="font-[400] text-sm">Price</p>
                         <div className="flex flex-col items-end">
                           <p className="font-[400] text-sm">
-                            {totalPrice.toFixed(2)} PAW
+                            {totalPrice.toFixed(2)} CILUNA
                           </p>
                           <p className="font-[400] text-xxs">($0.00)</p>
                         </div>
@@ -248,7 +248,7 @@ const CartPage = () => {
                         <p className="font-[400] text-sm">Discount</p>
                         <div className="flex flex-col items-end">
                           <p className="font-[400] text-sm">
-                            -{discount.toFixed(2)} PAW
+                            -{discount.toFixed(2)} CILUNA
                           </p>
                           <p className="font-[400] text-xxs">($0.00)</p>
                         </div>
@@ -258,7 +258,7 @@ const CartPage = () => {
                         <div className="flex items-center justify-between">
                           <p className="font-[400] text-sm">Shipping Fee</p>
                           <div className="flex flex-col items-end">
-                            <p className="font-[400] text-sm">0 PAW</p>
+                            <p className="font-[400] text-sm">0 CILUNA</p>
                             <p className="font-[400] text-xxs">($0.00)</p>
                           </div>
                         </div>
@@ -266,7 +266,7 @@ const CartPage = () => {
                           <p className="font-[400] text-sm">Total</p>
                           <div className="flex flex-col items-end">
                             <p className="font-[400] text-sm">
-                              {finalPrice.toFixed(2)} PAW
+                              {finalPrice.toFixed(2)} CILUNA
                             </p>
                             <p className="font-[400] text-xxs">($0.00)</p>
                           </div>
