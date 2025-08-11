@@ -23,7 +23,9 @@ export default async function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" type="image/x-icon" />
       </head>
-      <body className={`mx-auto flex flex-col font-inter bgcolor`}>
+      <body
+        className={`max-w-[1920px] mx-auto py-[16px] md:py-[20px] flex flex-col font-inter bgcolor`}
+      >
         <Toast richColors position="top-right" />
         <ConditionalLayout categories={categories}>
           {children}
