@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Image from "next/image";
+//import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/custom/Navbar";
 import Footer from "@/components/custom/Footer";
@@ -74,7 +74,7 @@ export default function ConditionalLayout({
 
   return (
     <div>
-      <div className="flex flex-col max-w-[1920px] mx-auto min-h-screen relative  ">
+      <div className="flex flex-col max-w-[1920px] mx-auto min-h-screen relative">
         {isHomePage && (
           <div className="absolute flex md:left-0 right-0 recommend:pl-24 top-16 md:-top-4 xl:-top-6 justify-center items-center">
             {/* <Image src={HeaderBanner} alt="Header Banner" /> */}
