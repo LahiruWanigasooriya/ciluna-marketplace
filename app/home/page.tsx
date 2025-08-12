@@ -8,6 +8,7 @@ import { IconButton } from "@/components/custom/IconButton";
 import Category from "./Category";
 import Title from "@/components/custom/Title";
 import Faq from "./Faq";
+import Testimonials from "./Testimonials";
 
 const Page = async () => {
   return (
@@ -21,17 +22,18 @@ const Page = async () => {
         <TimelessExpressions/>
         <NewCollection/>
         <BestSelling />
+        <Testimonials/>
         
-        <div className="relative flex flex-col gap-12 recommend:gap-[76px]">
+        {/* <div className="relative flex flex-col gap-12 recommend:gap-[76px] bg-blue">
           <Category />
         </div>
-        <div className="flex flex-col gap-3 text-white items-center xl:items-start">
+        <div className="flex flex-col gap-3 text-black items-center xl:items-start">
           <Title title="FAQ" />
           <p className="text-sm text-center xl:text-start font-[400] leading-[24px]">
             {`Our FAQ area addresses typical shopping, shipping, payment, and product inquiries fast. We provide solutions for first-time and returning customers to help you shop. Contact our customer service staff if you can't locate what you need.`}
           </p>
           <Faq />
-        </div>
+        </div> */}
       </div>
     </div>
   );

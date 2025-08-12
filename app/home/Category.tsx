@@ -10,13 +10,13 @@ const CategorySection = async () => {
 
   // Handle error
   if (!response.success) {
-    return <div className="text-white">Failed to load categories.</div>;
+    return <div className="text-black">Failed to load categories.</div>;
   }
 
   const categories = response?.data?.categories; // Extract categories
 
   return (
-    <div className="flex flex-col gap-3 items-center text-white">
+    <div className="flex flex-col gap-3 items-center text-black">
       <Title title="Categories" />
       <p className="text-sm font-normal text-center md:px-[30px] lg:px-[59px]">
         {`Our extensive computer accessory selection enhances your digital

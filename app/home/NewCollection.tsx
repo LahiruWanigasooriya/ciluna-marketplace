@@ -21,6 +21,7 @@ const NewCollection = () => {
       <div className="hidden md:block w-full bg-[#F2F2F2] rounded-lg overflow-hidden">
         <Swiper
           modules={[Autoplay]}
+          speed={1200}
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           loop
         >
@@ -52,6 +53,7 @@ const NewCollection = () => {
       <div className="md:hidden w-full bg-[#F2F2F2] rounded-lg overflow-hidden">
         <Swiper
           modules={[Autoplay]}
+          speed={1200}
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           loop
         >

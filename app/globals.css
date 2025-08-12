@@ -459,3 +459,42 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 1;
 }
+
+
+/* testimonials custom pagination bar */
+
+.swiper-pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  position: relative !important; 
+  bottom: 0 !important;
+}
+
+/* bar style bullets (inactive) */
+.swiper-pagination-bullet {
+  display: inline-block;
+  width: 16px !important; 
+  height: 2px !important;
+  background-color: #D9D9D9 !important; 
+  border-radius: 999px !important;
+  margin: 0 6px !important;
+  opacity: 1 !important;
+  transition: all 280ms ease !important;
+}
+
+/* active bullet style */
+.swiper-pagination-bullet-active {
+  background-color: #111 !important;
+  width: 16px !important; 
+  height: 2px !important;
+}
+
+/* prevent bullet transform changes */
+.swiper-pagination-bullet,
+.swiper-pagination-bullet-active {
+  transform: none !important;
+}
+
