@@ -51,32 +51,32 @@ const BestSelling = async () => {
       stock: 70,
       createdBy: "user3",
     },
-    // {
-    //   _id: "4",
-    //   name: "Laptop Stand",
-    //   description: "Adjustable aluminum laptop stand for desk setups.",
-    //   image: Product2.src,
-    //   category: { _id: "cat4", name: "Office" },
-    //   rating: 4.1,
-    //   sold: 60,
-    //   price: 1999,
-    //   stock: 30,
-    //   createdBy: "user4",
-    //   discount: {percentage: 25},
-    // },
-    // {
-    //   _id: "5",
-    //   name: "Bluetooth Speaker",
-    //   description: "Portable speaker with deep bass and waterproof design.",
-    //   image: Product1.src,
-    //   category: { _id: "cat1", name: "Electronics" },
-    //   rating: 4.6,
-    //   sold: 140,
-    //   price: 4999,
-    //   stock: 45,
-    //   createdBy: "user5",
-    //   discount: {percentage: 25},
-    // },
+    {
+      _id: "4",
+      name: "Laptop Stand",
+      description: "Adjustable aluminum laptop stand for desk setups.",
+      image: Product2.src,
+      category: { _id: "cat4", name: "Office" },
+      rating: 4.1,
+      sold: 60,
+      price: 1999,
+      stock: 30,
+      createdBy: "user4",
+      discount: {percentage: 25},
+    },
+    {
+      _id: "5",
+      name: "Bluetooth Speaker",
+      description: "Portable speaker with deep bass and waterproof design.",
+      image: Product1.src,
+      category: { _id: "cat1", name: "Electronics" },
+      rating: 4.6,
+      sold: 140,
+      price: 4999,
+      stock: 45,
+      createdBy: "user5",
+      discount: {percentage: 25},
+    },
     // {
     //   _id: "4",
     //   name: "Laptop Stand",
@@ -93,9 +93,9 @@ const BestSelling = async () => {
   ];
 
   return (
-    <div className="flex flex-col gap-3 items-center text-white ">
+    <div className="flex flex-col gap-3 items-center text-black ">
       <Title title="Best Selling" />
-      <p className="text-sm font-normal text-center leading-[24px] md:px-[30px] lg:px-[59px]">
+      <p className="text-sm font-normal text-center leading-[24px] md:px-[30px] lg:px-[59px] ">
         {`Upgrade your tech setup with our top-selling computer accessories!
       These must-have products are trusted by tech enthusiasts and
       professionals alike, offering superior performance, durability, and

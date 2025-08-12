@@ -1,13 +1,17 @@
 import React from "react";
 import Image from "next/image";
-import Img from "@/public/assets/product/img.webp";
-import ImgM from "@/public/assets/product/imgm.webp";
+import Img from "@/public/assets/product/img.png";
+import ImgM from "@/public/assets/product/imgm.jpg";
 import { getAllCategories } from "@/actions/categories/category";
 import { ICategory } from "@/types/category";
 import CategoryCard from "../category/CategoryCard";
 import Pagination from "@/app/product/Pagination";
 
-const page = async ({ searchParams: searchParamsPromise }: { searchParams: Promise<{ [key: string]: string | undefined }> }) => {
+const page = async ({
+  searchParams: searchParamsPromise,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) => {
   const searchParams = await searchParamsPromise;
   const currentPage = parseInt(searchParams.page || "1", 12);
   const search = searchParams.search || "";

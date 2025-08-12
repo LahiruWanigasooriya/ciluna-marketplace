@@ -9,26 +9,37 @@ import { useWishlistStore } from "@/store/wishlist";
 import { Skeleton } from "@/components/ui";
 import { useEffect, useState } from "react";
 import { ColorDot } from "@/components/ui/color-dot";
-// import { toast } from "sonner";
 import { updateWishlist } from "@/actions/wishlists/wishlist";
-// import { useAuthStore } from "@/store/authStore";
-// import { jwtDecode } from "jwt-decode";
+import { v4 as uuidv4 } from "uuid";
+import { useAuthStore } from "@/store/authStore";
+import { useQuantityStore } from "@/store/quantity";
+import { addToCart, getCart } from "@/actions/carts/cart";
+import { useCartStore } from "@/store/cart";
+import { toast } from "sonner";
+import { fetchExchangeRate, formatPrice } from "@/utils/getDiscountPrice";
 
-// interface DecodedToken {
-//   userId: string;
-//   exp: number;
-// }
+import { jwtDecode } from "jwt-decode";
+
+interface DecodedToken {
+  userId: string;
+  exp: number;
+}
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const { token } = useAuthStore();
+  const { token } = useAuthStore();
   const [userId, setUserId] = useState("");
   const [selectedColor, setSelectedColor] = useState(product.colorCode);
   const [usdPrices, setUsdPrices] = useState({
     original: "0.00",
     discounted: "0.00",
   });
+  const price = product.price
+  const discount = product.discount?.percentage || null;
+  const { quantity } = useQuantityStore();
+  const { addToCartItem, setCart } = useCartStore();
+  const discountPrice = getDiscountedPrice(price, discount);
 
   useEffect(() => {
     const fetchPrices = async () => {
@@ -60,16 +71,16 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     fetchPrices();
   }, [product.price, product.discount?.percentage]);
 
-  // useEffect(() => {
-  //   if (token) {
-  //     try {
-  //       const decoded: DecodedToken = jwtDecode(token);
-  //       setUserId(decoded.userId);
-  //     } catch (error) {
-  //       console.error("❌ Error fetching data:", error);
-  //     }
-  //   }
-  // }, [token]);
+  useEffect(() => {
+    if (token) {
+      try {
+        const decoded: DecodedToken = jwtDecode(token);
+        setUserId(decoded.userId);
+      } catch (error) {
+        console.error("❌ Error fetching data:", error);
+      }
+    }
+  }, [token]);
 
   // const isFavorited = false;
   const isFavorited = wishlist?.some((item) => item._id === product._id);
@@ -99,6 +110,53 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     }
   };
 
+  const handleAddToCart = async (event: React.MouseEvent<SVGElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const cartItemId = uuidv4();
+
+    if (token) {
+      const cartData = {
+        productId: product._id,
+        quantity: quantity,
+      };
+
+      try {
+        await addToCart(cartData);
+        const cartResponse = await getCart(token);
+        const updatedCart = cartResponse?.cart?.items || [];
+        setCart(updatedCart);
+        toast.success(`${product.name} added to cart!`);
+      } catch (error) {
+        console.error("❌ Error adding to cart:", error);
+        toast.error("Failed to add product to cart.");
+      }
+    } else {
+      const cartData = {
+        _id: cartItemId,
+        product,
+        productId: product._id,
+        name: product.name,
+        description: product.description,
+        discount: product.discount?.percentage,
+        stock: product.stock,
+        quantity: quantity,
+        image: product.image,
+        price: price,
+        priceUSD: usdPrices,
+        sold: product.sold,
+        rating: product.rating,
+        isActive: product.isActive,
+      };
+
+      // Add to local storage (Zustand store)
+      await addToCartItem(cartData);
+
+      // Show success toast
+      toast.success(`${product.name} added to cart!`);
+    }
+  };
+
   const truncatedName = isLoading
     ? null
     : product.name.length > 72
@@ -114,27 +172,12 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     }
   }, [product._id]);
 
-  function getDiscountedPrice(price: number, discount: number): number {
-    const discounted = price - (price * discount) / 100;
-    return parseFloat(discounted.toFixed(2)); // rounded to 2 decimal places
-  }
-
-  const finalPrice = getDiscountedPrice(
-    product.price,
-    product.discount ? product.discount?.percentage : 0
-  );
-
-  async function fetchExchangeRate(): Promise<number> {
-    const response = await fetch(process.env.CURRENCY_API as string);
-    const data = await response.json();
-    return data.rates.LKR;
-  }
-
-  function formatPrice(price: number): string {
-    return price.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+  function getDiscountedPrice(price: number, discount: number | null): number {
+    if (discount) {
+      const discounted = price - (price * discount) / 100;
+      return parseFloat(discounted.toFixed(2));
+    }
+    return price;
   }
 
   function handleSelectedColor(code: string) {
@@ -196,14 +239,11 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               {isLoading ? (
                 <Skeleton className="w-6 h-6" />
               ) : (
-                <div
-                  onClick={(e: React.MouseEvent) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                  className="rounded-full w-8 md:w-12 h-8 md:h-12 p-2 md:p-3 bg-[#252525] flex justify-center items-center hover:opacity-90"
-                >
-                  <FaCartPlus className="w-4 h-4 md:w-6 md:h-6" color="white" />
+                <div className="rounded-full w-8 md:w-12 h-8 md:h-12 p-2 md:p-3 bg-[#252525] flex justify-center items-center">
+                  <FaCartPlus
+                    className="w-4 h-4 md:w-6 md:h-6 text-white"
+                    onClick={handleAddToCart}
+                  />
                 </div>
               )}
             </div>
@@ -226,11 +266,11 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           <div>
             <div className="flex items-center gap-1">
               <p className="line-through text-[0.75rem] tracking-tight md:tracking-normal leading-[20px] text-[#909090]">
-                {formatPrice(product.price)}{" "}
-                <span className="ml-[2px]">LKR</span>
+                {formatPrice(price)} <span className="ml-[2px]">LKR</span>
               </p>
               <p className="text-[0.875rem] md:text-[1rem] text-[#252525] font-bold leading-[20px] md:leading-[24px]">
-                {formatPrice(finalPrice)} <span className="ml-[2px]">LKR</span>
+                {formatPrice(discountPrice)}{" "}
+                <span className="ml-[2px]">LKR</span>
               </p>
             </div>
             <div className="flex items-center gap-1">

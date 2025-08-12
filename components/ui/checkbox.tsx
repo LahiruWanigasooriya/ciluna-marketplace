@@ -45,18 +45,18 @@ const checkboxStyles = tv({
 })
 
 const boxStyles = tv({
-  base: "flex size-4 [&>[data-slot=icon]]:size-3 flex-shrink-0 items-center justify-center rounded border text-bg transition",
+  base: "flex size-4 [&>[data-slot=icon]]:size-3 flex-shrink-0 items-center justify-center rounded border text-bg transition hover:cursor-pointer hover:opacity-70",
   variants: {
     isSelected: {
-      false: "border-toggle bg-secondary",
+      false: "border-toggle bg-white",
       true: [
-        "border-primary/70 bg-primary text-primary-fg",
+        "border-[#252525]/70 bg-[#252525] text-primary-fg",
         "group-invalid:border-danger/70 group-invalid:bg-danger group-invalid:text-danger-fg"
       ]
     },
     isFocused: {
       true: [
-        "border-primary/70 ring-4 ring-primary/20",
+        "border-[#252525]/70 ring-4 ring-[#252525]/20",
         "group-invalid:border-danger/70 group-invalid:text-danger-fg group-invalid:ring-danger/20"
       ]
     },

@@ -10,12 +10,12 @@ import Product from "./Product";
 import { getProductWishCount } from "@/actions/wishlists/wishlist";
 import { ProductWishCountResponse } from "@/types/wishlist";
 import { IProductVariant } from "@/types/productVariant";
-import { getPawPrice } from "@/lib/pawService";
-import toFixed from "@/functions/pawPrice";
+import { getCilunaPrice } from "@/lib/cilunaService";
+import toFixed from "@/functions/cilunaPrice";
 
 interface Pro {
   product: IProduct;
-  variants?: IProductVariant
+  variants?: IProductVariant;
 }
 
 const ProductDetails = async ({
@@ -28,8 +28,8 @@ const ProductDetails = async ({
   const relatedres = await getRelatedProducts(id);
   // const reviews = await getProductReviews(id)
   const productWishcountres = await getProductWishCount(id);
-  const price = await getPawPrice()
-  const pawPrice = toFixed(Number(price))
+  const price = await getCilunaPrice();
+  const cilunaPrice = toFixed(Number(price));
 
   if (!productres.success || !productres.data) {
     return (
@@ -62,7 +62,12 @@ const ProductDetails = async ({
 
   return (
     <div className="flex flex-col gap-[64px] md:gap-[36px] lg:gap-[42px] recommend:gap-[48px] md:pt-6 lg:pt-14 xl:pt-16 2xl:pt-20">
-      <Product product={product} pawPrice={pawPrice} variants={variants} wishCount={productWishCount} />
+      <Product
+        product={product}
+        cilunaPrice={cilunaPrice}
+        variants={variants}
+        wishCount={productWishCount}
+      />
       <div className="flex flex-col gap-3 items-center md:items-start md:pt-8">
         <Title title="Related Item" className="text-white" />
         <div className="flex flex-wrap gap-4 w-full overflow-y-auto overflow-hidden justify-start">
@@ -72,7 +77,7 @@ const ProductDetails = async ({
         </div>
       </div>
       <Feedback productId={id} />
-      <Review  productId={id} />
+      <Review productId={id} />
     </div>
   );
 };
