@@ -20,7 +20,7 @@ const searchFieldStyles = tv({
     searchIcon:
       "mr-[2px] size-[24px] shrink-0 text-white group-disabled:text-muted-fg forced-colors:group-disabled:text-[GrayText]",
     clearButton: [
-      "mr-1 size- h-[26px] text-muted-fg group-empty:invisible pressed:bg-transparent hover:bg-transparent pressed:text-fg ",
+      "mr-1 h-[26px] w-[26px] text- group-empty:invisible pressed:bg",
     ],
     input:
       "[&::-webkit-search-cancel-button]:hidden text-center text- h-[26px] ",
@@ -67,19 +67,27 @@ const SearchField = ({
       onSubmit={handleSubmit}
     >
       {label && <Label>{label}</Label>}
-      <FieldGroup
-        className="border-none"
-      >
-        <Input placeholder={placeholder ?? ""} className={input() } />
+      <FieldGroup className="border-none bg-transparent focus-within:border-none focus-within:ring-0">
+        <Input
+          placeholder={placeholder ?? ""}
+          className={input() + " border-none"}
+        />
         {isPending ? (
           <Loader variant="spin" className="mr-2.5" />
         ) : (
           <Button
-            size="square-petite"
-            appearance="plain"
-            className={clearButton() + (isNavbarActive ? " text-black" : "text-white")}
+            className={
+              clearButton() +
+              (isNavbarActive ? " text-black" : "text-white") +
+              "p-0"
+            }
           >
-            <IconX aria-hidden className="text-white"/>
+            <IconX
+              aria-hidden
+              className={`p-0 ${
+                isNavbarActive ? " text-black" : " text-white"
+              }`}
+            />
           </Button>
         )}
         <img
@@ -89,7 +97,7 @@ const SearchField = ({
               : "/assets/header/searchIcon.svg"
           }
           alt="Search"
-          className={searchIcon() + " hover:cursor-pointer"}
+          className={searchIcon() + ""}
         />
       </FieldGroup>
       {description && <Description>{description}</Description>}

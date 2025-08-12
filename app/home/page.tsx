@@ -16,7 +16,7 @@ const Page = async () => {
         <ImageSlider />
       </div>
 
-      <div className="recommend:gap-[76px] flex flex-col gap-12 px-[16px] md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px]">
+      <div className="recommend:gap-[76px] flex flex-col gap-12 px-[16px] md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px] md:max-w-[1440px] md:mx-auto">
         <QuietBrilliance/>
         <TimelessExpressions/>
         <NewCollection/>

@@ -3,7 +3,7 @@ import "./globals.css";
 import ConditionalLayout from "@/components/custom/RootLayout";
 import { Toast } from "@/components/ui";
 import { getAllCategories } from "@/actions/categories/category";
-import { isUndefined } from "util";
+//import { isUndefined } from "util";
 
 export const metadata: Metadata = {
   title: "Ciluna Marketplace",
@@ -23,9 +23,7 @@ export default async function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" type="image/x-icon" />
       </head>
-      <body
-        className={`max-w-[1920px] mx-auto py-[16px] md:py-[20px] flex flex-col font-inter bgcolor`}
-      >
+      <body className={`max-w-[1920px] mx-auto flex flex-col font-inter bgcolor`}>
         <Toast richColors position="top-right" />
         <ConditionalLayout categories={categories}>
           {children}
