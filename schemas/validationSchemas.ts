@@ -10,6 +10,8 @@ export const forgotPasswordValidationSchema = Yup.object({
 });
 
 export const signupValidationSchema = Yup.object().shape({
+  titlelabel:Yup.string()
+  .required("Title is required"),
   firstName: Yup.string()
     .min(3, "First Name must be at least 3 characters long")
     .required("First Name is required"),
@@ -22,7 +24,8 @@ export const signupValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-    confirmemail:Yup.string()
+
+  confirmemail:Yup.string()
     .oneOf([Yup.ref("email")],"Emails do not match")
     .required("Please confirm your email"),
   country: Yup.string()
