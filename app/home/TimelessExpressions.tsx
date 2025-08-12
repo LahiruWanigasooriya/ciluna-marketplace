@@ -12,9 +12,8 @@ import { IconButton } from "@/components/custom/IconButton";
 import { motion } from "framer-motion";
 
 const TimelessExpressions = () => {
-
   return (
-    <div className="flex flex-col gap-3 items-center">
+    <div className="flex flex-col gap-3 items-center custom-container py-[0px] lg:py-[0px]">
       <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">
         OUR COLLECTION
       </p>

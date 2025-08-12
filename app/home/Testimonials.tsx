@@ -43,57 +43,59 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <div className="flex flex-col items-center bg-[#F5F5F5] py-[32px] lg:py-[96px]">
-      <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">
-        TESTIMONIALS
-      </p>
-      <Title title="What Our Clients Say" />
-      <p className="text-[14px] sm:text-[16px] font-inter text-center text-[#707070] leading-[24px] max-w-[843px] ">
-        {`The elegance we create finds its meaning in your moments. These are the whispers of those who carry a piece of our soul.`}
-      </p>
+    <div className="bg-[#F5F5F5] py-[32px] lg:py-[0px]">
+      <div className="flex flex-col items-center custom-container py-[32px] lg:py-[96px]">
+        <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">
+          TESTIMONIALS
+        </p>
+        <Title title="What Our Clients Say" />
+        <p className="text-[14px] sm:text-[16px] font-inter text-center text-[#707070] leading-[24px] max-w-[843px] ">
+          {`The elegance we create finds its meaning in your moments. These are the whispers of those who carry a piece of our soul.`}
+        </p>
 
-      <div className=" py-[48px] w-full">
-        {/* Desktop */}
-        <div className="hidden lg:grid grid-cols-3 gap-6">
-          {testimonials.map((item, index) => (
-            <TestimonialCard key={index} {...item} />
-          ))}
-        </div>
-
-        {/* Mobile & Tablet */}
-        <div className="block lg:hidden">
-          <Swiper
-            modules={[Pagination]}
-            pagination={{
-              clickable: true,
-              el: ".custom-swiper-pagination",
-            }}
-            spaceBetween={20}
-            breakpoints={{
-              320: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-            }}
-          >
+        <div className=" py-[48px] w-full">
+          {/* Desktop */}
+          <div className="hidden lg:grid grid-cols-3 gap-6">
             {testimonials.map((item, index) => (
-              <SwiperSlide key={index}>
-                <TestimonialCard {...item} />
-              </SwiperSlide>
+              <TestimonialCard key={index} {...item} />
             ))}
-          </Swiper>
+          </div>
 
-          {/* Pagination container */}
-          <div className="custom-swiper-pagination text-center"></div>
+          {/* Mobile & Tablet */}
+          <div className="block lg:hidden">
+            <Swiper
+              modules={[Pagination]}
+              pagination={{
+                clickable: true,
+                el: ".custom-swiper-pagination",
+              }}
+              spaceBetween={20}
+              breakpoints={{
+                320: { slidesPerView: 1 },
+                768: { slidesPerView: 2 },
+              }}
+            >
+              {testimonials.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <TestimonialCard {...item} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {/* Pagination container */}
+            <div className="custom-swiper-pagination text-center"></div>
+          </div>
         </div>
-      </div>
 
-      <Link href="/testimonials">
-        <IconButton
-          name="Explore all Testimonials"
-          process="Exploring..."
-          success="GO!"
-          className=" py-[8px] sm:py-[16px] px-[16px] sm:px-[32px] bg-black text-white text-[14px] sm:text-[18px] cursor-pointer hover:scale-105 transition-all duration-1000"
-        />
-      </Link>
+        <Link href="/testimonials">
+          <IconButton
+            name="Explore all Testimonials"
+            process="Exploring..."
+            success="GO!"
+            className=" py-[8px] sm:py-[16px] px-[16px] sm:px-[32px] bg-black text-white text-[14px] sm:text-[18px] cursor-pointer hover:scale-105 transition-all duration-1000"
+          />
+        </Link>
+      </div>
     </div>
   );
 };

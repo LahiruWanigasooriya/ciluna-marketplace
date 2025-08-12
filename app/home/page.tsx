@@ -3,11 +3,11 @@ import ImageSlider from "./ImageSlider";
 import QuietBrilliance from "./QuietBrilliance";
 import TimelessExpressions from "./TimelessExpressions";
 import NewCollection from "./NewCollection";
-import Link from "next/link";
-import { IconButton } from "@/components/custom/IconButton";
-import Category from "./Category";
-import Title from "@/components/custom/Title";
-import Faq from "./Faq";
+// import Link from "next/link";
+// import { IconButton } from "@/components/custom/IconButton";
+// import Category from "./Category";
+// import Title from "@/components/custom/Title";
+// import Faq from "./Faq";
 import Testimonials from "./Testimonials";
 
 const Page = async () => {
@@ -15,16 +15,14 @@ const Page = async () => {
     <div className="flex flex-col relative gap-12 recommend:gap-[76px] ">
       <div className="flex flex-col w-full h-full">
         <ImageSlider />
-      </div>
 
-      <div className="recommend:gap-[76px] flex flex-col gap-12 px-[16px] md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px]">
-        <QuietBrilliance/>
-        <TimelessExpressions/>
-        <NewCollection/>
+        <QuietBrilliance />
+        <TimelessExpressions />
+        <NewCollection />
         <BestSelling />
-        <Testimonials/>
-        
-        {/* <div className="relative flex flex-col gap-12 recommend:gap-[76px] bg-blue">
+        <Testimonials />
+      </div>
+      {/* <div className="relative flex flex-col gap-12 recommend:gap-[76px] bg-blue">
           <Category />
         </div>
         <div className="flex flex-col gap-3 text-black items-center xl:items-start">
@@ -34,7 +32,6 @@ const Page = async () => {
           </p>
           <Faq />
         </div> */}
-      </div>
     </div>
   );
 };

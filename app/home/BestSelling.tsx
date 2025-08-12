@@ -93,7 +93,7 @@ const BestSelling = async () => {
   ];
 
   return (
-    <div className="flex flex-col gap-3 text-black ">
+    <div className="flex flex-col gap-3 text-black custom-container py-[0px] lg:py-[0px]">
       <div className="flex-1 text-center md:text-start">
         <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">JEWELLERY</p>
         <h2 className="text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-gray-900 mb-6">
