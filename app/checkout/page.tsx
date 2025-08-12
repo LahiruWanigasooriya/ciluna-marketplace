@@ -128,7 +128,10 @@ const CheckoutPage: React.FC = () => {
   const [isAddingNewCard, setIsAddingNewCard] = useState<boolean>(false);
 
   const { token } = useAuthStore();
-  // const token = "dfd";
+
+  // when the customer has previous details
+  // const oldCustomer = "dfd"; 
+  const oldCustomer = "";
 
   const districts =
     provinces.find((p) => p.value === selectedProvince)?.districts || [];
@@ -190,7 +193,7 @@ const CheckoutPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (token) {
+    if (oldCustomer) { // change this back to token once the integration is done
       const fetchUserData = async () => {
         await new Promise((resolve) => setTimeout(resolve, 500)); // simulate the request to get addresses and cards stored in db
         setAddresses(addressOptions);
@@ -265,7 +268,7 @@ const CheckoutPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3 text-white py-8 lg:pb-20 pt-28">
+    <div className="flex flex-col gap-3 text-white py-8 lg:pb-20 pt-[120px] lg:pt-[132px] px-[16px] md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px]">
       <div className="flex flex-col gap-4 text-gray bg-white">
         <Link href="/cart" className="flex gap-3 items-center w-fit">
           <ArrowLeft />
@@ -275,7 +278,7 @@ const CheckoutPage: React.FC = () => {
           />
         </Link>
 
-        {token ? (
+        {oldCustomer ? (
           <div>
             <form
               onSubmit={handleSubmit(onSubmit)}
