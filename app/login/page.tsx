@@ -2,16 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, Loader2 } from "lucide-react";
-import Logo from "../assets/logo.png";
-import Banner from "../assets/login-banner.webp";
+import {  Loader2 } from "lucide-react";
 import Title from "@/components/custom/Title";
 import { TextField, Checkbox, Button } from "@/components/ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { checkUserAndGenerateToken } from "@/actions/users/user";
 import { useAuthStore } from "@/store/authStore";
-import BGIMG from "@/public/assets/bglogom.webp";
 import { toast } from "sonner";
 import bgpattern from '@/public/assets/login/bgpattern.png';
 import Footer from "@/components/custom/Footer";
@@ -167,23 +164,34 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-start flex-col justify-between text-black h-screen overflow-hidden">
+    <>
+    <div className="flex items-start flex-col  justify-between text-black min-h-screen overflow-y-auto overflow-x-hidden sm:overflow-hidden">
       <Navbar />
-            <div className="hidden sm:block absolute -right-6 top-10 h-[301px] w-[320px] ]">
+            <div className="hidden sm:block absolute -right-24 top-10 h-[301px] w-[320px] ">
           <Image 
           src={bgpattern}
           alt="background pattern"
           fill
-          className="object-cover bg-[#e8e8da"
+          className="object-contain bg-[#e8e8da"
           priority
           />
         </div>
-
-      <div className="flex items-center h-[100vh] w-full relative">
+            <div className="hidden sm:block absolute -left-32  top-[50vh] h-[301px] w-[320px] ">
+          <Image 
+          src={bgpattern}
+          alt="background pattern"
+          fill
+          className="object-contain bg-[#e8e8da transform scale-x-[-1]"
+          priority
+          />
+           
+        </div>
+       
+      <div className="flex items-center w-full relative pt-12">
 
 
    
-        <div className="flex items-center justify-between space-x-12 w-full absolute inset-0">
+        <div className="flex items-center justify-between space-x-12 w-full relative">
           <LoginForm
             formData={formData}
             handleChange={handleChange}
@@ -194,11 +202,13 @@ const LoginPage = () => {
           />
 
         </div>
+        
       </div>
       
     </div>
-    
-    
+          <div className="w-full absolute items-end justify-center"><Footer/></div>
+
+    </>
   );
 };
 
