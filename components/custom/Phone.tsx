@@ -59,9 +59,10 @@ const countries = [
 interface TelProps {
   value: string;
   onChange: (value: string) => void;
+  className?: string;
 }
 
-const Phone: React.FC<TelProps> = ({ value, onChange }) => {
+const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState({
     id: "Sri Lanka",
@@ -93,31 +94,29 @@ const Phone: React.FC<TelProps> = ({ value, onChange }) => {
   };
 
   return (
-    <div className="flex flex-col gap-y-2.5 w-full text-[#252525]">
-
-      <p className="text-sm font-[400] text-black">Phone Number*</p>
-
+    <div className="flex flex-col gap-y-2 w-full text-white/90">
+      <p className="font-[400] text-gray">Mobile Number</p>
       <div className="relative w-full" ref={modalRef}>
         <div
-          className="px-2 h-10 border border-[#252525] bg-[#ffffff] transition duration-200 ease-out rounded-lg flex items-center focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20
+          className={`px-2 h-[44px] bg-white transition duration-200 ease-out rounded-lg flex items-center
           group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
           [&>[role=progressbar]]:mr-2.5
           [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
           [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
           [&>[data-slot=prefix]]:ml-2.5 [&>[data-slot=prefix]]:text-muted-fg
-          group-disabled:opacity-50"
+          group-disabled:opacity-50 ${className}`}
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          <button className="flex text-sm items-center space-x-2">
+          <button className="flex text-sm items-center space-x-2 text-gray">
             <span className="text-lg">{selectedCountry.flag}</span>
             <span>{selectedCountry.code}</span>
           </button>
           <input
             type="text"
-            value={value.replace(selectedCountry.code, "")} // Strip country code for display
+            value={value?.replace(selectedCountry.code, "")} // Strip country code for display
             onChange={(e) => handleInputChange(e.target.value)}
             placeholder="Enter phone number"
-            className="ml-2 flex-grow outline-none text-sm bg-white placeholder:font-[400] placeholder-muted-fg"
+            className="ml-2 flex-grow text-gray outline-none text-sm bg-transparent placeholder:font-[400] placeholder-muted-fg  placeholder-[#707070]"
           />
           <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black`} />
         </div>
@@ -144,7 +143,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange }) => {
               {countries.map((country) => (
                 <li
                   key={country.id}
-                  className={`flex items-center p-2 font-[400] text-sm cursor-pointer hover:opacity-75 w-full ${
+                  className={`flex items-center p-2 font-[400] text-sm text-gray cursor-pointer hover:opacity-75 w-full ${
                     selectedCountry.id === country.id ? "bg-gray-400" : ""
                   }`}
                   onClick={() => handleCountryChange(country.id)}

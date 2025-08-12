@@ -58,7 +58,7 @@ const QuantitySelector: React.FC<QuantityProps> = ({
     "font-[400] text-sm w-[34px] h-[38px] flex-shrink-0 bg-[#FFFFFF]/5 hover:opacity-75 hover:bg-gray-100 cursor-pointer flex items-center justify-center";
 
   return (
-    <div className="flex flex-col gap-3 lg:gap-4 text-[#252525] font-lora bg-white">
+    <div className="flex flex-col gap-3 lg:gap-4 text-[#252525] font-arial bg-white">
       <span className={`text-base leading-[19px] ${countShow ? "block" : "hidden"}`}>
         <span className="font-interSemiBold">Quantity:</span> {quantity}
       </span>
@@ -66,7 +66,7 @@ const QuantitySelector: React.FC<QuantityProps> = ({
         <div onClick={decreaseQuantity} className={`${buttonStyle} rounded-tl-[0.5rem] rounded-bl-[0.5rem]`}>
           <Minus className="p-2 md:p-1.5" size={24}/>
         </div>
-        <div className="font-[400] text-base h-[40px] w-[34px] cursor-default flex items-center justify-center">
+        <div className="text-base h-[40px] w-[34px] cursor-default flex items-center justify-center font-bold">
           {quantity}
         </div>
         <div onClick={increaseQuantity} className={`${buttonStyle} rounded-tr-[0.5rem] rounded-br-[0.5rem]`}>

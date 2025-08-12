@@ -14,6 +14,7 @@ import type { FieldProps } from "./field"
 import { Description, FieldError, FieldGroup, Input, Label } from "./field"
 import { Loader } from "./loader"
 import { ctr } from "./primitive"
+import { cn } from "@/lib/utils"
 
 type InputType = Exclude<TextInputDOMProps["type"], "password">
 
@@ -22,6 +23,8 @@ interface BaseTextFieldProps extends TextFieldPrimitiveProps, FieldProps {
   suffix?: React.ReactNode
   isPending?: boolean
   className?: string
+  inputClassName?: string
+  groupClassName?:string
 }
 
 interface RevealableTextFieldProps extends BaseTextFieldProps {
@@ -45,6 +48,8 @@ const TextField = ({
   suffix,
   isPending,
   className,
+  inputClassName,
+  groupClassName,
   isRevealable,
   type,
   ...props
@@ -59,17 +64,16 @@ const TextField = ({
     <TextFieldPrimitive
       type={inputType}
       {...props}
-      className={ctr(className, "group flex flex-col")}
+      className={ctr(className, "group flex flex-col gap-2")}
     >
       {label && <Label>{label}</Label>}
-      <FieldGroup data-loading={isPending ? "true" : undefined}
-      className="relative">
+      <FieldGroup data-loading={isPending ? "true" : undefined} className={cn(groupClassName, "relative")}>
         {prefix ? (
-          <span data-slot="prefix" className="atrs x2e2">
+          <span data-slot="prefix" className="atrs x2e2 !ml-0">
             {prefix}
           </span>
         ) : null}
-        <Input placeholder={placeholder} />
+        <Input placeholder={placeholder} className={inputClassName}/>
         {isRevealable ? (
           <ButtonPrimitive
             type="button"
@@ -82,7 +86,7 @@ const TextField = ({
         ) : isPending ? (
           <Loader variant="spin" data-slot="suffix" />
         ) : suffix ? (
-          <span data-slot="suffix">{suffix}</span>
+          <span data-slot="suffix" className="!mr-0">{suffix}</span>
         ) : null}
       </FieldGroup>
       {description && <Description className="text-[#FFFFFF] font-[400] text-sm">{description}</Description>}
