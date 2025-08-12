@@ -89,7 +89,7 @@ const Testimonials = () => {
       <Link href="/testimonials">
         <IconButton
           name="Explore all Testimonials"
-          process="Processing..."
+          process="Exploring..."
           success="GO!"
           className=" py-[8px] sm:py-[16px] px-[16px] sm:px-[32px] bg-black text-white text-[14px] sm:text-[18px] cursor-pointer hover:scale-105 transition-all duration-1000"
         />

@@ -93,15 +93,16 @@ const BestSelling = async () => {
   ];
 
   return (
-    <div className="flex flex-col gap-3 items-center text-black ">
-      <Title title="Best Selling" />
-      <p className="text-sm font-normal text-center leading-[24px] md:px-[30px] lg:px-[59px] ">
-        {`Upgrade your tech setup with our top-selling computer accessories!
-      These must-have products are trusted by tech enthusiasts and
-      professionals alike, offering superior performance, durability, and
-      style. Whether you're building your dream workstation or simply
-      enhancing your current setup, our best sellers have you covered.`}
-      </p>
+    <div className="flex flex-col gap-3 text-black ">
+      <div className="flex-1 text-center md:text-start">
+        <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">JEWELLERY</p>
+        <h2 className="text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-gray-900 mb-6">
+          Best Seller
+        </h2>
+        <p className="text-[14px] sm:text-[16px] text-[#707070] font-inter leading-relaxed md:mb-4">
+          Chosen again and again for elegance that endures.
+        </p>
+      </div>
       <div className="flex flex-row overflow-x-auto no-scrollbar gap-4 recommend:gap-[15px] pt-3 w-full">
         {mockProducts?.map((product: IProduct) => (
           <ProductCard
