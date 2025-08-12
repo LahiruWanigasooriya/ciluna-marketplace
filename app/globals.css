@@ -172,8 +172,9 @@
 }
 
 @font-face {
-  font-family:"KaiseiHarunoUmi-Bold";
-  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf") format("opentype");
+  font-family: "KaiseiHarunoUmi-Bold";
+  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf")
+    format("opentype");
   font-family: " KaiseiHarunoUmi-Bold";
   src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf")
     format("opentype");
@@ -183,22 +184,30 @@
 }
 
 @font-face {
-  font-family:"KaiseiHarunoUmi-Regular";
-  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Regular.ttf") format("truetype");
+  font-family: "KaiseiHarunoUmi-Regular";
+  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Regular.ttf")
+    format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family:" Arial-Regular";
+  font-family: " Arial-Regular";
   font-family: " Arial-Regular";
   src: url("../public/assets/font/Arial/Arial-Regular.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
-
+@font-face {
+  font-family: " Arial-Bold";
+  font-family: " Arial-Bold";
+  src: url("../public/assets/font/Arial/Arial-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 @font-face {
   font-family: "Lora-Bold";
   src: url("../public/assets/font/lora/Lora-Bold.ttf") format("opentype");

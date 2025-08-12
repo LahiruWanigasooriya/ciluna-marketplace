@@ -171,21 +171,21 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           />
           {/* Name */}
           <div className="py-[14px]">
-            <div className="font-interBold text-[16px]">{fullName}</div>
-            <div className="font-inter text-[14px] lg:text-[14px]  md:text-[12px] md:min-w-[150px] lg:min-w-[200px] text-[#707070]">
+            <div className="font-arialBold text-[16px]">{fullName}</div>
+            <div className="font-arial text-[14px] lg:text-[14px]  md:text-[12px] md:min-w-[150px] lg:min-w-[200px] text-[#707070]">
               Last login : Yesterday 11.39am
             </div>
           </div>
         </div>
 
-        <div className="font-interSemiBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[16px] text-neutral-900 md:max-w-[800px] md:justify-end md:px-0">
+        <div className="font-arialBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[16px] text-neutral-900 md:max-w-[800px] md:justify-end md:px-0">
           {[
             { icon: HeartIcon.src, alt: "Heart", label: "Wish List" },
             { icon: WalletIcon.src, alt: "Wallet", label: "Ciluna Wallet" },
             { icon: CouponIcon.src, alt: "CouponIcon", label: "Coupons" },
           ].map((item, index) => (
             <React.Fragment key={index}>
-              <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
+              <div className="flex cursor-poarial hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
                 <img
                   src={item.icon}
                   alt={item.alt}
@@ -203,12 +203,12 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
       {/* Orders Card */}
       <section className="rounded-xl   box-bg px-[16px] text-[#1E1E1E]  md:px-[24px]">
         <div className="flex items-center justify-between border-b border-[#E1E1E1] py-[16px]">
-          <div className="font-interBold text-[18px]">My Orders</div>
-          <button className="font-inter cursor-pointer text-[16px] hover:underline">
+          <div className="font-arialBold text-[18px]">My Orders</div>
+          <button className="font-arial cursor-pointer text-[16px] hover:underline">
             View All
           </button>
         </div>
-        <div className="grid grid-cols-2 font-interSemiBold justify-between gap-y-[32px] divide-[#E1E1E1] py-[16px] text-center md:flex md:gap-y-0 md:divide-x">
+        <div className="grid grid-cols-2 font-arialBold justify-between gap-y-[32px] divide-[#E1E1E1] py-[16px] text-center md:flex md:gap-y-0 md:divide-x">
           {[
             { icon: PurseIcon.src, alt: "Purse", label: "Unpaid" },
             { icon: ShopCartIcon.src, alt: "Cart", label: "To be Shipped" },
@@ -247,7 +247,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         <span className="font-kaiseiBold text-[12px] mb-[-8px] md:hidden text-[#C19F32]">
           FLASH DEALS
         </span>
-        <div className="font-interBold text-[24px] text-[#252525] flex items-center justify-between">
+        <div className="font-arialBold text-[24px] text-[#252525] flex items-center justify-between">
           <div>
             <span className="hidden md:block">More to love</span>
             <span className="md:hidden font-kaiseiBold">
@@ -256,7 +256,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           </div>
         </div>
         <div className="flex items-end justify-between">
-          <div className="text-[16px] font-inter text-[#5D5D5D]">
+          <div className="text-[16px] font-arial text-[#5D5D5D]">
             A fleeting collection of rare beauty.
           </div>
           <div className="hidden  sm:flex gap-2">
