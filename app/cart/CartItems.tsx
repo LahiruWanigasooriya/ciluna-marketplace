@@ -3,13 +3,13 @@
 import Image from "next/image";
 import {
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   ChevronUp,
   CircleX,
   Trash2,
 } from "lucide-react";
-import React, { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
+import React, { useState, useMemo, useRef } from "react";
 import Link from "next/link";
 import QuantitySelector from "@/app/product/[id]/QuantitySelector";
 import { useCartStore } from "@/store/cart";
@@ -30,9 +30,96 @@ import Title from "@/components/custom/Title";
 import { IProduct } from "@/types/product";
 import Product1 from "@/public/assets/product/product1.webp";
 import Product2 from "@/public/assets/product/product2.webp";
-import SwiperImages from "@/components/custom/SwiperImages";
+import SwiperCards, {
+  SwiperCardsHandle,
+} from "@/components/custom/SwiperCards";
 
 const paymentOptions = [visa, mastercard, amex, applePay];
+
+const mockProducts: IProduct[] = [
+  {
+    _id: "1",
+    name: "ChillWave Jersey",
+    description:
+      "Noise-cancelling over-ear headphones with Bluetooth connectivity.",
+    image: Product1.src,
+    category: { _id: "cat1", name: "Electronics" },
+    rating: 4.5,
+    sold: 120,
+    price: 5001.95,
+    stock: 50,
+    createdBy: "user1",
+    discount: { percentage: 25 },
+    color: "white",
+    colorCode: "#E5E1D8",
+    colors: ["white", "blue", "black", "red"],
+    colorCodes: ["#E5E1D8", "#183B78", "#000000", "#EA0109"],
+  },
+  {
+    _id: "2",
+    name: "Sunny Circle Shades",
+    description: "Fitness-focused smart watch with heart-rate monitoring.",
+    image: Product2.src,
+    category: { _id: "cat2", name: "Wearables" },
+    rating: 4.2,
+    sold: 85,
+    price: 1001,
+    stock: 40,
+    createdBy: "user2",
+    discount: { percentage: 25 },
+  },
+  {
+    _id: "3",
+    name: "Gaming Mouse",
+    description: "High DPI gaming mouse with RGB lighting.",
+    image: Product1.src,
+    category: { _id: "cat3", name: "Accessories" },
+    rating: 4.7,
+    sold: 300,
+    price: 3499,
+    stock: 70,
+    createdBy: "user3",
+  },
+  {
+    _id: "4",
+    name: "Laptop Stand",
+    description: "Adjustable aluminum laptop stand for desk setups.",
+    image: Product2.src,
+    category: { _id: "cat4", name: "Office" },
+    rating: 4.1,
+    sold: 60,
+    price: 1999,
+    stock: 30,
+    createdBy: "user4",
+    discount: { percentage: 25 },
+  },
+  {
+    _id: "5",
+    name: "Bluetooth Speaker",
+    description: "Portable speaker with deep bass and waterproof design.",
+    image: Product1.src,
+    category: { _id: "cat1", name: "Electronics" },
+    rating: 4.6,
+    sold: 140,
+    price: 4999,
+    stock: 45,
+    createdBy: "user5",
+    discount: { percentage: 25 },
+  },
+  // {
+  //   _id: "4",
+  //   name: "Laptop Stand",
+  //   description: "Adjustable aluminum laptop stand for desk setups.",
+  //   image: Product2.src,
+  //   category: { _id: "cat4", name: "Office" },
+  //   rating: 4.1,
+  //   sold: 60,
+  //   price: 1999,
+  //   stock: 30,
+  //   createdBy: "user4",
+  //   discount: {percentage: 25},
+  // },
+];
 
 // Function to calculate totals based on cart items
 const calculateTotals = (items: any[]) => {
@@ -48,104 +135,14 @@ const calculateTotals = (items: any[]) => {
   return { totalPrice, discount, finalPrice };
 };
 
-const mockProducts: IProduct[] = [
-    {
-      _id: "1",
-      name: "ChillWave Jersey",
-      description:
-        "Noise-cancelling over-ear headphones with Bluetooth connectivity.",
-      image: Product1.src,
-      category: { _id: "cat1", name: "Electronics" },
-      rating: 4.5,
-      sold: 120,
-      price: 5001.95,
-      stock: 50,
-      createdBy: "user1",
-      discount: {percentage: 25},
-      color:"white",
-      colorCode: "#E5E1D8",
-      colors: ["white", "blue", "black", "red"],
-      colorCodes: ["#E5E1D8", "#183B78", "#000000", "#EA0109"],
-    },
-    {
-      _id: "2",
-      name: "Sunny Circle Shades",
-      description: "Fitness-focused smart watch with heart-rate monitoring.",
-      image: Product2.src,
-      category: { _id: "cat2", name: "Wearables" },
-      rating: 4.2,
-      sold: 85,
-      price: 1001,
-      stock: 40,
-      createdBy: "user2",
-      discount: {percentage: 25},
-    },
-    {
-      _id: "3",
-      name: "Gaming Mouse",
-      description: "High DPI gaming mouse with RGB lighting.",
-      image: Product1.src,
-      category: { _id: "cat3", name: "Accessories" },
-      rating: 4.7,
-      sold: 300,
-      price: 3499,
-      stock: 70,
-      createdBy: "user3",
-    },
-    {
-      _id: "4",
-      name: "Laptop Stand",
-      description: "Adjustable aluminum laptop stand for desk setups.",
-      image: Product2.src,
-      category: { _id: "cat4", name: "Office" },
-      rating: 4.1,
-      sold: 60,
-      price: 1999,
-      stock: 30,
-      createdBy: "user4",
-      discount: {percentage: 25},
-    },
-    {
-      _id: "5",
-      name: "Sunny Circle Shades",
-      description: "Fitness-focused smart watch with heart-rate monitoring.",
-      image: Product2.src,
-      category: { _id: "cat2", name: "Wearables" },
-      rating: 4.2,
-      sold: 85,
-      price: 1001,
-      stock: 40,
-      createdBy: "user2",
-      discount: {percentage: 25},
-    },
-    {
-      _id: "6",
-      name: "Gaming Mouse",
-      description: "High DPI gaming mouse with RGB lighting.",
-      image: Product1.src,
-      category: { _id: "cat3", name: "Accessories" },
-      rating: 4.7,
-      sold: 300,
-      price: 3499,
-      stock: 70,
-      createdBy: "user3",
-    },
-  ];
-
 const CartItems = () => {
+  const swiperRef = useRef<SwiperCardsHandle>(null);
   const { cart, removeFromCart, setCart, updateQuantity } = useCartStore();
   const { token } = useAuthStore();
   const [deleteCartItems, setDeleteCartItems] = useState<string[]>([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
-  const [isOpenSummary, setIsOpenSummary] = useState(false);
   const [removeProduct, setRemoveProduct] = useState<any>();
   const [removeAll, setIsRemoveAll] = useState(false);
-
-  // Recalculate totals whenever visibleOrderItems changes
-  const { totalPrice, discount, finalPrice } = useMemo(
-    () => calculateTotals(cart),
-    [cart]
-  );
 
   useDisableScroll(removeProduct);
   useDisableScroll(removeAll);
@@ -212,7 +209,7 @@ const CartItems = () => {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col lg:flex-row gap-y-4 lg:gap-x-6">
               <div className="relative h-fit overflow-x-hidden w-full bg-[#F5F5F5] recommend:min-w-[823px] p-4 md:p-6 rounded-[6px]">
-                <div className="pb-4 flex items-center justify-between font-lora gap-2">
+                <div className="pb-4 flex items-center justify-between font-arial gap-2">
                   <div className="flex gap-2">
                     <Checkbox
                       isSelected={isAllSelected}
@@ -226,7 +223,7 @@ const CartItems = () => {
                         }
                       }}
                     />
-                    <h2 className="text-[1.125rem] text-[#1E1E1E] font-bold">
+                    <h2 className="text-[1rem] lg:text-lg text-[#1E1E1E] font-arialBold font-bold">
                       Product ({deleteCartItems.length})
                     </h2>
                   </div>
@@ -250,11 +247,6 @@ const CartItems = () => {
                 </div>
                 <div className="flex flex-col">
                   {cart.map((product, index) => {
-                    // Calculate discounted price for this product
-                    const discountedPrice =
-                      product.price -
-                      (product.price * (product.discount || 0)) / 100;
-
                     const isSelected =
                       deleteCartItems.find((item) => item === product._id) !==
                       undefined;
@@ -318,9 +310,9 @@ const CartItems = () => {
                                 />
                               </Link>
 
-                              <div className="col-span-2 font-lora">
+                              <div className="col-span-2 font-arial">
                                 <div className="grid grid-cols-1 md:grid-cols-7">
-                                  <div className="col-span-6">
+                                  <div className="col-span-7">
                                     <div className="flex flex-col gap-1">
                                       <div className="flex items-center justify-between">
                                         <Link href={`/product/${product._id}`}>
@@ -343,7 +335,7 @@ const CartItems = () => {
                                           <p className="text-[0.75rem] lg:text-[0.75rem] text-[#909090] line-through leading-[18px] lg:leading-[20px]">
                                             {product.price.toFixed(2)}LKR
                                           </p>
-                                          <p className="text-base text-[#252525] font-bold leading-[24px]">
+                                          <p className="text-base text-[#252525] font-arialBold font-bold leading-[24px]">
                                             {getDiscountedPrice(
                                               product.price,
                                               product.discount
@@ -355,7 +347,7 @@ const CartItems = () => {
                                           <p className="text-[0.75rem] text-[#909090] line-through leading-[18px] lg:leading-[20px]">
                                             {product.priceUSD.original}USD
                                           </p>
-                                          <p className="text-base text-[#252525] font-bold leading-[24px]">
+                                          <p className="text-base text-[#252525] font-arialBold font-bold leading-[24px]">
                                             {product.priceUSD.discounted}
                                             USD
                                           </p>
@@ -423,10 +415,10 @@ const CartItems = () => {
                 )}
               </div>
 
-              <div className="flex flex-col w-full lg:max-w-[400px] gap-3">
+              <div className="flex flex-col w-full lg:max-w-[320px] recommend:max-w-[400px] gap-3">
                 <Summary to="checkout" text="Checkout" />
 
-                <div className="flex flex-col py-6 px-4 md:p-6 gap-4 text-gray font-lora bg-[#F5F5F5] rounded-[6px]">
+                <div className="flex flex-col py-6 px-4 md:p-6 gap-4 text-gray font-arial bg-[#F5F5F5] rounded-[6px]">
                   <h2 className="text-xl leading-6 font-bold">Pay With</h2>
                   <div className="flex gap-2 pb-2">
                     {paymentOptions.map((option, index) => (
@@ -465,27 +457,43 @@ const CartItems = () => {
       </div>
 
       {/* recommended products */}
-      <div className="py-20 flex flex-col gap-4">
+      <div className="pt-8 lg:pt-20 pb-6 lg:pb-[68px] flex flex-col gap-1 lg:gap-4">
         <Title
           title="Flash Deals"
-          className="text-gold uppercase !text-sm font-bold tracking-wider"
+          className="text-gold uppercase text-xs lg:!text-sm font-bold tracking-wider h-4 lg:h-5  "
         />
-        {/* <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           <Title
             title="Recommended Products"
-            className="text-gray !text-[52px] font-bold h-[60px] flex items-center"
+            className="text-gray text-[1.5rem] lg:!text-[52px] font-kaiseiBold h-8 lg:h-[60px] flex items-center"
           />
-          <p className="text-[#707070] leading-6">A fleeting collection of rare beauty.</p>
-        </div> */}
+          <div className="flex justify-between h-5 lg:h-6 relative">
+            <p className="text-[#707070] text-sm lg:text-[1rem] leading-6 font-arial">
+              A fleeting collection of rare beauty.
+            </p>
+            <div className="lg:flex gap-6 absolute right-0 bottom-0 hidden">
+              <button
+                onClick={() => swiperRef.current?.scrollPrev()}
+                className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
+              >
+                <ChevronLeft className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]" size={40}/>
+              </button>
+              <button
+                onClick={() => swiperRef.current?.scrollNext()}
+                className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
+              >
+                <ChevronRight className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]" size={40}/>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* <div className="hidden lg:block">
-        <SwiperImages products={mockProducts}/>
+      <div className="">
+        <SwiperCards ref={swiperRef} products={mockProducts} />
       </div>
 
-      <div className="flex">
-
-      </div> */}
+      <div className="flex"></div>
     </div>
   );
 };

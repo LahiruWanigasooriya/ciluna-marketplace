@@ -17,11 +17,12 @@ interface OptionType {
 interface SelectDropdownProps {
   label?: string;
   options: OptionType[];
-  value: OptionType | null;
+  value?: OptionType | null;
   onChange: (selectedOption: SingleValue<OptionType>) => void;
   placeholder: string;
   formatOptionLabel?: (option: OptionType) => React.ReactNode;
   showFlags?: boolean;
+  borderColor?: string;
 }
 
 const SelectDropdown: React.FC<SelectDropdownProps> = ({
@@ -32,6 +33,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
   placeholder,
   formatOptionLabel,
   showFlags = false,
+  borderColor,
 }) => {
   // Custom Option component to show flags
   const CustomOption = (props: OptionProps<OptionType>) => {
@@ -85,11 +87,11 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
       fontSize: "14px",
       borderRadius: "8px",
       // border: state.isFocused ? "2px solid #000000" : "none",
-      border: "none",
+      border: borderColor ? `1px solid ${borderColor}` : "none",
       // boxShadow: state.isFocused ? "0 0 0 1px #d1d5db" : "none",
       boxShadow: "none",
       "&:hover": {
-        // border: "1px solid #d1d5db",
+        // border: "1px solid #ea1515",
         cursor: "pointer",
       },
     }),

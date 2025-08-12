@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart";
 import { getDiscountedPrice } from "@/utils/getDiscountPrice";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, PencilLine } from "lucide-react";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
 import Image from "next/image";
@@ -10,6 +10,7 @@ interface SummaryProps {
   text: string;
   to?: string;
   handlePlaceOrder?: React.Dispatch<React.SetStateAction<boolean>>;
+  editCart?: boolean;
 }
 
 const calculateTotals = (items: any[]) => {
@@ -25,8 +26,8 @@ const calculateTotals = (items: any[]) => {
   return { totalPrice, discount, finalPrice };
 };
 
-const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
-  const { cart, removeFromCart, setCart, updateQuantity } = useCartStore();
+const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
+  const { cart } = useCartStore();
   const [isOpenSummary, setIsOpenSummary] = useState(false);
 
   const { totalPrice, discount, finalPrice } = useMemo(
@@ -40,10 +41,15 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
         {cart.length > 0 ? (
           <>
             <div className="flex flex-col text-gray">
-              <div className="flex flex-col gap-6">
-                <p className="text-lg md:text-xl font-lora font-bold leading-[px] md:leading-[24px]">
-                  Summary
-                </p>
+              <div className="flex flex-col gap-6 ">
+                <div className="flex justify-between">
+                  <p className="text-lg md:text-xl font-arialBold font-bold leading-[px] md:leading-[24px]">
+                    Summary
+                  </p>
+                  <Link href="/cart" className="w-6 h-6 hover:opacity-70">
+                    {editCart && <PencilLine color="black" size={20} />}
+                  </Link>
+                </div>
                 <div className="flex gap-2">
                   {cart.map((product, index) => {
                     return (
@@ -72,7 +78,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
                   })}
                 </div>
                 <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between h-6 font-lora">
+                  <div className="flex items-center justify-between h-6 font-arial">
                     <p className="font-[400] leading-[24px] md:leading-[32px]">
                       Total Bill
                     </p>
@@ -80,7 +86,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
                       <p className="font-[400]">${totalPrice.toFixed(2)}</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between h-6 font-lora">
+                  <div className="flex items-center justify-between h-6 font-arial">
                     <p className="font-[400] leading-[24px] md:leading-[32px]">
                       Discount
                     </p>
@@ -88,7 +94,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
                       <p className="font-[400]">- ${discount.toFixed(2)}</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between h-6 font-lora">
+                  <div className="flex items-center justify-between h-6 font-arial">
                     <p className="font-[400] leading-[24px] md:leading-[32px]">
                       Shipping
                     </p>
@@ -96,7 +102,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
                       <p className="font-[400]">($0.00)</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between h-8 font-lora">
+                  <div className="flex items-center justify-between h-8 font-arialBold">
                     <p className="leading-[24px] md:leading-[32px] font-bold">
                       Estimated Total
                     </p>
@@ -111,7 +117,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
                 {to ? (
                   <Link href={`/${to}`} className="w-full">
                     <Button
-                      className="w-full bg-gray text-white text-lg font-lora"
+                      className="w-full bg-gray text-white text-lg font-arial"
                       size="extra-large"
                     >
                       {text}
@@ -120,9 +126,10 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
                 ) : (
                   <div className="w-full">
                     <Button
-                      className="w-full bg-gray text-white text-lg font-lora"
+                      className="w-full bg-gray text-white text-lg font-arial"
                       size="extra-large"
-                      onPress={() => handlePlaceOrder?.(true)}
+                      type="submit"
+                      // onPress={() => handlePlaceOrder?.(true)}
                     >
                       {text}
                     </Button>
@@ -138,33 +145,35 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
         )}
       </div>
 
-      <div className="z-10 flex lg:hidden fixed w-full left-0 bottom-0 flex-col px-4 py-6 border-[#E1E1E1] rounded-tl-[8px] rounded-tr-[8px] justify-between bg-white border gap-4">
+      <div className="z-20 flex lg:hidden fixed w-full left-0 bottom-0 flex-col px-4 py-6 border-[#E1E1E1] rounded-tl-[8px] rounded-tr-[8px] justify-between bg-white border gap-4">
         {cart.length > 0 ? (
           <>
             <div className="flex flex-col text-gray relative">
               <div className="flex flex-col gap-5">
                 <div
-                  className="absolute top-0 w-full flex justify-end"
+                  className="absolute -mt-3 flex justify-center w-full"
                   onClick={() => setIsOpenSummary(!isOpenSummary)}
                 >
-                  {isOpenSummary ? (
-                    <ChevronDown />
-                  ) : (
-                    <ChevronUp className="" />
-                  )}
+                  {/* {isOpenSummary ? <ChevronDown /> : <ChevronUp className="" />} */}
+                  <div className="w-[44px] h-[3px] bg-black inline-block rounded-full p-[1.5px]"></div>
                 </div>
                 <div>
                   {isOpenSummary ? (
-                    <p className="text-lg md:text-xl font-lora font-bold leading-[24px]">
-                      Summary
-                    </p>
+                    <div className="flex justify-between">
+                      <p className="text-lg md:text-xl font-arialBold font-bold leading-[24px]">
+                        Summary
+                      </p>
+                      <Link href="/cart" className="w-6 h-6 hover:opacity-70">
+                        {editCart && <PencilLine color="black" size={20} />}
+                      </Link>
+                    </div>
                   ) : (
                     <div className="flex justify-between items-center h-6">
-                      <p className="font-lora font-bold leading-[32px] md:leading-[24px]">
+                      <p className="font-arial font-bold leading-[32px] md:leading-[24px]">
                         Estimated Total
                       </p>
                       <div className="flex flex-col items-end">
-                        <p className="font-bold text-[1.25rem] mr-8 font-lora leading-6">
+                        <p className="font-bold text-[1.25rem] font-arialBold leading-6">
                           ${finalPrice.toFixed(2)}
                         </p>
                       </div>
@@ -198,36 +207,36 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
                       })}
                     </div>
                     <div className="flex flex-col gap-3">
-                      <div className="flex items-center justify-between h-5 font-lora">
-                        <p className="font-[400] leading-[20px]">
+                      <div className="flex items-center justify-between h-5 font-arial">
+                        <p className="font-[400] leading-[20px] text-sm">
                           Total Bill
                         </p>
-                        <div className="flex flex-col items-end">
+                        <div className="flex flex-col items-end text-sm">
                           <p className="font-[400]">${totalPrice.toFixed(2)}</p>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between h-5 font-lora">
-                        <p className="font-[400] leading-[20px]">
+                      <div className="flex items-center justify-between h-5 font-arial">
+                        <p className="font-[400] leading-[20px] text-sm">
                           Discount
                         </p>
-                        <div className="flex flex-col items-end">
+                        <div className="flex flex-col items-end text-sm">
                           <p className="font-[400]">- ${discount.toFixed(2)}</p>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between h-5 font-lora">
-                        <p className="font-[400] leading-[20px]">
+                      <div className="flex items-center justify-between h-5 font-arial">
+                        <p className="font-[400] leading-[20px] text-sm">
                           Shipping
                         </p>
-                        <div className="flex flex-col items-end">
+                        <div className="flex flex-col items-end text-sm">
                           <p className="font-[400]">($0.00)</p>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between h-6 font-lora">
+                      <div className="flex items-center justify-between h-6 font-arial">
                         <p className="leading-[24px] md:leading-[32px] font-bold">
                           Estimated Total
                         </p>
                         <div className="flex flex-col items-end">
-                          <p className="font-bold text-[1.75rem]">
+                          <p className="font-arialBold font-bold text-[1.25rem]">
                             ${finalPrice.toFixed(2)}
                           </p>
                         </div>
@@ -238,7 +247,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
                 {to ? (
                   <Link href={`/${to}`} className="w-full">
                     <Button
-                      className="w-full bg-gray text-white text-lg font-lora"
+                      className="w-full bg-gray text-white text-lg font-arial"
                       size="extra-large"
                     >
                       {text}
@@ -247,9 +256,10 @@ const Summary: React.FC<SummaryProps> = ({ text, to, handlePlaceOrder }) => {
                 ) : (
                   <div className="w-full">
                     <Button
-                      className="w-full bg-gray text-white text-lg font-lora"
+                      className="w-full bg-gray text-white text-lg font-arial"
                       size="extra-large"
-                      onPress={() => handlePlaceOrder?.(true)}
+                      type="submit"
+                      // onPress={() => handlePlaceOrder?.(true)}
                     >
                       {text}
                     </Button>

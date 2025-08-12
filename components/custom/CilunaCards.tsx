@@ -8,6 +8,7 @@ import {
   Label,
 } from "react-aria-components";
 import React from "react";
+import { maskDigits } from "@/utils/maskDigits" 
 
 interface Option {
   label: string;
@@ -16,23 +17,38 @@ interface Option {
   prefixImage?: React.ReactNode;
 }
 
-interface RadioGroupFieldProps extends RadioGroupProps {
+interface CilunaCardsProps extends RadioGroupProps {
   options: Option[];
   selectedValue: string;
   onChange: (value: string) => void;
+  isConfidential?: boolean;
+  onCardSelect?: (card: Option) => void;
 }
 
-const RadioGroupField: React.FC<RadioGroupFieldProps> = ({
+const CilunaCards: React.FC<CilunaCardsProps> = ({
   options,
   selectedValue,
   onChange,
+  isConfidential = false,
+  onCardSelect,
   ...props
 }) => {
+    const handleSelectionChange = (value: string) => {
+    onChange(value);
+    
+    // Pass the full card object to parent
+    if (onCardSelect) {
+      const selectedCardObject = options.find(option => option.value === value) || null;
+      if(selectedCardObject && onCardSelect){
+          onCardSelect(selectedCardObject);
+      }
+    }
+  };
   return (
     <RadioGroup
       {...props}
       value={selectedValue}
-      onChange={(val) => onChange(val)}
+      onChange={handleSelectionChange}
       className="flex flex-col gap-8 md:gap-12"
     >
       {options.map((option) => (
@@ -52,9 +68,15 @@ const RadioGroupField: React.FC<RadioGroupFieldProps> = ({
                   <div className="w-[14px] h-[14px] rounded-full bg-black" />
                 )}
               </div>
-              {option.prefixImage && (option.prefixImage)}
+              {option.prefixImage && option.prefixImage}
               <div className="flex flex-col gap-1">
-                <Label className="font-bold">{option.label}</Label>
+                {isConfidential ? (
+                  <Label className="font-bold">
+                    {maskDigits(option.label, 6, 6)}
+                  </Label>
+                ) : (
+                  <Label className="font-bold">{option.label}</Label>
+                )}
                 <Text slot="description">{option.description}</Text>
               </div>
             </>
@@ -65,4 +87,4 @@ const RadioGroupField: React.FC<RadioGroupFieldProps> = ({
   );
 };
 
-export default RadioGroupField;
+export default CilunaCards;

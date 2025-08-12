@@ -1,256 +1,256 @@
 export const provinces = [
   {
     label: "Central Province",
-    value: "central",
+    value: "Central Province",
     districts: [
       {
         label: "Kandy",
-        value: "kandy",
+        value: "Kandy",
         towns: [
-          { label: "Kandy", value: "kandy" },
-          { label: "Gampola", value: "gampola" },
-          { label: "Kadugannawa", value: "kadugannawa" },
-          { label: "Peradeniya", value: "peradeniya" },
-          { label: "Wattegama", value: "wattegama" }
+          { label: "Kandy", value: "Kandy" },
+          { label: "Gampola", value: "Gampola" },
+          { label: "Kadugannawa", value: "Kadugannawa" },
+          { label: "Peradeniya", value: "Peradeniya" },
+          { label: "Wattegama", value: "Wattegama" }
         ]
       },
       {
         label: "Matale",
-        value: "matale",
+        value: "Matale",
         towns: [
-          { label: "Matale", value: "matale" },
-          { label: "Dambulla", value: "dambulla" },
-          { label: "Galewela", value: "galewela" },
-          { label: "Rattota", value: "rattota" },
-          { label: "Ukuwela", value: "ukuwela" }
+          { label: "Matale", value: "Matale" },
+          { label: "Dambulla", value: "Dambulla" },
+          { label: "Galewela", value: "Galewela" },
+          { label: "Rattota", value: "Rattota" },
+          { label: "Ukuwela", value: "Ukuwela" }
         ]
       },
       {
         label: "Nuwara Eliya",
-        value: "nuwara_eliya",
+        value: "Nuwara Eliya",
         towns: [
-          { label: "Nuwara Eliya", value: "nuwara_eliya" },
-          { label: "Hatton", value: "hatton" }
+          { label: "Nuwara Eliya", value: "Nuwara Eliya" },
+          { label: "Hatton", value: "Hatton" }
         ]
       }
     ]
   },
   {
     label: "Eastern Province",
-    value: "eastern",
+    value: "Eastern Province",
     districts: [
       {
         label: "Ampara",
-        value: "ampara",
+        value: "Ampara",
         towns: [
-          { label: "Ampara", value: "ampara" }
+          { label: "Ampara", value: "Ampara" }
         ]
       },
       {
         label: "Batticaloa",
-        value: "batticaloa",
+        value: "Batticaloa",
         towns: [
-          { label: "Batticaloa", value: "batticaloa" },
-          { label: "Kattankudy", value: "kattankudy" },
-          { label: "Eravur", value: "eravur" }
+          { label: "Batticaloa", value: "Batticaloa" },
+          { label: "Kattankudy", value: "Kattankudy" },
+          { label: "Eravur", value: "Eravur" }
         ]
       },
       {
         label: "Trincomalee",
-        value: "trincomalee",
+        value: "Trincomalee",
         towns: [
-          { label: "Trincomalee", value: "trincomalee" }
+          { label: "Trincomalee", value: "Trincomalee" }
         ]
       }
     ]
   },
   {
     label: "Northern Province",
-    value: "northern",
+    value: "Northern Province",
     districts: [
       {
         label: "Jaffna",
-        value: "jaffna",
+        value: "Jaffna",
         towns: [
-          { label: "Jaffna", value: "jaffna" },
-          { label: "Chavakachcheri", value: "chavakachcheri" },
-          { label: "Point Pedro", value: "point_pedro" },
-          { label: "Valvettithurai", value: "valvettithurai" }
+          { label: "Jaffna", value: "Jaffna" },
+          { label: "Chavakachcheri", value: "Chavakachcheri" },
+          { label: "Point Pedro", value: "Point Pedro" },
+          { label: "Valvettithurai", value: "Valvettithurai" }
         ]
       },
       {
         label: "Kilinochchi",
-        value: "kilinochchi",
+        value: "Kilinochchi",
         towns: [
-          { label: "Kilinochchi", value: "kilinochchi" }
+          { label: "Kilinochchi", value: "Kilinochchi" }
         ]
       },
       {
         label: "Mannar",
-        value: "mannar",
+        value: "Mannar",
         towns: [
-          { label: "Mannar", value: "mannar" }
+          { label: "Mannar", value: "Mannar" }
         ]
       },
       {
         label: "Mullaitivu",
-        value: "mullaitivu",
+        value: "Mullaitivu",
         towns: [
-          { label: "Mullaitivu", value: "mullaitivu" }
+          { label: "Mullaitivu", value: "Mullaitivu" }
         ]
       },
       {
         label: "Vavuniya",
-        value: "vavuniya",
+        value: "Vavuniya",
         towns: [
-          { label: "Vavuniya", value: "vavuniya" }
+          { label: "Vavuniya", value: "Vavuniya" }
         ]
       }
     ]
   },
   {
     label: "North Central Province",
-    value: "north_central",
+    value: "North Central Province",
     districts: [
       {
         label: "Anuradhapura",
-        value: "anuradhapura",
+        value: "Anuradhapura",
         towns: [
-          { label: "Anuradhapura", value: "anuradhapura" }
+          { label: "Anuradhapura", value: "Anuradhapura" }
         ]
       },
       {
         label: "Polonnaruwa",
-        value: "polonnaruwa",
+        value: "Polonnaruwa",
         towns: [
-          { label: "Polonnaruwa", value: "polonnaruwa" }
+          { label: "Polonnaruwa", value: "Polonnaruwa" }
         ]
       }
     ]
   },
   {
     label: "North Western Province",
-    value: "north_western",
+    value: "North Western Province",
     districts: [
       {
         label: "Kurunegala",
-        value: "kurunegala",
+        value: "Kurunegala",
         towns: [
-          { label: "Kurunegala", value: "kurunegala" }
+          { label: "Kurunegala", value: "Kurunegala" }
         ]
       },
       {
         label: "Puttalam",
         value: "puttalam",
         towns: [
-          { label: "Puttalam", value: "puttalam" },
-          { label: "Chilaw", value: "chilaw" }
+          { label: "Puttalam", value: "Puttalam" },
+          { label: "Chilaw", value: "Chilaw" }
         ]
       }
     ]
   },
   {
     label: "Sabaragamuwa Province",
-    value: "sabaragamuwa",
+    value: "Sabaragamuwa Province",
     districts: [
       {
         label: "Kegalle",
-        value: "kegalle",
+        value: "Kegalle",
         towns: [
-          { label: "Kegalle", value: "kegalle" }
+          { label: "Kegalle", value: "Kegalle" }
         ]
       },
       {
         label: "Ratnapura",
-        value: "ratnapura",
+        value: "Ratnapura",
         towns: [
-          { label: "Ratnapura", value: "ratnapura" },
-          { label: "Balangoda", value: "balangoda" }
+          { label: "Ratnapura", value: "Ratnapura" },
+          { label: "Balangoda", value: "Balangoda" }
         ]
       }
     ]
   },
   {
     label: "Southern Province",
-    value: "southern",
+    value: "Southern Province",
     districts: [
       {
         label: "Galle",
-        value: "galle",
+        value: "Galle",
         towns: [
-          { label: "Galle", value: "galle" },
-          { label: "Ambalangoda", value: "ambalangoda" }
+          { label: "Galle", value: "Galle" },
+          { label: "Ambalangoda", value: "Ambalangoda" }
         ]
       },
       {
         label: "Hambantota",
-        value: "hambantota",
+        value: "Hambantota",
         towns: [
-          { label: "Hambantota", value: "hambantota" },
-          { label: "Tangalle", value: "tangalle" }
+          { label: "Hambantota", value: "Hambantota" },
+          { label: "Tangalle", value: "Tangalle" }
         ]
       },
       {
         label: "Matara",
-        value: "matara",
+        value: "Matara",
         towns: [
-          { label: "Matara", value: "matara" },
-          { label: "Weligama", value: "weligama" }
+          { label: "Matara", value: "Matara" },
+          { label: "Weligama", value: "Weligama" }
         ]
       }
     ]
   },
   {
     label: "Uva Province",
-    value: "uva",
+    value: "Uva Province",
     districts: [
       {
         label: "Badulla",
-        value: "badulla",
+        value: "Badulla",
         towns: [
-          { label: "Badulla", value: "badulla" },
-          { label: "Bandarawela", value: "bandarawela" },
-          { label: "Haputale", value: "haputale" }
+          { label: "Badulla", value: "Badulla" },
+          { label: "Bandarawela", value: "Bandarawela" },
+          { label: "Haputale", value: "Haputale" }
         ]
       },
       {
         label: "Monaragala",
-        value: "monaragala",
+        value: "Monaragala",
         towns: [
-          { label: "Monaragala", value: "monaragala" }
+          { label: "Monaragala", value: "Monaragala" }
         ]
       }
     ]
   },
   {
     label: "Western Province",
-    value: "western",
+    value: "Western Province",
     districts: [
       {
         label: "Colombo",
-        value: "colombo",
+        value: "Colombo",
         towns: [
-          { label: "Colombo", value: "colombo" },
-          { label: "Avissawella", value: "avissawella" }
+          { label: "Colombo", value: "Colombo" },
+          { label: "Avissawella", value: "Avissawella" }
         ]
       },
       {
         label: "Gampaha",
-        value: "gampaha",
+        value: "Gampaha",
         towns: [
-          { label: "Gampaha", value: "gampaha" },
-          { label: "Ja-Ela", value: "ja_ela" },
-          { label: "Kelaniya", value: "kelaniya" },
-          { label: "Wattala", value: "wattala" }
+          { label: "Gampaha", value: "Gampaha" },
+          { label: "Ja-Ela", value: "Ja Ela" },
+          { label: "Kelaniya", value: "Kelaniya" },
+          { label: "Wattala", value: "Wattala" }
         ]
       },
       {
         label: "Kalutara",
-        value: "kalutara",
+        value: "Kalutara",
         towns: [
-          { label: "Kalutara", value: "kalutara" },
-          { label: "Panadura", value: "panadura" },
-          { label: "Beruwala", value: "beruwala" }
+          { label: "Kalutara", value: "Kalutara" },
+          { label: "Panadura", value: "Panadura" },
+          { label: "Beruwala", value: "Beruwala" }
         ]
       }
     ]
