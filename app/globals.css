@@ -426,6 +426,7 @@
   background-color: #e1e1e1;
   border-color: #e1e1e1;
 }
+
 .line-gradient {
   height: 1px;
   border-top-left-radius: 80px;
@@ -456,6 +457,6 @@
   width: 100%;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 1;
 }

@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
 import { motion, AnimatePresence } from "framer-motion";
 import { dropdownVariants } from "@/utils/animations";
+import { ChevronDown } from "lucide-react";
 
 const countries = [
   { id: "Austria", code: "+43", flag: "🇦🇹" },
@@ -93,7 +94,9 @@ const Phone: React.FC<TelProps> = ({ value, onChange }) => {
 
   return (
     <div className="flex flex-col gap-y-2.5 w-full text-[#252525]">
-      <p className="text-sm font-[400] text-black">Phone Number</p>
+
+      <p className="text-sm font-[400] text-black">Phone Number*</p>
+
       <div className="relative w-full" ref={modalRef}>
         <div
           className="px-2 h-10 border border-[#252525] bg-[#ffffff] transition duration-200 ease-out rounded-lg flex items-center focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20
@@ -116,11 +119,14 @@ const Phone: React.FC<TelProps> = ({ value, onChange }) => {
             placeholder="Enter phone number"
             className="ml-2 flex-grow outline-none text-sm bg-white placeholder:font-[400] placeholder-muted-fg"
           />
+          <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black`} />
         </div>
         {/* {!isValidPhoneNumber(value) && value.length > 0 && (
           <span className="text-xs text-red-500">Invalid phone number</span>
         )} */}
+        
         <AnimatePresence>
+          
           {isOpen && (
             <motion.ul
               initial="closed"

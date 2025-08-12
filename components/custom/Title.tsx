@@ -3,8 +3,20 @@ interface LabelProps {
   className?: string;
   title: string;
 }
+const titles=[
+  { name: "Mr"},
+  { name: "Mrs"},
+  { name: "Miss"},
+  { name: "Dr"},
+];
+interface TitleProps{
+  value: string;
+  onChange: (field:string,value:string)=>void;
+}
 
-const Title: React.FC<LabelProps> = ({ className='lg:text-[52px]', title }) => {
+
+const Title: React.FC<LabelProps> = ({ className='text-base lg:text-2xl', title }) => {
+
   return (
     <span className={cn(" font-kaiseiBold font-[700] text-center text-[24px] sm:text-[40px] lg:text-[52px]", className)}>
       {title}
@@ -13,3 +25,4 @@ const Title: React.FC<LabelProps> = ({ className='lg:text-[52px]', title }) => {
 };
 
 export default Title;
+

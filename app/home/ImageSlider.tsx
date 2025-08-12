@@ -2,10 +2,9 @@
 import Image from "next/image";
 import FashionableFrock from "@/public/assets/home/20250522_1610_Elegant Pink Gown_remix_01jvvs6wr3fx99gx4gz2szyjp2 1.svg";
 import Frock from "@/public/assets/home/Frame 37.svg";
-import MobFrock from "@/public/assets/home/MobFrock.webp";
+import MobileHairloom from "@/public/assets/home/MobileHairloom.svg";
+import MobileFrock from "@/public/assets/home/MobileFrock.svg";
 import MobScent from "@/public/assets/home/MobScent.webp";
-import MobHairloom from "@/public/assets/home/MobHairloom.webp";
-
 import Hairloom from "@/public/assets/home/Hairloom.svg";
 import Scent from "@/public/assets/home/Scent.svg";
 import LuxuriousHairloom from "@/public/assets/home/20250523_1205_Elegant Jewelry Display_remix_01jvxxjztyephsby89bvp3mawc 1.svg";
@@ -14,8 +13,8 @@ import SauvageScent from "@/public/assets/home/20250523_1226_Desert Fragrance Di
 import { useState, useEffect } from "react";
 import { Button } from "react-aria-components";
 import { useMediaQuery } from "@/components/ui";
-
 import type { StaticImageData } from "next/image";
+import { useAuthStore } from "@/store/authStore";
 
 interface HeroItem {
   image: string | StaticImageData;
@@ -33,7 +32,7 @@ export default function Hero() {
   const heroes: HeroItem[] = [
     {
       image: FashionableFrock,
-      mobImg: MobFrock,
+      mobImg: MobileFrock,
       thumbnail: Frock,
       title: "Fashionable Frock",
       subtitle:
@@ -42,7 +41,7 @@ export default function Hero() {
     },
     {
       image: LuxuriousHairloom,
-      mobImg: MobHairloom,
+      mobImg: MobileHairloom,
       thumbnail: Hairloom,
       title: "Luxurious Hairloom",
       subtitle:
@@ -63,7 +62,12 @@ export default function Hero() {
   const handleThumbnailClick = (index: number) => {
     setCurrentHero(index);
   };
+  const { isAuthenticated } = useAuthStore();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHero((prev) => (prev + 1) % heroes.length);
@@ -72,7 +76,12 @@ export default function Hero() {
   }, [heroes.length]);
 
   return (
-    <div className="relative w-full h-[372px] md:h-screen overflow-hidden flex justify-center mt-[40px] md:mt-0">
+    <div
+      className={`relative w-full h-[372px] md:h-screen overflow-hidden flex justify-center md:mt-0 ${
+        mounted && isAuthenticated ? "mt-0" : "mt-[40px] md:mt-0"
+      }`}
+    >
+      {/* Background Image */}
       <div className="relative w-full h-full">
         {heroes.map((hero, index) => {
           const imgSrc = isMobile ? hero.mobImg : hero.image;
@@ -92,8 +101,8 @@ export default function Hero() {
         })}
       </div>
 
-      <div className="absolute hidden md:flex flex-col gap-[8px] w-full text-white text-left top-0 z-9 h-full md:top-1/4 lg:top-[12%] items-start px-[16px] custom-container">
-        <p className="font-kaisei text-[28px] leading-[32px] tracking-normal md:text-[34px] md:leading-[38px] lg:text-[48px] lg:leading-[48px] xl:text-[58px] recommend:text-[68px] recommend:leading-[60px]">
+      <div className="absolute hidden md:flex flex-col gap-[8px] w-full text-white text-left top-0 z-9 h-fit md:top-1/4 lg:top-[12%] items-start px-[16px] custom-container">
+        <p className="font-kaisei text-[28px] leading-[32px] tracking-normal md:text-[42px] md:leading-[48px] lg:text-[48px] lg:leading-[48px] xl:text-[58px] recommend:text-[68px] recommend:leading-[60px]">
           Where Grace Becomes Legacy
         </p>
         <p className="font-[Arial] font-normal text-[16px] text-left leading-[24px] tracking-normal lg:text-[16px] lg:leading-[24px]">
@@ -157,7 +166,7 @@ export default function Hero() {
                 src={hero.thumbnail}
                 alt={hero.subtitle}
                 fill
-                className="w-full h-auto object-cover p-[4px] rounded-[9px] "
+                className="w-full h-auto object-cover p-[2px] lg:p-[4px] rounded-[9px] "
               />
             </div>
           ))}

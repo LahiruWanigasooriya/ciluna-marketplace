@@ -19,8 +19,11 @@ import Navbar from "@/components/custom/Navbar";
 import { policyConfig } from "@/config/policy";
 import {parseDate} from "@internationalized/date";
 import bgpattern from "@/public/assets/login/bgpattern.png";
+import TitleLabelDropdown from "@/components/TitleDropDown";
+import Footer from "@/components/custom/Footer";
 
 type FormData = {
+  titlelabel:string;
   firstName: string;
   lastName: string;
   email: string;
@@ -79,6 +82,24 @@ const SignupForm = ({
 
     <form
       onSubmit={handleSubmit}
+
+      className="max-w-[598px]  mx-auto rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
+    >
+      <div className="flex items-center justify-center space-x-2 text-[#252525]">
+        
+        <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-[32px]" />
+      </div>
+
+        <div>
+          <TitleLabelDropdown
+            value={formData.titlelabel}
+            onChange={(_field: string, value: string) => handleChange("titlelabel", value)}
+          />
+        </div>
+      <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
+        <div className="flex flex-col sm:gap-2  sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex-1">
+=======
       className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
     >
       <div className="flex items-center justify-center space-x-2 text-[#252525]">
@@ -88,6 +109,7 @@ const SignupForm = ({
 
       <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
         <div>
+
           <TextField
             label="First Name*"
             placeholder="Enter first name"
@@ -98,19 +120,23 @@ const SignupForm = ({
           {errors.firstName && <p className="text-red-500 text-xs">{errors.firstName}</p>}
         </div>
 
-        <div>
+
+        <div className="flex-1">
           <TextField
             label="Last Name*"
             placeholder="Enter last name"
             value={formData.lastName}
-            className="w-full"
+
+            className="w-full "
             onChange={(value: string) => handleChange("lastName", value)}
           />
           {errors.lastName && <p className="text-red-500 text-xs">{errors.lastName}</p>}
         </div>
 
+        </div>
 
 <div className="w-full">
+
         <label className="text-sm text-[#252525] font-medium mb-1 block">
           Date of Birth*
         </label>
@@ -135,7 +161,7 @@ const SignupForm = ({
 
         <div>
           <TextField
-            label="Email"
+            label="Email*"
             placeholder="Enter email"
             value={formData.email}
             className="w-full"
@@ -243,7 +269,8 @@ const SignupForm = ({
         </div>
       </div>
     </form>
-    </div>
+     </div>
+
   );
 };
 
@@ -251,6 +278,7 @@ const SignupPage: React.FC = () => {
   const router = useRouter();
 
   const { formData, errors, setErrors, handleChange } = useForm({
+    titlelabel:"",
     firstName: "",
     lastName: "",
      dateofbirth:null,
@@ -302,8 +330,16 @@ const SignupPage: React.FC = () => {
 
   return (
 
+<>
     <div className="flex flex-col h-screen bg-white text-black ">
-            <div className="hidden sm:block absolute -right-24 top-10 h-[301px] w-[320px] ]">
+
+           
+      <Navbar />
+     
+
+
+      <div className="flex-1  flex justify-center pt-20 px-4 py-10 overflow-y-auto scrollbar-hide z-0 ">
+                    <div className="hidden sm:block absolute -right-24 top-10 h-[301px] w-[320px] ]">
                 <Image 
                 src={bgpattern}
                 alt="background pattern"
@@ -312,18 +348,15 @@ const SignupPage: React.FC = () => {
                 priority
                 />
           </div>
-           <div className="hidden sm:block  fixed -left-24 bottom-0 h-[301px] w-[320px] ]">
+           <div className="hidden sm:block  absolute -left-24 bottom-0 h-[301px] w-[320px] ]">
                         <Image 
                         src={bgpattern}
                         alt="background pattern"
                         fill
-                        className="object-cover bg-[#e8e8da rotate-180"
+                        className="object-cover bg-[#e8e8da transform scale-x-[-1]"
                         priority
                         />
             </div>
-      <Navbar />
-
-      <div className="flex-1  flex justify-center pt-20 px-4 py-10 overflow-y-auto scrollbar-hide  ">
         <SignupForm
           formData={formData}
           errors={errors}
@@ -333,8 +366,14 @@ const SignupPage: React.FC = () => {
           isSuccess={isSuccess}
         />
       </div>
+      
+     
     </div>
+    <div className="w-full absolute items-end justify-center"><Footer/></div>
+    
+    </>
   );
 }
 
 export default SignupPage;
+
