@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, Loader2,Info } from "lucide-react";
+import {  Loader2,Info } from "lucide-react";
 import Title from "@/components/custom/Title";
 import { TextField, Button, DatePicker,Checkbox } from "@/components/ui";
 import Link from "next/link";
@@ -27,13 +27,15 @@ type FormData = {
   firstName: string;
   lastName: string;
   email: string;
-  confirmemail:string;
+  confirmemail:string; 
   phone: string;
   password: string;
   confirmpassword: string;
   remember: boolean;
   dateofbirth: DateValue | null;
   country: string;
+  recieveUpdates:boolean;
+  personalizedOffers:boolean;
 };
 
 type FormErrors = {
@@ -142,6 +144,7 @@ const SignupForm = ({
         </label>
         <DatePicker
           className="w-full"
+          placeholder="Select date od birth"
           onChange={(value) => {
             const date = value ? value.toDate("UTC") : null;
             handleChange("dateofbirth", date);
@@ -226,18 +229,18 @@ const SignupForm = ({
         
         <div className="flex flex-col gap-[16px]">
             <Checkbox
-              isSelected={formData.remember}
+              isSelected={formData.recieveUpdates}
               onChange={(isSelected: boolean) =>
-                  handleChange("remember", isSelected)
+                  handleChange("recieveUpdates", isSelected)
                   }
                     >
               <p className="font-arial text-[#252525] text-sm">I agree to receive CILUNA updates and promotions as per the Privacy Policy.</p>
             </Checkbox>
 
            <Checkbox
-              isSelected={formData.remember}
+              isSelected={formData.personalizedOffers}
               onChange={(isSelected: boolean) =>
-                  handleChange("remember", isSelected)
+                  handleChange("personalizedOffers", isSelected)
                   }
                     >
               <p className="font-arial text-[#252525] text-sm">I consent to personalized offers from CILUNA based on my preferences.</p>
@@ -289,6 +292,8 @@ const SignupPage: React.FC = () => {
     password: "",
     confirmpassword:"",
     remember: false,
+    recieveUpdates:false,
+    personalizedOffers:false,
   });
 
   const [isSuccess, setIsSuccess] = useState(false);
@@ -344,7 +349,7 @@ const SignupPage: React.FC = () => {
                 src={bgpattern}
                 alt="background pattern"
                 fill
-                className="object-cover bg-[#e8e8da"
+                className="object-contain bg-[#e8e8da"
                 priority
                 />
           </div>
@@ -353,7 +358,7 @@ const SignupPage: React.FC = () => {
                         src={bgpattern}
                         alt="background pattern"
                         fill
-                        className="object-cover bg-[#e8e8da transform scale-x-[-1]"
+                        className="object-contain bg-[#e8e8da transform scale-x-[-1]"
                         priority
                         />
             </div>

@@ -73,22 +73,28 @@ const DatePickerIcon = () => (
 
 interface DatePickerProps<T extends DateValue> extends DatePickerPrimitiveProps<T> {
   label?: string
+  placeholder?: string
   description?: string
   errorMessage?: string | ((validation: ValidationResult) => string)
 }
 
 const DatePicker = <T extends DateValue>({
   label,
+  placeholder,
   className,
   description,
   errorMessage,
   ...props
 }: DatePickerProps<T>) => {
+ 
   return (
     <DatePickerPrimitive {...props} className={ctr(className, base())}>
       {label && <Label className="text-white">{label}</Label>}
       <FieldGroup className="min-w-40">
-        <DateInput className={datePickerInput()} />
+        <DateInput className={datePickerInput()} 
+        
+      />        
+    
         <DatePickerIcon />
       </FieldGroup>
       {description && <Description>{description}</Description>}
