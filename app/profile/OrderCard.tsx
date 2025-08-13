@@ -72,7 +72,7 @@ const OrderCard = ({ order }: { order: IOrderHistory }) => {
                 <Skeleton className="w-full h-5" />
               ) : (
                 <p className="leading-[17px] sm:leading-[15px] md:leading-[17px] text-blue text-sm sm:text-xs md:text-sm font-interSemiBold">
-                  {order.CilunaPrice}&nbsp;CILUNA
+                  {order.cilunaPrice}&nbsp;CILUNA
                 </p>
               )}
 
@@ -81,7 +81,7 @@ const OrderCard = ({ order }: { order: IOrderHistory }) => {
                   <Skeleton className="w-full h-5" />
                 ) : (
                   <p className="text-sm leading-[17px] sm:leading-[15px] md:leading-[17px] sm:text-xs md:text-sm">
-                    {order.originalcilunaPrice}&nbsp;CILUNA
+                    {order.originalCilunaPrice}&nbsp;CILUNA
                   </p>
                 )}
                 {isLoading ? (
@@ -149,12 +149,12 @@ const OrderCard = ({ order }: { order: IOrderHistory }) => {
           ) : (
             <div className="flex items-center justify-between gap-[10px] recommend:gap-[12px]">
               <p className="leading-[20px] text-blue text-sm xl:text-lg font-interSemiBold">
-                {order.CilunaPrice}&nbsp;CILUNA
+                {order.cilunaPrice}&nbsp;CILUNA
               </p>
 
               <div className="flex items-end line-through decoration-1">
                 <p className="text-sm xl:text-lg leading-[18px] xl:leading-[20px]">
-                  {order.originalcilunaPrice}&nbsp;CILUNA
+                  {order.originalCilunaPrice}&nbsp;CILUNA
                 </p>
 
                 <p className="text-xxs">($123)</p>
