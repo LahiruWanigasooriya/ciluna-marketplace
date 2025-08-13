@@ -3,7 +3,7 @@
 export const getCilunaPrice = async () => {
   try {
     const response = await fetch(
-      "https://wallet.pawchain.net/api/cilunaPrice",
+      "https://wallet.cilunachain.net/api/cilunaPrice",
       {
         cache: "no-store",
       }
