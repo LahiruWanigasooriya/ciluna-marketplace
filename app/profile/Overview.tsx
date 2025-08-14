@@ -208,7 +208,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
             View All
           </button>
         </div>
-        <div className="grid grid-cols-2 font-arialBold justify-between gap-y-[32px] divide-[#E1E1E1] py-[16px] text-center md:flex md:gap-y-0 md:divide-x">
+        <div className="grid grid-cols-2 font-arialBold justify-between gap-y-[12px] divide-[#E1E1E1] py-[16px] text-center md:flex md:gap-y-0 md:divide-x">
           {[
             { icon: PurseIcon.src, alt: "Purse", label: "Unpaid" },
             { icon: ShopCartIcon.src, alt: "Cart", label: "To be Shipped" },
@@ -219,27 +219,29 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
               label: "To be reviewed",
             },
           ].map((item, index) => (
-            <div
-              key={index}
-              className={`flex-1 flex justify-center py-[14px] ${
-                index % 2 === 0 ? "border-r border-[#E1E1E1]" : ""
-              }`}
-            >
-              <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
-                <span className="mb-1 flex cursor-pointer items-center justify-center">
-                  <img
-                    src={item.icon}
-                    alt={item.alt}
-                    className="w-[24px] h-[24px]"
-                  />
-                </span>
-                <div className="cursor-pointer font-medium">{item.label}</div>
+            <React.Fragment key={index}>
+              <div
+                className={`flex-1 flex justify-center py-[14px] ${
+                  index % 2 === 0 ? "border-r border-[#E1E1E1]" : ""
+                }`}
+              >
+                <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
+                  <span className="mb-1 flex cursor-pointer items-center justify-center">
+                    <img
+                      src={item.icon}
+                      alt={item.alt}
+                      className="w-[24px] h-[24px]"
+                    />
+                  </span>
+                  <div className="cursor-pointer font-medium">{item.label}</div>
+                </div>
               </div>
-            </div>
+              {/* Horizontal divider between rows in mobile view only */}
+              {index === 1 && (
+                <div className="col-span-2 my-0.5 h-px w-full line-color md:hidden"></div>
+              )}
+            </React.Fragment>
           ))}
-
-          {/* Horizontal divider for mobile view only */}
-          <div className="col-span-2 my-0.5 h-px w-full line-color md:hidden"></div>
         </div>
       </section>
       {/* More to love */}

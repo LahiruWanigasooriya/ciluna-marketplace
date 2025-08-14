@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Overview from "./Overview";
 import CilunaWallet from "./CilunaWallet";
-// Add these imports for logout functionality - same as navbar
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
@@ -33,14 +32,11 @@ export default function ProfilePage() {
   const [selected, setSelected] = useState("Overview");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userData, setUserData] = useState<any>(null);
-
-  // Use the same stores as navbar
   const { clearAuth } = useAuthStore();
   const { setCart } = useCartStore();
   const { setWishlist } = useWishlistStore();
   const router = useRouter();
 
-  // Simplified logout function without unused state updates
   const handleLogout = async () => {
     setTimeout(() => {
       clearAuth();
@@ -189,7 +185,7 @@ export default function ProfilePage() {
                   ))}
                 </nav>
                 {/* Black Line */}
-                <div className=" flex  w-[134px] h-[5px] bg-[#2D2D2D]"></div>
+                <div className=" flex mb-[8px] w-[134px] h-[5px] bg-[#2D2D2D]"></div>
               </div>
             )}
           </div>
