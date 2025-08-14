@@ -7,7 +7,7 @@ import BgImg from "@/public/assets/home/quiet-brillience-bg.png";
 
 const QuietBrilliance: React.FC = () => {
   return (
-    <div className="custom-container py-[32px] lg:py-[96px]">
+    <div className="custom-container py-[24px] sm:py-[32px] lg:py-[96px]">
       
     <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 xl:gap-[103px] max-w-[1920px] mx-auto font-inter z-10">
       {/* Text Content */}

@@ -99,7 +99,7 @@ const BestSelling = () => {
   ];
 
   return (
-    <div className="custom-container py-[0px] lg:py-[0px] lg:pb-[96px]">
+    <div className="custom-container py-[24px] sm:py-[32px] lg:py-[96px]">
       <div className="flex flex-col gap-1  ">
         <p className="text-[12px] sm:text-[14px] font-cinzel text-[#C19F32] sm:mb-[5px]">
           Jewellery

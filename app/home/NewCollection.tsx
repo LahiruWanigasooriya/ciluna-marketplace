@@ -16,7 +16,7 @@ import { IconButton } from "@/components/custom/IconButton";
 
 const NewCollection = () => {
   return (
-    <div className="custom-container py-[0px]">
+    <div className="custom-container py-[20px] sm:py-[20px] lg:py-[20px]">
       {/* Desktop Slider */}
       <div className="hidden md:block w-full bg-[#F2F2F2] rounded-lg overflow-hidden">
         <Swiper
