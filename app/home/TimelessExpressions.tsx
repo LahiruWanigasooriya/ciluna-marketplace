@@ -14,8 +14,8 @@ import { motion } from "framer-motion";
 const TimelessExpressions = () => {
   return (
     <div className="flex flex-col gap-3 items-center custom-container py-[0px] lg:py-[0px]">
-      <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">
-        OUR COLLECTION
+      <p className="text-[12px] sm:text-[14px] font-cinzel text-[#C19F32] sm:mb-[5px]">
+        Our Collection
       </p>
       <Title title="Timeless Expressions of Elegance" />
       <p className="text-[14px] sm:text-[16px] font-inter text-center text-[#707070] leading-[24px] max-w-[843px] mb-[24px] sm:mb-[48px]">

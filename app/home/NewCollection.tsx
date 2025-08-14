@@ -32,7 +32,7 @@ const NewCollection = () => {
                 <p className="text-[#6B6B65] text-[14px] sm:text-[24px] lg:text-[32px] xl:text-[40px] font-kaisei">
                   Introducing our
                 </p>
-                <h1 className="text-[24px] sm:text-[44px] lg:text-[60px] xl:text-[68px] font-kaiseiBold mb-2 whitespace-nowrap">
+                <h1 className="text-[24px] sm:text-[44px] lg:text-[60px] xl:text-[68px] font-cinzel mb-2 whitespace-nowrap">
                   New Collection
                 </h1>
                 <Link href="/categories">
