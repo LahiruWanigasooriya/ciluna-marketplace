@@ -2471,9 +2471,9 @@ camelcase-css@^2.0.1:
   integrity sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==
 
 caniuse-lite@^1.0.30001579:
-  version "1.0.30001734"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001734.tgz#f97e08599e2d75664543ae4b6ef25dc2183c5cc6"
-  integrity sha512-uhE1Ye5vgqju6OI71HTQqcBCZrvHugk0MjLak7Q+HfoBgoq5Bi+5YnwjP4fjDgrtYr/l8MVRBvzz9dPD4KyK0A==
+  version "1.0.30001735"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001735.tgz#ba658fd3fd24a4106fd68d5ce472a2c251494dbe"
+  integrity sha512-EV/laoX7Wq2J9TQlyIXRxTJqIw4sxfXS4OYgudGxBYRuTv0q7AM6yMEpU/Vo1I94thg9U6EZ2NfZx9GJq83u7w==
 
 chalk@^4.0.0:
   version "4.1.2"
@@ -2507,7 +2507,7 @@ chokidar@^3.6.0:
     "@stripe/stripe-js" "^5.6.0"
     "@types/react-select-country-list" "^2.2.3"
     bcryptjs "^2.4.3"
-    ciluna-marketplace "file:../../../Library/Caches/Yarn/v6/npm-ciluna-marketplace-0.1.0-f98a6426-800a-4e7c-aeee-c6120afdd488-1755074010374/node_modules/ciluna-marketplace"
+    ciluna-marketplace "file:../../../Library/Caches/Yarn/v6/npm-ciluna-marketplace-0.1.0-914095de-fed6-4be9-857a-6d986cb576fa-1755171284681/node_modules/ciluna-marketplace"
     class-variance-authority "^0.7.1"
     cloudinary "^2.5.1"
     clsx "^2.1.1"
