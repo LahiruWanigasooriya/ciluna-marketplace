@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import ProductCard from "@/app/product/ProductCard";
+//import ProductCard from "@/app/product/ProductCard";
 import { IProduct } from "@/types/product";
 import Product1 from "@/public/assets/product/product1.webp";
 import Product2 from "@/public/assets/product/product2.webp";
