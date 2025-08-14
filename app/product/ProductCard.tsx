@@ -241,7 +241,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               ) : (
                 <div className="rounded-full w-8 md:w-12 h-8 md:h-12 p-2 md:p-3 bg-[#252525] flex justify-center items-center">
                   <FaCartPlus
-                    className="w-4 h-4 md:w-6 md:h-6"
+                    className="w-4 h-4 md:w-6 md:h-6 text-white"
                     onClick={handleAddToCart}
                   />
                 </div>
