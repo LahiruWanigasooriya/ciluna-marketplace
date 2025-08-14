@@ -43,10 +43,10 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <div className="bg-[#F5F5F5] py-[32px] lg:py-[0px]">
-      <div className="flex flex-col items-center custom-container py-[32px] lg:py-[96px]">
+    <div className="bg-[#F5F5F5] py-[32px] lg:py-[0px] mt-20 sm:mt-0">
+      <div className="flex flex-col items-center custom-container py-[24px] sm:py-[32px] lg:py-[96px]">
         <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">
-          TESTIMONIALS
+          Testimonials
         </p>
         <Title title="What Our Clients Say" />
         <p className="text-[14px] sm:text-[16px] font-inter text-center text-[#707070] leading-[24px] max-w-[843px] ">

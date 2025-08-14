@@ -9,6 +9,7 @@ import NewCollection from "./NewCollection";
 // import Title from "@/components/custom/Title";
 // import Faq from "./Faq";
 import Testimonials from "./Testimonials";
+import LimitedTimeGrace from "./LimitedTimeGrace";
 
 const Page = async () => {
   return (
@@ -18,6 +19,7 @@ const Page = async () => {
 
         <QuietBrilliance />
         <TimelessExpressions />
+        <LimitedTimeGrace/>
         <NewCollection />
         <BestSelling />
         <Testimonials />

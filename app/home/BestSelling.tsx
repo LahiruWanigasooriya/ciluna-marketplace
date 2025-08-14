@@ -1,11 +1,17 @@
-import Title from "@/components/custom/Title";
-import React from "react";
-import ProductCard from "@/app/product/ProductCard";
+"use client";
+
+import React, { useRef } from "react";
+//import ProductCard from "@/app/product/ProductCard";
 import { IProduct } from "@/types/product";
 import Product1 from "@/public/assets/product/product1.webp";
 import Product2 from "@/public/assets/product/product2.webp";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import SwiperCards, {
+  SwiperCardsHandle,
+} from "@/components/custom/SwiperCards";
 
-const BestSelling = async () => {
+const BestSelling = () => {
+  const swiperRef = useRef<SwiperCardsHandle>(null);
 
   const mockProducts: IProduct[] = [
     {
@@ -20,8 +26,8 @@ const BestSelling = async () => {
       price: 5001.95,
       stock: 50,
       createdBy: "user1",
-      discount: {percentage: 25},
-      color:"white",
+      discount: { percentage: 25 },
+      color: "white",
       colorCode: "#E5E1D8",
       colors: ["white", "blue", "black", "red"],
       colorCodes: ["#E5E1D8", "#183B78", "#000000", "#EA0109"],
@@ -37,7 +43,7 @@ const BestSelling = async () => {
       price: 1001,
       stock: 40,
       createdBy: "user2",
-      discount: {percentage: 25},
+      discount: { percentage: 25 },
     },
     {
       _id: "3",
@@ -62,7 +68,7 @@ const BestSelling = async () => {
       price: 1999,
       stock: 30,
       createdBy: "user4",
-      discount: {percentage: 25},
+      discount: { percentage: 25 },
     },
     {
       _id: "5",
@@ -75,7 +81,7 @@ const BestSelling = async () => {
       price: 4999,
       stock: 45,
       createdBy: "user5",
-      discount: {percentage: 25},
+      discount: { percentage: 25 },
     },
     // {
     //   _id: "4",
@@ -93,23 +99,65 @@ const BestSelling = async () => {
   ];
 
   return (
-    <div className="flex flex-col gap-3 text-black custom-container py-[0px] lg:py-[0px]">
-      <div className="flex-1 text-center md:text-start">
-        <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">JEWELLERY</p>
-        <h2 className="text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-gray-900 mb-6">
-          Best Seller
-        </h2>
-        <p className="text-[14px] sm:text-[16px] text-[#707070] font-inter leading-relaxed md:mb-4">
-          Chosen again and again for elegance that endures.
+    <div className="custom-container py-[24px] sm:py-[32px] lg:py-[96px]">
+      <div className="flex flex-col gap-1  ">
+        <p className="text-[12px] sm:text-[14px] font-cinzel text-[#C19F32] sm:mb-[5px]">
+          Jewellery
         </p>
+        <div className="flex flex-col gap-3">
+          <h2 className="text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-gray-900 mb-[12px]">
+            Best Seller
+          </h2>
+          <div className="flex justify-between h-5 lg:h-6 relative">
+            <p className="text-[14px] sm:text-[16px] text-[#707070] font-inter leading-relaxed md:mb-4 -mt-3">
+              A fleeting collection of rare beauty.
+            </p>
+            <div className="sm:flex gap-[24px] absolute right-0 bottom-0 hidden">
+              <button
+                onClick={() => swiperRef.current?.scrollPrev()}
+                className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
+              >
+                <ChevronLeft
+                  className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]"
+                  size={40}
+                />
+              </button>
+              <button
+                onClick={() => swiperRef.current?.scrollNext()}
+                className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
+              >
+                <ChevronRight
+                  className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]"
+                  size={40}
+                />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="flex flex-row overflow-x-auto no-scrollbar gap-4 recommend:gap-[15px] pt-3 w-full">
-        {mockProducts?.map((product: IProduct) => (
-          <ProductCard
-            key={product._id}
-            product={product}
-          />
-        ))}
+
+      <div className="mt-[48px] relative">
+        <SwiperCards ref={swiperRef} products={mockProducts} />
+        <div className="flex gap-[16px] absolute left-1/2 -translate-x-1/2 bottom-[-60px] sm:hidden">
+          <button
+            onClick={() => swiperRef.current?.scrollPrev()}
+            className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
+          >
+            <ChevronLeft
+              className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]"
+              size={40}
+            />
+          </button>
+          <button
+            onClick={() => swiperRef.current?.scrollNext()}
+            className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
+          >
+            <ChevronRight
+              className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]"
+              size={40}
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

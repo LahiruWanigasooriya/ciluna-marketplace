@@ -16,7 +16,7 @@ import { IconButton } from "@/components/custom/IconButton";
 
 const NewCollection = () => {
   return (
-    <div className="custom-container py-[0px]">
+    <div className="custom-container py-[20px] sm:py-[20px] lg:py-[20px]">
       {/* Desktop Slider */}
       <div className="hidden md:block w-full bg-[#F2F2F2] rounded-lg overflow-hidden">
         <Swiper
@@ -32,7 +32,7 @@ const NewCollection = () => {
                 <p className="text-[#6B6B65] text-[14px] sm:text-[24px] lg:text-[32px] xl:text-[40px] font-kaisei">
                   Introducing our
                 </p>
-                <h1 className="text-[24px] sm:text-[44px] lg:text-[60px] xl:text-[68px] font-kaiseiBold mb-2 whitespace-nowrap">
+                <h1 className="text-[24px] sm:text-[44px] lg:text-[60px] xl:text-[68px] font-cinzel mb-2 whitespace-nowrap">
                   New Collection
                 </h1>
                 <Link href="/categories">
@@ -50,7 +50,7 @@ const NewCollection = () => {
       </div>
 
       {/* Mobile Slider */}
-      <div className="md:hidden w-full bg-[#F2F2F2] rounded-lg overflow-hidden">
+      <div className="md:hidden w-full bg-[#F2F2F2] rounded-lg overflow-hidden  mt-12 sm:mt-0">
         <Swiper
           modules={[Autoplay]}
           speed={1200}
