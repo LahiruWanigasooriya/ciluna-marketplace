@@ -50,7 +50,7 @@ const NewCollection = () => {
       </div>
 
       {/* Mobile Slider */}
-      <div className="md:hidden w-full bg-[#F2F2F2] rounded-lg overflow-hidden">
+      <div className="md:hidden w-full bg-[#F2F2F2] rounded-lg overflow-hidden  mt-12 sm:mt-0">
         <Swiper
           modules={[Autoplay]}
           speed={1200}

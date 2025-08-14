@@ -112,7 +112,7 @@ const LimitedTimeGrace = () => {
             <p className="text-[14px] sm:text-[16px] text-[#707070] font-inter leading-relaxed md:mb-4 -mt-3">
               A fleeting collection of rare beauty.
             </p>
-            <div className="lg:flex gap-6 absolute right-0 bottom-0 hidden">
+           <div className="sm:flex gap-[24px] absolute right-0 bottom-0 hidden">
               <button
                 onClick={() => swiperRef.current?.scrollPrev()}
                 className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
@@ -136,10 +136,29 @@ const LimitedTimeGrace = () => {
         </div>
       </div>
 
-      <div className="mt-[48px]">
+      <div className="mt-[48px] relative">
         <SwiperCards ref={swiperRef} products={mockProducts} />
+        <div className="flex gap-[16px] absolute left-1/2 -translate-x-1/2 bottom-[-60px] sm:hidden">
+          <button
+            onClick={() => swiperRef.current?.scrollPrev()}
+            className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
+          >
+            <ChevronLeft
+              className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]"
+              size={40}
+            />
+          </button>
+          <button
+            onClick={() => swiperRef.current?.scrollNext()}
+            className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
+          >
+            <ChevronRight
+              className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]"
+              size={40}
+            />
+          </button>
+        </div>
       </div>
-
     </div>
   );
 };
