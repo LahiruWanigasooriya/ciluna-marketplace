@@ -25,7 +25,7 @@ export const RemoveOne: React.FC<RemoveOneProps> = ({
       <hr className="border border-[#E8E8DA]" />
       <div className="flex gap-2 font-lora">
         <Button
-          className="w-full p-4 border !border-gray text-lg"
+          className="w-full border !border-gray text-lg"
           size="extra-large"
           onPressChange={() => setIsRemoveProduct(null)}
         >
@@ -73,14 +73,14 @@ export const RemoveAll: React.FC<RemoveAllProps> = ({
       <hr className="border border-[#E8E8DA]" />
       <div className="flex gap-2">
         <Button
-          className="w-full p-4 border !border-gray"
+          className="w-full border !border-gray"
           size="extra-large"
           onPressChange={() => setIsRemoveAll(false)}
         >
           Cancel
         </Button>
         <Button
-          className="w-full p-4 text-white bg-custom-red"
+          className="w-full text-white bg-custom-red"
           size="extra-large"
           onPress={() => removeAll()}
         >

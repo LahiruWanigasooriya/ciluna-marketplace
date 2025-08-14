@@ -29,20 +29,20 @@ const CilunaWallet = () => {
         </div>
         <div className="flex w-full flex-col items-center gap-[16px]">
           <div className="flex flex-col items-center gap-1">
-            <div className="font-loraBold text-center text-[20px] text-[#252525]">
+            <div className="font-arialBold text-center text-[20px] text-[#252525]">
               20,000 LKR
             </div>
-            <div className="font-lora text-center text-[14px] text-[#707070]">
+            <div className="font-arial text-center text-[14px] text-[#707070]">
               C Cash
             </div>
           </div>
 
           <hr className="w-full border-[#F5F5F5]" />
           <div className="flex flex-col items-center gap-1">
-            <div className="font-loraBold text-center text-[20px] text-[#252525]">
+            <div className="font-arialBold text-center text-[20px] text-[#252525]">
               2,000 USD
             </div>
-            <div className="font-lora text-center text-[14px] text-[#707070]">
+            <div className="font-arial text-center text-[14px] text-[#707070]">
               C USD
             </div>
           </div>

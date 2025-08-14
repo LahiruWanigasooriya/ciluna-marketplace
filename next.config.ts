@@ -39,7 +39,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "https://paw-marketplace-dev-8xvdp.ondigitalocean.app",
+        hostname: "",
       },
       {
         protocol: "https",

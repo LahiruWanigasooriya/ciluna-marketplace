@@ -63,11 +63,11 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen  bg-white ">
-      <div className="flex flex-col mt-[132px]  gap-[24px] md:flex-row">
+    <div className="min-h-screen px-[16px] md:px-[20px] lg:px-[40px] xl:px-[60px] 2xl:px-[96px] bg-white ">
+      <div className="flex flex-col mt-[132px]  gap-[24px] md:flex-row ">
         {/* Sidebar for md and up */}
         <aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-[#F5F5F5] px-[16px] text-[#1E1E1E]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
-          <div className="font-interBold  border-b border-[#E1E1E1]  pb-[16px] text-[16px]">
+          <div className="font-arialBold  border-b border-[#E1E1E1]  pb-[16px] text-[16px]">
             Account
           </div>
           <nav className="flex flex-col text-[14px] gap-[12px]">
@@ -79,8 +79,8 @@ export default function ProfilePage() {
                 <button
                   className={`cursor-pointer rounded-md w-full px-[16px] py-[8px] text-left ${
                     selected === item
-                      ? "font-inter bg-neutral-900 text-white"
-                      : "font-inter hover:bg-[#a7a5a5]"
+                      ? "font-arial bg-neutral-900 text-white"
+                      : "font-arial hover:bg-[#a7a5a5]"
                   } ${item === "Ciluna Wallet" ? "py-[20px]" : ""}`}
                   onClick={() => setSelected(item)}
                 >
@@ -104,7 +104,7 @@ export default function ProfilePage() {
               }`}
             >
               <button
-                className={`font-interBold flex w-full items-center justify-between px-[12px] bg-transparent py-[0] text-[16px] z-10`}
+                className={`font-arialBold flex w-full items-center justify-between px-[12px] bg-transparent py-[0] text-[16px] z-10`}
                 onClick={() => setMobileOpen((open) => !open)}
               >
                 <div
@@ -136,8 +136,8 @@ export default function ProfilePage() {
                       <button
                         className={`w-full cursor-pointer rounded-md px-[12px] py-2 text-left ${
                           selected === item
-                            ? "font-inter bg-[#252525] text-white"
-                            : "font-inter hover:bg-[#a7a5a5]"
+                            ? "font-arial bg-[#252525] text-white"
+                            : "font-arial hover:bg-[#a7a5a5]"
                         } ${item === "C Wallet" ? "my-2" : ""}`}
                         onClick={() => {
                           setSelected(item);

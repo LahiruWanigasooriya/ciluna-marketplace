@@ -1,15 +1,45 @@
+import { StaticImageData } from "next/image";
+
 export interface Checkout {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address1: string;
-  address2: string;
-  city: string;
-  state: string;
+  country:string;
+  contactName: string;
+  mobileNumber: string;
+  street: string;
+  province: string;
+  district: string;
+  town: string;
   zip: string;
-  country: string;
+  defaultShippingAddress: boolean;
+  paymentMethod: string;
+  holderName?: string;
+  cardNumber?: string;
+  expireMonth?: string;
+  expireYear?: string;
+  cvv?: string;
+  rememberCardDetails?: boolean;
+  cilunaWallet?: string;
+}
+
+export interface PaymentCardOption {
+  img: StaticImageData;
   holderName: string;
   cardNumber: string;
-  csv: string;
+  expireMonth: string;
+  expireYear: string;
+  cvv: string;
+  rememberCardDetails: boolean;
+  isConfidential: boolean;
+}
+
+export interface Address {
+  id: string;
+  country: string;
+  contactName: string;
+  mobileNumber: string;
+  street: string;
+  province: string;
+  district: string;
+  town: string;
+  zip: string;
+  defaultShippingAddress: boolean;
 }
