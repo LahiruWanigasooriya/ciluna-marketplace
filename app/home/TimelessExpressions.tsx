@@ -11,9 +11,9 @@ import ScentsImg from "@/public/assets/home/timeless-exp4.webp";
 import { IconButton } from "@/components/custom/IconButton";
 import { motion } from "framer-motion";
 
-const TimelessExpressions = async () => {
+const TimelessExpressions = () => {
   return (
-    <div className="flex flex-col gap-3 items-center">
+    <div className="flex flex-col gap-3 items-center custom-container py-[0px] lg:py-[0px]">
       <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">
         OUR COLLECTION
       </p>
@@ -134,7 +134,7 @@ const TimelessExpressions = async () => {
       <Link href="/categories">
         <IconButton
           name="Explore all Collection"
-          process="Processing..."
+          process="Exploring..."
           success="GO!"
           className=" py-[8px] sm:py-[16px] px-[16px] sm:px-[32px] bg-black text-white text-[14px] sm:text-[18px] cursor-pointer hover:scale-105 transition-all duration-1000"
         />
