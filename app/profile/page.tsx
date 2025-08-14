@@ -64,7 +64,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen px-[16px] md:px-[20px] lg:px-[40px] xl:px-[60px] 2xl:px-[96px] bg-white ">
-      <div className="flex flex-col mt-[132px]  gap-[24px] md:flex-row ">
+      <div className="flex flex-col mt-0 md:mt-[132px]  gap-[24px] md:flex-row ">
         {/* Sidebar for md and up */}
         <aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-[#F5F5F5] px-[16px] text-[#1E1E1E]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
           <div className="font-arialBold  border-b border-[#E1E1E1]  pb-[16px] text-[16px]">

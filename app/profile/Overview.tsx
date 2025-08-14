@@ -185,7 +185,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
             { icon: CouponIcon.src, alt: "CouponIcon", label: "Coupons" },
           ].map((item, index) => (
             <React.Fragment key={index}>
-              <div className="flex cursor-poarial hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
+              <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
                 <img
                   src={item.icon}
                   alt={item.alt}
