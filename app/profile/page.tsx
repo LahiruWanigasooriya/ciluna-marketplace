@@ -8,6 +8,10 @@ import { useState, useEffect } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Overview from "./Overview";
 import CilunaWallet from "./CilunaWallet";
+import { useAuthStore } from "@/store/authStore";
+import { useCartStore } from "@/store/cart";
+import { useWishlistStore } from "@/store/wishlist";
+import { useRouter } from "next/navigation";
 
 const sidebarItems = [
   "Overview",
@@ -28,6 +32,30 @@ export default function ProfilePage() {
   const [selected, setSelected] = useState("Overview");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userData, setUserData] = useState<any>(null);
+  const { clearAuth } = useAuthStore();
+  const { setCart } = useCartStore();
+  const { setWishlist } = useWishlistStore();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    setTimeout(() => {
+      clearAuth();
+      localStorage.removeItem("wishlist-storage");
+      localStorage.removeItem("cart-storage");
+      setCart([]);
+      setWishlist([]);
+      router.push("/");
+    }, 1000);
+  };
+
+  // Update the onClick handler for sidebar items
+  const handleSidebarClick = (item: string) => {
+    if (item === "Logout") {
+      handleLogout();
+    } else {
+      setSelected(item);
+    }
+  };
 
   useEffect(() => {
     async function fetchUserProfile() {
@@ -64,7 +92,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen px-[16px] md:px-[20px] lg:px-[40px] xl:px-[60px] 2xl:px-[96px] bg-white ">
-      <div className="flex flex-col mt-[132px]  gap-[24px] md:flex-row ">
+      <div className="flex flex-col mt-[76px] md:mt-[132px]  gap-[24px] md:flex-row ">
         {/* Sidebar for md and up */}
         <aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-[#F5F5F5] px-[16px] text-[#1E1E1E]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
           <div className="font-arialBold  border-b border-[#E1E1E1]  pb-[16px] text-[16px]">
@@ -82,7 +110,7 @@ export default function ProfilePage() {
                       ? "font-arial bg-neutral-900 text-white"
                       : "font-arial hover:bg-[#a7a5a5]"
                   } ${item === "Ciluna Wallet" ? "py-[20px]" : ""}`}
-                  onClick={() => setSelected(item)}
+                  onClick={() => handleSidebarClick(item)}
                 >
                   {item}
                 </button>
@@ -140,8 +168,12 @@ export default function ProfilePage() {
                             : "font-arial hover:bg-[#a7a5a5]"
                         } ${item === "C Wallet" ? "my-2" : ""}`}
                         onClick={() => {
-                          setSelected(item);
-                          setMobileOpen(false);
+                          if (item === "Logout") {
+                            handleLogout();
+                          } else {
+                            setSelected(item);
+                            setMobileOpen(false);
+                          }
                         }}
                       >
                         {item}
@@ -153,7 +185,7 @@ export default function ProfilePage() {
                   ))}
                 </nav>
                 {/* Black Line */}
-                <div className=" flex  w-[134px] h-[5px] bg-[#2D2D2D]"></div>
+                <div className=" flex mb-[8px] w-[134px] h-[5px] bg-[#2D2D2D]"></div>
               </div>
             )}
           </div>
