@@ -1,20 +1,49 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import 'swiper/css';
-import 'swiper/css/pagination';
-
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import ProductCard from "@/app/product/ProductCard";
+import { IProduct } from "@/types/product";
+import { cn } from "../ui/primitive";
 
 interface SwiperImagesProps {
-  images: string[];
+  images?: string[];
+  products?: IProduct[];
 }
 
-const SwiperImages: React.FC<SwiperImagesProps> = ({ images }) => {
+const SwiperImages: React.FC<SwiperImagesProps> = ({ images, products }) => {
+  const productsBreakpoints = {
+    1024: {
+      slidesPerView: 5,
+      spaceBetween: 20,
+    },
+    1440: {
+      slidesPerView: 4,
+      spaceBetween: 24,
+    },
+    1920: {
+      slidesPerView: 5,
+      spaceBetween: 24,
+    },
+  };
+
+  const imagesBreakpoints = {
+    375: {
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+  };
   return (
-    <div className="w-full sm:max-w-[277px] mt-[24px] md:mt-0">
+    <div
+      className={cn("w-full mt-[24px] md:mt-0", images && "sm:max-w-[277px]")}
+    >
       <div className="rounded-xl overflow-hidden">
         <Swiper
-          modules={[Pagination]}
+          modules={[Pagination,Autoplay]}
+          speed={1000}
+          autoplay={{ delay: 1500, disableOnInteraction: false }}
+          loop
           pagination={{
             clickable: true,
             el: ".custom-pagination",
@@ -22,18 +51,25 @@ const SwiperImages: React.FC<SwiperImagesProps> = ({ images }) => {
               return `<span class="${className} custom-bullet"></span>`;
             },
           }}
-          spaceBetween={10}
-          slidesPerView={1}
+          breakpoints={products ? productsBreakpoints : imagesBreakpoints}
         >
-          {images.map((img, index) => (
-            <SwiperSlide key={index}>
-              <img
-                src={img}
-                alt={`Slide ${index}`}
-                className="w-full h-auto object-cover rounded-xl"
-              />
-            </SwiperSlide>
-          ))}
+          {images &&
+            images.map((img, index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={img}
+                  alt={`Slide ${index}`}
+                  className="w-full h-auto object-cover rounded-xl"
+                />
+              </SwiperSlide>
+            ))}
+
+          {products &&
+            products.map((product: IProduct, index) => (
+              <SwiperSlide key={index}>
+                <ProductCard key={product._id} product={product} />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </div>
 
