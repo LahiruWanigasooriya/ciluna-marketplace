@@ -49,6 +49,7 @@ const buttonStyles = tv(
         ],
       },
       appearance: {
+        normal: ["border border-black"],
         solid: [
           "border-transparent bg-[--button-border]",
           "before:inset-0 before:-z-10 before:bg-[--button-bg] before:shadow before:data-[disabled]:shadow-none",
@@ -77,7 +78,7 @@ const buttonStyles = tv(
         large:
           "h-10 [&>[data-slot=icon]]:mx-[-3px] sm:h-11 px-[calc(theme(spacing.4)-1px)] sm:px-[calc(theme(spacing.5)-1px)] py-[calc(theme(spacing[2.5])-1px)] text-base lg:text-base/7 sm:[&>[data-slot=icon]]:size-5",
         "square-petite": "size-9 shrink-0 [&_[data-slot=icon]]:text-current",
-        "extra-large": "p-4 hover:opacity-90 h-14 "
+        "extra-large": "p-4 hover:opacity-90 h-14 ",
       },
       shape: {
         square:
@@ -95,7 +96,7 @@ const buttonStyles = tv(
     },
     defaultVariants: {
       intent: "primary",
-      appearance: "solid",
+      appearance: "normal",
       size: "medium",
       shape: "square",
     },
@@ -107,9 +108,15 @@ const buttonStyles = tv(
 
 interface ButtonProps extends ButtonPrimitiveProps {
   intent?: "primary" | "secondary" | "danger" | "warning";
-  size?: "medium" | "large" | "extra-large" | "square-petite" | "extra-small" | "small";
+  size?:
+    | "medium"
+    | "large"
+    | "extra-large"
+    | "square-petite"
+    | "extra-small"
+    | "small";
   shape?: "square" | "circle";
-  appearance?: "solid" | "outline" | "plain";
+  appearance?: "solid" | "outline" | "plain" | "normal";
   bgColor?: string;
 }
 

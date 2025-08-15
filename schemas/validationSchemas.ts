@@ -105,6 +105,24 @@ export const passwordValidationSchema = Yup.object().shape({
 
 
 
+export const fileSchema = Yup.mixed()
+  .test(
+    "fileSize",
+    "File too large, maximum 5MB",
+    (value) => {
+      if (!value || typeof value !== "object" || !("size" in value)) return true;
+      return (value as any).size <= 5 * 1024 * 1024;
+    }
+  )
+  .test(
+    "fileType",
+    "Unsupported file format",
+    (value) => {
+      if (!value || typeof value !== "object" || !("type" in value)) return true;
+      return (value as any).type && ["image/jpeg", "image/png", "image/gif"].includes((value as any).type);
+    }
+  );
+
 export const reviewValidationSchema = Yup.object().shape({
   title: Yup
     .string()
@@ -123,4 +141,8 @@ export const reviewValidationSchema = Yup.object().shape({
     .min(1, "Please select a rating")
     .max(5, "Rating cannot exceed 5")
     .required("Rating is required"),
+  uploadedImages: Yup.array()
+    .of(fileSchema)
+    .max(3, "Maximum of 3 images allowed")
+    .optional(),
 });
