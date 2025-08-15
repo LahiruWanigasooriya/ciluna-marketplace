@@ -518,7 +518,7 @@ export default function Navbar({ categories }: any) {
                   <Link
                     key={data._id}
                     href={`/subcategories/${data._id}`}
-                    className="cursor-pointer border border-transparent hover:border-solid hover:border-gray-300 px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px] "
+                    className="cursor-pointer border border-transparent hover:border-solid hover:border-black px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px] "
                     onMouseEnter={() => {
                       if (!profileSelect) {
                         setActiveMenu(data.name);
@@ -535,7 +535,7 @@ export default function Navbar({ categories }: any) {
                     }}
                   >
                     {activeMenu === data.name && (
-                      <div className="absolute left-0 shadow-sm w-full py-[40px] px-[16px] sm:px-[56px] md:px-[96px] z-10 bg-white mt-8">
+                      <div className="absolute left-0 shadow-sm w-full py-[40px] px-[16px] sm:px-[56px] md:px-[96px] z-10 bg-[#FFFFFFF5] mt-[28px]">
                         {React.createElement(data.component)}
                       </div>
                     )}
