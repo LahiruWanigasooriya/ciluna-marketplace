@@ -14,76 +14,81 @@ interface ProductInfoTabsProps {
 
 export default function ProductInfoTabs({ productId }: ProductInfoTabsProps) {
   const [activeTab, setActiveTab] = useState("Product Details");
-  const id = productId;
+  const tabs = ["Product Details", "Ratings & Reviews", "Shipping & Returns"];
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case "Product Details":
-        return <ProductDetailsTab productId={id} />;
-      case "Ratings & Reviews":
-        return <Feedback productId={id} />;
-      case "Shipping & Returns":
-        return <div>This is content for Shipping & Returns.</div>;
-      default:
-        return null;
-    }
-  };
+  const renderContent = () =>
+    ({
+      "Product Details": <ProductDetailsTab productId={productId} />,
+      "Ratings & Reviews": <Feedback productId={productId} />,
+      "Shipping & Returns": <div>Shipping & Returns Content</div>,
+    }[activeTab] || null);
 
   return (
-    <div className="w-full h-full mt-40 md:mt-20">
-      <div className="font-[Arial] space-x-[16px] relative">
-        {["Product Details", "Ratings & Reviews", "Shipping & Returns"].map(
-          (tab) => (
-            <div key={tab} className="relative inline-block">
-              <button
-                onClick={() => setActiveTab(tab)}
-                className={`${
-                  activeTab === tab ? "text-gray" : "text-grayNeutralFg"
-                } px-[16px] py-[8px] font-bold text-[16px] md:text-[18px] leading-[24px]`}
-              >
-                {tab}
-              </button>
-              <div
-                className={`h-[5px] w-[49px] mx-auto bg-gray rounded-t-[12px] ${
-                  activeTab === tab ? "opacity-100" : "opacity-0"
-                } transition-opacity duration-300`}
+    <div className="mt-32 w-full overflow-hidden items-center">
+      <div
+        className={`flex gap-4 font-[Arial] transition-all duration-1000 md:px-8 lg:px-[68px] xl:px-[84px] recommend:px-[96px] max-w-[1440px] recommend:mx-auto  ${
+          activeTab === "Product Details"
+            ? "justify-start"
+            : activeTab === "Ratings & Reviews"
+            ? "justify-center"
+            : "justify-end"
+        } md:justify-start`}
+      >
+        {tabs.map((tab) => (
+          <div key={tab} className="relative">
+            <button
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 font-bold text-[16px] whitespace-nowrap ${
+                activeTab === tab ? "text-black" : "text-neutralGray-700"
+              }`}
+            >
+              {tab}
+            </button>
+            <div
+              className={`h-[5px] w-[49px] mx-auto bg-gray rounded-t-[12px] mt-2 ${
+                activeTab === tab ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="md:mt-6 custom-container md:py-0">
+        <>{renderContent()}</>
+        <div
+          className={`space-y-[16px] md:space-y-[20px] block md:px-0 mt-5 md:mt-6 ${
+            activeTab === "Product Details" ? "block" : "md:hidden"
+          }`}
+        >
+          <div className="h-[196px] md:aspect-[1248/713] w-full md:h-full">
+            <Image
+              src={CozyHat}
+              alt="Celestial Drop Ring"
+              className="w-full h-full object-cover object-center rounded-[6px]"
+            />
+          </div>
+          <div className="flex flex-col md:flex-row w-full h-full space-y-[16px] md:space-y-0 md:space-x-[24px]">
+            <div className="md:aspect-[612/1064] w-full h-[600px] md:h-full">
+              <Image
+                src={ManInBlue}
+                alt="Image 1"
+                className="w-full h-full object-cover object-center rounded-[6px]"
               />
             </div>
-          )
-        )}
-      </div>
-      <div className="mt-5 md:mt-6 px-[16px] md:px-0">{renderContent()}</div>
-
-      <div className="space-y-[16px] md:space-y-[20px] md:hidden px-[16px] md:px-0 mt-5 md:mt-6">
-        <div className="h-[196px] md:aspect-[1248/713] w-full md:h-full">
-          <img
-            src={CozyHat.src}
-            alt="Celestial Drop Ring"
-            className="w-full h-full object-cover object-center rounded-[6px]"
-          />
-        </div>
-        <div className="flex flex-col md:flex-row w-full h-full space-y-[16px] md:space-y-0 md:space-x-[24px]">
-          <div className="md:aspect-[612/1064] w-full h-[600px] md:h-full">
+            <div className="md:aspect-[612/1064] w-full h-[600px] md:h-full">
+              <Image
+                src={GirlInHat}
+                alt="Image 2"
+                className="w-full h-full object-cover object-center rounded-[6px]"
+              />
+            </div>
+          </div>
+          <div className="md:aspect-[1248/774] w-full h-[212px] md:h-full">
             <Image
-              src={ManInBlue}
-              alt="Image 1"
-              className="w-full h-full object-cover object-center rounded-[6px]"
+              src={SizingHat}
+              alt="Image 3"
+              className="w-full h-full md:object-cover object-center"
             />
           </div>
-          <div className="md:aspect-[612/1064] w-full h-[600px] md:h-full">
-            <Image
-              src={GirlInHat}
-              alt="Image 2"
-              className="w-full h-full object-cover object-center rounded-[6px]"
-            />
-          </div>
-        </div>
-        <div className="md:aspect-[1248/774] w-full h-[212px] md:h-full">
-          <Image
-            src={SizingHat}
-            alt="Image 3"
-            className="w-full h-full md:object-cover object-center"
-          />
         </div>
       </div>
     </div>

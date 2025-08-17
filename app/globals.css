@@ -268,20 +268,11 @@
   border: 1px solid #e1e1e1;
 }
 
-
 .custom-container {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-}
-.custom-container {
   padding: 16px;
-}
-
-@media (min-width: 640px) {
-  .custom-container {
-    padding: 16px;
-  }
 }
 
 @media (min-width: 768px) {

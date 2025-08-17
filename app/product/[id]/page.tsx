@@ -1,11 +1,22 @@
 import React from "react";
 import ProductInfoTabs from "./ProductInfoTabs";
+import { getRelatedProducts } from "@/actions/products/product";
+import { IProduct } from "@/types/product";
+import Title from "@/components/custom/Title";
+import ProductCard from "../ProductCard";
+/*
+import Product from "./Product";
+import { getProductWishCount } from "@/actions/wishlists/wishlist";
+import { ProductWishCountResponse } from "@/types/wishlist";
+import { IProductVariant } from "@/types/productVariant";
+import { getCilunaPrice } from "@/lib/cilunaService";
+import toFixed from "@/functions/cilunaPrice";
 
-//interface Pro {
-//  product: IProduct;
-//  variants?: IProductVariant;
-//}
-
+interface Pro {
+ product: IProduct;
+ variants?: IProductVariant;
+}
+ */
 const ProductDetails = async ({
   params,
 }: {
@@ -13,6 +24,9 @@ const ProductDetails = async ({
   searchParams: Promise<{ tab?: string }>;
 }) => {
   const id = (await params).id;
+  const relatedres = await getRelatedProducts(id);
+  const relatedproduct: IProduct[] = relatedres?.data?.relatedItems || [];
+
   /*
   {
 const productres = await getProductById(id);
@@ -52,7 +66,7 @@ const productres = await getProductById(id);
    */
 
   return (
-    <div className="flex flex-col gap-[24px] md:gap-[36px] lg:gap-[42px] recommend:gap-[64px] custom-container ">
+    <div className="flex flex-col gap-[24px] md:gap-[36px] lg:gap-[42px] recommend:gap-[64px]">
       {/* <Product
         product={product}
         cilunaPrice={cilunaPrice}
@@ -60,8 +74,8 @@ const productres = await getProductById(id);
         wishCount={productWishCount}
       /> */}
       <ProductInfoTabs productId={id} />
-      {/*
-      <div className="flex flex-col gap-3 items-center md:items-start md:pt-8">
+
+      <div className="flex flex-col gap-3 items-center md:items-start md:pt-8 custom-container md:py-0">
         <Title title="Recommended Products" className="text-black" />
         <div className="flex flex-wrap gap-4 w-full overflow-y-auto overflow-hidden justify-start">
           {relatedproduct.map((product: IProduct) => (
@@ -69,7 +83,6 @@ const productres = await getProductById(id);
           ))}
         </div>
       </div>
-      */}
     </div>
   );
 };
