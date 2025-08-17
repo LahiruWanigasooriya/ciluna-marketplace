@@ -74,6 +74,7 @@ const config = withTV({
         interSemiBold: ["Inter-semiBold", "sans-serif"],
         lora: ["Lora-Regular", "sans-serif"],
         loraBold: ["Lora", "serif"],
+        kaiseiHarunoumi: ["KaiseiHarunoumi-Bold", "sans-serif"],
       },
       fontSize: {
         xxxs: "0.512rem",

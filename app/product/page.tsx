@@ -165,7 +165,6 @@
 import React from "react";
 import Image from "next/image";
 import ProductCard from "./ProductCard";
-import Img from "@/public/assets/product/img.webp";
 import bannerImage from "@/public/assets/product/bannerImage.webp";
 import { getAllProducts } from "@/actions/products/product";
 import { IProduct } from "@/types/product";
@@ -292,13 +291,15 @@ const ProductPage = async ({
   return (
     <div className="flex flex-col gap-[32px] md:gap-[36px] lg:gap-[42px] recommend:gap-[48px]">
       <div className="relative">
-        <Image src={bannerImage} alt="bannerimg" className="hidden md:block w-screen h-[468px] object-cover"
-        style={{objectPosition: 'center 30%'}} />
+        <Image src={bannerImage} alt="bannerimg" className="hidden sm:block w-screen h-[468px] object-cover object-top"
+        style={{ objectPosition: 'center 10%' }}  />
+       
         
-        <Image src={bannerImage} alt="bannerImage" className="block md:hidden object-none object-[center_top]"  />
+        <Image src={bannerImage} alt="bannerImage" className="block sm:hidden w-screen h-[468px] object-contain "
+        style={{objectPosition: 'center 30%'}}  />
         
 
-          <div className="absolute bottom-0 w-full h-2/3 "
+          <div className="absolute bottom-0 w-full h-2/3 sm:h-1/2"
               style={{
                 backdropFilter: `blur(8px)`,
                 maskImage: `linear-gradient(
@@ -329,16 +330,18 @@ const ProductPage = async ({
           </div>
 
 
-          <div className="absolute bottom-0 w-full h-fit flex items-end justify-center">
-            <div className="text-white text-center max-w-2xl pt-8 pb-8 pl-4 pr-4">
-              <h2 className="text-3xl font-bold mb-3">Women's Clothing</h2>
-              <p className="text-sm leading-relaxed">
-                An edit of refined essentials designed to express quiet strength and lasting beauty. Each piece is crafted 
+          <div className="absolute bottom-0 sm:bottom-1/4 w-full h-fit flex items-end sm:items-center justify-center ">
+            <div className="text-white text-center  max-w-2xl pt-8 pb-8 pl-4 pr-4">
+              <h2 className="text-3xl sm:text-[40px] font-bold font-kaiseiHarunoumi mb-3">Women's Clothing</h2>
+              <p className="text-sm font-lora sm:text-base sm:leading-6 leading-relaxed">
+                An edit of refined essentials designed to express quiet strength and lasting beauty. Each piece is crafted
                 with intention made to feel effortless, look timeless, and move with you through every moment.
               </p>
             </div>
           </div>
+          <div className="flex-1 text-black">fggf</div>
       </div>
+      
       <div className="flex flex-col gap-[24px] justify-center">
         <div className="flex flex-col md:flex-row gap-4 justify-between items-start">
           <Sort disabled={!hasProducts} />
