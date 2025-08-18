@@ -13,7 +13,7 @@ import LimitedTimeGrace from "./LimitedTimeGrace";
 
 const Page = async () => {
   return (
-    <div className="flex flex-col relative gap-12 recommend:gap-[76px] ">
+    <div className="flex flex-col relative gap-12 recommend:gap-[76px] overflow-hidden">
       <div className="flex flex-col w-full h-full">
         <ImageSlider />
 

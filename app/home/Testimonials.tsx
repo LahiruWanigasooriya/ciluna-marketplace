@@ -2,11 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Title from "@/components/custom/Title";
 import TestimonialCard from "@/components/custom/TestimonialCard";
 import NecklaceImg from "@/public/assets/home/necklaceimg.webp";
 import RingImg from "@/public/assets/home/ringimg.webp";
 import PerfumeImg from "@/public/assets/home/perfumeimg.webp";
+import BgImg from "@/public/assets/home/testimonials-bg.png";
 import { IconButton } from "@/components/custom/IconButton";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -43,8 +45,8 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <div className="bg-[#F5F5F5] py-[32px] lg:py-[0px] mt-20 sm:mt-0">
-      <div className="flex flex-col items-center custom-container py-[24px] sm:py-[32px] lg:py-[96px]">
+    <div className="bg-[#F5F5F5] py-[32px] lg:py-[0px] mt-20 sm:mt-0 relative">
+      <div className="flex flex-col items-center custom-container py-[24px] sm:py-[32px] lg:py-[96px] z-10">
         <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">
           Testimonials
         </p>
@@ -53,7 +55,7 @@ const Testimonials = () => {
           {`The elegance we create finds its meaning in your moments. These are the whispers of those who carry a piece of our soul.`}
         </p>
 
-        <div className=" py-[48px] w-full">
+        <div className=" py-[48px] w-full z-10">
           {/* Desktop */}
           <div className="hidden lg:grid grid-cols-3 gap-6">
             {testimonials.map((item, index) => (
@@ -96,6 +98,19 @@ const Testimonials = () => {
           />
         </Link>
       </div>
+      <Image
+        src={BgImg}
+        alt="BG Image"
+        className="absolute hidden md:block w-[20%] h-auto object-cover rounded-2xl top-0 left-0 z-0"
+        placeholder="blur"
+      />
+
+      <Image
+        src={BgImg}
+        alt="BG Image"
+        className="absolute hidden md:block w-[20%] h-auto object-cover rounded-2xl top-0 right-0 -scale-x-100 z-0"
+        placeholder="blur"
+      />
     </div>
   );
 };
