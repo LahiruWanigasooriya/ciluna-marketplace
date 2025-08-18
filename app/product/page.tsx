@@ -176,7 +176,7 @@ import toFixed from "@/functions/pawPrice";
 import { getSubcategoryById } from "@/actions/subcategories/subcategory";
 import { getAllBrands } from "@/actions/brands/brand";
 import { getAllModels } from "@/actions/model/model";
-
+import ProductVarientTab from "./ProductVarientTab";
 const ProductPage = async ({
   searchParams: searchParamsPromise,
 }: {
@@ -289,13 +289,15 @@ const ProductPage = async ({
   const hasProducts = products.length > 0;
 
   return (
-    <div className="flex flex-col gap-[32px] md:gap-[36px] lg:gap-[42px] recommend:gap-[48px]">
+    
+        <div className="flex flex-col pb-[32px] md:pb-[36px] lg:pb-[42px] recommend:pb-[48px]">
+
       <div className="relative">
         <Image src={bannerImage} alt="bannerimg" className="hidden sm:block w-screen h-[468px] object-cover object-top"
         style={{ objectPosition: 'center 10%' }}  />
        
         
-        <Image src={bannerImage} alt="bannerImage" className="block sm:hidden w-screen h-[468px] object-contain "
+        <Image src={bannerImage} alt="bannerImage" className="block sm:hidden w-screen h-[468px] object-cover "
         style={{objectPosition: 'center 30%'}}  />
         
 
@@ -339,11 +341,12 @@ const ProductPage = async ({
               </p>
             </div>
           </div>
-          <div className="flex-1 text-black">fggf</div>
+        
       </div>
+       <div className="flex justify-start mt-0"><ProductVarientTab/></div> 
       
       <div className="flex flex-col gap-[24px] justify-center">
-        <div className="flex flex-col md:flex-row gap-4 justify-between items-start">
+        <div className="flex flex-row gap-4 justify-between items-start">
           <Sort disabled={!hasProducts} />
           <Filter brands={brands} modals={models} />
         </div>
