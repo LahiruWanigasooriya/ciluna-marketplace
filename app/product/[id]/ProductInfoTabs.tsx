@@ -7,6 +7,7 @@ import ManInBlue from "@/public/assets/product/Portrait of a Man in Blue.svg";
 import GirlInHat from "@/public/assets/product/Mysterious Sunset Portrait.svg";
 import SizingHat from "@/public/assets/product/image 1.svg";
 import Image from "next/image";
+import ShippingReturns from "@/components/custom/product/ShippingReturns";
 
 interface ProductInfoTabsProps {
   productId: string;
@@ -20,7 +21,7 @@ export default function ProductInfoTabs({ productId }: ProductInfoTabsProps) {
     ({
       "Product Details": <ProductDetailsTab productId={productId} />,
       "Ratings & Reviews": <Feedback productId={productId} />,
-      "Shipping & Returns": <div>Shipping & Returns Content</div>,
+      "Shipping & Returns": <ShippingReturns/>,
     }[activeTab] || null);
 
   return (
