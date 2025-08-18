@@ -535,7 +535,7 @@ export default function Navbar({ categories }: any) {
                     }}
                   >
                     {activeMenu === data.name && (
-                      <div className="absolute left-0 shadow-sm w-full py-[40px] px-[16px] sm:px-[56px] md:px-[96px] z-10 bg-[#FFFFFFF5] mt-[28px]">
+                      <div className="absolute left-0 shadow-sm w-full  z-10 bg-[#FFFFFFF5] mt-[28px]">
                         {React.createElement(data.component)}
                       </div>
                     )}

@@ -11,7 +11,7 @@ const MenMenu = () => {
   const subItemClass = "relative text-[#252525] hover:text-yellow-700 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-7 after:bg-yellow-600 after:scale-x-0 after:origin-left hover:after:scale-x-100 after:transition-transform after:duration-200";
 
   return (
-    <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 ">
+    <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 custom-container !py-[40px] ">
       <h1 className='sm:hidden font-interBold text-[20px] mb-[16px]'>Men</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-[16px] md:gap-y-[30px] w-full">
 

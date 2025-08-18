@@ -35,7 +35,7 @@ const NewCollection = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="absolute flex flex-col top-[5%] lg:left-[45%] right-[3%] items-end lg:items-start">
+        <div className="absolute flex flex-col top-[5%] lg:left-[45%] right-[3%] items-end lg:items-start z-10">
           <p className="text-[#6B6B65] text-[14px] sm:text-[24px] lg:text-[32px] xl:text-[37px] recommend:text-[40px] font-kaisei">
             Introducing our
           </p>
@@ -72,7 +72,7 @@ const NewCollection = () => {
           ))}
         </Swiper>
 
-        <div className="absolute flex flex-col top-[5%] right-[3%] items-end lg:items-start">
+        <div className="absolute flex flex-col top-[5%] right-[3%] items-end lg:items-start z-10">
           <p className="text-[#6B6B65] text-[14px] sm:text-[24px] lg:text-[40px] font-kaisei">
             Introducing our
           </p>
