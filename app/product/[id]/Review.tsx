@@ -4,7 +4,7 @@ import { useAuthStore } from "@/store/authStore";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import React, { useState, useRef } from "react";
-import { IoIosCloseCircleOutline, IoIosStar } from "react-icons/io";
+import { IoIosClose, IoIosCloseCircleOutline, IoIosStar } from "react-icons/io";
 import { GrCloudUpload } from "react-icons/gr";
 import { addReview } from "@/actions/reviews/action";
 import { toast } from "sonner";
@@ -153,26 +153,21 @@ const Review: React.FC<RatingProps> = ({
         className="w-[20px] h-[20px] absolute top-0 right-0 m-[8px] cursor-pointer"
         onClick={closePopup}
       />
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full pt-[16px]"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
+        <p className="text-[20px] leading-6 md:text-[24px] text-left md:leading-8 font-bold">
+          Rate your experience
+        </p>
         <div className="flex flex-col">
-          <div className="flex md:flex md:flex-col justify-between">
-            <p className="text-[16px] leading-6 md:text-xl lg:text-[24px] text-left md:leading-8 font-bold md:mb-4">
-              Rate your experience
-            </p>
-            <div className="flex items-center gap-[2px] md:gap-1 text-[#FFC41F] text-sm">
-              {[...Array(5)].map((_, index) => (
-                <IoIosStar
-                  key={`star-${index}`}
-                  onClick={() => handleStarClick(index + 1)}
-                  className={`cursor-pointer items-center h-5 w-5 md:w-[30px] md:h-[30px] ${
-                    readOnly ? "" : "hover:opacity-75"
-                  } ${rating > index ? "text-yellow-500" : "text-neutral-300"}`}
-                />
-              ))}
-            </div>
+          <div className="flex items-center gap-1 text-[#FFC41F] text-sm">
+            {[...Array(5)].map((_, index) => (
+              <IoIosStar
+                key={`star-${index}`}
+                onClick={() => handleStarClick(index + 1)}
+                className={`cursor-pointer items-center w-[32px] h-[32px] ${
+                  readOnly ? "" : "hover:opacity-75"
+                } ${rating > index ? "text-yellow-500" : "text-neutral-300"}`}
+              />
+            ))}
           </div>
 
           {errors.rating && (
@@ -192,68 +187,71 @@ const Review: React.FC<RatingProps> = ({
             <p className="text-red-500 text-xs mt-1">{errors.content}</p>
           )}
         </div>
-        <p className="text-[16px] leading-6 text-left">Add Images</p>
-        <div className="w-full h-[140px] flex items-center justify-center flex-col text-center relative overflow-y-auto">
-          <svg className="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div>
+          <p className="text-[16px] leading-6 text-left mb-2">Add Images</p>
+          <div className="w-full flex items-center justify-center flex-col text-center relative overflow-y-auto">
+            <svg className="absolute top-0 left-0 w-full h-full pointer-events-none">
+              {uploadedImages.length === 0 ? (
+                <rect
+                  x="0"
+                  y="0"
+                  width="100%"
+                  height="100%"
+                  fill="none"
+                  stroke="#E0E0E0"
+                  strokeWidth="1"
+                  strokeDasharray="8,8"
+                />
+              ) : null}
+            </svg>
             {uploadedImages.length === 0 ? (
-              <rect
-                x="0"
-                y="0"
-                width="100%"
-                height="100%"
-                fill="none"
-                stroke="#E0E0E0"
-                strokeWidth="1"
-                strokeDasharray="8,8"
-              />
-            ) : null}
-          </svg>
-          {uploadedImages.length === 0 ? (
-            <div
-              onClick={handleImagesUploadClick}
-              className="flex flex-col cursor-pointer items-center"
-            >
-              <GrCloudUpload className="text-gray-500 text-2xl transform -scale-x-100" />
-              <p className="text-gray-700 text-sm mt-3 mb-2">
-                Drag your file(s) or <span className="font-bold">browse</span>
-              </p>
-              <p className="text-gray-500 text-neutralGray-600">
-                Maximum of 3 images, 5 MB per file.
-              </p>
-            </div>
-          ) : (
-            <div className="w-full flex flex-wrap gap-4">
-              {uploadedImages.map((image, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={URL.createObjectURL(image)}
-                    alt={`Uploaded ${index + 1}`}
-                    className="w-[120px] h-[120px] object-cover rounded-[8px]"
-                  />
-                  <button
-                    onClick={() => handleRemoveImage(index)}
-                    className="absolute top-0 right-0 bg-white text-black rounded-full w-5 h-5 flex items-center justify-center m-[4px]"
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-          {/* Hidden file input */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            multiple
-            accept="image/*"
-            className="hidden"
-          />
+              <div
+                onClick={handleImagesUploadClick}
+                className="flex flex-col cursor-pointer items-center p-6"
+              >
+                <GrCloudUpload className="text-black w-[32px] h-[32px] transform -scale-x-100" />
+                <p className="text-gray-700 text-sm mt-3 mb-2">
+                  Drag your file(s) or <span className="font-bold">browse</span>
+                </p>
+                <p className="text-gray-500 text-neutralGray-600">
+                  Maximum of 3 images, 5 MB per file.
+                </p>
+              </div>
+            ) : (
+              <div className="w-full flex flex-wrap gap-4">
+                {uploadedImages.map((image, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt={`Uploaded ${index + 1}`}
+                      className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] object-cover rounded-[8px]"
+                    />
+                    <button
+                      onClick={() => handleRemoveImage(index)}
+                      className="absolute top-0 right-0 bg-white text-black rounded-full w-5 h-5 flex items-center justify-center m-[4px]"
+                    >
+                      <IoIosClose className="w-5 h-5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            {/* Hidden file input */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              multiple
+              accept="image/*"
+              className="hidden"
+            />
+          </div>
         </div>
-        <div className="flex flex-col md:flex-row gap-[16px] mt-[16px]">
+
+        <div className="flex gap-[16px] mt-[16px]">
           <Button
             type="button"
-            className="w-full h-[56px] bg-white text-black text-lg leading-6"
+            className="w-full h-[56px] bg-white text-black text-lg md:text-xl leading-6"
             onPress={() => {
               setTitle("");
               setContent("");
@@ -267,7 +265,7 @@ const Review: React.FC<RatingProps> = ({
           </Button>
           <Button
             type="submit"
-            className="w-full h-[56px] bg-black text-white text-lg leading-6"
+            className="w-full h-[56px] bg-black text-white text-lg md:text-xl leading-6"
             isDisabled={isSubmitting}
           >
             {isSubmitting ? "Processing..." : "Submit review"}
