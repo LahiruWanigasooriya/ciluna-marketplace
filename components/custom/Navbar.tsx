@@ -230,7 +230,7 @@ export default function Navbar({ categories }: any) {
           mounted && isAuthenticated ? "hidden" : "flex"
         }`}
       >
-        <span className="text-neutralGray font-[400] font-[Arial] text-[14px] leading-[20px] tracking-[0%]">
+        <span className="text-neutralGray-600 font-[400] font-[Arial] text-[14px] leading-[20px] tracking-[0%]">
           Start Shopping Now
         </span>
         <div className="text-white font-[Arial] text-[14px] leading-[20px] flex gap-[24px] font-[700px] items-center">
