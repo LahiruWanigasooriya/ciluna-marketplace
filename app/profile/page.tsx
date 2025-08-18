@@ -98,11 +98,11 @@ export default function ProfilePage() {
           <div className="font-arialBold  border-b border-[#E1E1E1]  pb-[16px] text-[16px]">
             Account
           </div>
-          <nav className="flex flex-col text-[14px] gap-[12px]">
+          <nav className="flex flex-col text-[14px] gap-[8px]">
             {sidebarItems.map((item) => (
               <div key={item}>
                 {item === "C Wallet" && (
-                  <div className="col-span-2 my-0.5 mb-[12px] h-px w-full bg-[#E1E1E1]"></div>
+                  <div className="col-span-2 my-0.5 mb-[8px] h-px w-full bg-[#E1E1E1]"></div>
                 )}
                 <button
                   className={`cursor-pointer rounded-md w-full px-[16px] py-[8px] text-left ${
@@ -115,7 +115,7 @@ export default function ProfilePage() {
                   {item}
                 </button>
                 {item === "C Wallet" && (
-                  <div className="col-span-2 my-0.5 mt-[12px] h-px w-full bg-[#E1E1E1] "></div>
+                  <div className="col-span-2 my-0.5 mt-[8px] h-px w-full bg-[#E1E1E1] "></div>
                 )}
               </div>
             ))}

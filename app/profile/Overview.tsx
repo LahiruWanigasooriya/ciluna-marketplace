@@ -245,8 +245,8 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         </div>
       </section>
       {/* More to love */}
-      <section className="flex flex-col mb-[158px] mt-[48px] gap-[12px] overflow-hidden">
-        <span className="font-kaiseiBold text-[12px] mb-[-8px] md:hidden text-[#C19F32]">
+      <section className="flex flex-col mb-[158px] mt-[48px] gap-0 overflow-hidden">
+        <span className="font-kaiseiBold text-[12px] tracking-[2px] mb-[0px]  md:hidden text-[#C19F32]">
           FLASH DEALS
         </span>
         <div className="font-arialBold text-[24px] text-[#252525] flex items-center justify-between">

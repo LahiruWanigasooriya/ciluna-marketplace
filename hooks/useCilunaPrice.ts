@@ -13,7 +13,7 @@ const useCilunaPrice = () => {
     const fetchPrice = async () => {
       try {
         const response = await fetch(
-          `https://wallet1.pawchain.net/api/pawPrice`
+          `https://wallet1.cilunachain.net/api/cilunaPrice`
         );
 
         if (!response.ok) {
