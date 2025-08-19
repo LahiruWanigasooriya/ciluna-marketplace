@@ -96,6 +96,7 @@ const config = withTV({
         gray: "#252525",
         black: "#252525",
         lightgray: "#F5F5F5",
+        lightgrayBorders: "#E1E1E1",
         "custom-red": "#A70000",
       },
 

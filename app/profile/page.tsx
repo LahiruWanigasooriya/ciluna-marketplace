@@ -79,7 +79,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-[#F5F5F5]0">Loading...</p>
+        <p className="text-lightgray">Loading...</p>
       </div>
     );
   }
@@ -91,18 +91,18 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen px-[16px] md:px-[20px] lg:px-[40px] xl:px-[60px] 2xl:px-[96px] bg-white ">
+    <div className="min-h-screen px-[16px] md:px-[20px] lg:px-[40px] xl:px-[96px] bg-white ">
       <div className="flex flex-col mt-[76px] md:mt-[132px]  gap-[24px] md:flex-row ">
         {/* Sidebar for md and up */}
-        <aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-[#F5F5F5] px-[16px] text-[#1E1E1E]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
-          <div className="font-arialBold  border-b border-[#E1E1E1]  pb-[16px] text-[16px]">
+        <aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-lightgray px-[16px] text-[#1E1E1E]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
+          <div className="font-arialBold  border-b border-lightgrayBorders  pb-[16px] text-[16px]">
             Account
           </div>
-          <nav className="flex flex-col text-[14px] gap-[12px]">
+          <nav className="flex flex-col text-[14px] gap-[8px]">
             {sidebarItems.map((item) => (
               <div key={item}>
                 {item === "C Wallet" && (
-                  <div className="col-span-2 my-0.5 mb-[12px] h-px w-full bg-[#E1E1E1]"></div>
+                  <div className="col-span-2 my-0.5 mb-[8px] h-px w-full bg-lightgrayBorders"></div>
                 )}
                 <button
                   className={`cursor-pointer rounded-md w-full px-[16px] py-[8px] text-left ${
@@ -115,7 +115,7 @@ export default function ProfilePage() {
                   {item}
                 </button>
                 {item === "C Wallet" && (
-                  <div className="col-span-2 my-0.5 mt-[12px] h-px w-full bg-[#E1E1E1] "></div>
+                  <div className="col-span-2 my-0.5 mt-[8px] h-px w-full bg-lightgrayBorders "></div>
                 )}
               </div>
             ))}
@@ -127,7 +127,7 @@ export default function ProfilePage() {
           <div className="relative z-10 w-full max-w-sm">
             {/* Header */}
             <div
-              className={` bg-[#F5F5F5] text-[#1E1E1E] ${
+              className={` bg-lightgray text-[#1E1E1E] ${
                 mobileOpen ? "rounded-0" : "rounded-xl"
               }`}
             >
@@ -148,23 +148,23 @@ export default function ProfilePage() {
               </button>
               {mobileOpen && (
                 <div className="px-[12px]">
-                  <div className="col-span-2 h-px w-full bg-[#E1E1E1] md:hidden"></div>
+                  <div className="col-span-2 h-px w-full bg-light-gray md:hidden"></div>
                 </div>
               )}
             </div>
             {/* Dropdown List */}
             {mobileOpen && (
               <div className="absolute flex-col top-full left-0 z-0 flex w-full text-[14px] gap-[147px] items-center justify-center bg-white">
-                <nav className="relative z-0 flex w-full  max-w-sm flex-col gap-2 bg-[#F5F5F5] px-[16px] py-4 ">
+                <nav className="relative z-0 flex w-full  max-w-sm flex-col gap-2 bg-lightgray px-[16px] py-4 ">
                   {sidebarItems.map((item) => (
                     <div key={item}>
                       {item === "C Wallet" && (
-                        <div className="col-span-2  h-px w-full bg-[#E1E1E1] md:hidden"></div>
+                        <div className="col-span-2  h-px w-full bg-light-gray md:hidden"></div>
                       )}
                       <button
                         className={`w-full cursor-pointer rounded-md px-[12px] py-2 text-left ${
                           selected === item
-                            ? "font-arial bg-[#252525] text-white"
+                            ? "font-arial bg-gray text-white"
                             : "font-arial hover:bg-[#a7a5a5]"
                         } ${item === "C Wallet" ? "my-2" : ""}`}
                         onClick={() => {
@@ -179,7 +179,7 @@ export default function ProfilePage() {
                         {item}
                       </button>
                       {item === "C Wallet" && (
-                        <div className="col-span-2  h-px w-full bg-[#E1E1E1] md:hidden"></div>
+                        <div className="col-span-2  h-px w-full bg-light-gray md:hidden"></div>
                       )}
                     </div>
                   ))}
