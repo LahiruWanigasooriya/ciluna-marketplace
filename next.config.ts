@@ -39,10 +39,6 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "test.com",
-      },
-      {
-        protocol: "https",
         hostname: "anotherdomain.com", // Add another domain if needed
       },
     ],
