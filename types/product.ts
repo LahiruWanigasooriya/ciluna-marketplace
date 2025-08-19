@@ -35,6 +35,7 @@ export interface IProduct {
   colors?: string[];
   colorCodes?: string[];
   size?: string; // Size details if applicable
+  overview?: {description: string; images: string[]};
 }
 
 export interface GetProductsParams {

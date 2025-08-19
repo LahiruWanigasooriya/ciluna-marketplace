@@ -24,7 +24,10 @@ const dummyReviewData: ReviewData = {
 
 const RatingBars: React.FC<RatingBarProps> = ({ ratingCounts }) => {
   const ratings = [5, 4, 3, 2, 1];
-  const maxRatingCount = Math.max(...Object.values(ratingCounts));
+  // const maxRatingCount = Math.max(...Object.values(ratingCounts));
+  const maxRatingCount = ratingCounts && Object.keys(ratingCounts).length > 0 
+  ? Math.max(...Object.values(ratingCounts)) 
+  : 0;
   const maxWidthPercentage = 80; // Maximum width for the longest bar (adjust as needed)
 
   return (

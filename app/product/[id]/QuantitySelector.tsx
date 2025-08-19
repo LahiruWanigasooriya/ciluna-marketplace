@@ -58,15 +58,16 @@ const QuantitySelector: React.FC<QuantityProps> = ({
     "font-[400] text-sm w-[34px] h-[38px] flex-shrink-0 bg-[#FFFFFF]/5 hover:opacity-75 hover:bg-gray-100 cursor-pointer flex items-center justify-center";
 
   return (
-    <div className="flex flex-col gap-3 lg:gap-4 text-[#252525] font-arial bg-white">
+    <div className="flex flex-col gap-2 text-[#252525] font-arial bg-white">
       <span className={`text-base leading-[19px] ${countShow ? "block" : "hidden"}`}>
-        <span className="font-interSemiBold">Quantity:</span> {quantity}
+        {/* <span className="font-arial">Quantity:</span> {quantity} */}
+        <span className="font-arial leading-6">Quantity</span>
       </span>
       <div className="flex items-center border border-[#252525] rounded-[0.5rem]">
         <div onClick={decreaseQuantity} className={`${buttonStyle} rounded-tl-[0.5rem] rounded-bl-[0.5rem]`}>
           <Minus className="p-2 md:p-1.5" size={24}/>
         </div>
-        <div className="text-base h-[40px] w-[34px] cursor-default flex items-center justify-center font-bold">
+        <div className="text-base h-[40px] w-[34px] cursor-default flex items-center justify-center font-arialBold">
           {quantity}
         </div>
         <div onClick={increaseQuantity} className={`${buttonStyle} rounded-tr-[0.5rem] rounded-br-[0.5rem]`}>

@@ -11,21 +11,22 @@ import ShippingReturns from "@/components/custom/product/ShippingReturns";
 
 interface ProductInfoTabsProps {
   productId: string;
+  overview: {description: string; images: string[]}
 }
 
-export default function ProductInfoTabs({ productId }: ProductInfoTabsProps) {
+export default function ProductInfoTabs({ productId, overview }: ProductInfoTabsProps) {
   const [activeTab, setActiveTab] = useState("Product Details");
   const tabs = ["Product Details", "Ratings & Reviews", "Shipping & Returns"];
 
   const renderContent = () =>
     ({
-      "Product Details": <ProductDetailsTab productId={productId} />,
+      "Product Details": <ProductDetailsTab productId={productId} overview={overview}/>,
       "Ratings & Reviews": <Feedback productId={productId} />,
       "Shipping & Returns": <ShippingReturns/>,
     }[activeTab] || null);
 
   return (
-    <div className="mt-32 w-full overflow-hidden items-center">
+    <div className="w-full overflow-hidden items-center">
       <div
         className={`flex gap-4 font-[Arial] transition-all duration-1000 md:px-8 lg:px-[68px] xl:px-[84px] recommend:px-[96px] max-w-[1440px] recommend:mx-auto  ${
           activeTab === "Product Details"
@@ -55,42 +56,6 @@ export default function ProductInfoTabs({ productId }: ProductInfoTabsProps) {
       </div>
       <div className="md:mt-6 custom-container md:py-0">
         <>{renderContent()}</>
-        <div
-          className={`space-y-[16px] md:space-y-[20px] block md:px-0 mt-5 md:mt-6 ${
-            activeTab === "Product Details" ? "block" : "md:hidden"
-          }`}
-        >
-          <div className="h-[196px] md:aspect-[1248/713] w-full md:h-full">
-            <Image
-              src={CozyHat}
-              alt="Celestial Drop Ring"
-              className="w-full h-full object-cover object-center rounded-[6px]"
-            />
-          </div>
-          <div className="flex flex-col md:flex-row w-full h-full space-y-[16px] md:space-y-0 md:space-x-[24px]">
-            <div className="md:aspect-[612/1064] w-full h-[600px] md:h-full">
-              <Image
-                src={ManInBlue}
-                alt="Image 1"
-                className="w-full h-full object-cover object-center rounded-[6px]"
-              />
-            </div>
-            <div className="md:aspect-[612/1064] w-full h-[600px] md:h-full">
-              <Image
-                src={GirlInHat}
-                alt="Image 2"
-                className="w-full h-full object-cover object-center rounded-[6px]"
-              />
-            </div>
-          </div>
-          <div className="md:aspect-[1248/774] w-full h-[212px] md:h-full">
-            <Image
-              src={SizingHat}
-              alt="Image 3"
-              className="w-full h-full md:object-cover object-center"
-            />
-          </div>
-        </div>
       </div>
     </div>
   );
