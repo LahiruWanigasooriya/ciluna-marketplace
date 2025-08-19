@@ -24,12 +24,12 @@ const CilunaWallet = () => {
         </div>
       </div>
       <div className="flex flex-col items-center   justify-center  px-[16px] w-full md:w-[300px] lg:w-[380px] xl:w-[440px]  pb-[24px] md:px-[20px] xl:px-[32px]">
-        <div className="font-kaiseiBold pt-[24px] md:pt-0  text-center text-[28px] text-[#252525] mb-[32px] md:text-[28px] lg:text-[28px]">
+        <div className="font-kaiseiBold pt-[24px] md:pt-0  text-center text-[28px] text-gray mb-[32px] md:text-[28px] lg:text-[28px]">
           C Wallet
         </div>
         <div className="flex w-full flex-col items-center gap-[16px]">
           <div className="flex flex-col items-center gap-1">
-            <div className="font-arialBold text-center text-[20px] text-[#252525]">
+            <div className="font-arialBold text-center text-[20px] text-gray">
               20,000 LKR
             </div>
             <div className="font-arial text-center text-[14px] text-[#707070]">
@@ -37,9 +37,9 @@ const CilunaWallet = () => {
             </div>
           </div>
 
-          <hr className="w-full border-[#F5F5F5]" />
+          <hr className="w-full border-lightgrayBorders" />
           <div className="flex flex-col items-center gap-1">
-            <div className="font-arialBold text-center text-[20px] text-[#252525]">
+            <div className="font-arialBold text-center text-[20px] text-gray">
               2,000 USD
             </div>
             <div className="font-arial text-center text-[14px] text-[#707070]">
@@ -47,7 +47,7 @@ const CilunaWallet = () => {
             </div>
           </div>
 
-          <button className="font-kaiseiBold mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#252525] py-[16px] text-[18px] text-white  hover:bg-gray-800">
+          <button className="font-kaiseiBold mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-gray py-[16px] text-[18px] text-white  hover:bg-gray-800">
             <CirclePlus />
             Top-up
           </button>
