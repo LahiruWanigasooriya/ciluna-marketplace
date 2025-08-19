@@ -93,7 +93,7 @@ const Product: React.FC<ProductProps> = ({
 
   const [stock, setStock] = useState<number>(product.stock);
 
-  const { quantity } = useQuantityStore();
+  const { quantity, setQuantity } = useQuantityStore();
 
   const { cart, addToCartItem, setCart, updateQuantity } = useCartStore();
 
@@ -284,8 +284,15 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleQuantityUpdate = async (product: any, newQuantity: number) => {
+    const cartItem = cart.find((item) => item.productId === product._id);
+    setQuantity(newQuantity);
+
+    if (!cartItem) {
+      console.log("Product is not in cart yet");
+      return;
+    }
     const updateParams: UpdateCartItemParams = {
-      itemId: product._id, // Use cart item ID
+      itemId: cartItem._id, // Use cart item ID
       quantity: newQuantity,
       productVariantId: product.productVariantId, // Include if exists
     };
@@ -301,7 +308,7 @@ const Product: React.FC<ProductProps> = ({
         toast.error("Failed to update quantity.");
       }
     } else {
-      updateQuantity(product._id, newQuantity); // Use itemId for local update
+      updateQuantity(cartItem._id, newQuantity); // Use itemId for local update
     }
   };
 
