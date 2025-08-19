@@ -97,7 +97,6 @@ const config = withTV({
         black: "#252525",
         lightgray: "#F5F5F5",
         "custom-red": "#A70000",
-        gold: "#C19F32",
       },
 
       fontFamily: {

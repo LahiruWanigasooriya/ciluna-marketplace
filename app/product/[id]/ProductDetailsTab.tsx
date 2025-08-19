@@ -1,43 +1,93 @@
 import React from "react";
+import Image from "next/image";
 interface ProductDetailsTabProps {
   productId: string;
+  overview: { description: string; images: string[] };
 }
 
-const ProductDetailsTab = ({ productId }: ProductDetailsTabProps) => {
+const ProductGallery = ({ overview }: ProductDetailsTabProps) => {
+  // Split images into chunks of 4
+  const chunks: string[][] = [];
+  for (let i = 0; i < (overview?.images?.length || 0); i += 4) {
+    chunks.push(overview.images.slice(i, i + 4));
+  }
 
+  return (
+    <div className="flex flex-col space-y-6">
+      {chunks.map((chunk, i) => (
+        <div key={i} className="flex flex-col space-y-6">
+          {chunk[0] && (
+            <div className="h-[196px] md:aspect-[1248/713] w-full md:h-full relative">
+              <Image
+                src={chunk[0]}
+                alt={`Image ${i * 4 + 1}`}
+                fill
+                className="object-cover object-center rounded-[6px]"
+              />
+            </div>
+          )}
+
+          {(chunk[1] || chunk[2]) && (
+            <div className="flex flex-col md:flex-row w-full h-full space-y-[16px] md:space-y-0 md:space-x-[24px]">
+              {chunk[1] && (
+                <div className="md:aspect-[612/1064] w-full h-[600px] md:h-full relative">
+                  <Image
+                    src={chunk[1]}
+                    alt={`Image ${i * 4 + 2}`}
+                    fill
+                    className="object-cover object-center rounded-[6px]"
+                  />
+                </div>
+              )}
+              {chunk[2] && (
+                <div className="md:aspect-[612/1064] w-full h-[600px] md:h-full relative">
+                  <Image
+                    src={chunk[2]}
+                    alt={`Image ${i * 4 + 3}`}
+                    fill
+                    className="object-cover object-center rounded-[6px]"
+                  />
+                </div>
+              )}
+            </div>
+          )}
+
+          {chunk[3] && (
+            <div className="md:aspect-[1248/774] w-full h-[212px] md:h-full relative">
+              <Image
+                src={chunk[3]}
+                alt={`Image ${i * 4 + 4}`}
+                fill
+                className="object-cover object-center rounded-[6px]"
+              />
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const ProductDetailsTab = ({ productId, overview }: ProductDetailsTabProps) => {
+  const description = overview?.description || "";
+  const paragraphs = description ? description.split("\n\n") : [];
   return (
     <div className="">
       <div className="font-arial text-grayNeutralFg text-[14px] leading-[20px] md:text-[16px] md:leading-[24px] text-neutralGray-700">
-        Elevate your elegance with the Celestial Drop Ring a stunning fusion of
-        cosmic wonder and modern sophistication. Inspired by the quiet
-        brilliance of the night sky, this exquisitely designed ring draws its
-        essence from the timeless allure of stardust and constellations. Every
-        element of its design pays homage to the mysteries of the universe,
-        offering a piece that is both captivating and deeply symbolic.
-        <br />
-        <br />
-        At the heart of the Celestial Drop Ring is its signature drop motif,
-        gracefully suspended to reflect fluidity, light, and movement much like
-        a falling star frozen in time. Handcrafted with precision, the band is
-        forged from high-polish sterling silver or 18k gold vermeil (custom
-        options available), ensuring both durability and brilliance.
-        <br />
-        <br />
-        The drop detail is delicately adorned with a conflict-free white
-        sapphire or moissanite, expertly cut to reflect light with dazzling
-        intensity. The stone setting is secured with micro-prongs, giving the
-        illusion of weightlessness while offering maximum sparkle. The ring’s
-        sleek profile and balanced proportions make it ideal for stacking with
-        other celestial-inspired pieces or wearing solo as a bold, meaningful
-        statement.
-        <br />
-        <br /> Finished with a high-shine polish and protected with an
-        anti-tarnish coating, the Celestial Drop Ring is as enduring as it is
-        enchanting a piece designed to journey with you through countless
-        moments and memories. Whether you're celebrating a personal milestone,
-        gifting a loved one, or simply adding a touch of celestial charm to your
-        collection, this ring invites you to carry a piece of the universe with
-        you wherever you go.
+        {paragraphs.map((paragraph, index) => (
+          <React.Fragment key={index}>
+            {paragraph}
+            {index < paragraphs.length - 1 && (
+              <>
+                <br />
+                <br />
+              </>
+            )}
+          </React.Fragment>
+        ))}
+        <div className="mt-6">
+          <ProductGallery productId={productId} overview={overview} />
+        </div>
       </div>
     </div>
   );
