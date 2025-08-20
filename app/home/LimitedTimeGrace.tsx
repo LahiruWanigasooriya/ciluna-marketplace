@@ -94,7 +94,7 @@ const LimitedTimeGrace = () => {
 
   return (
     <div className="custom-container py-[24px] sm:py-[32px] lg:py-[96px]">
-      <div className="mt-[48px] relative">
+     
         <SwiperCards
           products={mockProducts}
           section={{
@@ -103,7 +103,7 @@ const LimitedTimeGrace = () => {
             description: "A fleeting collection of rare beauty.",
           }}
         />
-      </div>
+      
     </div>
   );
 };
