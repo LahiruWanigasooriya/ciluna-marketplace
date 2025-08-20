@@ -329,7 +329,7 @@ const SignupPage: React.FC = () => {
 
 
       <div className="flex-1  flex justify-center pt-20 px-4 py-10 overflow-y-auto scrollbar-hide z-0 ">
-                    <div className="hidden sm:block absolute -right-0 top-10 h-[301px] w-[320px] ]">
+                    <div className="hidden sm:block absolute -right-0 top-10 h-[301px] w-[320px] ">
                 <Image 
                 src={bgpattern}
                 alt="background pattern"
@@ -338,7 +338,7 @@ const SignupPage: React.FC = () => {
                 priority
                 />
           </div>
-           <div className="hidden sm:block  absolute -left-0 bottom-0 h-[301px] w-[320px] ]">
+           <div className="hidden sm:block  absolute -left-0 bottom-0 h-[301px] w-[320px] ">
                         <Image 
                         src={bgpattern}
                         alt="background pattern"
