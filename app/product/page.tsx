@@ -2,8 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import ProductCard from "./ProductCard";
-import Img from "@/public/assets/product/img.png";
-import ImgM from "@/public/assets/product/imgm.jpg";
+import bannerImage from "@/public/assets/product/bannerImage.webp";
 import { getAllProducts } from "@/actions/products/product";
 import { IProduct } from "@/types/product";
 import Sort from "./Sort";
@@ -14,6 +13,7 @@ import toFixed from "@/functions/cilunaPrice";
 import { getSubcategoryById } from "@/actions/subcategories/subcategory";
 import { getAllBrands } from "@/actions/brands/brand";
 import { getAllModels } from "@/actions/model/model";
+import ProductVarientTab from "./ProductVarientTab";
 
 const ProductPage = async ({
   searchParams: searchParamsPromise,
@@ -46,11 +46,11 @@ const ProductPage = async ({
       sortBy = "price";
       sortOrder = "desc";
       break;
-    case "name_a_z":
+    case "popularity":
       sortBy = "name";
       sortOrder = "asc";
       break;
-    case "price_z_a":
+    case "bestsellers":
       sortBy = "name";
       sortOrder = "desc";
       break;
@@ -127,15 +127,77 @@ const ProductPage = async ({
   const hasProducts = products.length > 0;
 
   return (
-    <div className="flex flex-col gap-[32px] md:gap-[36px] lg:gap-[42px] recommend:gap-[48px]">
-      <div>
-        <Image src={Img} alt="img" className="hidden md:block" />
-        <Image src={ImgM} alt="imgm" className="block md:hidden" />
+    
+        <div className="flex flex-col pb-[32px] md:pb-[36px] lg:pb-[42px] recommend:pb-[48px]">
+
+      <div className="relative">
+        <Image src={bannerImage} alt="bannerimg" className="hidden sm:block w-screen h-[468px] object-cover object-top"
+        style={{ objectPosition: 'center 10%' }}  />
+       
+        
+        <Image src={bannerImage} alt="bannerImage" className="block sm:hidden w-screen h-[468px] object-cover "
+        style={{objectPosition: 'center 30%'}}  />
+        
+
+          <div className="absolute bottom-0 w-full h-2/3 sm:h-1/2"
+              style={{
+                backdropFilter: `blur(8px)`,
+                maskImage: `linear-gradient(
+                  0deg, 
+                  rgba(0,0,0,1) 0%, 
+                  rgba(0,0,0,0.7) 40%, 
+                  rgba(0,0,0,0) 86.26%
+                )`,
+                WebkitMaskImage: `linear-gradient(
+                  0deg, 
+                  rgba(0,0,0,1) 0%, 
+                  rgba(0,0,0,0.7) 40%, 
+                  rgba(0,0,0,0) 86.26%
+                )`
+              }}>
+          </div>
+
+
+          <div className="absolute bottom-0 w-full h-2/3 "
+              style={{
+                background: `linear-gradient(
+                  0deg, 
+                  rgba(0,0,0,0.6) 0%, 
+                  rgba(0,0,0,0.3) 40%, 
+                  transparent 86.26%
+                )`
+              }}>
+          </div>
+
+
+          <div className="absolute bottom-0 sm:bottom-1/4 w-full h-fit flex items-end sm:items-center justify-center ">
+            <div className="text-white text-center  max-w-2xl pt-8 pb-8 pl-4 pr-4">
+              <h2 className="text-3xl sm:text-[40px] font-bold font-kaiseiHarunoumi mb-3">Women's Clothing</h2>
+              <p className="text-sm font-lora sm:text-base sm:leading-6 leading-relaxed">
+                An edit of refined essentials designed to express quiet strength and lasting beauty. Each piece is crafted
+                with intention made to feel effortless, look timeless, and move with you through every moment.
+              </p>
+            </div>
+          </div>
+        
       </div>
-      <div className="flex flex-col gap-[24px] justify-center">
-        <div className="flex flex-col md:flex-row gap-4 justify-between items-start">
-          <Sort disabled={!hasProducts} />
-          <Filter brands={brands} modals={models} />
+       <div className="flex justify-start mt-0"><ProductVarientTab/></div> 
+      
+      <div className="flex flex-col gap-[20px] justify-center  pt-6 pr-4 pb-8 pl-4">
+        <div className="flex flex-row  h-[34px] justify-between items-start font-loraBold">
+          <div className="font-loraBold text-base leading-6 text-[#252525]">{products.length} Products</div>
+        <div className="flex flex-row gap-4 h-[34px]">
+        <button className="cursor-pointer">
+
+          <Sort />
+          
+        </button>
+        <button className="cursor-pointer">
+
+          <Filter />
+          
+        </button>
+        </div>
         </div>
         {hasProducts ? (
           <>
