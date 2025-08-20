@@ -440,7 +440,6 @@
 }
 
 .line-gradient-header {
-  height: 0.5px;
   border-top-left-radius: 80px;
   border-top-right-radius: 80px;
   background: linear-gradient(
