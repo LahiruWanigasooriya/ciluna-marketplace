@@ -4,14 +4,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Heart, Menu, CircleX, ChevronRight } from "lucide-react";
+import { BsHandbag } from "react-icons/bs";
 import Logo from "../../app/assets/logo.svg";
 import MobLogo from "../../app/assets/moblogo.svg";
 import profileIcon from "@/public/assets/header/profileIcon.svg";
 import flag from "@/public/assets/header/flag.svg";
 import hamburgerMenu from "@/public/assets/header/hamburgerMenu.svg";
 import menuActive from "@/public/assets/header/HamburgerMenuActive.svg";
-import cartIcon from "@/public/assets/header/cartIcon.svg";
-import cartActive from "@/public/assets/header/cartIconActive.svg";
 import Link from "next/link";
 import useClickOutside from "@/hooks/useClickOutside";
 import { motion, useTransform, useMotionValue } from "framer-motion";
@@ -24,7 +23,7 @@ import { useAuthStore } from "@/store/authStore";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import { ICategory } from "@/types/category";
 //import { Skeleton } from "@/components/ui";
-import AuthWrapper from "./AuthWrapper";
+//import AuthWrapper from "./AuthWrapper";
 //import Cookies from "js-cookie";
 import WomenMenu from "@/components/custom/Submenus/WomenMenu";
 import MenMenu from "@/components/custom/Submenus/MenMenu";
@@ -34,7 +33,7 @@ import ScentsMenu from "@/components/custom/Submenus/ScentsMenu";
 
 export default function Navbar({ categories }: any) {
   const modalRef = useRef<HTMLDivElement>(null);
-  const authRef = useRef<HTMLDivElement>(null);
+  //  const authRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -58,7 +57,7 @@ export default function Navbar({ categories }: any) {
   useEffect(() => {
     setMounted(true);
   }, []);
-  const [authPopup, setAuthPopup] = useState(false);
+  //  const [authPopup, setAuthPopup] = useState(false);
   const [isNavbarActive, setIsNavbarActive] = useState(false);
 
   // Dummy data for categories
@@ -93,7 +92,7 @@ export default function Navbar({ categories }: any) {
   );
 
   useClickOutside(modalRef, () => setSearchOpen(false));
-  useClickOutside(authRef, () => setAuthPopup(false));
+  //  useClickOutside(authRef, () => setAuthPopup(false));
   useClickOutside(menuRef, () => toggleMenu());
   useClickOutside(profileRef, () => setProfileSelect(false));
   useClickOutside(mobileMenuRef, () => setMobileMenuOpen(false));
@@ -138,10 +137,13 @@ export default function Navbar({ categories }: any) {
     router.push(href);
   };
 
-  const toggleSearch = () => {
+  {
+    /*
+    const toggleSearch = () => {
     setSearchOpen(!searchOpen);
     setIsNavbarActive(true);
-  };
+  }; */
+  }
 
   const handleAuthAction = async () => {
     if (token) {
@@ -162,10 +164,12 @@ export default function Navbar({ categories }: any) {
     }
   };
 
-  const handleAuthPopup = () => {
+  {
+    /*  const handleAuthPopup = () => {
     setAuthPopup(true);
     setIsNavbarActive(true);
-  };
+  }; */
+  }
 
   const handleLogout = async () => {
     setIsNavbarActive(true);
@@ -201,10 +205,12 @@ export default function Navbar({ categories }: any) {
     setIsNavbarActive(true);
   };
 
-  const closePopup = () => {
+  {
+    /*  const closePopup = () => {
     setAuthPopup(false);
     setIsNavbarActive(true);
-  };
+  }; */
+  }
 
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
@@ -298,13 +304,7 @@ export default function Navbar({ categories }: any) {
                 </motion.div>
               </Link>
               <Link href="/cart" className="relative">
-                <img
-                  src={
-                    pathname === "/cart" || isNavbarActive
-                      ? cartActive.src
-                      : cartIcon.src
-                  }
-                  alt="Cart Icon"
+                <BsHandbag
                   className={`min-w-[24px] h-[24px] md:mr-0 ${
                     isNavbarActive ? "text-gray" : "text-white"
                   }`}
@@ -496,16 +496,18 @@ export default function Navbar({ categories }: any) {
                 </button>
               </motion.div>
             )}
-            {authPopup && (
+            {/* {authPopup && (
               <div className="fixed inset-0 flex justify-center items-center py-4 bg-fg/80 z-50">
                 <AuthWrapper ref={authRef} closePopup={closePopup} />
               </div>
-            )}
+            )} */}
           </div>
         </div>
         <div
           className={` mx-auto w-[80%] max-w-[1248px] hidden md:flex ${
-            isNavbarActive ? "line-gradient-header " : "line-gradient-header"
+            isNavbarActive
+              ? "line-gradient-header h-[1px]"
+              : "line-gradient-header h-[0.5px]"
           }`}
         ></div>
 
