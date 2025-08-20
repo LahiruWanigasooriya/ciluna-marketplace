@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, Loader2 } from "lucide-react";
-import Logo from "../assets/logo.png";
-import Banner from "../assets/login-banner.webp";
+import Logo from "../assets/logo.svg";
+import Banner from "../assets/logo.svg";
 import Title from "@/components/custom/Title";
 import { TextField, Button } from "@/components/ui";
 import Link from "next/link";
 import { toast } from "sonner";
 import { resendTemporaryPassword } from "@/actions/users/resendTempPassword";
-import BGIMG from "@/public/assets/bglogom.webp";
+// import BGIMG from "@/public/assets/bglogom.webp";
 
 const ForgotPasswordForm = ({
   formData,
@@ -131,9 +131,9 @@ const ForgotPasswordPage = () => {
         <Image src={Logo} alt="logo" />
       </Link>
       <div className="flex items-center h-[100vh] w-full relative">
-        <div className="flex lg:hidden justify-center items-center w-full">
+        {/* <div className="flex lg:hidden justify-center items-center w-full">
           <Image src={BGIMG} alt="" className="bg-cover" />
-        </div>
+        </div> */}
 
         <div className="flex items-center justify-between space-x-12 w-full absolute inset-0">
           <ForgotPasswordForm

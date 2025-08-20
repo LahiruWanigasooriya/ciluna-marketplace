@@ -236,7 +236,7 @@ export default function Navbar({ categories }: any) {
           mounted && isAuthenticated ? "hidden" : "flex"
         }`}
       >
-        <span className="text-neutralGray font-[400] font-[Arial] text-[14px] leading-[20px] tracking-[0%]">
+        <span className="text-neutralGray-600 font-[400] font-[Arial] text-[14px] leading-[20px] tracking-[0%]">
           Start Shopping Now
         </span>
         <div className="text-white font-[Arial] text-[14px] leading-[20px] flex gap-[24px] font-[700px] items-center">
@@ -520,7 +520,7 @@ export default function Navbar({ categories }: any) {
                   <Link
                     key={data._id}
                     href={`/subcategories/${data._id}`}
-                    className="cursor-pointer border border-transparent hover:border-solid hover:border-gray-300 px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px] "
+                    className="cursor-pointer border border-transparent hover:border-solid hover:border-black px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px] "
                     onMouseEnter={() => {
                       if (!profileSelect) {
                         setActiveMenu(data.name);
@@ -537,7 +537,7 @@ export default function Navbar({ categories }: any) {
                     }}
                   >
                     {activeMenu === data.name && (
-                      <div className="absolute left-0 shadow-sm w-full py-[40px] px-[16px] sm:px-[56px] md:px-[96px] z-10 bg-white mt-8">
+                      <div className="absolute left-0 shadow-sm w-full  z-10 bg-[#FFFFFFF5] mt-[28px]">
                         {React.createElement(data.component)}
                       </div>
                     )}

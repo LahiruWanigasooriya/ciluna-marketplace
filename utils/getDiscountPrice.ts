@@ -17,7 +17,7 @@ export const formatPrice = (price: number): string => {
 };
 
 export const fetchExchangeRate = async(): Promise<number> => {
-  const response = await fetch(process.env.CURRENCY_API as string);
+  const response = await fetch(process.env.NEXT_PUBLIC_CURRENCY_API as string);
   const data = await response.json();
   return data.rates.LKR;
 }

@@ -171,14 +171,14 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           />
           {/* Name */}
           <div className="py-[14px]">
-            <div className="font-interBold text-[16px]">{fullName}</div>
-            <div className="font-inter text-[14px] lg:text-[14px]  md:text-[12px] md:min-w-[150px] lg:min-w-[200px] text-[#707070]">
+            <div className="font-arialBold text-[16px]">{fullName}</div>
+            <div className="font-arial text-[14px] lg:text-[14px]  md:text-[12px] md:min-w-[150px] lg:min-w-[200px] text-[#707070]">
               Last login : Yesterday 11.39am
             </div>
           </div>
         </div>
 
-        <div className="font-interSemiBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[16px] text-neutral-900 md:max-w-[800px] md:justify-end md:px-0">
+        <div className="font-arialBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[16px] text-neutral-900 md:max-w-[800px] md:justify-end md:px-0">
           {[
             { icon: HeartIcon.src, alt: "Heart", label: "Wish List" },
             { icon: WalletIcon.src, alt: "Wallet", label: "Ciluna Wallet" },
@@ -202,13 +202,13 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
       </section>
       {/* Orders Card */}
       <section className="rounded-xl   box-bg px-[16px] text-[#1E1E1E]  md:px-[24px]">
-        <div className="flex items-center justify-between border-b border-[#E1E1E1] py-[16px]">
-          <div className="font-interBold text-[18px]">My Orders</div>
-          <button className="font-inter cursor-pointer text-[16px] hover:underline">
+        <div className="flex items-center justify-between border-b border-lightgrayBorders py-[12px] md:py-[16px]">
+          <div className="font-arialBold text-[18px]">My Orders</div>
+          <button className="font-arial cursor-pointer text-[14px] md:text-[16px] hover:underline">
             View All
           </button>
         </div>
-        <div className="grid grid-cols-2 font-interSemiBold justify-between gap-y-[32px] divide-[#E1E1E1] py-[16px] text-center md:flex md:gap-y-0 md:divide-x">
+        <div className="grid grid-cols-2 font-arialBold justify-between gap-y-[12px] divide-lightgrayBorders py-[12px] md:py-[16px] text-center md:flex md:gap-y-0 md:divide-x">
           {[
             { icon: PurseIcon.src, alt: "Purse", label: "Unpaid" },
             { icon: ShopCartIcon.src, alt: "Cart", label: "To be Shipped" },
@@ -219,35 +219,39 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
               label: "To be reviewed",
             },
           ].map((item, index) => (
-            <div
-              key={index}
-              className={`flex-1 flex justify-center py-[14px] ${
-                index % 2 === 0 ? "border-r border-[#E1E1E1]" : ""
-              }`}
-            >
-              <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
-                <span className="mb-1 flex cursor-pointer items-center justify-center">
-                  <img
-                    src={item.icon}
-                    alt={item.alt}
-                    className="w-[24px] h-[24px]"
-                  />
-                </span>
-                <div className="cursor-pointer font-medium">{item.label}</div>
+            <React.Fragment key={index}>
+              <div
+                className={`flex-1 flex justify-center py-[8px] md:py-[14px] ${
+                  index % 2 === 0 ? "border-r border-lightgrayBorders" : ""
+                }`}
+              >
+                <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
+                  <span className="mb-1 flex cursor-pointer items-center justify-center">
+                    <img
+                      src={item.icon}
+                      alt={item.alt}
+                      className="w-[24px] h-[24px]"
+                    />
+                  </span>
+                  <div className="cursor-pointer text-[14px] md:text-[16px] font-medium">
+                    {item.label}
+                  </div>
+                </div>
               </div>
-            </div>
+              {/* Horizontal divider between rows in mobile view only */}
+              {index === 1 && (
+                <div className="col-span-2  h-px w-full bg-lightgrayBorders md:hidden"></div>
+              )}
+            </React.Fragment>
           ))}
-
-          {/* Horizontal divider for mobile view only */}
-          <div className="col-span-2 my-0.5 h-px w-full line-color md:hidden"></div>
         </div>
       </section>
       {/* More to love */}
-      <section className="flex flex-col mb-[158px] mt-[48px] gap-[12px] overflow-hidden">
-        <span className="font-kaiseiBold text-[12px] mb-[-8px] md:hidden text-[#C19F32]">
+      <section className="flex flex-col mb-[158px] mt-[48px] gap-0 overflow-hidden">
+        <span className="font-kaiseiBold text-[12px] tracking-[2px] mb-[0px]  md:hidden text-[#C19F32]">
           FLASH DEALS
         </span>
-        <div className="font-interBold text-[24px] text-[#252525] flex items-center justify-between">
+        <div className="font-arialBold text-[24px] text-[#252525] flex items-center justify-between">
           <div>
             <span className="hidden md:block">More to love</span>
             <span className="md:hidden font-kaiseiBold">
@@ -256,7 +260,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           </div>
         </div>
         <div className="flex items-end justify-between">
-          <div className="text-[16px] font-inter text-[#5D5D5D]">
+          <div className="text-[16px] font-arial text-[#5D5D5D]">
             A fleeting collection of rare beauty.
           </div>
           <div className="hidden  sm:flex gap-2">
@@ -288,7 +292,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         <div
           ref={scrollContainerRef}
           onScroll={updateScrollButtons}
-          className="flex flex-wrap sm:flex-nowrap  justify-center sm:justify-start flex-row gap-y-[20px] sm:gap-y-[20px] sm:overflow-x-auto no-scrollbar gap-x-[16px] sm:gap-[16px] md:gap-[24px] pt-[12px] w-full min-w-0"
+          className="flex flex-wrap sm:flex-nowrap  justify-center sm:justify-start flex-row gap-y-[20px] sm:gap-y-[20px] sm:overflow-x-auto no-scrollbar gap-x-[15px] sm:gap-[16px] md:gap-[24px] pt-[12px] w-full min-w-0"
         >
           {mockProducts.map((product) => (
             <div key={product._id} className="w-[164px]  md:w-full ">

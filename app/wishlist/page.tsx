@@ -3,12 +3,13 @@ import Image from "next/image";
 import Img from "@/public/assets/wishlist/img.png";
 import ImgM from "@/public/assets/wishlist/imgm.jpg";
 import WishlistList from "./WishlistList";
-import { getCilunaPrice } from "@/lib/cilunaService";
+// import { getCilunaPrice } from "@/lib/cilunaService";
 import toFixed from "@/functions/cilunaPrice";
 
 const WishlistPage = async () => {
-  const price = await getCilunaPrice();
-  const cilunaPrice = toFixed(Number(price));
+  // const price = await getCilunaPrice();
+  const cilunaPrice = 0
+  // toFixed(Number(price));
   return (
     <div className="flex flex-col gap-6 md:gap-8 xl:gap-12">
       {/* Wishlist Client Component */}

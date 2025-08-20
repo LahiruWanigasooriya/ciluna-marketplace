@@ -3,7 +3,7 @@
 export const getCilunaPrice = async () => {
   try {
     const response = await fetch(
-      "https://wallet.pawchain.net/api/cilunaPrice",
+      "https://wallet1.pawchain.net/api/pawPrice",
       {
         cache: "no-store",
       }
@@ -17,6 +17,6 @@ export const getCilunaPrice = async () => {
     return data.price;
   } catch (error) {
     console.error("Failed to fetch CILUNA price:", error);
-    return null;
+    return null
   }
 };
