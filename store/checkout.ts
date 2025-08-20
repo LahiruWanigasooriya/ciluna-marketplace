@@ -1,48 +1,62 @@
-"use client"
+"use client";
 
-import {create} from 'zustand';
-import { Checkout } from '@/types/checkout';
+import { create } from "zustand";
+import { Checkout } from "@/types/checkout";
 
 interface CheckoutStore {
   values: Checkout;
-  handleChange: <K extends keyof Checkout>(field: K, value: Checkout[K]) => void;
+  handleChange: <K extends keyof Checkout>(
+    field: K,
+    value: Checkout[K]
+  ) => void;
   resetForm: () => void;
+  setValues: (data: Checkout) => void;
 }
 
 export const useCheckoutStore = create<CheckoutStore>((set) => ({
   values: {
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    zip: "",
     country: "",
+    contactName: "",
+    mobileNumber: "",
+    street: "",
+    province: "",
+    district: "",
+    town: "",
+    zip: "",
+    defaultShippingAddress: false,
+    paymentMethod: "",
     holderName: "",
     cardNumber: "",
-    csv: "string",
+    expireMonth: "",
+    expireYear: "",
+    cvv: "",
+    rememberCardDetails: false,
   },
-  handleChange: (field, value) => set((state) => ({
-    values: { ...state.values, [field]: value }
-  })),
-  resetForm: () => set(() => ({
-    values: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      address1: "",
-      address2: "",
-      city: "",
-      state: "",
-      zip: "",
-      country: "",
-      holderName: "",
-      cardNumber: "",
-      csv: "string",
-    }
-  }))
+  setValues: (data) => set({ values: data }),
+  handleChange: (field, value) =>
+    set((state) => ({
+      values: { ...state.values, [field]: value },
+    })),
+  resetForm: () =>
+    set(() => ({
+      values: {
+        country: "",
+        contactName: "",
+        mobileNumber: "",
+        street: "",
+        province: "",
+        district: "",
+        town: "",
+        zip: "",
+        defaultShippingAddress: false,
+        paymentMethod: "",
+        holderName: "",
+        cardNumber: "",
+        expireMonth: "",
+        expireYear: "",
+        cvv: "",
+        rememberShippingAddress: false,
+        rememberCardDetails: false,
+      },
+    })),
 }));

@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import { withTV } from "tailwind-variants/transformer";
+import tailwindcssAnimate from "tailwindcss-animate";
+import tailwindcssReactAriaComponents from "tailwindcss-react-aria-components";
 
 const config = withTV({
   darkMode: ["class"],
@@ -61,11 +63,41 @@ const config = withTV({
           DEFAULT: "hsl(var(--overlay))",
           fg: "hsl(var(--overlay-fg))",
         },
+        neutralGray: {
+          50: "#f5f5f5",
+          100: "#e1e1e1",
+          200: "#d2d2d2",
+          300: "#bebebe",
+          400: "#b1b1b1",
+          500: "#9e9e9e",
+          600: "#909090",
+          700: "#707070",
+          800: "#575757",
+          900: "#424242",
+        },
+        gold: {
+          50: "#fbf7eb",
+          100: "#f2e6c1",
+          200: "#ebdaa3",
+          300: "#d06276",
+          400: "#ddbf5f",
+          500: "#d4af37",
+          600: "#c19f32",
+          700: "#977c27",
+          800: "#75601e",
+          900: "#594a17",
+        },
         blue: "hsl(var(--blue))",
-        purple: "#6442C1",
+        purple: "#6442c1",
+        bgBlack: "hsl(var(--bg-black))",
         lightGreen: "#BFD5CD",
         lightBlack: "hsl(var(--light-black))",
-        neutralGray: "hsl(var(--neutral-gray))",
+        grayNeutralFg: "hsl(var(--gray-neutral-fg))",
+        gray: "#252525",
+        black: "#252525",
+        lightgray: "#F5F5F5",
+        lightgrayBorders: "#E1E1E1",
+        "custom-red": "#A70000",
       },
 
       fontFamily: {
@@ -73,10 +105,15 @@ const config = withTV({
         interBold: ["Inter-Bold", "sans-serif"],
         interSemiBold: ["Inter-semiBold", "sans-serif"],
         lora: ["Lora-Regular", "sans-serif"],
-        loraBold: ["Lora", "serif"],
-        kaiseiHarunoumi: ["KaiseiHarunoumi-Bold", "sans-serif"],
+        loraBold: ["Lora-Bold", "sans-serif"],
+        kaisei: ["KaiseiHarunoUmi-Regular", "sans-serif"],
+        kaiseiBold: ["KaiseiHarunoUmi-Bold", "sans-serif"],
+        playFairExtraBold: ["PlayFairDisplay-ExtraBold", "sans-serif"],
         arial: ["Arial-Regular", "sans-serif"],
         arialBold: ["Arial-Bold", "sans-serif"],
+        kaiseiHarunoUmi: ['"KaiseiHarunoUmi-Bold"', "sans-serif"],
+        cinzel: ["CinzelDecorative-Bold", "sans-serif"],
+
       },
       fontSize: {
         xxxs: "0.512rem",
@@ -98,6 +135,7 @@ const config = withTV({
         large1: "2rem",
       },
       screens: {
+        xsm: "375px",
         sm: "640px",
         md: "768px",
         lg: "1024px",
@@ -117,8 +155,9 @@ const config = withTV({
     },
   },
   plugins: [
-    require("tailwindcss-animate"),
-    require("tailwindcss-react-aria-components"),
+    tailwindcssAnimate,
+    tailwindcssReactAriaComponents,
+    require("tailwind-scrollbar-hide"),
   ],
 });
 
