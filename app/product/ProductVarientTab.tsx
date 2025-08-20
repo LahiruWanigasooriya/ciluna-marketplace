@@ -29,8 +29,8 @@ const ProductVarientTab = () => {
     const [active, setActive] = useState<string>("all");
 
     return(
-        <div className = "flex border-b bg-white h-auto overflow-auto scrollbar-hide gap-2.5 ">
-            <button className={`p-4 text-sm font-arial ${
+        <div className = "flex  items-center bg-white w-full overflow-auto scrollbar-hide gap-2.5 whitespace-nowrap">
+            <button className={`p-4 text-sm leading-5 font-arial ${
                 active === "all"
                 ? "bg-black text-white font-arialBold"
                 :"text-gray-700 hover:text-[#252525]"
@@ -43,9 +43,9 @@ const ProductVarientTab = () => {
            {variants.map((variant) => (
             <button
               key={variant.id}
-              className={`px-4 py-2 text-sm font-medium ${
+              className={`p-4 text-sm leading-5 font-arial ${
                 active === variant.id
-                  ? "bg-black text-white"
+                  ? "bg-black text-white font-arialBold"
                   : "text-gray-700 hover:text-black"
               }`}
               onClick={() => setActive(variant.id)}

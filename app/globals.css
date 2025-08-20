@@ -117,12 +117,13 @@
 }
 
 .bgcolor {
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom,
     hsla(258, 52%, 12%, 1) 0%,
     hsla(233, 100%, 4%, 1) 30%,
     hsla(228, 82%, 11%, 1) 70%
-  );
+  ); */
+  background: white;
 }
 
 @font-face {
@@ -165,6 +166,21 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Arial-Regular";
+  src: url("../public/assets/font/arial/ARIAL.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arial-Bold";
+  src: url("../public/assets/font/arial/ARIALBD.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 .custom-textfield label {
   color: #ffffff;
   font-weight: 400;
