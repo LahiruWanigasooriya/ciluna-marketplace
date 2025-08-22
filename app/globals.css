@@ -170,7 +170,7 @@
 
 @font-face {
   font-family:" KaiseiHarunoUmi-Bold";
-  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf") format("opentype");
+  src: url("../public/assets/font/kaisei/KaiseiHarunoUmi-Bold.ttf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
