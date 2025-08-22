@@ -37,16 +37,16 @@ const datePickerStyles = tv({
 
 const { base, datePickerIcon, calendarIcon, datePickerInput } = datePickerStyles()
 
-interface DatePickerOverlayProps
-  extends Omit<DialogProps, "children" | "className" | "style">,
-    Omit<PopoverProps, "children" | "className" | "style"> {
-  className?: string | ((values: { defaultClassName?: string }) => string)
-  children?: React.ReactNode
-  closeButton?: boolean
-  range?: boolean
-}
+// interface DatePickerOverlayProps
+//   extends Omit<DialogProps, "children" | "className" | "style">,
+//     Omit<PopoverProps, "children" | "className" | "style"> {
+//   className?: string | ((values: { defaultClassName?: string }) => string)
+//   children?: React.ReactNode
+//   closeButton?: boolean
+//   range?: boolean
+// }
 
-const DatePickerOverlay = ({ closeButton = true, range, ...props }: DatePickerOverlayProps) => {
+const DatePickerOverlay = ({ closeButton = true, range, ...props }: any) => {
   return (
     <Popover.Content
       showArrow={false}
@@ -73,22 +73,28 @@ const DatePickerIcon = () => (
 
 interface DatePickerProps<T extends DateValue> extends DatePickerPrimitiveProps<T> {
   label?: string
+  placeholder?: string
   description?: string
   errorMessage?: string | ((validation: ValidationResult) => string)
 }
 
 const DatePicker = <T extends DateValue>({
   label,
+  placeholder,
   className,
   description,
   errorMessage,
   ...props
 }: DatePickerProps<T>) => {
+ 
   return (
     <DatePickerPrimitive {...props} className={ctr(className, base())}>
       {label && <Label className="text-white">{label}</Label>}
       <FieldGroup className="min-w-40">
-        <DateInput className={datePickerInput()} />
+        <DateInput className={datePickerInput()} 
+        
+      />        
+    
         <DatePickerIcon />
       </FieldGroup>
       {description && <Description>{description}</Description>}

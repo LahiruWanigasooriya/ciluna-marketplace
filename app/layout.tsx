@@ -6,8 +6,8 @@ import { getAllCategories } from "@/actions/categories/category";
 //import { isUndefined } from "util";
 
 export const metadata: Metadata = {
-  title: "Ciluna Marketplace",
-  description: "Ciluna Marketplace",
+  title: "Ciluna",
+  description: "Ciluna",
 };
 
 export default async function RootLayout({
@@ -23,7 +23,9 @@ export default async function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" type="image/x-icon" />
       </head>
+
       <body className={`max-w-[1920px] mx-auto flex flex-col font-inter bgcolor`}>
+
         <Toast richColors position="top-right" />
         <ConditionalLayout categories={categories}>
           {children}

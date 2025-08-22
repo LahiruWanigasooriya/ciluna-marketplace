@@ -30,9 +30,7 @@ import Title from "@/components/custom/Title";
 import { IProduct } from "@/types/product";
 import Product1 from "@/public/assets/product/product1.webp";
 import Product2 from "@/public/assets/product/product2.webp";
-import SwiperCards, {
-  SwiperCardsHandle,
-} from "@/components/custom/SwiperCards";
+import SwiperCards from "@/components/custom/SwiperCards";
 
 const paymentOptions = [visa, mastercard, amex, applePay];
 
@@ -136,7 +134,6 @@ const calculateTotals = (items: any[]) => {
 };
 
 const CartItems = () => {
-  const swiperRef = useRef<SwiperCardsHandle>(null);
   const { cart, removeFromCart, setCart, updateQuantity } = useCartStore();
   const { token } = useAuthStore();
   const [deleteCartItems, setDeleteCartItems] = useState<string[]>([]);
@@ -419,7 +416,7 @@ const CartItems = () => {
                 <Summary to="checkout" text="Checkout" />
 
                 <div className="flex flex-col py-6 px-4 md:p-6 gap-4 text-gray font-arial bg-[#F5F5F5] rounded-[6px]">
-                  <h2 className="text-xl leading-6 font-bold">Pay With</h2>
+                  <h2 className="text-xl leading-6 font-arialBold ">Pay with</h2>
                   <div className="flex gap-2 pb-2">
                     {paymentOptions.map((option, index) => (
                       <div
@@ -438,7 +435,7 @@ const CartItems = () => {
                     ))}
                   </div>
                   <hr className="border-t border-[#E8E8DA]" />{" "}
-                  <h2 className="text-xl leading-6 font-bold">
+                  <h2 className="text-xl leading-6 font-arialBold">
                     Buyer protection
                   </h2>
                   <p>
@@ -457,43 +454,14 @@ const CartItems = () => {
       </div>
 
       {/* recommended products */}
-      <div className="pt-8 lg:pt-20 pb-6 lg:pb-[68px] flex flex-col gap-1 lg:gap-4">
-        <Title
-          title="Flash Deals"
-          className="text-gold uppercase text-xs lg:!text-sm font-bold tracking-wider h-4 lg:h-5  "
-        />
-        <div className="flex flex-col gap-3">
-          <Title
-            title="Recommended Products"
-            className="text-gray text-[1.5rem] lg:!text-[52px] font-kaiseiBold h-8 lg:h-[60px] flex items-center"
-          />
-          <div className="flex justify-between h-5 lg:h-6 relative">
-            <p className="text-[#707070] text-sm lg:text-[1rem] leading-6 font-arial">
-              A fleeting collection of rare beauty.
-            </p>
-            <div className="lg:flex gap-6 absolute right-0 bottom-0 hidden">
-              <button
-                onClick={() => swiperRef.current?.scrollPrev()}
-                className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
-              >
-                <ChevronLeft className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]" size={40}/>
-              </button>
-              <button
-                onClick={() => swiperRef.current?.scrollNext()}
-                className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
-              >
-                <ChevronRight className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]" size={40}/>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div className="">
-        <SwiperCards ref={swiperRef} products={mockProducts} />
+      <div className="py-8 md:py-20">
+        <SwiperCards products={mockProducts} section={{
+          category: "Jewellery",
+          title: "Recommended Products",
+          description: "A fleeting collection of rare beauty.",
+        }}/>
       </div>
-
-      <div className="flex"></div>
     </div>
   );
 };

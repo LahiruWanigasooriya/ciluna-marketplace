@@ -11,7 +11,7 @@
     --dark: 239.95 9% 6%;
     --bg: 0 0% 100%;
     --fg: 239.93 9% 4%;
-    --primary: 256 51% 51%;
+    --primary: 0 0% 26%;
     --primary-fg: 0 0% 100%;
     --secondary: 240 5.88% 90%;
     --secondary-fg: 240.01 6% 10%;
@@ -47,7 +47,6 @@
     --bg-black: 0 0% 5%;
     --light-green: 158 21% 79%;
     --light-black: 0, 0%, 15%;
-    --neutral-gray: 0, 0%, 56%;
     --gray-neutral-fg: 0, 0%, 44%;
     --gray-border: 0, 0%, 88%;
   }
@@ -126,7 +125,9 @@
     hsla(258, 52%, 12%, 1) 0%,
     hsla(233, 100%, 4%, 1) 30%,
     hsla(228, 82%, 11%, 1) 70%
-); */
+
+  ); */
+
   background: white;
 }
 
@@ -219,6 +220,39 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: "CinzelDecorative-Bold";
+  src: url("../public/assets/font/cinzeldecorative/CinzelDecorative-Bold.ttf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "KaiseiHarunoumi-Bold";
+  src: url("../public/assets/font/kaiseiHarunoumi/KaiseiHarunoUmi-Bold.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arial-Regular";
+  src: url("../public/assets/font/arial/ARIAL.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arial-Bold";
+  src: url("../public/assets/font/arial/ARIALBD.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 .custom-textfield label {
   color: #252525;
   font-weight: 400;
@@ -258,15 +292,7 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-}
-.custom-container {
-  padding: 0px;
-}
-
-@media (min-width: 640px) {
-  .custom-container {
-    padding: 0px;
-  }
+  padding: 16px;
 }
 
 @media (min-width: 768px) {
@@ -443,7 +469,6 @@
 }
 
 .line-gradient-header {
-  height: 0.5px;
   border-top-left-radius: 80px;
   border-top-right-radius: 80px;
   background: linear-gradient(
@@ -464,6 +489,7 @@
   z-index: 1;
 }
 
+
 @layer base {
   input:-webkit-autofill {
     background-color: #fff !important;
@@ -473,5 +499,43 @@
     -webkit-box-shadow: 0 0 0 1000px white inset !important;
     -webkit-text-fill-color: black !important;
   }
+}
+
+
+/* testimonials custom pagination bar */
+
+.swiper-pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  position: relative !important;
+  bottom: 0 !important;
+}
+
+/* bar style bullets (inactive) */
+.swiper-pagination-bullet {
+  display: inline-block;
+  width: 16px !important;
+  height: 2px !important;
+  background-color: #d9d9d9 !important;
+  border-radius: 999px !important;
+  margin: 0 6px !important;
+  opacity: 1 !important;
+  transition: all 280ms ease !important;
+}
+
+/* active bullet style */
+.swiper-pagination-bullet-active {
+  background-color: #111 !important;
+  width: 16px !important;
+  height: 2px !important;
+}
+
+/* prevent bullet transform changes */
+.swiper-pagination-bullet,
+.swiper-pagination-bullet-active {
+  transform: none !important;
 }
 

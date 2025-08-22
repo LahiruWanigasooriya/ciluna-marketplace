@@ -1,6 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import ProductCard from "@/app/product/ProductCard";
@@ -30,7 +30,7 @@ const SwiperImages: React.FC<SwiperImagesProps> = ({ images, products }) => {
 
   const imagesBreakpoints = {
     375: {
-      slidesPerView: 2,
+      slidesPerView: 1,
       spaceBetween: 10,
     },
   };
@@ -40,7 +40,10 @@ const SwiperImages: React.FC<SwiperImagesProps> = ({ images, products }) => {
     >
       <div className="rounded-xl overflow-hidden">
         <Swiper
-          modules={[Pagination]}
+          modules={[Pagination,Autoplay]}
+          speed={1000}
+          autoplay={{ delay: 1500, disableOnInteraction: false }}
+          loop
           pagination={{
             clickable: true,
             el: ".custom-pagination",
