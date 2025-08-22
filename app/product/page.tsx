@@ -185,7 +185,7 @@ const ProductPage = async ({
       
       <div className="flex flex-col gap-[20px] justify-center  pt-6 pr-4 pb-8 pl-4">
         <div className="flex flex-row  h-[34px] justify-between items-start font-loraBold">
-          <div className="font-loraBold text-base leading-6 text-[#252525]">{products.length} Products</div>
+          <div className="font-arial fnt-bold text-lg leading-6 text-[#252525]">{products.length} Products</div>
         <div className="flex flex-row gap-4 h-[34px]">
         <button className="cursor-pointer">
 
