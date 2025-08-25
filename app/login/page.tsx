@@ -36,7 +36,7 @@ const LoginForm = ({
   >
     <div className="flex items-center justify-center space-x-3">
   
-      <Title title="Login" className="text-2xl lg:text-3xl font-kaiseiHarunoUmi font-bold text-[#252525]" />
+      <Title title="Login" className="mt-20 text-2xl lg:text-3xl font-kaiseiHarunoUmi font-bold text-[#252525]" />
     </div>
 
     <div className="flex flex-col space-y-3 lg:space-y-4">
@@ -167,21 +167,21 @@ const LoginPage = () => {
     <>
     <div className="flex items-start flex-col  justify-between text-black min-h-screen overflow-y-auto overflow-x-hidden sm:overflow-hidden">
       <Navbar />
-            <div className="hidden sm:block absolute -right-24 top-10 h-[301px] w-[320px] ">
+            <div className="hidden sm:block absolute -right-0 top-36  h-[301px] w-[320px]" >
           <Image 
           src={bgpattern}
           alt="background pattern"
           fill
-          className="object-contain bg-[#e8e8da"
+          className="object-right bg-[#e8e8da"
           priority
           />
         </div>
-            <div className="hidden sm:block absolute -left-32  top-[50vh] h-[301px] w-[320px] ">
+            <div className="hidden sm:block absolute -left-0  top-[50vh] h-[301px] w-[320px] ">
           <Image 
           src={bgpattern}
           alt="background pattern"
           fill
-          className="object-contain bg-[#e8e8da transform scale-x-[-1]"
+          className="object-right bg-[#e8e8da transform scale-x-[-1]"
           priority
           />
            

@@ -59,7 +59,10 @@ const Sort: React.FC<SortProps> = ({ disabled = false }) => {
     <div className="relative w-full ">
       <div className="flex flex-col gap-[16px]">
         <div className="flex items-center">
+           <ArrowDownNarrowWide size={24} className="text-black" />
+          <p className="text-[#252525] font-arial leading-[19px] text-base">Sort by</p>&nbsp;
           <div
+          
             className={`flex items-center ${
               disabled
                 ? "cursor-not-allowed opacity-50"
@@ -68,7 +71,6 @@ const Sort: React.FC<SortProps> = ({ disabled = false }) => {
             onClick={handleSort}
           >
 
-            <ArrowDownNarrowWide size={24} className="text-black" />
           </div>
         </div>
       </div>
