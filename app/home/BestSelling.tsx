@@ -96,7 +96,7 @@ const BestSelling = () => {
   ];
 
   return (
-    <div className="py-[24px] sm:py-[32px] lg:py-[96px]">
+    <div className="custom-container py-[24px] sm:py-[32px] lg:py-[96px]">
       <SwiperCards
         products={mockProducts}
         section={{
