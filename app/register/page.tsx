@@ -87,7 +87,7 @@ const SignupForm = ({
       onSubmit={handleSubmit}
       className="max-w-[598px]  mx-auto rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
     >
-      <div className="flex items-center justify-center space-x-2 text-[#252525]">
+      <div className="flex items-center justify-center space-x-2 text-[#252525] mt-10">
         
         <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-[32px]" />
       </div>
@@ -232,7 +232,7 @@ const SignupForm = ({
               <p className="font-arial text-[#252525] text-sm">I consent to personalized offers from CILUNA based on my preferences.</p>
             </Checkbox>
             <Link href="/policyConfig">
-                        <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-lora"> Privacy Policy.</span></p>
+                        <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-arialBold"> Privacy Policy.</span></p>
 
             </Link>
         </div>
@@ -240,7 +240,7 @@ const SignupForm = ({
         <div className="flex flex-col gap-2">
           <Button
             type="submit"
-            className={`w-full font-interSemiBold bg-black text-white transition-opacity duration-300 ${
+            className={`w-full font-arial text-lg leading-6 bg-black text-white transition-opacity duration-300 ${
               isLoading ? "opacity-80" : ""
             }`}
             isDisabled={isLoading || isSuccess}
@@ -252,7 +252,7 @@ const SignupForm = ({
           <div className="flex items-center justify-center space-x-2 mt-5">
             <p className="text-[#252525] font-arial text-sm">Already have a CILUNA account? </p>
             <Link href="/login">
-              <p className="text-[#252525] cursor-pointer font-lora font-bold text-sm hover:opacity-75">Login</p>
+              <p className="text-[#252525] cursor-pointer font-arialBold  text-sm hover:opacity-75">Login</p>
             </Link>
           </div>
         </div>
@@ -328,7 +328,7 @@ const SignupPage: React.FC = () => {
 
 
       <div className="flex-1  flex justify-center pt-20 px-4 py-10 overflow-y-auto scrollbar-hide z-0 ">
-                    <div className="hidden sm:block absolute -right-0 top-24 h-[301px] w-[320px] ">
+                    <div className="hidden sm:block absolute -right-0 top-32  h-[301px] w-[320px] ">
                 <Image 
                 src={bgpattern}
                 alt="background pattern"
