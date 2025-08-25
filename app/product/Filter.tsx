@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { ListFilter, X } from "lucide-react";
+import { ListFilter, Settings2, Settings2Icon, SettingsIcon, X } from "lucide-react";
 import { motion } from "framer-motion";
 import useClickOutside from "@/hooks/useClickOutside";
 
@@ -79,7 +79,8 @@ const FilterComponent: React.FC<FilterProps> = ({
       >
        
        
-        <ListFilter size={24} />
+        <Settings2 size={24} />
+          <p className="text-[#252525] font-arial leading-[19px] text-base">Filter</p>&nbsp;
       </div>
 
       
