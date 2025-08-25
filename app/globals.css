@@ -173,9 +173,6 @@
 }
 
 @font-face {
-  font-family: "KaiseiHarunoUmi-Bold";
-  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf")
-    format("opentype");
   font-family: " KaiseiHarunoUmi-Bold";
   src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf")
     format("opentype");
@@ -195,14 +192,12 @@
 
 @font-face {
   font-family: " Arial-Regular";
-  font-family: " Arial-Regular";
   src: url("../public/assets/font/Arial/Arial-Regular.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: " Arial-Bold";
   font-family: " Arial-Bold";
   src: url("../public/assets/font/Arial/Arial-Bold.otf") format("opentype");
   font-weight: 700;
@@ -494,6 +489,19 @@
   z-index: 1;
 }
 
+
+@layer base {
+  input:-webkit-autofill {
+    background-color: #fff !important;
+    color: #000 !important;
+    border: 1px solid #e1e1e1 !important; /* Tailwind's border-gray-300 */
+    border-radius: 0.375rem !important;    /* Tailwind's rounded-md */
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: black !important;
+  }
+}
+
+
 /* testimonials custom pagination bar */
 
 .swiper-pagination {
@@ -530,3 +538,4 @@
 .swiper-pagination-bullet-active {
   transform: none !important;
 }
+
