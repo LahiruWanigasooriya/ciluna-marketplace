@@ -37,16 +37,16 @@ const datePickerStyles = tv({
 
 const { base, datePickerIcon, calendarIcon, datePickerInput } = datePickerStyles()
 
-interface DatePickerOverlayProps
-  extends Omit<DialogProps, "children" | "className" | "style">,
-    Omit<PopoverProps, "children" | "className" | "style"> {
-  className?: string | ((values: { defaultClassName?: string }) => string)
-  children?: React.ReactNode
-  closeButton?: boolean
-  range?: boolean
-}
+// interface DatePickerOverlayProps
+//   extends Omit<DialogProps, "children" | "className" | "style">,
+//     Omit<PopoverProps, "children" | "className" | "style"> {
+//   className?: string | ((values: { defaultClassName?: string }) => string)
+//   children?: React.ReactNode
+//   closeButton?: boolean
+//   range?: boolean
+// }
 
-const DatePickerOverlay = ({ closeButton = true, range, ...props }: DatePickerOverlayProps) => {
+const DatePickerOverlay = ({ closeButton = true, range, ...props }: any) => {
   return (
     <Popover.Content
       showArrow={false}

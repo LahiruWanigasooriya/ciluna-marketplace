@@ -188,7 +188,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     <Link
       key={product._id}
       href={`/product/${product._id}`}
-      className="flex flex-col gap-2 md:gap-5 font-inter border border-[#ffffff00] bg-white hover:border-blue recommend:min-w-[294px] transition-all duration-300 ease-in-out min-w-[164px] sm:w-[calc(33%-0.75rem)] lg:w-[calc(23.33%-0.833rem)] xl:w-[calc(18.33%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
+      className="flex flex-col gap-2 md:gap-5 font-inter border border-[#ffffff00] bg-white recommend:min-w-[294px] transition-all duration-300 ease-in-out min-w-[164px] sm:w-[calc(33%-0.75rem)] lg:w-[calc(23.33%-0.833rem)] xl:w-[calc(18.33%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
     >
       <div className="h-[177px] recommend:h-[317px]">
         {isLoading ? (
@@ -199,7 +199,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               alt={product.name}
               src={product.image}
               fill
-              className="object-cover"
+              className="object-cover rounded-[1.5rem]"
               sizes="(max-width: 768px) 164px, 294px"
               placeholder="blur"
               blurDataURL="/placeholder-image.jpg"
@@ -241,7 +241,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               ) : (
                 <div className="rounded-full w-8 md:w-12 h-8 md:h-12 p-2 md:p-3 bg-[#252525] flex justify-center items-center">
                   <FaCartPlus
-                    className="w-4 h-4 md:w-6 md:h-6"
+                    className="w-4 h-4 md:w-6 md:h-6 text-white"
                     onClick={handleAddToCart}
                   />
                 </div>

@@ -25,7 +25,7 @@ export const policyConfig: {
       {
         label: "Transactional Data",
         description:
-          "We record details related to your orders, including products purchased, order history, and interactions with PAW Pay.",
+          "We record details related to your orders, including products purchased, order history, and interactions with CILUNA Pay.",
       },
       {
         label: "Technical Information",
@@ -65,7 +65,7 @@ export const policyConfig: {
       {
         label: "Payment Processing",
         description:
-          "PAW Pay securely handles your payment data; we do not store full payment details.",
+          "CILUNA Pay securely handles your payment data; we do not store full payment details.",
       },
       {
         label: "Legal Requirements",
@@ -94,17 +94,15 @@ export const policyConfig: {
     title: "Cookies and Tracking Technologies",
     items: [
       {
-        description:
-          "Enhance your browsing experience.",
+        description: "Enhance your browsing experience.",
       },
       {
-        description:
-          "Analyze site traffic.",
+        description: "Analyze site traffic.",
       },
       {
         description:
           "Offer personalized content and advertisements. You can manage your cookie preferences through your browser settings.",
-      }
+      },
     ],
   },
   {
@@ -114,7 +112,7 @@ export const policyConfig: {
       {
         description:
           "Depending on your jurisdiction, you may have rights regarding your personal data, including access, correction, or deletion. Contact us to exercise these rights.",
-      }
+      },
     ],
   },
 ];

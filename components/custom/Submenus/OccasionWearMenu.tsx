@@ -8,8 +8,10 @@ import Img4 from "../../../app/assets/mainmenu-images/O4.webp";
 const images = [Img1.src, Img2.src, Img3.src, Img4.src];
 
 const OccasionWearMenu = () => {
+  const subItemClass = "relative text-[#252525] hover:text-yellow-700 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-7 after:bg-yellow-600 after:scale-x-0 after:origin-left hover:after:scale-x-100 after:transition-transform after:duration-200";
+
   return (
-    <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 ">
+    <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 custom-container !py-[40px] ">
       <h1 className='sm:hidden font-interBold text-[20px] mb-[16px]'>Occasion Wear</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-[16px] md:gap-y-[30px] w-full">
 
@@ -17,13 +19,13 @@ const OccasionWearMenu = () => {
   <div>
     <div className="mb-[16px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Wedding</a></div>    
     <div className="flex flex-col gap-[8px] font-inter font-light">
-      <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Groom & Groomsmen Suits</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Mother-of-the-Bride Dresses</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Flower Girl Dresses</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Wedding Guest Attire</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Veils & Headpieces</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Bridal Belts & Sashes</a>
+      <a href="#" className={subItemClass}>View All</a>
+      <a href="#" className={subItemClass}>Groom & Groomsmen Suits</a>
+      <a href="#" className={subItemClass}>Mother-of-the-Bride Dresses</a>
+      <a href="#" className={subItemClass}>Flower Girl Dresses</a>
+      <a href="#" className={subItemClass}>Wedding Guest Attire</a>
+      <a href="#" className={subItemClass}>Veils & Headpieces</a>
+      <a href="#" className={subItemClass}>Bridal Belts & Sashes</a>
       <div className='sm:hidden border-b my-[16px]'></div>
     </div>
   </div>
@@ -32,13 +34,13 @@ const OccasionWearMenu = () => {
   <div>
     <div className="mb-[16px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Party & Evening</a></div>    
     <div className="flex flex-col gap-[8px] font-inter font-light">
-      <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Evening Gowns</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Jumpsuits & Playsuits</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Statement Jewelry</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Clutch Bags</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Heels & Strappy Sandals</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Dress Shirts & Ties</a>
+      <a href="#" className={subItemClass}>View All</a>
+      <a href="#" className={subItemClass}>Evening Gowns</a>
+      <a href="#" className={subItemClass}>Jumpsuits & Playsuits</a>
+      <a href="#" className={subItemClass}>Statement Jewelry</a>
+      <a href="#" className={subItemClass}>Clutch Bags</a>
+      <a href="#" className={subItemClass}>Heels & Strappy Sandals</a>
+      <a href="#" className={subItemClass}>Dress Shirts & Ties</a>
       <div className='sm:hidden border-b my-[16px]'></div>
     </div>
   </div>
@@ -47,15 +49,15 @@ const OccasionWearMenu = () => {
   <div>
     <div className="mb-[8px] sm:mb-[12px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Office & Work</a></div>    
     <div className="flex flex-col gap-[8px] font-inter font-light">
-      <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Pencil Skirts</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Modest Dresses</a>
+      <a href="#" className={subItemClass}>View All</a>
+      <a href="#" className={subItemClass}>Pencil Skirts</a>
+      <a href="#" className={subItemClass}>Modest Dresses</a>
       <div className='sm:hidden border-b my-[16px]'></div>
     </div>
     <div className="mb-[8px] sm:mb-[12px] mt-[16px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Festival & Themed</a></div>    
     <div className="flex flex-col gap-[8px] font-inter font-light">
-      <a href="#" className="text-[#252525] hover:text-gray-600">Fringe Jackets</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Flower Crowns</a>
+      <a href="#" className={subItemClass}>Fringe Jackets</a>
+      <a href="#" className={subItemClass}>Flower Crowns</a>
       <div className='sm:hidden border-b my-[16px]'></div>
     </div>
   </div>
@@ -64,9 +66,9 @@ const OccasionWearMenu = () => {
   <div>
     <div className="mb-[8px] sm:mb-[12px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Grooming & Fragrance</a></div>    
     <div className="flex flex-col gap-[8px] font-inter font-light">
-      <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Eau de Toilette</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Bath & Body</a>
+      <a href="#" className={subItemClass}>View All</a>
+      <a href="#" className={subItemClass}>Eau de Toilette</a>
+      <a href="#" className={subItemClass}>Bath & Body</a>
       <div className='sm:hidden border-b my-[16px]'></div>
     </div>
   </div>
@@ -75,13 +77,13 @@ const OccasionWearMenu = () => {
   <div>
     <div className="mb-[8px] sm:mb-[12px]"><a href="#" className="text-black hover:text-gray-600 font-interBold text-[16px]">Casual & Day Out</a></div>    
     <div className="flex flex-col gap-[8px] font-inter font-light">
-      <a href="#" className="text-[#252525] hover:text-gray-600">View All</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Lightweight Blazers</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Midi Skirts</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Ballet Flats</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Crossbody Bags</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Sun Hats</a>
-      <a href="#" className="text-[#252525] hover:text-gray-600">Linen Pants</a>
+      <a href="#" className={subItemClass}>View All</a>
+      <a href="#" className={subItemClass}>Lightweight Blazers</a>
+      <a href="#" className={subItemClass}>Midi Skirts</a>
+      <a href="#" className={subItemClass}>Ballet Flats</a>
+      <a href="#" className={subItemClass}>Crossbody Bags</a>
+      <a href="#" className={subItemClass}>Sun Hats</a>
+      <a href="#" className={subItemClass}>Linen Pants</a>
     </div>
   </div>
 

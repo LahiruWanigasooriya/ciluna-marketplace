@@ -1,6 +1,7 @@
 "use client";
 
 import { IconX } from "justd-icons";
+import { FiSearch } from "react-icons/fi";
 import {
   SearchField as SearchFieldPrimitive,
   type SearchFieldProps as SearchFieldPrimitiveProps,
@@ -18,9 +19,9 @@ const searchFieldStyles = tv({
   slots: {
     base: "group flex flex-col gap-y-1.5 focus:outline-none ",
     searchIcon:
-      "mr-[12px] lg:mr-[24px] size-[24px] shrink-0 text-white group-disabled:text-muted-fg forced-colors:group-disabled:text-[GrayText]",
+      "mr-[2px] size-[24px] shrink-0 group-disabled:text-muted-fg forced-colors:group-disabled:text-[GrayText]",
     clearButton: [
-      "mr-1 size- h-[26px] text-muted-fg group-empty:invisible pressed:bg-transparent hover:bg-transparent pressed:text-fg ",
+      "mr-1 h-[24px] w-[24px] text- group-empty:invisible pressed:bg border-solid",
     ],
     input:
       "[&::-webkit-search-cancel-button]:hidden text-center text- h-[26px] ",
@@ -67,27 +68,36 @@ const SearchField = ({
       onSubmit={handleSubmit}
     >
       {label && <Label>{label}</Label>}
-      <FieldGroup>
-        <Input placeholder={placeholder ?? ""} className={input()} />
+      <FieldGroup
+        className={`border-none bg-transparent focus-within:border-none focus-within:ring-2 ${
+          isNavbarActive
+            ? "focus-within:ring-neutralGray-900"
+            : "focus-within:ring-neutralGray-100"
+        }`}
+      >
+        <Input
+          placeholder={placeholder ?? ""}
+          className={input() + " border-none"}
+        />
         {isPending ? (
           <Loader variant="spin" className="mr-2.5" />
         ) : (
           <Button
-            size="square-petite"
-            appearance="plain"
-            className={clearButton() + (isNavbarActive ? " text-black" : "text-white")}
+            className={
+              clearButton() +
+              (isNavbarActive
+                ? " text-black border-black"
+                : "text-white border-white") +
+              ""
+            }
           >
-            <IconX aria-hidden className="text-white"/>
+            <IconX />
           </Button>
         )}
-        <img
-          src={
-            isNavbarActive
-              ? "/assets/header/searchActiveIcon.svg"
-              : "/assets/header/searchIcon.svg"
+        <FiSearch
+          className={
+            searchIcon() + ` ${isNavbarActive ? " text-black" : " text-white"}`
           }
-          alt="Search"
-          className={searchIcon() + " hover:cursor-pointer"}
         />
       </FieldGroup>
       {description && <Description>{description}</Description>}

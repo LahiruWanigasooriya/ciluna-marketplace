@@ -26,9 +26,9 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "example.com"
+        hostname: "example.com",
       },
-   
+
       {
         protocol: "https",
         hostname: "http://localhost:3000", // Add the external domain you're using
@@ -39,15 +39,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "https://paw-marketplace-dev-8xvdp.ondigitalocean.app",
-      },
-      {
-        protocol: "https",
         hostname: "anotherdomain.com", // Add another domain if needed
       },
     ],
   },
 };
-
 
 export default nextConfig;

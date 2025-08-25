@@ -3,11 +3,11 @@ import "./globals.css";
 import ConditionalLayout from "@/components/custom/RootLayout";
 import { Toast } from "@/components/ui";
 import { getAllCategories } from "@/actions/categories/category";
-import { isUndefined } from "util";
+//import { isUndefined } from "util";
 
 export const metadata: Metadata = {
-  title: "Paw Marketplace",
-  description: "Paw Marketplace",
+  title: "Ciluna",
+  description: "Ciluna",
 };
 
 export default async function RootLayout({
@@ -23,9 +23,9 @@ export default async function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" type="image/x-icon" />
       </head>
-      <body
-        className={`max-w-[1920px] mx-auto px-[15px] md:px-[18px] xl:px-[22px] py-[16px] md:py-[20px] xl:py-[24px] recommend:py-[32px] recommend:px-[100px] flex flex-col font-inter bgcolor`}
-      >
+
+      <body className={`max-w-[1920px] mx-auto flex flex-col font-inter bgcolor`}>
+
         <Toast richColors position="top-right" />
         <ConditionalLayout categories={categories}>
           {children}

@@ -12,17 +12,17 @@ let isConnected = false;
 
 export async function dbConnectMarketPlace() {
   if (isConnected) {
-    console.log("Already connected to the ciluna database.");
+    console.log("Already connected to the ciluna-market-place database.");
     return;
   }
 
   try {
     await mongoose.connect(MONGODB_URL_CILUNA);
     isConnected = true;
-    console.log("ciluna database connected");
+    console.log("ciluna-market-place database connected");
   } catch (error) {
-    console.error('ciluna database connection failed!', error);
-    throw new Error('ciluna database connection failed!');
+    console.error("ciluna-market-place database connection failed!", error);
+    throw new Error("ciluna-market-place database connection failed!");
   }
 }
 

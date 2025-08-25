@@ -177,11 +177,11 @@ const SignupForm = ({
         </div>
 
         <div className="relative w-full">
-          <label className="text-sm text-[#252525] font-arial flex items-center gap-1 mb-1">
+          <label className="text-sm text-[#252525] font-arial flex items-center gap-1 ">
             Password* 
             <div className="relative group cursor-pointer">  
               <Info  className="h-4 w-4 text-black" />
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 bg-gray-500 text-black text-xs px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+              <div className="absolute left-6 top-1/2 mt-0 mb-0 -translate-y-1/2 bg-gray-500 text-black text-xs px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
               Password must contain 8 characters.
               </div>
               </div>
@@ -192,7 +192,6 @@ const SignupForm = ({
             isRevealable
             placeholder="Enter your password"
             className="w-full"
-            description="Password must contain at least 8 characters."
             value={formData.password}
             onChange={(value: string) => handleChange("password", value)}
           
@@ -329,12 +328,12 @@ const SignupPage: React.FC = () => {
 
 
       <div className="flex-1  flex justify-center pt-20 px-4 py-10 overflow-y-auto scrollbar-hide z-0 ">
-                    <div className="hidden sm:block absolute -right-0 top-10 h-[301px] w-[320px] ">
+                    <div className="hidden sm:block absolute -right-0 top-24 h-[301px] w-[320px] ">
                 <Image 
                 src={bgpattern}
                 alt="background pattern"
                 fill
-                className="object-contain bg-[#e8e8da"
+                className="object-right bg-[#e8e8da"
                 priority
                 />
           </div>
@@ -343,7 +342,7 @@ const SignupPage: React.FC = () => {
                         src={bgpattern}
                         alt="background pattern"
                         fill
-                        className="object-contain bg-[#e8e8da transform scale-x-[-1]"
+                        className="object-right bg-[#e8e8da transform scale-x-[-1]"
                         priority
                         />
             </div>
@@ -366,4 +365,3 @@ const SignupPage: React.FC = () => {
 }
 
 export default SignupPage;
-
