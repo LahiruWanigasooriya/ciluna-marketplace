@@ -322,10 +322,14 @@ const CartItems = () => {
                                         </Link>
                                       </div>
 
-                                      <div className="flex text-gray">
-                                        <h2>Blue | XL</h2>
-                                        <ChevronRight />
-                                      </div>
+                                      {product.color && product.size && (
+                                        <div className="flex text-gray">
+                                          <h2>
+                                            {product.color} | {product.size}
+                                          </h2>
+                                          <ChevronRight />
+                                        </div>
+                                      )}
 
                                       <div className="flex flex-col items-start justify-between">
                                         <div className="flex justify-center items-center gap-4">
@@ -456,11 +460,14 @@ const CartItems = () => {
       {/* recommended products */}
 
       <div className="py-8 md:py-20">
-        <SwiperCards products={mockProducts} section={{
-          category: "Jewellery",
-          title: "Recommended Products",
-          description: "A fleeting collection of rare beauty.",
-        }}/>
+        <SwiperCards
+          products={mockProducts}
+          section={{
+            category: "Jewellery",
+            title: "Recommended Products",
+            description: "A fleeting collection of rare beauty.",
+          }}
+        />
       </div>
     </div>
   );

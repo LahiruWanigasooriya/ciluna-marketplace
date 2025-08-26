@@ -351,7 +351,7 @@ export const getProductById = async (productId: string) => {
         populate: {
           path: "subCategories",
           model: "ProductVariantSubCategory",
-          select: "value",
+          select: "value subValue",
         },
       });
 
@@ -364,10 +364,49 @@ export const getProductById = async (productId: string) => {
     }
 
     // Fetch variants
+    // const variants = await ProductVariantModel.find({ productId })
+    //   .populate("subCategoryIds", "value")
+    //   .select("_id price stock images discount subCategoryIds")
+    //   .lean();
+
     const variants = await ProductVariantModel.find({ productId })
-      .populate("subCategoryIds", "value")
+      .populate({
+        path: "subCategoryIds",
+        select: "value subValue _id",
+        model: "ProductVariantSubCategory"
+      })
       .select("_id price stock images discount subCategoryIds")
       .lean();
+
+    // Transform variants to include explicit color and size fields
+    const enhancedVariants = variants.map(variant => {
+      const transformedVariant = { ...variant };
+      
+      // Extract color and size from subCategoryIds
+      variant.subCategoryIds.forEach((subCategory: any) => {
+        // Find which category this subCategory belongs to
+        const parentCategory = product.productVariantCategories.find((cat: any) => 
+          cat.subCategories.some((sub: any) => sub._id.toString() === subCategory._id.toString())
+        );
+        
+        if (parentCategory) {
+          if (parentCategory.name === 'Color') {
+            transformedVariant.color = subCategory.value;
+            transformedVariant.colorCode = subCategory.subValue;
+          } else if (parentCategory.name === 'Size') {
+            transformedVariant.size = subCategory.value;
+          }
+          // Add more categories here in the future as needed
+        }
+      });
+      
+      return transformedVariant;
+    });
+
+    const availableCombinations = enhancedVariants.map(variant => ({
+      color: variant.color,
+      size: variant.size
+    }));
 
     return {
       status: 200,
@@ -376,6 +415,7 @@ export const getProductById = async (productId: string) => {
       data: {
         product: JSON.parse(JSON.stringify(product)),
         variants: JSON.parse(JSON.stringify(variants)),
+        availableCombinations: JSON.parse(JSON.stringify(availableCombinations))
       },
     };
   } catch (error: any) {

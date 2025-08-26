@@ -127,7 +127,7 @@ export const createProductVariantCategory = async (
 
     // Check if the product variant category with the same name already exists for the product
     const existingCategory = await ProductVariantCategoryModel.findOne({
-      productId,
+      product: productId,
       name,
     });
 
@@ -141,7 +141,7 @@ export const createProductVariantCategory = async (
 
     // Create a new product variant category
     const newProductVariantCategory = new ProductVariantCategoryModel({
-      productId,
+      product: productId,
       name,
       subCategories: subCategories || [],
     });

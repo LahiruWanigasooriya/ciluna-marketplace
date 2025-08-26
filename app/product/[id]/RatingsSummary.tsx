@@ -67,7 +67,8 @@ const RatingsSummary = ({ productId }: { productId: string }) => {
           totalReviews: result.data?.totalReviews ?? 0,
           ratingCounts: result.data?.ratingCounts ?? {},
         };
-        setReviewsData(dummyReviewData || reviewsData); //use dummy data temporarily
+        // setReviewsData(dummyReviewData || reviewsData); //use dummy data temporarily
+        setReviewsData(reviewsData); //use dummy data temporarily
       } catch (error) {
         console.error("Error fetching review summary:", error);
         setReviewsData(dummyReviewData);

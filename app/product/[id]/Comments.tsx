@@ -10,6 +10,7 @@ import User5 from "@/public/assets/product/user5.svg";
 import { Button, Skeleton } from "@/components/ui";
 import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
 import { getProductReviews } from "@/actions/reviews/action";
+import { formatTimeAgo } from "@/utils/formatTime";
 //import Comment from "@/components/custom/product/Comment";
 //import Rating from "../Ratings";
 
@@ -89,13 +90,15 @@ const Comments = ({
       const transformedData =
         result.data?.reviews?.map((review: any) => ({
           user: { name: review.user?.name || "Anonymous" },
-          profilePicture: review.user?.profilePicture || User5,
+          profilePicture: review.user?.profileImage || User5,
           content: review.content,
           rating: review.rating,
-          timestamp: review.createdAt || "Just now",
+          // timestamp: review.createdAt || "Just now",
+          timestamp: formatTimeAgo(review.createdAt),
           replies: [],
         })) || [];
-      setCommentsData(dummyComments || transformedData);
+      setCommentsData(transformedData);
+      // setCommentsData(transformedData);
       setIsLoading(false);
     };
 
@@ -150,7 +153,11 @@ const Comments = ({
               <div className="flex flex-col gap-3">
                 <div className="flex gap-4 mt-[24px]">
                   <Image
-                    src={comment.profilePicture}
+                    src={
+                      typeof comment.profilePicture === "string"
+                        ? comment.profilePicture
+                        : (comment.profilePicture as any)
+                    }
                     alt={`${comment.user.name}'s profile picture`}
                     width={43}
                     height={43}
@@ -159,7 +166,7 @@ const Comments = ({
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2">
                       <p className="font-bold text-[14px] md:text-[16px]">
-                        {comment.user.name}:
+                        {comment.user.name}
                       </p>
                       {/* <Rating rating={comment.rating} /> */}
                     </div>
@@ -181,7 +188,12 @@ const Comments = ({
                   <div className="flex flex-col gap-3">
                     <div className="flex gap-4">
                       <Image
-                        src={reply.profilePicture}
+                        // src={reply.profilePicture}
+                        src={
+                          typeof reply.profilePicture === "string"
+                            ? reply.profilePicture
+                            : (reply.profilePicture as any)
+                        }
                         alt={`${reply.user.name}'s profile picture`}
                         width={43}
                         height={43}
@@ -190,7 +202,7 @@ const Comments = ({
                       <div className="flex flex-col">
                         <div className="flex items-center gap-2">
                           <p className="font-bold text-[14px] md:text-[16px]">
-                           Replied {reply.user.name}:
+                            Replied {reply.user.name}:
                           </p>
                           {/* <Rating rating={reply.rating} /> */}
                         </div>

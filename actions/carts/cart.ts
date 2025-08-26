@@ -55,7 +55,13 @@ export async function addToCart(params: AddToCartParams, token?: string) {
     let stockToCheck = product.stock; // Default to product stock
 
     if (params.productVariantId) {
-      const variant = await ProductVariantModel.findById(params.productVariantId);
+      const variant = await ProductVariantModel.findById(
+        params.productVariantId
+      ).populate({
+        path: "subCategoryIds",
+        select: "value",
+      });
+      
       if (!variant) {
         return { success: false, message: "Product variant not found" };
       }
@@ -107,13 +113,13 @@ export async function addToCart(params: AddToCartParams, token?: string) {
       cart = new CartModel({
         userId,
         items: [{
-          productId: params.productId,
-          productVariantId: params.productVariantId || null,
-          quantity: params.quantity,
-          price: finalPrice,
-          discount: discountAmount,
-          total: itemTotal,
-          finalTotal: finalTotal,
+            productId: params.productId,
+            productVariantId: params.productVariantId || null,
+            quantity: params.quantity,
+            price: finalPrice,
+            discount: discountAmount,
+            total: itemTotal,
+            finalTotal: finalTotal,
         }],
         totalPrice: itemTotal,
         discount: discountAmount,
