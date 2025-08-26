@@ -230,13 +230,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "KaiseiHarunoumi-Bold";
-  src: url("../public/assets/font/kaiseiHarunoumi/KaiseiHarunoUmi-Bold.otf") format("opentype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
 
 @font-face {
   font-family: "Arial-Regular";
