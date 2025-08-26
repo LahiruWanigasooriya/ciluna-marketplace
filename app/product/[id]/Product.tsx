@@ -34,10 +34,14 @@ import {
   getDiscountedPrice,
 } from "@/utils/getDiscountPrice";
 import ProductImageSlider from "../ProductImageSlider";
-
+import ColorSelector from "./ColorSelector";
+import ProductInfoTabs from "./ProductInfoTabs";
+import { ReviewSummary } from "@/types/review";
 interface ProductProps {
   product: IProduct;
   variants: IProductVariant;
+  reviews?: ReviewSummary;
+  availableCombinations: { color: string; size: string }[];
   // wishCount: ProductWishCountResponse;
   // cilunaPrice: number;
 }
@@ -45,6 +49,8 @@ interface ProductProps {
 const Product: React.FC<ProductProps> = ({
   product,
   variants,
+  reviews,
+  availableCombinations,
   // wishCount,
   // cilunaPrice,
 }) => {
@@ -57,15 +63,13 @@ const Product: React.FC<ProductProps> = ({
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // For color variant selection
-  const [selectColor, setSelectColor] = useState<string[]>();
-  // const [selectSize, setSelectSize] = useState<string[]>([]);
-  const [selectSize, setSelectSize] = useState<string[]>([
-    "S",
-    "M",
-    "L",
-    "XL",
-    "XXL",
-  ]); // use the previous line in case of dynamic size changes
+  const [selectColor, setSelectColor] = useState<string[]>([
+    product.color || "",
+  ]);
+  const [selectedColor, setSelectedColor] = useState<string>(
+    selectColor[0] || ""
+  );
+  const [selectSize, setSelectSize] = useState<string[]>([product.size || ""]);
   const [selectedSize, setSelectedSize] = useState<string>(selectSize[0] || "");
   const [selectedVariant, setSelectedVariant] =
     useState<IProductVariant | null>(null);
@@ -75,7 +79,7 @@ const Product: React.FC<ProductProps> = ({
   const [discount, setDiscount] = useState<number | null>(
     product.discount?.percentage || null
   );
-  const [sold, setSold] = useState();
+  const [sold, setSold] = useState(product.sold);
   const [variantId, setVariantId] = useState("");
   const [isActive, setIsActive] = useState();
 
@@ -92,6 +96,8 @@ const Product: React.FC<ProductProps> = ({
   // const thumbnails = allImages.filter((img) => img !== mainImageUrl);
 
   const [stock, setStock] = useState<number>(product.stock);
+
+  const [soldOut, setSoldout] = useState(false);
 
   const { quantity, setQuantity } = useQuantityStore();
 
@@ -114,20 +120,47 @@ const Product: React.FC<ProductProps> = ({
       const sizes = sizeCategory.subCategories.map((sub: any) => sub.value);
       setSelectSize(sizes);
     }
+
+    const colorCategory: any = product?.productVariantCategories?.find(
+      (category: any) => category.name === "Color"
+    );
+
+    if (colorCategory) {
+      const colors = colorCategory.subCategories.map((sub: any) => sub.value);
+      setSelectColor(colors);
+    }
+
+
   }, [product]);
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
+
+    const variant: any = variants.find(
+      (v: any) =>
+        v.subCategoryIds.some((sub: any) => sub.value === size) &&
+        v.subCategoryIds.some((sub: any) => sub.value === selectedColor)
+    );
+
+    if (variant) {
+      setVariantId(variant._id);
+      setSelectedVariant(variant);
+      setPrice(variant.price);
+      setDiscount(variant.discount?.percentage || null);
+      setStock(variant.stock);
+      setMainImageUrl(variant.images[0]);
+      setThumbnails(variant.images);
+      setRating(variant.rating);
+      setIsActive(variant.isActive);
+    }
   };
 
   useEffect(() => {
     const fetchPrices = async () => {
       try {
         const rate = await fetchExchangeRate();
-        const originalUSD = product.price / rate;
-        const discountedUSD =
-          getDiscountedPrice(product.price, product.discount?.percentage || 0) /
-          rate;
+        const originalUSD = price / rate;
+        const discountedUSD = getDiscountedPrice(price, discount || 0) / rate;
 
         setUsdPrices({
           original: formatPrice(originalUSD),
@@ -136,19 +169,16 @@ const Product: React.FC<ProductProps> = ({
       } catch (error) {
         console.error("Failed to fetch exchange rate", error);
         setUsdPrices({
-          original: formatPrice(product.price / 300),
+          original: formatPrice(price / 300),
           discounted: formatPrice(
-            getDiscountedPrice(
-              product.price,
-              product.discount?.percentage || 0
-            ) / 300
+            getDiscountedPrice(price, discount || 0) / 300
           ),
         });
       }
     };
 
     fetchPrices();
-  }, [product.price, product.discount?.percentage]);
+  }, [price, discount]);
 
   const handleImageClick = (img: string, index: number) => {
     if (img !== mainImageUrl) {
@@ -164,7 +194,7 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleColorSelect = (color: any) => {
-    setSelectColor(color);
+    setSelectedColor(color);
 
     const variant: any = variants.find(
       (v: any) =>
@@ -193,6 +223,16 @@ const Product: React.FC<ProductProps> = ({
       return () => clearTimeout(timer);
     }
   }, [product._id]);
+
+  useEffect(() => {
+    const variant = { size: selectedSize, color: selectedColor };
+
+    const availableVariant = availableCombinations.find(
+      (option) => option.size === variant.size && option.color === variant.color
+    );
+
+    setSoldout(!availableVariant);
+  }, [selectedSize, selectedColor, availableCombinations]);
 
   const displayInitialImagesCount = (): string => {
     const length = initialImages.current.length;
@@ -223,10 +263,14 @@ const Product: React.FC<ProductProps> = ({
             productId: product._id,
             productVariantId: variantId,
             quantity: quantity,
+            color: selectedColor,
+            size: selectedSize,
           }
         : {
             productId: product._id,
             quantity: quantity,
+            color: selectedColor,
+            size: selectedSize,
           };
 
       try {
@@ -257,6 +301,8 @@ const Product: React.FC<ProductProps> = ({
             rating: rating,
             sold: sold,
             isActive: isActive,
+            color: selectedColor,
+            size: selectedSize,
           }
         : {
             _id: cartItemId,
@@ -273,6 +319,8 @@ const Product: React.FC<ProductProps> = ({
             sold: product.sold,
             rating: product.rating,
             isActive: product.isActive,
+            color: selectedColor,
+            size: selectedSize,
           };
 
       // Add to local storage (Zustand store)
@@ -312,46 +360,21 @@ const Product: React.FC<ProductProps> = ({
     }
   };
 
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast.success("Link copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy:", err);
+      toast.error("Failed to copy link");
+    }
+  };
+
   return (
     <div className="w-full">
       <div className="flex flex-col px-4 md:px-8 lg:px-[68px] xl:px-[84px] recommend:px-[96px] max-w-[1440px] recommend:mx-auto mt-32">
         <div className="flex flex-col md:flex-row font-arial justify-between gap-3 md:gap-[24px] lg:gap-[25px] items-start text-gray h-full">
           <div className="flex flex-col md:gap-[12px] lg:gap-4 w-full xl:w-auto">
-            {/* <div className="flex md:hidden items-center gap-4 justify-start text-gray text-sm font-[400] pb-[12px]">
-          <Link href="/product">
-            <ChevronLeft className="hover:opacity-75 cursor-pointer" />
-          </Link>
-          {isLoading ? (
-            <Skeleton className="w-1/3 h-5 bg-[#FFFFFF]/10" />
-          ) : (
-            <p className="text-sm leading-[16px]">{product?.category?.name}</p>
-          )}
-          {isLoading ? (
-            <Skeleton className="w-1/3 h-5 bg-[#FFFFFF]/10" />
-          ) : (
-            <p className="text-sm leading-[16px]">
-              {product?.subcategory?.name}
-            </p>
-          )}
-        </div> */}
-            {/* <div className="flex flex-col items-center gap-[10px]  md:hidden">
-          {isLoading ? (
-            <Skeleton className="w-full h-5 bg-[#FFFFFF]/10" />
-          ) : (
-            <p className="text-2xl lg:text-large font-interSemiBold text-center leading-[30px]">
-              {product.name}
-            </p>
-          )}
-          {isLoading ? (
-            <Skeleton className="w-1/2 h-5 bg-[#FFFFFF]/10" />
-          ) : (
-            <p className="text-sm leading-[20px]">
-              Availability:&nbsp;
-              <span className="text-[#2DB224]">In Stock</span>
-            </p>
-          )}
-        </div> */}
-
             {/* images of the product */}
             <div className="">
               <div className="hidden xl:flex flex-row-reverse gap-6 min-w-[343px] md:h-[380px] xl:h-[426px] h-[353px] sm:h-[240px]">
@@ -374,9 +397,13 @@ const Product: React.FC<ProductProps> = ({
                     {isLoading ? (
                       <Skeleton className="w-full h-5 bg-[#FFFFFF]/10" />
                     ) : (
-                      <p className="text-sm font-arial hidden xl:block recommend:hidden leading-[17px] bg-gray text-white px-2 py-1 rounded-[8px]">
-                        -{discount}%
-                      </p>
+                      <>
+                        {discount && (
+                          <p className="text-sm font-arial hidden xl:block recommend:hidden leading-[17px] bg-gray text-white px-2 py-1 rounded-[8px]">
+                            -{discount}%
+                          </p>
+                        )}
+                      </>
                     )}
                   </div>
                 </motion.div>
@@ -387,7 +414,7 @@ const Product: React.FC<ProductProps> = ({
                   animate="visible"
                   className="flex flex-col items-center gap-[3px] sm:gap-[5px] md:gap-4 xl:gap-4"
                 >
-                  {thumbnails.map((img, index) => (
+                  {thumbnails.slice(0, 3).map((img, index) => (
                     <motion.div
                       key={img}
                       className="w-[47px] md:w-[52px] md:h-[52px] xl:w-[188px] h-[47px] sm:h-[56px] sm:w-[56px] xl:h-[193px] rounded-[2px] md:rounded-[3px]"
@@ -401,7 +428,7 @@ const Product: React.FC<ProductProps> = ({
                         height={100}
                         // sizes="(max-width: 468px) 42px, 42px"
                         sizes="(max-width: 640px) 47px, (max-width: 768px) 56px, (max-width: 1024px) 52px, 188px"
-                        className="rounded-[3px] w-full h-full"
+                        className="rounded-[8px] w-full h-full"
                       />
                     </motion.div>
                   ))}
@@ -410,15 +437,19 @@ const Product: React.FC<ProductProps> = ({
 
               <div className="flex xl:hidden w-full relative">
                 <ProductImageSlider
-                  productImages={[mainImageUrl, ...thumbnails]}
+                  productImages={[mainImageUrl, ...thumbnails.slice(0, 3)]}
                 />
                 <div className="absolute bottom-[51px] md:bottom-2 right-2">
                   {isLoading ? (
                     <Skeleton className="w-full h-5 bg-[#FFFFFF]/10" />
                   ) : (
-                    <p className="text-sm font-arial block recommend:hidden leading-[17px] bg-gray text-white px-2 py-1 rounded-[8px]">
-                      -{discount}%
-                    </p>
+                    <>
+                      {discount && (
+                        <p className="text-sm font-arial block recommend:hidden leading-[17px] bg-gray text-white px-2 py-1 rounded-[8px]">
+                          -{discount}%
+                        </p>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
@@ -451,10 +482,10 @@ const Product: React.FC<ProductProps> = ({
                 <Skeleton className="w-1/3 h-5 bg-[#FFFFFF]/10" />
               ) : (
                 <div className="flex items-center gap-2">
-                  <Rating rating={product.rating || 0} />
+                  <Rating rating={reviews?.avgRating || 0} />
                   <span className="text-sm ml-2 text-[#707070]">
                     {" "}
-                    25 Reviews | {product.sold}+ Sold
+                    {reviews?.totalReviews || 0} {reviews?.totalReviews === 1 ? 'Review' : 'Reviews'} | {sold}+ Sold
                   </span>
                 </div>
               )}
@@ -491,10 +522,10 @@ const Product: React.FC<ProductProps> = ({
                   <Skeleton className="w-1/3 h-5 bg-[#FFFFFF]/10" />
                 ) : (
                   <div className="flex items-center gap-2">
-                    <Rating rating={product.rating || 0} />
+                    <Rating rating={reviews?.avgRating || 0} />
                     <span className="text-xs ml-2 text-[#707070]">
                       {" "}
-                      25 Reviews | {product.sold}+ Sold
+                      {reviews?.totalReviews || 0} {reviews?.totalReviews === 1 ? 'Review' : 'Reviews'} | {sold}+ Sold
                     </span>
                   </div>
                 )}
@@ -507,34 +538,56 @@ const Product: React.FC<ProductProps> = ({
                   ) : (
                     <div className="flex flex-col xl:flex-row xl:gap-2 gap-1">
                       <div className="flex gap-1 recommend:gap-2 h-6 recommend:h-7">
-                        <p className="line-through flex items-center text-sm xl:text-xs recommend:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#909090]">
-                          {formatPrice(price)}{" "}
-                          <span className="ml-[2px]">LKR</span>
-                        </p>
-                        <p className="text-lg recommend:text-xl text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
-                          {formatPrice(discountPrice)}{" "}
-                          <span className="ml-[2px]">LKR</span>
-                        </p>
+                        {discount ? (
+                          <>
+                            <p className="line-through flex items-center text-sm xl:text-xs recommend:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#909090]">
+                              {formatPrice(price)}{" "}
+                              <span className="ml-[2px]">LKR</span>
+                            </p>
+                            <p className="text-lg recommend:text-xl text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
+                              {formatPrice(discountPrice)}{" "}
+                              <span className="ml-[2px]">LKR</span>
+                            </p>
+                          </>
+                        ) : (
+                          <p className="text-lg recommend:text-xl text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
+                            {formatPrice(price)}{" "}
+                            <span className="ml-[2px]">LKR</span>
+                          </p>
+                        )}
                       </div>
                       <span className="hidden xl:block">|</span>
                       <div className="flex gap-1 recommend:gap-2 h-6 recommend:h-7">
-                        <p className="line-through flex items-center text-sm xl:text-xs recommend:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#909090]">
-                          {usdPrices.original}{" "}
-                          <span className="ml-[2px]">USD</span>
-                        </p>
-                        <p className="text-lg recommend:text-xl text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
-                          {usdPrices.discounted}{" "}
-                          <span className="ml-[2px]">USD</span>
-                        </p>
+                        {discount ? (
+                          <>
+                            <p className="line-through flex items-center text-sm xl:text-xs recommend:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#909090]">
+                              {usdPrices.original}{" "}
+                              <span className="ml-[2px]">USD</span>
+                            </p>
+                            <p className="text-lg recommend:text-xl text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
+                              {usdPrices.discounted}{" "}
+                              <span className="ml-[2px]">USD</span>
+                            </p>
+                          </>
+                        ) : (
+                          <p className="text-lg recommend:text-xl text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
+                            {usdPrices.original}{" "}
+                            <span className="ml-[2px]">USD</span>
+                          </p>
+                        )}
                       </div>
                     </div>
                   )}
                   {isLoading ? (
                     <Skeleton className="w-full h-5 bg-[#FFFFFF]/10" />
                   ) : (
-                    <p className="text-sm font-arial hidden recommend:block leading-[17px] bg-gray text-white px-2 py-1 rounded-[8px]">
-                      -{discount}%
-                    </p>
+                    <>
+                      {discount && (
+                        <p className="text-sm font-arial hidden recommend:block leading-[17px] bg-gray text-white px-2 py-1 rounded-[8px]">
+                          -{discount}%
+                        </p>
+                      )}
+                    </>
                   )}
                 </div>
                 {/* {isLoading ? (
@@ -548,9 +601,6 @@ const Product: React.FC<ProductProps> = ({
               </div>
               {/* <hr className="hidden md:block border-dashed text-gray w-full" /> */}
               <div className="flex flex-col gap-2 w-full">
-                {/* <p className="text-base font-interSemiBold leading-[19px]">
-            Description:
-          </p> */}
                 {isLoading ? (
                   <Skeleton className="w-full h-10 bg-[#FFFFFF]/10" />
                 ) : (
@@ -581,32 +631,10 @@ const Product: React.FC<ProductProps> = ({
                 )}
               </div>
               <div className="flex flex-col items-start justify-between gap-3 lg:gap-4 w-full">
-                <div className="flex flex-col gap-2 my-1 md:my-2">
-                  <span className="text-base leading-[24px]">
-                    <span>Colours:</span>&nbsp;
-                    <span className="font-arialBold">
-                      {selectColor || "N/A"}
-                    </span>
-                  </span>
-                  {product.productVariantCategories?.find(
-                    (category: any) => category.name === "Color"
-                  )?.subCategories.length > 0 && (
-                    <div className="flex items-center gap-2 w-full mt-7">
-                      {product.productVariantCategories
-                        ?.find((category: any) => category.name === "Color")
-                        ?.subCategories.map((colorSubCategory: any) => (
-                          <div
-                            key={colorSubCategory._id}
-                            onClick={() =>
-                              handleColorSelect(colorSubCategory.value)
-                            }
-                            className="w-[27px] h-[27px] rounded-full cursor-pointer hover:opacity-90"
-                            style={{ backgroundColor: colorSubCategory.value }}
-                          />
-                        ))}
-                    </div>
-                  )}
-                </div>
+                <ColorSelector
+                  colors={selectColor}
+                  onColorSelect={handleColorSelect}
+                />
                 <div className="block xl:hidden mb-2">
                   <QuantitySelector
                     initialQuantity={1}
@@ -614,9 +642,6 @@ const Product: React.FC<ProductProps> = ({
                     isCartContext={false}
                   />
                 </div>
-                {/* <div className="hidden xl:block">
-            <SizeSelector sizes={selectSize} onSizeSelect={handleSizeSelect} />
-          </div> */}
               </div>
               <div className="block xl:hidden w-full">
                 <SizeSelector
@@ -641,6 +666,9 @@ const Product: React.FC<ProductProps> = ({
                     onSizeSelect={handleSizeSelect}
                   />
                 </div>
+                {soldOut && (
+                  <div className="text-red-600 font-arial">Not available</div>
+                )}
               </div>
             </div>
             <div className="hidden xl:flex items-center gap-3 w-full pt-2 xl:pt-0 justify-start">
@@ -661,7 +689,10 @@ const Product: React.FC<ProductProps> = ({
                 </Button>
               </Link>
 
-              <button className="border border-gray h-14 w-14 shrink-0 flex justify-center items-center rounded-[8px] hover:opacity-70">
+              <button
+                onClick={handleShare}
+                className="border border-gray h-14 w-14 shrink-0 flex justify-center items-center rounded-[8px] hover:opacity-70"
+              >
                 <Share2 />
               </button>
             </div>
@@ -688,6 +719,13 @@ const Product: React.FC<ProductProps> = ({
           <button className="border border-gray h-14 w-14 shrink-0 flex justify-center items-center rounded-[8px] hover:opacity-70">
             <Share2 />
           </button>
+        </div>
+        <div className="pt-6 md:pt-16">
+          <ProductInfoTabs
+            productId={product._id}
+            productVariantId={variantId}
+            overview={product.overview || { description: "", images: [] }}
+          />
         </div>
       </div>
     </div>

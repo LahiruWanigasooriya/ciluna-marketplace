@@ -11,24 +11,25 @@ import ShippingReturns from "@/components/custom/product/ShippingReturns";
 
 interface ProductInfoTabsProps {
   productId: string;
+  productVariantId: string;
   overview: {description: string; images: string[]}
 }
 
-export default function ProductInfoTabs({ productId, overview }: ProductInfoTabsProps) {
+export default function ProductInfoTabs({ productId, overview, productVariantId }: ProductInfoTabsProps) {
   const [activeTab, setActiveTab] = useState("Product Details");
   const tabs = ["Product Details", "Ratings & Reviews", "Shipping & Returns"];
 
   const renderContent = () =>
     ({
       "Product Details": <ProductDetailsTab productId={productId} overview={overview}/>,
-      "Ratings & Reviews": <Feedback productId={productId} />,
+      "Ratings & Reviews": <Feedback productId={productId} productVariantId={productVariantId}/>,
       "Shipping & Returns": <ShippingReturns/>,
     }[activeTab] || null);
 
   return (
     <div className="w-full overflow-hidden items-center">
       <div
-        className={`flex gap-4 font-[Arial] transition-all duration-1000 md:px-8 lg:px-[68px] xl:px-[84px] recommend:px-[96px] max-w-[1440px] recommend:mx-auto  ${
+        className={`flex gap-4 font-[Arial] transition-all duration-1000 ${
           activeTab === "Product Details"
             ? "justify-start"
             : activeTab === "Ratings & Reviews"
@@ -54,7 +55,7 @@ export default function ProductInfoTabs({ productId, overview }: ProductInfoTabs
           </div>
         ))}
       </div>
-      <div className="md:mt-6 custom-container md:py-0">
+      <div className="md:mt-6 md:py-0">
         <>{renderContent()}</>
       </div>
     </div>

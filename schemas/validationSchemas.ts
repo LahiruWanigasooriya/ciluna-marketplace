@@ -117,11 +117,11 @@ export const fileSchema = Yup.mixed()
   );
 
 export const reviewValidationSchema = Yup.object().shape({
-  title: Yup.string()
-    .trim()
-    .min(5, "Title must be at least 5 characters")
-    .max(100, "Title cannot exceed 100 characters")
-    .required("Review title is required"),
+  // title: Yup.string()
+  //   .trim()
+  //   .min(5, "Title must be at least 5 characters")
+  //   .max(100, "Title cannot exceed 100 characters")
+  //   .required("Review title is required"),
   content: Yup.string()
     .trim()
     .min(10, "Review content must be at least 10 characters")

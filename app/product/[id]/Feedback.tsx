@@ -5,7 +5,7 @@ import Comments from "./Comments";
 import { Button } from "@/components/ui";
 import RatingsSummary from "./RatingsSummary";
 
-const Feedback = ({ productId }: { productId: string }) => {
+const Feedback = ({ productId, productVariantId }: { productId: string, productVariantId:string }) => {
   const [addReviewPopup, setAddReviewPopup] = useState(false);
   const closePopup = () => {
     setAddReviewPopup(false);
