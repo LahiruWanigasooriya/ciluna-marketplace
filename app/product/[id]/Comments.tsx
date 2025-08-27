@@ -75,9 +75,11 @@ const dummyComments: CommentData[] = [
 const Comments = ({
   productId,
   productVariantId,
+  refreshFlag,
 }: {
   productId: string;
   productVariantId?: string;
+  refreshFlag: boolean;
 }) => {
   const [showAllComments, setShowAllComments] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -90,7 +92,7 @@ const Comments = ({
       const transformedData =
         result.data?.reviews?.map((review: any) => ({
           user: { name: review.user?.name || "Anonymous" },
-          profilePicture: review.user?.profileImage || User5,
+          profilePicture: review.user?.profilePicture || User1,
           content: review.content,
           rating: review.rating,
           // timestamp: review.createdAt || "Just now",
@@ -98,12 +100,11 @@ const Comments = ({
           replies: [],
         })) || [];
       setCommentsData(transformedData);
-      // setCommentsData(transformedData);
       setIsLoading(false);
     };
 
     fetchData();
-  }, [productId, productVariantId]);
+  }, [productId, productVariantId, refreshFlag]);
 
   const handleToggleComments = () => {
     setShowAllComments((prev) => !prev);

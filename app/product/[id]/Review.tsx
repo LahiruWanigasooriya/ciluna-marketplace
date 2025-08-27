@@ -18,6 +18,7 @@ interface RatingProps {
   onRatingChange?: (rating: number) => void;
   readOnly?: boolean;
   closePopup: () => void;
+  onReviewSubmit: () => void;
 }
 
 const Review: React.FC<RatingProps> = ({
@@ -26,6 +27,7 @@ const Review: React.FC<RatingProps> = ({
   onRatingChange,
   readOnly = false,
   closePopup,
+  onReviewSubmit,
 }) => {
   const [rating, setRating] = useState<number>(initialRating);
   // const [title, setTitle] = useState<string>("");
@@ -123,6 +125,7 @@ const Review: React.FC<RatingProps> = ({
       setIsSubmitting(false);
 
       if (response.success) {
+        onReviewSubmit?.();
         // setTitle("");
         setContent("");
         setRating(0);
