@@ -9,6 +9,7 @@ import NecklaceImg from "@/public/assets/home/necklaceimg.webp";
 import RingImg from "@/public/assets/home/ringimg.webp";
 import PerfumeImg from "@/public/assets/home/perfumeimg.webp";
 import BgImg from "@/public/assets/home/testimonials-bg.png";
+import { Button } from "react-aria-components";
 import { IconButton } from "@/components/custom/IconButton";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -90,12 +91,9 @@ const Testimonials = () => {
         </div>
 
         <Link href="/testimonials">
-          <IconButton
-            name="Explore all Testimonials"
-            process="Exploring..."
-            success="GO!"
-            className=" py-[8px] sm:py-[16px] px-[16px] sm:px-[32px] bg-black text-white text-[14px] sm:text-[18px] cursor-pointer hover:scale-105 transition-all duration-1000"
-          />
+          <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
+            Explore all Testimonials
+          </Button>
         </Link>
       </div>
       <Image
