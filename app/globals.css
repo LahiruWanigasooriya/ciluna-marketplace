@@ -237,7 +237,8 @@
 
 @font-face {
   font-family: "KaiseiHarunoumi-Bold";
-  src: url("../public/assets/font/kaiseiHarunoumi/KaiseiHarunoUmi-Bold.otf") format("opentype");
+  src: url("../public/assets/font/kaiseiHarunoumi/KaiseiHarunoUmi-Bold.otf")
+    format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -297,7 +298,7 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 24px 16px;
 }
 
 @media (min-width: 768px) {

@@ -19,7 +19,7 @@ const QuietBrilliance: React.FC = () => {
           <h2 className="text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-gray-900 mb-6">
             Quiet Brilliance
           </h2>
-          <p className="text-[14px] sm:text-[16px] text-[#707070] font-inter leading-relaxed md:mb-4 ">
+          <p className="text-[14px] sm:text-[16px] max-w-[612px] text-[#707070] font-arial leading-relaxed md:mb-4 ">
             CILUNA emerged from the balance between tradition and vision, earth
             and ether, self and story.
             <br /> With every creation, we seek to awaken what is eternal. Not
@@ -34,7 +34,7 @@ const QuietBrilliance: React.FC = () => {
         </div>
 
         {/* Image Section */}
-        <div className="flex-1 max-w-md xl:max-w-none w-full relative rounded-2xl ">
+        <div className="flex-1 max-w-md xl:max-w-[533px] w-full relative rounded-2xl ">
           <Image
             src={womanImage}
             alt="Quiet Brilliance"
