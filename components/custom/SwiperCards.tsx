@@ -44,16 +44,15 @@ const SwiperCards = ({ products, section }: SwiperCardsProps) => {
             <p className="text-[12px] sm:text-[14px] text-center md:text-left font-cinzel text-[#C19F32] pb-0 md:pb-4 leading-5">
               {section.category}
             </p>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col ">
               <h2 className="text-[24px] sm:text-[40px] text-center md:text-left lg:text-[52px] font-kaiseiBold text-gray-900 leading-8 md:leading-[60px]">
                 {section.title}
               </h2>
-              <p className="text-[14px] sm:text-[16px] text-center md:text-left text-[#707070] font-inter leading-5 md:leading-6 ">
-                {section.description}
-              </p>
-              <div className="hidden md:flex justify-between items-end h-5 lg:h-6 relative">
-                {/* desktop nav */}
-                <div className="md:flex gap-[24px] absolute right-0 bottom-0 hidden">
+              <div className="hidden md:flex items-end w-full justify-between ">
+                <p className="text-[14px] sm:text-[16px] text-left text-[#707070] font-inter leading-5 md:leading-6">
+                  {section.description}
+                </p>
+                <div className="flex items-start gap-[24px]">
                   <button
                     onClick={scrollPrev}
                     className="bg-gray-300 rounded-[8px] border border-[#3D3D3D] hover:border-[#B4B4B4]"
@@ -74,6 +73,10 @@ const SwiperCards = ({ products, section }: SwiperCardsProps) => {
                   </button>
                 </div>
               </div>
+              {/* Mobile description */}
+              <p className="text-[14px] sm:text-[16px] text-center md:hidden text-[#707070] font-inter leading-5 md:leading-6">
+                {section.description}
+              </p>
             </div>
           </div>
         )}
