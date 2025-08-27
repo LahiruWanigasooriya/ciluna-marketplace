@@ -77,8 +77,6 @@ const FieldGroup = ({ className, ...props }: GroupProps) => {
       {...props}
       className={cn([
         "border border-[#e1e1e1] bg-[#ffffff] transition duration-200 ease-out rounded-lg flex items-center",
-        "focus-within:border-gray/70 focus-within:ring-4 focus-within:ring-gray/20",
-        "group-invalid:focus-within:border-danger focus-within:ring-4 group-invalid:focus-within:ring-danger/20",
         "[&>[role=progressbar]]:mr-2.5",
         "[&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0",
         "[&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg",

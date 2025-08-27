@@ -87,7 +87,7 @@ const SignupForm = ({
       onSubmit={handleSubmit}
       className="max-w-[598px]  mx-auto rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
     >
-      <div className="flex items-center justify-center space-x-2 text-[#252525] mt-10">
+      <div className="flex items-center justify-center space-x-2 text-[#252525] mt-16">
         
         <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-[32px]" />
       </div>
@@ -131,7 +131,7 @@ const SignupForm = ({
         </label>
         <DatePicker
           className="w-full"
-          placeholder="Select date od birth"
+          placeholder="Select date of birth"
           onChange={(value) => {
             const date = value ? value.toDate("UTC") : null;
             handleChange("dateofbirth", date);
@@ -319,48 +319,46 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-<>
-    <div className="flex flex-col h-screen bg-white text-black ">
 
-           
-      <Navbar />
-     
+      <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative">
 
+        <Navbar />
 
-      <div className="flex-1  flex justify-center pt-20 px-4 py-10 overflow-y-auto scrollbar-hide z-0 ">
-                    <div className="hidden sm:block absolute -right-0 top-32  h-[301px] w-[320px] ">
-                <Image 
-                src={bgpattern}
-                alt="background pattern"
-                fill
-                className="object-right bg-[#e8e8da"
-                priority
-                />
+        <main className="flex-grow flex justify-center pt-20 px-4 py-10 relative">
+        
+          <div className="hidden sm:block absolute right-0 top-32 h-[301px] w-[320px]">
+            <Image
+              src={bgpattern}
+              alt="background pattern"
+              fill
+              className="object-right bg-[#e8e8da"
+              priority
+            />
           </div>
-           <div className="hidden sm:block  absolute -left-0 bottom-0 h-[301px] w-[320px] ">
-                        <Image 
-                        src={bgpattern}
-                        alt="background pattern"
-                        fill
-                        className="object-right bg-[#e8e8da transform scale-x-[-1]"
-                        priority
-                        />
-            </div>
-        <SignupForm
-          formData={formData}
-          errors={errors}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          isLoading={isLoading}
-          isSuccess={isSuccess}
-        />
+          <div className="hidden sm:block absolute left-0 bottom-0 h-[301px] w-[320px]">
+            <Image
+              src={bgpattern}
+              alt="background pattern"
+              fill
+              className="object-right bg-[#e8e8da transform scale-x-[-1]"
+              priority
+            />
+          </div>
+
+          
+          <SignupForm
+            formData={formData}
+            errors={errors}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+          />
+        </main>
+
+
+        <Footer />
       </div>
-      
-     
-    </div>
-    <div className="w-full absolute items-end justify-center"><Footer/></div>
-    
-    </>
   );
 }
 

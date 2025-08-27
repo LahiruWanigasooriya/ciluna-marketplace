@@ -131,7 +131,7 @@
   background: white;
 }
 
-@font-face {
+/* @font-face {
   font-family: "Inter";
   src: url("../public/assets/font/inter/Inter-Regular.otf") format("opentype");
   font-weight: normal;
@@ -162,7 +162,7 @@
   font-style: normal;
   font-display: swap;
 }
-/* added font */
+
 @font-face {
   font-family: "PlayfairDisplay-Bold";
   src: url("../public/assets/font/playfairdisplay/PlayfairDisplay-Bold.otf")
@@ -245,7 +245,125 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+} */
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/font/inter/Inter-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
+
+@font-face {
+  font-family: "Inter-Bold";
+  src: url("/assets/font/inter/Inter-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter-semiBold";
+  src: url("/assets/font/inter/Inter-SemiBold.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora-Regular";
+  src: url("/assets/font/lora/Lora-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+/* added font */
+@font-face {
+  font-family: "PlayfairDisplay-Bold";
+  src: url("/assets/font/playfairdisplay/PlayfairDisplay-Bold.otf")
+    format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: " KaiseiHarunoUmi-Bold";
+  src: url("/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf")
+    format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "KaiseiHarunoUmi-Regular";
+  src: url("/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Regular.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: " Arial-Regular";
+  src: url("/assets/font/Arial/Arial-Regular.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: " Arial-Bold";
+  src: url("/assets/font/Arial/Arial-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lora-Bold";
+  src: url("/assets/font/lora/Lora-Bold.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlayFairDisplay-ExtraBold";
+  src: url("../public/assets/font/playfair/PlayfairDisplay-ExtraBold.ttf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CinzelDecorative-Bold";
+  src: url("/assets/font/cinzeldecorative/CinzelDecorative-Bold.ttf")
+    format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: "Arial-Regular";
+  src: url("/assets/font/arial/ARIAL.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arial-Bold";
+  src: url("/assets/font/arial/ARIALBD.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 .custom-textfield label {
   color: #252525;
   font-weight: 400;
