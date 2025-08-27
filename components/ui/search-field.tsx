@@ -1,5 +1,5 @@
 "use client";
-
+import { useRef } from "react";
 import { IconX } from "justd-icons";
 import { FiSearch } from "react-icons/fi";
 import {
@@ -8,7 +8,6 @@ import {
   type ValidationResult,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-
 import { Button } from "./button";
 import { Description, FieldError, FieldGroup, Input, Label } from "./field";
 import { Loader } from "./loader";
@@ -23,8 +22,7 @@ const searchFieldStyles = tv({
     clearButton: [
       "mr-1 h-[24px] w-[24px] text- group-empty:invisible pressed:bg border-solid",
     ],
-    input:
-      "[&::-webkit-search-cancel-button]:hidden text-center text- h-[26px] ",
+    input: "[&::-webkit-search-cancel-button]:hidden text-left text- h-[26px] ",
   },
 });
 
@@ -49,15 +47,23 @@ const SearchField = ({
   isNavbarActive = false,
   ...props
 }: SearchFieldProps) => {
-  const router = useRouter(); // Initialize router
+  const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Handle form submission
   const handleSubmit = (value: string) => {
     if (value.trim()) {
-      // Redirect to search results page with query
       router.push(`/search?query=${encodeURIComponent(value)}`);
     }
   };
+
+  const handleSearchIconClick = () => {
+    // Focus the input when search icon is clicked
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <SearchFieldPrimitive
       aria-label={
@@ -76,6 +82,7 @@ const SearchField = ({
         }`}
       >
         <Input
+          ref={inputRef}
           placeholder={placeholder ?? ""}
           className={input() + " border-none"}
         />
@@ -87,16 +94,19 @@ const SearchField = ({
               clearButton() +
               (isNavbarActive
                 ? " text-black border-black"
-                : "text-white border-white") +
-              ""
+                : " text-white border-white")
             }
           >
             <IconX />
           </Button>
         )}
         <FiSearch
+          onClick={handleSearchIconClick}
           className={
-            searchIcon() + ` ${isNavbarActive ? " text-black" : " text-white"}`
+            searchIcon() +
+            ` hover:cursor-pointer ${
+              isNavbarActive ? " text-black" : " text-white"
+            }`
           }
         />
       </FieldGroup>
