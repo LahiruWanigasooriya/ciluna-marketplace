@@ -83,7 +83,7 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
       <div ref={wrapperRef} className="relative">
         <div
           onClick={() => setIsOpen(!isOpen)}
-          className="cursor-pointer flex justify-between items-center px-2 h-10 border border-[#252525] bg-[#ffffff] transition duration-200 ease-out rounded-lg focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20
+          className="cursor-pointer flex justify-between items-center px-2 h-10 border border-[#e1e1e1] bg-[#ffffff] transition duration-200 ease-out rounded-lg focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20
           group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
           [&>[role=progressbar]]:mr-2.5
           [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
