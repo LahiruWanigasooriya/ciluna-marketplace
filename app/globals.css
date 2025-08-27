@@ -125,7 +125,9 @@
     hsla(258, 52%, 12%, 1) 0%,
     hsla(233, 100%, 4%, 1) 30%,
     hsla(228, 82%, 11%, 1) 70%
-); */
+
+  ); */
+
   background: white;
 }
 
@@ -171,9 +173,6 @@
 }
 
 @font-face {
-  font-family: "KaiseiHarunoUmi-Bold";
-  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf")
-    format("opentype");
   font-family: " KaiseiHarunoUmi-Bold";
   src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf")
     format("opentype");
@@ -193,14 +192,12 @@
 
 @font-face {
   font-family: " Arial-Regular";
-  font-family: " Arial-Regular";
   src: url("../public/assets/font/Arial/Arial-Regular.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: " Arial-Bold";
   font-family: " Arial-Bold";
   src: url("../public/assets/font/Arial/Arial-Bold.otf") format("opentype");
   font-weight: 700;
@@ -233,6 +230,22 @@
   font-display: swap;
 }
 
+
+@font-face {
+  font-family: "Arial-Regular";
+  src: url("../public/assets/font/arial/ARIAL.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Arial-Bold";
+  src: url("../public/assets/font/arial/ARIALBD.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 .custom-textfield label {
   color: #252525;
   font-weight: 400;
@@ -449,7 +462,6 @@
 }
 
 .line-gradient-header {
-  height: 0.5px;
   border-top-left-radius: 80px;
   border-top-right-radius: 80px;
   background: linear-gradient(
@@ -469,6 +481,19 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   z-index: 1;
 }
+
+
+@layer base {
+  input:-webkit-autofill {
+    background-color: #fff !important;
+    color: #000 !important;
+    border: 1px solid #e1e1e1 !important; /* Tailwind's border-gray-300 */
+    border-radius: 0.375rem !important;    /* Tailwind's rounded-md */
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: black !important;
+  }
+}
+
 
 /* testimonials custom pagination bar */
 
@@ -506,3 +531,4 @@
 .swiper-pagination-bullet-active {
   transform: none !important;
 }
+

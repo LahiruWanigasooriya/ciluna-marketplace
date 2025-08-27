@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ArrowDownNarrowWide } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import useClickOutside from "@/hooks/useClickOutside";
@@ -14,11 +14,11 @@ interface SortOption {
 
 const sortOptions: SortOption[] = [
   { label: "Default Sorting", value: "default" },
-  { label: "Latest", value: "latest" },
+  { label: "Newest First", value: "latest" },
   { label: "Price: Low to High", value: "price_low_high" },
   { label: "Price: High to Low", value: "price_high_low" },
-  { label: "Name: A to Z", value: "name_a_z" },
-  { label: "Price: Z to A", value: "price_z_a" },
+  { label: "Popularity", value: "popularity" },
+  { label: "Best Sellers", value: "bestsellers" },
 ];
 
 interface SortProps {
@@ -56,10 +56,10 @@ const Sort: React.FC<SortProps> = ({ disabled = false }) => {
   };
 
   return (
-    <div className="relative w-full md:w-[300px]">
+    <div className="relative w-full ">
       <div className="flex flex-col gap-[16px]">
         <div className="flex items-center">
-          <p className="text-white leading-[19px] text-base">Sort by:</p>&nbsp;
+          
           <div
             className={`flex items-center ${
               disabled
@@ -68,10 +68,9 @@ const Sort: React.FC<SortProps> = ({ disabled = false }) => {
             }`}
             onClick={handleSort}
           >
-            <p className="cursor-pointer text-white leading-[19px] text-base">
-              {sort}
-            </p>
-            <ChevronDown size={24} className="text-blue" />
+          <ArrowDownNarrowWide size={24} className="text-black" />
+          <p className="text-[#252525] font-arial leading-[19px] text-base">Sort by</p>&nbsp;
+
           </div>
         </div>
       </div>
@@ -81,16 +80,20 @@ const Sort: React.FC<SortProps> = ({ disabled = false }) => {
           animate="visible"
           variants={popupVariants}
           ref={modalRef}
-          className="absolute w-[200px] md:w-[240px] flex flex-col top-8 left-0 bg-[#FFFFFF]/5 backdrop-blur-md py-4 z-20 text-white rounded-[10px] text-sm"
+          className="absolute w-[200px] md:w-[240px] flex flex-col top-8 right-0  bg-[#FFFFFF]/5 border-black border-2 backdrop-blur-md py-4 z-20 text-[#252525] rounded-[10px] text-sm"
         >
           {sortOptions.map((option) => (
-            <p
-              key={option.value}
-              className="hover:bg-[#FFFFFF]/10 px-4 leading-[26px] py-1 cursor-pointer"
-              onClick={() => handleSelect(option)}
-            >
-              {option.label}
-            </p>
+          <p
+            key={option.value}
+            className={`px-4 leading-[26px] py-1 cursor-pointer 
+              ${sort === option.label 
+                ? "bg-[#FFFFFF]/20 font-medium text-black rounded-md"  
+                : "hover:bg-[#FFFFFF]/10"
+              }`}
+            onClick={() => handleSelect(option)}
+          >
+            {option.label}
+          </p>
           ))}
         </motion.div>
       )}

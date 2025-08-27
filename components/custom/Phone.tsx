@@ -98,7 +98,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
       <p className="font-[400] text-gray">Mobile Number</p>
       <div className="relative w-full" ref={modalRef}>
         <div
-          className={`px-2 h-[44px] bg-white transition duration-200 ease-out rounded-lg flex items-center
+          className={`px-2 h-[44px] bg-white transition duration-200 ease-out rounded-lg flex items-center border border-[#e1e1e1]
           group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
           [&>[role=progressbar]]:mr-2.5
           [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0

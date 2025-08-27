@@ -113,6 +113,7 @@ const config = withTV({
         arialBold: ["Arial-Bold", "sans-serif"],
         kaiseiHarunoUmi: ['"KaiseiHarunoUmi-Bold"', "sans-serif"],
         cinzel: ["CinzelDecorative-Bold", "sans-serif"],
+
       },
       fontSize: {
         xxxs: "0.512rem",
