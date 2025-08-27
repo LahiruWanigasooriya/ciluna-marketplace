@@ -53,7 +53,7 @@ const RatingBars: React.FC<RatingBarProps> = ({ ratingCounts }) => {
   );
 };
 
-const RatingsSummary = ({ productId }: { productId: string }) => {
+const RatingsSummary = ({ productId, refreshFlag }: { productId: string, refreshFlag: boolean }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [reviewsData, setReviewsData] = useState<ReviewData>(dummyReviewData);
 
@@ -78,7 +78,7 @@ const RatingsSummary = ({ productId }: { productId: string }) => {
     };
 
     fetchData();
-  }, [productId]);
+  }, [productId, refreshFlag]);
 
   const { avgRating, totalReviews, ratingCounts } = reviewsData;
 

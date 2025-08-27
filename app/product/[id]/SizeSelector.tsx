@@ -4,17 +4,23 @@ import { motion } from "framer-motion";
 
 interface SizeSelectorProps {
   sizes: string[];
+  selectedSize: string;
   onSizeSelect?: (size: string) => void;
+  availableSizes: string[];
 }
 
 const sizeDisplayMap: Record<string, string> = {
   Small: "S",
   Medium: "M",
   Large: "L",
-  Xlarge: "XL",
+  "Extra Large": "XL",
 };
-const SizeSelector: React.FC<SizeSelectorProps> = ({ sizes, onSizeSelect }) => {
-  const [selectedSize, setSelectedSize] = useState<string>(sizes[1]);
+const SizeSelector: React.FC<SizeSelectorProps> = ({
+  sizes,
+  selectedSize,
+  onSizeSelect,
+  availableSizes,
+}) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // useEffect(() => {
@@ -26,39 +32,65 @@ const SizeSelector: React.FC<SizeSelectorProps> = ({ sizes, onSizeSelect }) => {
   //   }
   // }, [sizes, onSizeSelect]);
 
+  // const handleSizeClick = (size: string) => {
+  //   setSelectedSize(size);
+  //   if (onSizeSelect) {
+  //     onSizeSelect(size);
+  //   }
+  // };
+
   useEffect(() => {
-    if (sizes.length > 0) {
-      setSelectedSize(sizes[0]);
-      onSizeSelect?.(sizes[0]);
-    }
-  }, []); // use the previous use effect in case of dynamic size changes
+    onSizeSelect?.(selectedSize);
+  }, [selectedSize]);
 
-  const handleSizeClick = (size: string) => {
-    setSelectedSize(size);
-    if (onSizeSelect) {
-      onSizeSelect(size);
+  const getStyle = (size: string) => {
+    const isAvailable = availableSizes?.includes(size);
+    const isSelected = selectedSize === size;
+
+    if (isSelected) {
+      return {
+        backgroundColor: "#252525",
+        color: "#ffffff",
+        borderRadius: "8px",
+        border: "1px solid #252525",
+      };
+    } else if (isAvailable) {
+      return {
+        backgroundColor: "#ffffff",
+        color: "#252525",
+        borderRadius: "8px",
+        border: "1px solid #252525",
+      };
+    } else {
+      return {
+        color: "#909090",
+        borderRadius: "8px",
+        border: "1px solid #909090",
+        cursor: "not-allowed",
+        backgroundImage: "linear-gradient(to top left, transparent 48.5%, #909090 50%, transparent 51.5%)",
+      };
     }
   };
 
-  const sizeVariant = {
-    selected: {
-      backgroundColor: "#252525",
-      color: "#ffffff",
-      transition: { duration: 0.3 },
-    },
-    // unselected: {
-    //   backgroundColor: "rgba(255, 255, 255, 0.03)",
-    //   color: "#ffffff",
-    //   transition: { duration: 0.3 },
-    // },
-    unselected: {
-      backgroundColor: "#ffffff", // for testing
-      color: "#252525",
-      transition: { duration: 0.3 },
-      border: "1px solid #252525",
-      borderRadius: "8px",
-    },
-  };
+  // const sizeVariant = {
+  //   selected: {
+  //     backgroundColor: "#252525",
+  //     color: "#ffffff",
+  //     transition: { duration: 0.3 },
+  //   },
+  //   // unselected: {
+  //   //   backgroundColor: "rgba(255, 255, 255, 0.03)",
+  //   //   color: "#ffffff",
+  //   //   transition: { duration: 0.3 },
+  //   // },
+  //   unselected: {
+  //     backgroundColor: "#ffffff", // for testing
+  //     color: "#252525",
+  //     transition: { duration: 0.3 },
+  //     border: "1px solid #252525",
+  //     borderRadius: "8px",
+  //   },
+  // };
 
   // const handleScrollLeft = () => {
   //   if (scrollContainerRef.current) {
@@ -90,21 +122,22 @@ const SizeSelector: React.FC<SizeSelectorProps> = ({ sizes, onSizeSelect }) => {
           ref={scrollContainerRef}
           className="flex gap-2 overflow-x-auto w-full md:max-w-[326px] scrollbar-hide"
         >
-          {sizes.map(
-            (size, index) =>
-              size && (
-                <motion.div
-                  key={index}
-                  className="w-[40px] h-[40px] flex-shrink-0 bg-[#FFFFFF]/5 rounded-[10px] flex justify-center items-center cursor-pointer hover:opacity-75"
-                  onClick={() => handleSizeClick(size)}
-                  variants={sizeVariant}
-                  initial="unselected"
-                  animate={selectedSize === size ? "selected" : "unselected"}
-                >
-                  {sizeDisplayMap[size]}
-                </motion.div>
-              )
-          )}
+          {sizes.map((size, index) => {
+            if (!size) return null;
+
+            const isAvailable = availableSizes?.includes(size);
+
+            return (
+              <motion.div
+                key={index}
+                className="w-[40px] h-[40px] flex-shrink-0 flex justify-center items-center cursor-pointer"
+                style={getStyle(size)}
+                onClick={() => isAvailable && onSizeSelect?.(size)}
+              >
+                {sizeDisplayMap[size]}
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </div>

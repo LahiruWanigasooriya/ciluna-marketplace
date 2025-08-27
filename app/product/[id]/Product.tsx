@@ -63,16 +63,16 @@ const Product: React.FC<ProductProps> = ({
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // For color variant selection
-  const [selectColor, setSelectColor] = useState<string[]>([
-    product.color || "",
-  ]);
-  const [selectedColor, setSelectedColor] = useState<string>(
-    selectColor[0] || ""
-  );
+  const [selectColor, setSelectColor] = useState<string[]>([product.color || ""]);
+  const [selectedColor, setSelectedColor] = useState<string>(selectColor[0] || "");
   const [selectSize, setSelectSize] = useState<string[]>([product.size || ""]);
+
+  const availableSizes = availableCombinations
+    .filter((c) => c.color === selectedColor)
+    .map((c) => c.size);
+
   const [selectedSize, setSelectedSize] = useState<string>(selectSize[0] || "");
-  const [selectedVariant, setSelectedVariant] =
-    useState<IProductVariant | null>(null);
+  const [selectedVariant, setSelectedVariant] =useState<IProductVariant | null>(null);
   const [rating, setRating] = useState();
   const { token } = useAuthStore();
   const [price, setPrice] = useState<number>(product.price);
@@ -96,8 +96,6 @@ const Product: React.FC<ProductProps> = ({
   // const thumbnails = allImages.filter((img) => img !== mainImageUrl);
 
   const [stock, setStock] = useState<number>(product.stock);
-
-  const [soldOut, setSoldout] = useState(false);
 
   const { quantity, setQuantity } = useQuantityStore();
 
@@ -129,8 +127,6 @@ const Product: React.FC<ProductProps> = ({
       const colors = colorCategory.subCategories.map((sub: any) => sub.value);
       setSelectColor(colors);
     }
-
-
   }, [product]);
 
   const handleSizeSelect = (size: string) => {
@@ -196,12 +192,21 @@ const Product: React.FC<ProductProps> = ({
   const handleColorSelect = (color: any) => {
     setSelectedColor(color);
 
-    const variant: any = variants.find(
-      (v: any) =>
-        v.subCategoryIds.some((sub: any) => sub.value === color) &&
-        v.subCategoryIds.some((sub: any) => sub.value === selectedSize)
-    );
+    let variant: any
 
+    if(selectedSize){
+      variant = variants.find(
+        (v: any) =>
+          v.subCategoryIds.some((sub: any) => sub.value === color) &&
+          v.subCategoryIds.some((sub: any) => sub.value === selectedSize)
+      );
+    }else{
+      variant = variants.find(
+        (v: any) =>
+          v.subCategoryIds.some((sub: any) => sub.value === color)
+      );
+    }
+    
     if (variant) {
       setVariantId(variant._id);
       setSelectedVariant(variant);
@@ -225,14 +230,10 @@ const Product: React.FC<ProductProps> = ({
   }, [product._id]);
 
   useEffect(() => {
-    const variant = { size: selectedSize, color: selectedColor };
-
-    const availableVariant = availableCombinations.find(
-      (option) => option.size === variant.size && option.color === variant.color
-    );
-
-    setSoldout(!availableVariant);
-  }, [selectedSize, selectedColor, availableCombinations]);
+    if (!availableSizes.includes(selectedSize) && availableSizes.length > 0) {
+      setSelectedSize(availableSizes[0]);
+    }
+  }, [selectedColor, availableSizes, selectedSize]);
 
   const displayInitialImagesCount = (): string => {
     const length = initialImages.current.length;
@@ -412,22 +413,23 @@ const Product: React.FC<ProductProps> = ({
                   variants={containerVariants}
                   initial="hidden"
                   animate="visible"
-                  className="flex flex-col items-center gap-[3px] sm:gap-[5px] md:gap-4 xl:gap-4"
+                  className="flex flex-col items-center gap-[3px] sm:gap-[5px] md:gap-4 xl:gap-4 xl:h-[609px]"
                 >
                   {thumbnails.slice(0, 3).map((img, index) => (
                     <motion.div
                       key={img}
-                      className="w-[47px] md:w-[52px] md:h-[52px] xl:w-[188px] h-[47px] sm:h-[56px] sm:w-[56px] xl:h-[193px] rounded-[2px] md:rounded-[3px]"
+                      className="w-[47px] md:w-[52px] md:h-[52px] xl:w-[188px] h-[47px] sm:h-[56px] sm:w-[56px] xl:h-[193px] rounded-[2px] md:rounded-[3px] relative"
                       onClick={() => handleImageClick(img, index)}
                       variants={thumbnailVariants}
                     >
                       <Image
                         src={img}
                         alt="MinProImg"
-                        width={200}
-                        height={100}
+                        fill
+                        // width={200}
+                        // height={100}
                         // sizes="(max-width: 468px) 42px, 42px"
-                        sizes="(max-width: 640px) 47px, (max-width: 768px) 56px, (max-width: 1024px) 52px, 188px"
+                        // sizes="(max-width: 640px) 47px, (max-width: 768px) 56px, (max-width: 1024px) 52px, 188px"
                         className="rounded-[8px] w-full h-full"
                       />
                     </motion.div>
@@ -590,16 +592,7 @@ const Product: React.FC<ProductProps> = ({
                     </>
                   )}
                 </div>
-                {/* {isLoading ? (
-            <Skeleton className="w-1/3 h-5 bg-[#FFFFFF]/10" />
-          ) : (
-            <div className="flex items-center gap-2">
-              <Rating rating={product.rating || 0} />
-              <span className="text-xs ml-2">{product.sold} Sold</span>
-            </div>
-          )} */}
               </div>
-              {/* <hr className="hidden md:block border-dashed text-gray w-full" /> */}
               <div className="flex flex-col gap-2 w-full">
                 {isLoading ? (
                   <Skeleton className="w-full h-10 bg-[#FFFFFF]/10" />
@@ -646,7 +639,9 @@ const Product: React.FC<ProductProps> = ({
               <div className="block xl:hidden w-full">
                 <SizeSelector
                   sizes={selectSize}
+                  selectedSize={selectedSize}
                   onSizeSelect={handleSizeSelect}
+                  availableSizes={availableSizes}
                 />
               </div>
               <div className="flex flex-col items-start justify-between gap-5 w-full">
@@ -663,12 +658,11 @@ const Product: React.FC<ProductProps> = ({
                 <div className="hidden xl:block">
                   <SizeSelector
                     sizes={selectSize}
+                    selectedSize={selectedSize}
                     onSizeSelect={handleSizeSelect}
+                    availableSizes={availableSizes}
                   />
                 </div>
-                {soldOut && (
-                  <div className="text-red-600 font-arial">Not available</div>
-                )}
               </div>
             </div>
             <div className="hidden xl:flex items-center gap-3 w-full pt-2 xl:pt-0 justify-start">
