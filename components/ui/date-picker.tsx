@@ -84,18 +84,27 @@ const DatePicker = <T extends DateValue>({
   className,
   description,
   errorMessage,
+  value,
   ...props
 }: DatePickerProps<T>) => {
- 
   return (
     <DatePickerPrimitive {...props} className={ctr(className, base())}>
-      {label && <Label className="text-white">{label}</Label>}
-      <FieldGroup className="min-w-40">
-        <DateInput className={datePickerInput()} 
-        
-      />        
-    
-        <DatePickerIcon />
+      {label && <Label className="text-black">{label}</Label>}
+      <FieldGroup className="min-w-40 relative">
+        {!value && placeholder ? (
+          <div className="flex items-center justify-between w-full h-10 px-3 text-sm text-[#707070] bg-transparent border-0">
+            <span>{placeholder}</span>
+            <DatePickerIcon />
+          </div>
+        ) : (
+          <>
+            <DateInput
+              className={datePickerInput()}
+              data-has-value={!!value}
+            />
+            <DatePickerIcon />
+          </>
+        )}
       </FieldGroup>
       {description && <Description>{description}</Description>}
       <FieldError>{errorMessage}</FieldError>
@@ -103,7 +112,6 @@ const DatePicker = <T extends DateValue>({
     </DatePickerPrimitive>
   )
 }
-
 export {
   DatePicker,
   DatePickerIcon,

@@ -67,10 +67,12 @@ export default function ConditionalLayout({
   }, [token]);
 
   const mainClasses = isHiddenRoute
-    ? "md:overflow-hidden h-screen"
-    : isLogoPages
-    ? "flex-1 "
-    : "flex-1 ";
+    // ? "md:overflow-hidden h-screen"
+    // : isLogoPages
+    // ? "flex-1 "
+    // : "flex-1 ";
+      ? "min-h-screen overflow-auto"
+  : "flex-grow overflow-auto";
 
   return (
     <div>
@@ -97,7 +99,7 @@ export default function ConditionalLayout({
         </main>
         {!isHiddenRoute}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

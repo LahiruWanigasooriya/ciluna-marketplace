@@ -59,6 +59,7 @@ const Sort: React.FC<SortProps> = ({ disabled = false }) => {
     <div className="relative w-full ">
       <div className="flex flex-col gap-[16px]">
         <div className="flex items-center">
+          
           <div
             className={`flex items-center ${
               disabled
@@ -67,8 +68,9 @@ const Sort: React.FC<SortProps> = ({ disabled = false }) => {
             }`}
             onClick={handleSort}
           >
+          <ArrowDownNarrowWide size={24} className="text-black" />
+          <p className="text-[#252525] font-arial leading-[19px] text-base">Sort by</p>&nbsp;
 
-            <ArrowDownNarrowWide size={24} className="text-black" />
           </div>
         </div>
       </div>
@@ -81,17 +83,18 @@ const Sort: React.FC<SortProps> = ({ disabled = false }) => {
           className="absolute w-[200px] md:w-[240px] flex flex-col top-8 right-0  bg-[#FFFFFF]/5 border-black border-2 backdrop-blur-md py-4 z-20 text-[#252525] rounded-[10px] text-sm"
         >
           {sortOptions.map((option) => (
-          <p
+          <button
             key={option.value}
-            className={`px-4 leading-[26px] py-1 cursor-pointer 
+            type="button"
+            className={`w-full text-left px-4 leading-[26px] py-1 cursor-pointer 
               ${sort === option.label 
-                ? "bg-[#FFFFFF]/20 font-medium text-black rounded-md"  
-                : "hover:bg-[#FFFFFF]/10"
+                ? "bg-slate-400 font-medium text-black " 
+                : "hover:bg-slate-600"
               }`}
             onClick={() => handleSelect(option)}
           >
             {option.label}
-          </p>
+          </button>
           ))}
         </motion.div>
       )}

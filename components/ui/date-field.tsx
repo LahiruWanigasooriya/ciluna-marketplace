@@ -19,6 +19,7 @@ import { ctr } from "./primitive"
 
 interface DateFieldProps<T extends DateValue> extends DateFieldPrimitiveProps<T> {
   label?: string
+  placeholder?: string
   description?: string
   errorMessage?: string | ((validation: ValidationResult) => string)
   prefix?: React.ReactNode
@@ -31,6 +32,7 @@ const DateField = <T extends DateValue>({
   label,
   description,
   errorMessage,
+  placeholder,
   ...props
 }: DateFieldProps<T>) => {
   return (
@@ -45,6 +47,7 @@ const DateField = <T extends DateValue>({
         {suffix ? <span data-slot="suffix">{suffix}</span> : null}
       </FieldGroup>
       {description && <Description>{description}</Description>}
+
       <FieldError>{errorMessage}</FieldError>
     </DateFieldPrimitive>
   )
