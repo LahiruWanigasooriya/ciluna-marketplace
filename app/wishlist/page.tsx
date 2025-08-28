@@ -1,24 +1,33 @@
 import React from "react";
 import Image from "next/image";
-import Img from "@/public/assets/wishlist/img.png";
-import ImgM from "@/public/assets/wishlist/imgm.jpg";
+import BannerImg from "@/public/assets/wishlist/bannerImg.webp";
+import MobBannerImg from "@/public/assets/wishlist/mobBannerImg.webp";
 import WishlistList from "./WishlistList";
 // import { getCilunaPrice } from "@/lib/cilunaService";
-import toFixed from "@/functions/cilunaPrice";
+//import toFixed from "@/functions/cilunaPrice";
 
 const WishlistPage = async () => {
   // const price = await getCilunaPrice();
-  const cilunaPrice = 0
+  const cilunaPrice = 0;
   // toFixed(Number(price));
   return (
-    <div className="flex flex-col gap-6 md:gap-8 xl:gap-12">
-      {/* Wishlist Client Component */}
-      <WishlistList cilunaPrice={cilunaPrice} />
+    <div className="flex flex-col mt-28 md:mt-[120px] lg:mt-[140px] md:gap-12 w-full justify-between">
+      <div className="custom-container md:max-w-[1440px] pt-[96px] md:py-0">
+        {/* Wishlist Client Component */}
+        <WishlistList cilunaPrice={cilunaPrice} />
+      </div>
 
-      {/* Image Section */}
-      <div>
-        <Image src={Img} alt="img" className="hidden md:block" />
-        <Image src={ImgM} alt="imgm" className="block md:hidden" />
+      <div className="mt-5 md:mt-0 w-full h-full custom-container md:max-w-[1440px] md:py-0">
+        <Image
+          src={BannerImg}
+          alt="img"
+          className="hidden md:block w-full h-full"
+        />
+        <Image
+          src={MobBannerImg}
+          alt="imgm"
+          className="block md:hidden w-full h-full"
+        />
       </div>
     </div>
   );
