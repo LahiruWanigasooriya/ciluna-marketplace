@@ -517,3 +517,19 @@
 .swiper-pagination-bullet-active {
   transform: none !important;
 }
+
+@layer base {
+  input:-webkit-autofill {
+    background-color: #fff !important;
+    color: #000 !important;
+    border: 1px solid #e1e1e1 !important; /* Tailwind's border-gray-300 */
+    border-radius: 0.375rem !important;    /* Tailwind's rounded-md */
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: black !important;
+  }
+}
+
+[data-has-value="false"] [data-placeholder],
+[data-has-value="false"] [data-slot="literal"] {
+  opacity: 0;
+}
