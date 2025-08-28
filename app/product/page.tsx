@@ -130,14 +130,13 @@ const ProductPage = async ({
     
         <div className="flex flex-col pb-[32px] md:pb-[36px] lg:pb-[42px] recommend:pb-[48px]">
 
-      <div className="relative pt-16">
+      <div className="relative">
         <Image src={bannerImage} alt="bannerimg" className="hidden sm:block w-screen h-[468px] object-cover object-top"
         style={{ objectPosition: 'center 10%' }}  />
        
         
         <Image src={bannerImage} alt="bannerImage" className="block sm:hidden w-screen h-[468px] object-cover "
-        style={{objectPosition: 'center 10%'}}  />
-
+        style={{objectPosition: 'center 30%'}}  />
         
 
           <div className="absolute bottom-0 w-full h-2/3 sm:h-1/2"
@@ -174,7 +173,7 @@ const ProductPage = async ({
           <div className="absolute bottom-0 sm:bottom-1/4 w-full h-fit flex items-end sm:items-center justify-center ">
             <div className="text-white text-center  max-w-2xl pt-8 pb-8 pl-4 pr-4">
               <h2 className="text-3xl sm:text-[40px] font-bold font-kaiseiHarunoumi mb-3">Women's Clothing</h2>
-              <p className="text-sm  sm:text-base sm:leading-6 leading-relaxed font-loraBold">
+              <p className="text-sm font-lora sm:text-base sm:leading-6 leading-relaxed">
                 An edit of refined essentials designed to express quiet strength and lasting beauty. Each piece is crafted
                 with intention made to feel effortless, look timeless, and move with you through every moment.
               </p>
@@ -186,7 +185,7 @@ const ProductPage = async ({
       
       <div className="flex flex-col gap-[20px] justify-center  pt-6 pr-4 pb-8 pl-4">
         <div className="flex flex-row  h-[34px] justify-between items-start font-loraBold">
-          <div className="font-arial fnt-bold text-lg leading-6 text-[#252525]">{products.length} Products</div>
+          <div className="font-loraBold text-base leading-6 text-[#252525]">{products.length} Products</div>
         <div className="flex flex-row gap-4 h-[34px]">
         <button className="cursor-pointer">
 
