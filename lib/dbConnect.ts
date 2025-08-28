@@ -1,10 +1,10 @@
 // "use server";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const MONGODB_URL_CILUNA = process.env.MONGODB_URL_CILUNA as string;
 
 if (!MONGODB_URL_CILUNA) {
-  throw new Error('MONGODB_URL_CILUNA is not defined!');
+  throw new Error("MONGODB_URL_CILUNA is not defined!");
 }
 
 // Singleton for mongoose connection

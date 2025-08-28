@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "react-aria-components";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
@@ -42,14 +43,11 @@ const NewCollection = () => {
           <h1 className="text-[24px] sm:text-[44px] lg:text-[50px] xl:text-[60px] recommend:text-[68px] font-cinzel mb-2 whitespace-nowrap">
             New Collection
           </h1>
-          <Link href="/categories">
-            <IconButton
-              name="Explore Now"
-              process="Exploring..."
-              success="GO!"
-              className="py-[8px] sm:py-[16px] px-[16px] sm:px-[32px] bg-black text-white text-[14px] sm:text-[18px] cursor-pointer hover:scale-105 transition-all duration-1000"
-            />
-          </Link>
+          
+            <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
+              Explore Now
+            </Button>
+          
         </div>
       </div>
 
@@ -79,14 +77,11 @@ const NewCollection = () => {
           <h1 className="text-[24px] sm:text-[44px] lg:text-[68px] font-kaiseiBold mb-2">
             New Collection
           </h1>
-          <Link href="/categories">
-            <IconButton
-              name="Explore Now"
-              process="Processing..."
-              success="GO!"
-              className="py-[8px] sm:py-[16px] px-[16px] sm:px-[32px] bg-black text-white text-[14px] sm:text-[18px] cursor-pointer hover:scale-105 transition-all duration-1000"
-            />
-          </Link>
+          
+            <Button className="bg-black text-white px-[16px] py-[8px] w-fit rounded-lg font-normal font-[Arial] text-[14px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
+              Explore Now
+            </Button>
+          
         </div>
       </div>
     </div>

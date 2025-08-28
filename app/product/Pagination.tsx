@@ -1,6 +1,8 @@
 "use client";
+
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import React,{useState} from "react";
+import React from "react";
 
 interface PaginationProps {
   currentPage: number; 
@@ -66,20 +68,41 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full flex-col">
-      <p className="flex text-[#707070] text-base font-arial">{` ${currentPage} - ${totalPages}`}</p>
-    
-    {currentPage < totalPages &&(
-      <button 
-      onClick={goToNextPage}
-      className="bg-inherit pt-4 pr-8 pb-4 pl-8 gap-2.5 text-[#252525] border rounded-[8px] border-[#252525] w-[176px] h-[56px]">
-        Load 20 more
+    <div className="flex justify-end w-full">
+      <div className="flex gap-2 items-center">
+        <div
+          className={`${buttonStyle} ${
+            currentPage === 1 ? "opacity-50" : "cursor-pointer hover:bg-[#6442C1]/80"
+          }`}
+          onClick={goToPrevPage}
+        >
+          <ChevronLeft className="text-white" />
+        </div>
+        {getPageNumbers().map((pageNumber) => (
+          <div
+            key={pageNumber}
+            className={`${numberStyle} ${
+              currentPage === pageNumber
+                ? "bg-[#6442C1]/40 border border-solid border-[#D6D6D6]"
+                : "border border-solid border-[#6442C1]"
+            }`}
+            onClick={() => handlePageClick(pageNumber)}
+          >
+            {pageNumber}
+          </div>
+        ))}
 
-      </button>
-    )}
-
-
-    
+        <div
+          className={`${buttonStyle} ${
+            currentPage === totalPages
+              ? " opacity-50"
+              : "cursor-pointer hover:bg-[#6442C1]/80"
+          }`}
+          onClick={goToNextPage}
+        >
+          <ChevronRight className="text-white" />
+        </div>
+      </div>
     </div>
   );
 };

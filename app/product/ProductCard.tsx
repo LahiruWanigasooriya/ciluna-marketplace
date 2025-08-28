@@ -180,8 +180,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     return price;
   }
 
-  function handleSelectedColor(code: string) {
-    setSelectedColor(code);
+  function handleSelectedColor(color: string) {
+    setSelectedColor(color);
   }
 
   return (
@@ -289,10 +289,11 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           <div className="flex items-center gap-3 md:mt-1">
             {product.colors?.map((clr, idx) => {
               const code = product.colorCodes?.[idx] || "#000";
+              const color = product.colors?.[idx] || "White";
 
               return (
                 <div key={clr} className="relative z-10">
-                  {selectedColor === code ? (
+                  {selectedColor === color ? (
                     <div
                       className="w-[22px] h-[22px] rounded-full flex items-center justify-center bg-white"
                       style={{
@@ -303,7 +304,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
                     >
                       <ColorDot
                         code={code}
-                        onClick={() => handleSelectedColor(code)}
+                        onClick={() => handleSelectedColor(color)}
                       />
                       {/* <div
                         className="w-[14px] h-[14px] rounded-full"
@@ -313,7 +314,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
                   ) : (
                     <ColorDot
                       code={code}
-                      onClick={() => handleSelectedColor(code)}
+                      onClick={() => handleSelectedColor(color)}
                     />
                     // <div
                     //   className="w-[14px] h-[14px] rounded-full border border-gray-400"

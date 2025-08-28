@@ -16,7 +16,7 @@ const ColorDot = ({ code, onClick }: ColorDotProps) => {
 
   return (
     <div
-      className="w-[14px] h-[14px] rounded-full border hover:opacity-70"
+      className="w-[14px] h-[14px] rounded-full border hover:opacity-70 hover: cursor-pointer"
       style={{
         backgroundColor: code,
       }}

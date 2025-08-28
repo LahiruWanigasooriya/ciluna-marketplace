@@ -35,3 +35,10 @@ export interface LikeReviewParams {
   userId: string;
   reviewId: string;
 }
+
+export type RatingValue = 1 | 2 | 3 | 4 | 5;
+export interface ReviewSummary {
+  avgRating: number;
+  totalReviews: number;
+  ratingCounts: Record<RatingValue, number>;
+}

@@ -15,7 +15,6 @@
     "@stripe/stripe-js": "^5.6.0",
     "@types/react-select-country-list": "^2.2.3",
     "bcryptjs": "^2.4.3",
-    "ciluna-marketplace": "file:",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
@@ -31,12 +30,13 @@
     "lucide-react": "^0.469.0",
     "mongoose": "^8.9.5",
     "motion": "^12.0.11",
-    "next": "^15.5.1-canary.7",
+    "next": "^15.2.0",
     "nodemailer": "^6.9.16",
-    "react": "18.3.1",
+    "ciluna-marketplace": "file:",
+    "react": "^19.0.0",
     "react-aria-components": "^1.5.0",
     "react-country-flag": "^3.1.0",
-    "react-dom": "18.3.1",
+    "react-dom": "^19.0.0",
     "react-fast-marquee": "^1.6.5",
     "react-hook-form": "^7.62.0",
     "react-icons": "^5.4.0",
@@ -74,7 +74,6 @@
     "tailwind-variants": "^0.3.0",
     "tailwindcss": "^3.4.1",
     "tailwindcss-react-aria-components": "^1.2.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5"
   }
 }
