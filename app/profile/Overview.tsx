@@ -18,89 +18,35 @@ import Product5 from "@/public/assets/product/product5.webp";
 import Arrow from "@/public/assets/profile/arrow.svg";
 import { useEffect, useRef, useState } from "react";
 import React from "react";
+import { getAllProducts } from "@/actions/products/product";
+import SwiperCards from "@/components/custom/SwiperCards";
 
 interface OverviewProps {
   userData?: FormValues;
 }
 
-// Corrected mock data to use the correct structure for the `category` field
-const mockProducts: IProduct[] = [
-  {
-    _id: "1",
-    name: "Product 1",
-    price: 1000,
-    discount: { percentage: 10 },
-    image: Product5.src,
-    colors: ["Red", "Blue"],
-    color: "Red",
-    colorCodes: ["#FF0000", "#0000FF"],
-    description: "A beautiful product.",
-    stock: 10,
-    category: { _id: "cat1", name: "Category 1" },
-    createdBy: "Admin",
-  },
-  {
-    _id: "2",
-    name: "Product 2",
-    price: 2000,
-    discount: { percentage: 20 },
-    image: Product4.src,
-    colors: ["Green", "Yellow"],
-    color: "Green",
-    colorCodes: ["#00FF00", "#FFFF00"],
-    description: "Another amazing product.",
-    stock: 5,
-    category: { _id: "cat2", name: "Category 2" },
-    createdBy: "Admin",
-  },
-  {
-    _id: "3",
-    name: "Product 3",
-    price: 3000,
-    discount: { percentage: 15 },
-    image: Product3.src,
-    colors: ["Black", "White"],
-    color: "Black",
-    colorCodes: ["#000000", "#FFFFFF"],
-    description: "Yet another great product.",
-    stock: 8,
-    category: { _id: "cat3", name: "Category 3" },
-    createdBy: "Admin",
-  },
-  {
-    _id: "4",
-    name: "Product 4",
-    price: 3000,
-    discount: { percentage: 15 },
-    image: Product2.src,
-    colors: ["Black", "White"],
-    color: "Black",
-    colorCodes: ["#000000", "#FFFFFF"],
-    description: "Yet another great product.",
-    stock: 8,
-    category: { _id: "cat4", name: "Category 4" },
-    createdBy: "Admin",
-  },
-  {
-    _id: "5",
-    name: "Product 5",
-    price: 3000,
-    discount: { percentage: 15 },
-    image: Product1.src,
-    colors: ["Black", "White"],
-    color: "Black",
-    colorCodes: ["#000000", "#FFFFFF"],
-    description: "Yet another great product.",
-    stock: 8,
-    category: { _id: "cat5", name: "Category 5" },
-    createdBy: "Admin",
-  },
-];
-
 const Overview: React.FC<OverviewProps> = ({ userData }) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [products, setProducts] = useState<IProduct[]>([]);
+
+  useEffect(() => {
+    async function fetchUserProfile() {
+      try {
+        const response = await getAllProducts();
+        if (response.status !== 200 || !response.data) {
+          throw new Error(response.message || "No products found!");
+        }
+        // Store user data in state
+        setProducts(response.data.products);
+      } catch (err: any) {
+        throw new Error(err.message);
+      }
+    }
+
+    fetchUserProfile();
+  }, []);
 
   const updateScrollButtons = () => {
     if (scrollContainerRef.current) {
@@ -247,7 +193,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         </div>
       </section>
       {/* More to love */}
-      <section className="flex flex-col mb-[158px] mt-[48px] gap-0 overflow-hidden">
+      {/* <section className="flex flex-col mb-[158px] mt-[48px] gap-0 overflow-hidden">
         <span className="font-kaiseiBold text-[12px] tracking-[2px] mb-[0px]  md:hidden text-[#C19F32]">
           FLASH DEALS
         </span>
@@ -300,7 +246,20 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
+       <div className="py-[36px] lg:py-[48px]">
+     
+        <SwiperCards
+          products={products}
+          className="gap-[24px] md:gap-[24px]"
+          titleClassName="!text-[24px] md:leading-8"
+          section={{
+            title: "More to love",
+            description: "A fleeting collection of rare beauty.",
+          }}
+        />
+      
+    </div>
     </>
   );
 };

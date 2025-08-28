@@ -194,12 +194,12 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         {isLoading ? (
           <Skeleton className="h-[146px] w-[160px] md:w-full md:h-[212px]" />
         ) : (
-          <div className="relative bg-[#F5F5F5] w-full h-[177px] recommend:h-[317px] rounded-[1.5rem]">
+          <div className="relative bg-[#F5F5F5] w-full h-[177px] recommend:h-[317px] rounded-[0.5rem]">
             <Image
               alt={product.name}
               src={product.image}
               fill
-              className="object-cover rounded-[1.5rem]"
+              className="object-cover rounded-[0.5rem]"
               sizes="(max-width: 768px) 164px, 294px"
               placeholder="blur"
               blurDataURL="/placeholder-image.jpg"
@@ -297,7 +297,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
                     <div
                       className="w-[22px] h-[22px] rounded-full flex items-center justify-center bg-white"
                       style={{
-                        borderColor: code,
+                        borderColor: "#BEBEBE",
                         borderStyle: "solid",
                         borderWidth: "1px",
                       }}
