@@ -133,7 +133,7 @@
 
 @font-face {
   font-family: "Inter";
-  src: url("../public/assets/font/inter/Inter-Regular.otf") format("opentype");
+  src: url("../public/assets/font/inter/inter-regular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -141,7 +141,7 @@
 
 @font-face {
   font-family: "Inter-Bold";
-  src: url("../public/assets/font/inter/Inter-Bold.otf") format("opentype");
+  src: url("../public/assets/font/inter/inter-bold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -149,7 +149,7 @@
 
 @font-face {
   font-family: "Inter-semiBold";
-  src: url("../public/assets/font/inter/Inter-SemiBold.otf") format("opentype");
+  src: url("../public/assets/font/inter/inter-semibold.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -157,7 +157,7 @@
 
 @font-face {
   font-family: "Lora-Regular";
-  src: url("../public/assets/font/lora/Lora-Regular.otf") format("opentype");
+  src: url("../public/assets/font/lora/lora-regular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -165,7 +165,7 @@
 /* added font */
 @font-face {
   font-family: "PlayfairDisplay-Bold";
-  src: url("../public/assets/font/playfairdisplay/PlayfairDisplay-Bold.otf")
+  src: url("../public/assets/font/playfairdisplay/playfairdisplay-bold.otf")
     format("opentype");
   font-weight: 700;
   font-style: normal;
@@ -174,11 +174,9 @@
 
 @font-face {
   font-family: "KaiseiHarunoUmi-Bold";
-  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf")
+  src: url("../public/assets/font/kaiseiharunoumi/kaiseiharunoumi-bold.otf")
     format("opentype");
-  font-family: " KaiseiHarunoUmi-Bold";
-  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Bold.otf")
-    format("opentype");
+
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -186,7 +184,7 @@
 
 @font-face {
   font-family: "KaiseiHarunoUmi-Regular";
-  src: url("../public/assets/font/KaiseiHarunoUmi/KaiseiHarunoUmi-Regular.ttf")
+  src: url("../public/assets/font/kaiseiharunoumi/kaiseiharunoumi-regular.ttf")
     format("truetype");
   font-weight: 400;
   font-style: normal;
@@ -196,7 +194,7 @@
 @font-face {
   font-family: " Arial-Regular";
   font-family: " Arial-Regular";
-  src: url("../public/assets/font/Arial/Arial-Regular.otf") format("opentype");
+  src: url("../public/assets/font/arial/arial-regular.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -204,14 +202,14 @@
 @font-face {
   font-family: " Arial-Bold";
   font-family: " Arial-Bold";
-  src: url("../public/assets/font/Arial/Arial-Bold.otf") format("opentype");
+  src: url("../public/assets/font/arial/arial-bold.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Lora-Bold";
-  src: url("../public/assets/font/lora/Lora-Bold.ttf") format("opentype");
+  src: url("../public/assets/font/lora/lora-bold.ttf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -219,7 +217,7 @@
 
 @font-face {
   font-family: "PlayFairDisplay-ExtraBold";
-  src: url("../public/assets/font/playfair/PlayfairDisplay-ExtraBold.ttf")
+  src: url("../public/assets/font/playfair/playfairdisplay-extrabold.ttf")
     format("opentype");
   font-weight: normal;
   font-style: normal;
@@ -228,16 +226,7 @@
 
 @font-face {
   font-family: "CinzelDecorative-Bold";
-  src: url("../public/assets/font/cinzeldecorative/CinzelDecorative-Bold.ttf")
-    format("opentype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "KaiseiHarunoumi-Bold";
-  src: url("../public/assets/font/kaiseiHarunoumi/KaiseiHarunoUmi-Bold.otf")
+  src: url("../public/assets/font/cinzeldecorative/cinzeldecorative-bold.ttf")
     format("opentype");
   font-weight: normal;
   font-style: normal;
@@ -246,7 +235,7 @@
 
 @font-face {
   font-family: "Arial-Regular";
-  src: url("../public/assets/font/arial/ARIAL.otf") format("opentype");
+  src: url("../public/assets/font/arial/arial.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -254,7 +243,7 @@
 
 @font-face {
   font-family: "Arial-Bold";
-  src: url("../public/assets/font/arial/ARIALBD.otf") format("opentype");
+  src: url("../public/assets/font/arial/arialbd.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
