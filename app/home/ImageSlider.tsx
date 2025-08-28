@@ -132,7 +132,7 @@ export default function Hero() {
               today’s soulful elegance.
             </p>
           </div>
-          <Button className="bg-white text-lightBlack px-[24px] py-[12px] w-fit rounded-lg font-normal font-[Arial] text-[14px] leading-[20px] tracking-normal cursor-pointer transition-colors duration-300">
+          <Button className="bg-white text-lightBlack px-[24px] py-[12px] w-fit rounded-lg font-normal font-[Arial] text-[14px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-white hover:text-white duration-300">
             View Product
           </Button>
           {/* Mobile Thumbnail Indicators */}

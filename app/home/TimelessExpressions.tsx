@@ -8,6 +8,7 @@ import NewInImg from "@/public/assets/home/timeless-exp1.webp";
 import OccasionWearImg from "@/public/assets/home/timeless-exp2.webp";
 import JewelleryImg from "@/public/assets/home/timeless-exp3.webp";
 import ScentsImg from "@/public/assets/home/timeless-exp4.webp";
+import { Button } from "react-aria-components";
 import { IconButton } from "@/components/custom/IconButton";
 import { motion } from "framer-motion";
 
@@ -27,7 +28,7 @@ const TimelessExpressions = () => {
 
       <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-x-[24px] gap-y-[14px] w-full h-[400vw] sm:h-[42vw] xl:max-h-[536px] recommend:h-[38vw] mb-[24px] md:mb-[48px]">
         {/* New In - Left Column */}
-        <div className="flex flex-col w-full sm:w-1/3 h-1/3 sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#F1EADA] to-[#DBC99B] p-[14px] xl:p-[24px] relative overflow-hidden cursor-pointer hover:scale-105 transition-all duration-300">
+        <div className="flex flex-col w-full sm:w-1/3 h-1/3 sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#F1EADA] to-[#DBC99B] p-[14px] xl:p-[24px] relative overflow-hidden cursor-pointer transition-all duration-300">
           <div>
             <h2 className="text-[20px] lg:text-[24px] font-kaiseiBold mb-1">
               New In
@@ -36,9 +37,9 @@ const TimelessExpressions = () => {
               Fresh arrivals, timeless intentions.
             </p>
           </div>
-          <div className="absolute top-4 right-4 w-[40px] h-[40px] bg-white rounded-full flex items-center justify-center shadow hover:scale-105 transition-all duration-600 z-10">
-            <span className="text-[20px]">↗</span>
-          </div>
+          <div className="absolute top-[24px] right-[6px] md:right-[24px] w-[40px] h-[40px] bg-white rounded-full flex items-center justify-center shadow cursor-pointer transition-all duration-500 z-10">
+              <span className="text-[20px]">↗</span>
+            </div>
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -53,7 +54,7 @@ const TimelessExpressions = () => {
         {/* Middle Column - Stack 2 */}
         <div className="flex flex-col w-full sm:w-1/3 h-auto  justify-between gap-4 ">
           {/* Occasion Wear */}
-          <div className="flex flex-col h-[261px] justify-between rounded-lg bg-gradient-to-br from-[#F6F4E5] to-[#DEDBA5] relative overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer">
+          <div className="flex flex-col h-[261px] justify-between rounded-lg bg-gradient-to-br from-[#F6F4E5] to-[#DEDBA5] relative overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="p-[14px] z-20 xl:p-[24px]">
               <h2 className="text-[20px] lg:text-[24px] font-kaiseiBold mb-1 w-[70%]">
                 Occasion Wear
@@ -62,7 +63,7 @@ const TimelessExpressions = () => {
                 For the moments that mean more.
               </p>
             </div>
-            <div className="absolute top-[24px] right-[6px] md:right-[24px] w-[40px] h-[40px] bg-white rounded-full flex items-center justify-center shadow cursor-pointer hover:scale-105 transition-all duration-600 z-10">
+            <div className="absolute top-[24px] right-[6px] md:right-[24px] w-[40px] h-[40px] bg-white rounded-full flex items-center justify-center shadow cursor-pointer transition-all duration-500 z-10">
               <span className="text-[20px]">↗</span>
             </div>
             <motion.div
@@ -81,7 +82,7 @@ const TimelessExpressions = () => {
           </div>
 
           {/* Jewellery */}
-          <div className="flex flex-col h-[261px] justify-between rounded-lg bg-gradient-to-br from-[#F2F2F2] to-[#D9D9D9]  relative overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer">
+          <div className="flex flex-col h-[261px] justify-between rounded-lg bg-gradient-to-br from-[#F2F2F2] to-[#D9D9D9]  relative overflow-hidden transition-all duration-300 cursor-pointer">
             <div className="p-[14px]  z-20 xl:p-[24px]">
               <h2 className="text-[20px] lg:text-[24px] font-kaiseiBold mb-1">
                 Jewellery
@@ -90,8 +91,8 @@ const TimelessExpressions = () => {
                 Adorn with Story
               </p>
             </div>
-            <div className="absolute top-[24px] right-[6px] md:right-[24px] w-[40px] h-[40px] bg-white rounded-full flex items-center justify-center shadow cursor-pointer hover:scale-105 transition-all duration-600 z-10">
-              <span className="text-[24px] ">↗</span>
+            <div className="absolute top-[24px] right-[6px] md:right-[24px] w-[40px] h-[40px] bg-white rounded-full flex items-center justify-center shadow cursor-pointer transition-all duration-500 z-10">
+              <span className="text-[20px]">↗</span>
             </div>
             <motion.div
               initial={{ opacity: 0, x: 100 }}
@@ -110,7 +111,7 @@ const TimelessExpressions = () => {
         </div>
 
         {/* Scents - Right Column */}
-        <div className="flex flex-col w-full sm:w-1/3 h-1/3 sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#CEDCE9] to-[#7DA1C4] relative overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer">
+        <div className="flex flex-col w-full sm:w-1/3 h-1/3 sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#CEDCE9] to-[#7DA1C4] relative overflow-hidden transition-all duration-300 cursor-pointer">
           <div className="p-[14px] xl:p-[24px]">
             <h2 className="text-[20px] mt-[0px] lg:text-[24px] font-kaiseiBold mb-1">
               Scents
@@ -119,9 +120,9 @@ const TimelessExpressions = () => {
               Whispers of Memory
             </p>
           </div>
-          <div className="absolute top-4 right-4 w-[40px] h-[40px] bg-white rounded-full flex items-center justify-center shadow cursor-pointer hover:scale-105 transition-all duration-600 z-10">
-            <span className="text-[20px]">↗</span>
-          </div>
+          <div className="absolute top-[24px] right-[6px] md:right-[24px] w-[40px] h-[40px] bg-white rounded-full flex items-center justify-center shadow cursor-pointer transition-all duration-500 z-10">
+              <span className="text-[20px]">↗</span>
+            </div>
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -134,14 +135,11 @@ const TimelessExpressions = () => {
         </div>
       </div>
 
-      <Link href="/categories">
-        <IconButton
-          name="Explore all Collection"
-          process="Exploring..."
-          success="GO!"
-          className=" py-[8px] sm:py-[16px] px-[16px] sm:px-[32px] bg-black text-white text-[14px] sm:text-[18px] cursor-pointer hover:scale-105 transition-all duration-1000"
-        />
-      </Link>
+      
+        <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
+          Explore all Collection
+        </Button>
+      
     </div>
   );
 };
