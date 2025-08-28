@@ -131,12 +131,12 @@ const ProductPage = async ({
         <div className="flex flex-col pb-[32px] md:pb-[36px] lg:pb-[42px] recommend:pb-[48px]">
 
       <div className="relative">
-        <Image src={bannerImage} alt="bannerimg" className="hidden sm:block w-screen h-[468px] object-cover object-top"
+        <Image src={bannerImage} alt="bannerimg" className="hidden sm:block w-screen h-[468px] object-cover object-top pt-20"
         style={{ objectPosition: 'center 10%' }}  />
        
         
-        <Image src={bannerImage} alt="bannerImage" className="block sm:hidden w-screen h-[468px] object-cover "
-        style={{objectPosition: 'center 30%'}}  />
+        <Image src={bannerImage} alt="bannerImage mobile" className="block sm:hidden w-screen h-[468px] object-cover object-center pt-14 "
+        style={{objectPosition: 'center 10%'}}  />
         
 
           <div className="absolute bottom-0 w-full h-2/3 sm:h-1/2"
@@ -170,7 +170,7 @@ const ProductPage = async ({
           </div>
 
 
-          <div className="absolute bottom-0 sm:bottom-1/4 w-full h-fit flex items-end sm:items-center justify-center ">
+          <div className="absolute bottom-0 sm:bottom-4 w-full h-fit flex items-end sm:items-center justify-center ">
             <div className="text-white text-center  max-w-2xl pt-8 pb-8 pl-4 pr-4">
               <h2 className="text-3xl sm:text-[40px] font-bold font-kaiseiHarunoumi mb-3">Women's Clothing</h2>
               <p className="text-sm font-lora sm:text-base sm:leading-6 leading-relaxed">
