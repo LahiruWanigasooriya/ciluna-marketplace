@@ -83,8 +83,7 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
       <div ref={wrapperRef} className="relative">
         <div
           onClick={() => setIsOpen(!isOpen)}
-          className="cursor-pointer flex justify-between items-center px-2 h-10 border border-[#252525] bg-[#ffffff] transition duration-200 ease-out rounded-lg focus-within:border-primary/70 focus-within:ring-4 focus-within:ring-primary/20
-          group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
+          className="cursor-pointer flex justify-between items-center px-2 h-10 border border-[#e1e1e1] bg-[#ffffff] transition duration-200 ease-out rounded-lg 
           [&>[role=progressbar]]:mr-2.5
           [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
           [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
@@ -111,13 +110,12 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
                 animate="open"
                 exit="closed"
                 variants={dropdownVariants}
-              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10 border border-[#252525]  transition duration-200 ease-out flex flex-col items-start border-primary/70 ring-4 ring-primary/20
-              group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
-              [&>[role=progressbar]]:mr-2.5
-              [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
-              [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
-              [&>[data-slot=prefix]]:ml-2.5 [&>[data-slot=prefix]]:text-muted-fg
-              group-disabled:opacity-50"
+              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10 border border-[#252525]  transition duration-200 ease-out flex flex-col items-start border-primary/70 
+            [&>[role=progressbar]]:mr-2.5
+            [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
+            [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
+            [&>[data-slot=prefix]]:ml-2.5 [&>[data-slot=prefix]]:text-muted-fg
+            group-disabled:opacity-50"
             >
               {countries
                 .filter((country) =>
@@ -126,7 +124,7 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
                 .map((country) => (
                   <div
                     key={country.name}
-                    className="px-3 py-2 text-black hover:bg-gray-500 w-full flex items-center text-sm font-[400]"
+                    className="flex items-center p-2 font-[400] text-sm text-black cursor-pointer hover:opacity-75 hover:bg-stone-400 w-full"
                     onClick={() => handleSelectCountry(country)}
                   >
                     {country.name}

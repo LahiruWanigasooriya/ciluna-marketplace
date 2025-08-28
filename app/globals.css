@@ -517,7 +517,6 @@
 .swiper-pagination-bullet-active {
   transform: none !important;
 }
-
 @layer base {
   input:-webkit-autofill {
     background-color: #fff !important;
@@ -528,3 +527,9 @@
     -webkit-text-fill-color: black !important;
   }
 }
+
+[data-has-value="false"] [data-placeholder],
+[data-has-value="false"] [data-slot="literal"] {
+  opacity: 0;
+}
+

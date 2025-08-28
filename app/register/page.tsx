@@ -87,7 +87,7 @@ const SignupForm = ({
       onSubmit={handleSubmit}
       className="max-w-[598px]  mx-auto rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
     >
-      <div className="flex items-center justify-center space-x-2 text-[#252525]">
+      <div className="flex items-center justify-center space-x-2 text-[#252525] mt-16">
         
         <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-[32px]" />
       </div>
@@ -131,7 +131,7 @@ const SignupForm = ({
         </label>
         <DatePicker
           className="w-full"
-          placeholder="Select date od birth"
+          placeholder="Select date of birth"
           onChange={(value) => {
             const date = value ? value.toDate("UTC") : null;
             handleChange("dateofbirth", date);
@@ -177,11 +177,11 @@ const SignupForm = ({
         </div>
 
         <div className="relative w-full">
-          <label className="text-sm text-[#252525] font-arial flex items-center gap-1 mb-1">
+          <label className="text-sm text-[#252525] font-arial flex items-center gap-1 ">
             Password* 
             <div className="relative group cursor-pointer">  
               <Info  className="h-4 w-4 text-black" />
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 bg-gray-500 text-black text-xs px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+              <div className="absolute left-6 top-1/2 mt-0 mb-0 -translate-y-1/2 bg-gray-500 text-black text-xs px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
               Password must contain 8 characters.
               </div>
               </div>
@@ -192,7 +192,6 @@ const SignupForm = ({
             isRevealable
             placeholder="Enter your password"
             className="w-full"
-            description="Password must contain at least 8 characters."
             value={formData.password}
             onChange={(value: string) => handleChange("password", value)}
           
@@ -233,7 +232,7 @@ const SignupForm = ({
               <p className="font-arial text-[#252525] text-sm">I consent to personalized offers from CILUNA based on my preferences.</p>
             </Checkbox>
             <Link href="/policyConfig">
-                        <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-lora"> Privacy Policy.</span></p>
+                        <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-arialBold"> Privacy Policy.</span></p>
 
             </Link>
         </div>
@@ -241,7 +240,7 @@ const SignupForm = ({
         <div className="flex flex-col gap-2">
           <Button
             type="submit"
-            className={`w-full font-interSemiBold bg-black text-white transition-opacity duration-300 ${
+            className={`w-full font-arial text-lg leading-6 bg-black text-white transition-opacity duration-300 ${
               isLoading ? "opacity-80" : ""
             }`}
             isDisabled={isLoading || isSuccess}
@@ -253,7 +252,7 @@ const SignupForm = ({
           <div className="flex items-center justify-center space-x-2 mt-5">
             <p className="text-[#252525] font-arial text-sm">Already have a CILUNA account? </p>
             <Link href="/login">
-              <p className="text-[#252525] cursor-pointer font-lora font-bold text-sm hover:opacity-75">Login</p>
+              <p className="text-[#252525] cursor-pointer font-arialBold  text-sm hover:opacity-75">Login</p>
             </Link>
           </div>
         </div>
@@ -320,48 +319,46 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-<>
-    <div className="flex flex-col h-screen bg-white text-black ">
 
-           
-      <Navbar />
-     
+      <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative">
 
+        <Navbar />
 
-      <div className="flex-1  flex justify-center pt-20 px-4 py-10 overflow-y-auto scrollbar-hide z-0 ">
-                    <div className="hidden sm:block absolute -right-24 top-10 h-[301px] w-[320px] ]">
-                <Image 
-                src={bgpattern}
-                alt="background pattern"
-                fill
-                className="object-contain bg-[#e8e8da"
-                priority
-                />
+        <main className="flex-grow flex justify-center pt-20 px-4 py-10 relative">
+        
+          <div className="hidden sm:block absolute right-0 top-32 h-[301px] w-[320px]">
+            <Image
+              src={bgpattern}
+              alt="background pattern"
+              fill
+              className="object-right bg-[#e8e8da"
+              priority
+            />
           </div>
-           <div className="hidden sm:block  absolute -left-24 bottom-0 h-[301px] w-[320px] ]">
-                        <Image 
-                        src={bgpattern}
-                        alt="background pattern"
-                        fill
-                        className="object-contain bg-[#e8e8da transform scale-x-[-1]"
-                        priority
-                        />
-            </div>
-        <SignupForm
-          formData={formData}
-          errors={errors}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          isLoading={isLoading}
-          isSuccess={isSuccess}
-        />
+          <div className="hidden sm:block absolute left-0 bottom-0 h-[301px] w-[320px]">
+            <Image
+              src={bgpattern}
+              alt="background pattern"
+              fill
+              className="object-right bg-[#e8e8da transform scale-x-[-1]"
+              priority
+            />
+          </div>
+
+          
+          <SignupForm
+            formData={formData}
+            errors={errors}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+          />
+        </main>
+
+
+        <Footer />
       </div>
-      
-     
-    </div>
-    <div className="w-full absolute items-end justify-center"><Footer/></div>
-    
-    </>
   );
 }
 
