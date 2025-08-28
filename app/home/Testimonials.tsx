@@ -90,11 +90,11 @@ const Testimonials = () => {
           </div>
         </div>
 
-        <Link href="/testimonials">
+       
           <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
             Explore all Testimonials
           </Button>
-        </Link>
+       
       </div>
       <Image
         src={BgImg}

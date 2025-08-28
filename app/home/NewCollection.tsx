@@ -17,7 +17,7 @@ import { IconButton } from "@/components/custom/IconButton";
 
 const NewCollection = () => {
   return (
-    <div className="px-[16px]  py-[20px] md:px-[32px] lg:px-[68px] xl:px-[96px]">
+    <div className="custom-container py-[20px] sm:py-[20px] lg:py-[20px]">
       {/* Desktop Slider */}
       <div className="hidden md:block w-full bg-[#F2F2F2] rounded-lg overflow-hidden relative">
         <Swiper
@@ -43,16 +43,16 @@ const NewCollection = () => {
           <h1 className="text-[24px] sm:text-[44px] lg:text-[50px] xl:text-[60px] recommend:text-[68px] font-cinzel mb-2 whitespace-nowrap">
             New Collection
           </h1>
-          <Link href="/categories">
+          
             <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
               Explore Now
             </Button>
-          </Link>
+          
         </div>
       </div>
 
       {/* Mobile Slider */}
-      <div className="md:hidden w-full bg-[#F2F2F2] rounded-lg overflow-hidden  mt-0  relative">
+      <div className="md:hidden w-full bg-[#F2F2F2] rounded-lg overflow-hidden  mt-12 sm:mt-0 relative">
         <Swiper
           modules={[Autoplay]}
           speed={1200}
@@ -77,11 +77,11 @@ const NewCollection = () => {
           <h1 className="text-[24px] sm:text-[44px] lg:text-[68px] font-kaiseiBold mb-2">
             New Collection
           </h1>
-          <Link href="/categories">
+          
             <Button className="bg-black text-white px-[16px] py-[8px] w-fit rounded-lg font-normal font-[Arial] text-[14px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
               Explore Now
             </Button>
-          </Link>
+          
         </div>
       </div>
     </div>
