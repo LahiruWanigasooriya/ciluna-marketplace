@@ -33,7 +33,10 @@ const ProductSchema = new mongoose.Schema(
     color: { type: String, default: null },
     colorCode: { type: String, default: null },
     size: { type: String, default: null },
-
+    overview: {
+      description: { type: String, default: "" },
+      images: { type: [String], default: [] }
+    }
   },
   { timestamps: true }
 );

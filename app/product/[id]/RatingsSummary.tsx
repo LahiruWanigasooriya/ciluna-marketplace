@@ -53,7 +53,7 @@ const RatingBars: React.FC<RatingBarProps> = ({ ratingCounts }) => {
   );
 };
 
-const RatingsSummary = ({ productId }: { productId: string }) => {
+const RatingsSummary = ({ productId, refreshFlag }: { productId: string, refreshFlag: boolean }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [reviewsData, setReviewsData] = useState<ReviewData>(dummyReviewData);
 
@@ -67,7 +67,8 @@ const RatingsSummary = ({ productId }: { productId: string }) => {
           totalReviews: result.data?.totalReviews ?? 0,
           ratingCounts: result.data?.ratingCounts ?? {},
         };
-        setReviewsData(dummyReviewData || reviewsData); //use dummy data temporarily
+        // setReviewsData(dummyReviewData || reviewsData); //use dummy data temporarily
+        setReviewsData(reviewsData); //use dummy data temporarily
       } catch (error) {
         console.error("Error fetching review summary:", error);
         setReviewsData(dummyReviewData);
@@ -77,7 +78,7 @@ const RatingsSummary = ({ productId }: { productId: string }) => {
     };
 
     fetchData();
-  }, [productId]);
+  }, [productId, refreshFlag]);
 
   const { avgRating, totalReviews, ratingCounts } = reviewsData;
 
