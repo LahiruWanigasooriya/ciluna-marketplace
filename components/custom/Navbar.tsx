@@ -5,12 +5,10 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Heart, Menu, CircleX, ChevronRight } from "lucide-react";
 import { BsHandbag } from "react-icons/bs";
-import Logo from "../../app/assets/logo.svg";
-import MobLogo from "../../app/assets/moblogo.svg";
+import Logo from "../../public/assets/logo.webp";
+import MobLogo from "../../public/assets/mobLogo.webp";
 import profileIcon from "@/public/assets/header/profileIcon.svg";
 import flag from "@/public/assets/header/flag.svg";
-import hamburgerMenu from "@/public/assets/header/hamburgerMenu.svg";
-import menuActive from "@/public/assets/header/HamburgerMenuActive.svg";
 import Link from "next/link";
 import useClickOutside from "@/hooks/useClickOutside";
 import { motion, useTransform, useMotionValue } from "framer-motion";
@@ -69,21 +67,17 @@ export default function Navbar({ categories }: any) {
     { _id: "5", name: "Scents", component: ScentsMenu },
   ];
 
-  // Use dummy data if categories prop is empty or undefined
-  const categoriesToUse =
-    categories && categories.length > 0 ? categories : dummyCategories;
-
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
 
   useEffect(() => {
-    if (categoriesToUse.length > 0) {
+    if (categories.length > 0) {
       const timer = setTimeout(() => {
         setIsLoading(false);
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [categoriesToUse]);
+  }, [categories]);
 
   const shadowIntensity = useTransform(scrollY, [0, 50], [0, 0.5]);
   const shadowStyle = useTransform(
@@ -132,7 +126,7 @@ export default function Navbar({ categories }: any) {
   }, [isHomePage, isMenuOpen, profileSelect, isMainMenuActive]);
 
   const handleNavigation = (label: string, href: string) => {
-    setIsNavbarActive(true);
+    if (!isHomePage) setIsNavbarActive(true);
     setMobileMenuOpen(false); // Close mobile menu on navigation
     router.push(href);
   };
@@ -195,22 +189,20 @@ export default function Navbar({ categories }: any) {
     visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
   };
 
-  const popupVariants2 = {
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-  };
+  //  const popupVariants2 = {
+  //    hidden: { opacity: 0, x: 20 },
+  //    visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+  //  };
 
-  const handleProfileClick = () => {
-    toggleMenu();
-    setIsNavbarActive(true);
-  };
+  //  const handleProfileClick = () => {
+  //     toggleMenu();
+  //     setIsNavbarActive(true);
+  //   };
 
-  {
-    /*  const closePopup = () => {
-    setAuthPopup(false);
-    setIsNavbarActive(true);
-  }; */
-  }
+  //   const closePopup = () => {
+  //     setAuthPopup(false);
+  //     setIsNavbarActive(true);
+  //   };
 
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
@@ -224,9 +216,9 @@ export default function Navbar({ categories }: any) {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full z-30 transition-all duration-50000 font-arial leading-[20px] ${
+      className={`fixed top-0 left-0 w-full z-30 transition-all font-arial leading-[20px] ${
         isNavbarActive
-          ? "bg-white transition-all duration-50000 border-b border-black/5"
+          ? "bg-white transition-all border-b border-black/5"
           : "bg-[rgba(255,255,255,0.02)] glass-navbar"
       } ${shadow ? "shadow-md" : ""}`}
       style={{ boxShadow: shadow ? shadowStyle.get() : "none" }}
@@ -255,9 +247,20 @@ export default function Navbar({ categories }: any) {
             onClick={() => handleNavigation("Home", "/")}
           >
             <Image
-              src={isNavbarActive ? MobLogo : Logo}
+              src={Logo}
               alt="Logo"
-              className="object-contain w-[108px] md:min-w-[130px]"
+              loading="eager"
+              className={`object-contain w-[108px] md:min-w-[130px] ${
+                isNavbarActive ? "hidden" : "block"
+              }`}
+            />
+            <Image
+              src={MobLogo}
+              alt="Mobile Logo"
+              loading="eager"
+              className={`object-contain w-[108px] md:min-w-[130px] ${
+                isNavbarActive ? "block" : "hidden"
+              }`}
             />
           </div>
 
@@ -266,7 +269,7 @@ export default function Navbar({ categories }: any) {
               <SearchField
                 aria-label="Search"
                 isNavbarActive={isNavbarActive}
-                className={`w-full h-[26px] flex justify-end text-left lg:text-center ${
+                className={`w-full h-[26px] flex justify-end text-left ${
                   isNavbarActive ? "text-gray" : "text-white"
                 }`}
               />
@@ -274,8 +277,11 @@ export default function Navbar({ categories }: any) {
 
             <div className="flex items-center gap-[12px] lg:gap-[24px] w-fit">
               <div className="flex md:min-w-fit">
-                <img
+                <Image
+                  width={24}
+                  height={24}
                   src={flag.src}
+                  loading="lazy"
                   alt="Language Flag"
                   className="w-[24px] flex h-[24px] ml-[12px] lg:ml-[24px] md:mr-[8px]"
                 />
@@ -314,13 +320,18 @@ export default function Navbar({ categories }: any) {
                     <button
                       className="rotation-animation conic-gradient transform-gpu cursor-pointer rounded-full p-px shadow-[0_0_20px_0_rgba(245,48,107,0.1)] hue-rotate-[190deg] invert transition-all dark:hue-rotate-0 dark:invert-0"
                       style={{
-                        background:
-                          "conic-gradient(from calc(var(--r2) - 80deg) at var(--x) 15px, transparent 0, #090979 10%, transparent 25%), #4A55E2 ",
+                        background: isNavbarActive
+                          ? "conic-gradient(from calc(var(--r2) - 80deg) at var(--x) 15px, transparent 0, #000000 10%, transparent 25%), #adadad"
+                          : "conic-gradient(from calc(var(--r2) - 80deg) at var(--x) 15px, transparent 0, #adadad 10%, transparent 25%), #000000",
                       }}
                       type="button"
                     >
                       <span
-                        className={`pointer-events-none flex h-3 w-3 md:h-4 md:w-4 items-center justify-center rounded-full bg-[#190F30] p-2 font-medium text-blue text-xxs tracking-tighter`}
+                        className={`pointer-events-none flex h-3 w-3 md:h-4 md:w-4 items-center justify-center rounded-full ${
+                          isNavbarActive
+                            ? "bg-black text-[#adadad]"
+                            : "bg-black text-[#adadad]"
+                        } p-2 font-extralight text-xxs tracking-tighter`}
                       >
                         {cart.length}
                       </span>
@@ -337,14 +348,10 @@ export default function Navbar({ categories }: any) {
                   }}
                   aria-label="Toggle mobile menu"
                 >
-                  <img
-                    src={
-                      isMobileMenuOpen || isNavbarActive
-                        ? menuActive.src
-                        : hamburgerMenu.src
-                    }
-                    alt="Menu Icon"
-                    className={`min-w-[24px] h-[24px]`}
+                  <Menu
+                    className={`h-[24px] w-[24px] ${
+                      isNavbarActive ? "text-black" : "text-white"
+                    }`}
                   />
                 </button>
               </div>
@@ -374,6 +381,7 @@ export default function Navbar({ categories }: any) {
                     <Image
                       src={profileIcon}
                       alt="Profile Icon"
+                      loading="lazy"
                       className="object-contain w-[24px] hover:cursor-pointer"
                       width={24}
                       height={24}
@@ -515,42 +523,41 @@ export default function Navbar({ categories }: any) {
           className={`rounded-[9px] items-center justify-between border-none h-[50px] px-4 md:flex hidden`}
         >
           <div className="flex flex-row overflow-x-auto no-scrollbar md:gap-[16px] lg:gap-[24px]">
-            {categoriesToUse && categoriesToUse.length > 0 && mounted
-              ? categoriesToUse.map((data: ICategory) => (
-                  <Link
-                    key={data._id}
-                    href={`/subcategories/${data._id}`}
-                    className="cursor-pointer border border-transparent hover:border-solid hover:border-black px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px] "
-                    onMouseEnter={() => {
-                      if (!profileSelect) {
-                        setActiveMenu(data.name);
-                        setIsMainMenuActive(true);
-                        setIsNavbarActive(true);
-                      }
-                    }}
-                    onMouseLeave={() => {
-                      setActiveMenu(null);
-                      setIsMainMenuActive(false);
-                      if (!profileSelect && isHomePage) {
-                        setIsNavbarActive(false);
-                      }
-                    }}
-                  >
-                    {activeMenu === data.name && (
-                      <div className="absolute left-0 shadow-sm w-full  z-10 bg-[#FFFFFFF5] mt-[28px]">
-                        {React.createElement(data.component)}
-                      </div>
-                    )}
-                    <p
-                      className={`text-xs md:text-[14px] ${
-                        isNavbarActive ? "text-lightBlack" : "text-white"
-                      }`}
-                    >
-                      {data?.name}
-                    </p>
-                  </Link>
-                ))
-              : null}
+            {dummyCategories.map((data: ICategory) => (
+              <Link
+                key={data._id}
+                href={`#`}
+                //href={`/subcategories/${data._id}`}
+                className="cursor-pointer border border-transparent hover:border-solid hover:border-black px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px] "
+                onMouseEnter={() => {
+                  if (!profileSelect) {
+                    setActiveMenu(data.name);
+                    setIsMainMenuActive(true);
+                    setIsNavbarActive(true);
+                  }
+                }}
+                onMouseLeave={() => {
+                  setActiveMenu(null);
+                  setIsMainMenuActive(false);
+                  if (!profileSelect && isHomePage) {
+                    setIsNavbarActive(false);
+                  }
+                }}
+              >
+                {activeMenu === data.name && (
+                  <div className="absolute left-0 shadow-sm w-full  z-10 bg-[#FFFFFFF5] mt-[28px]">
+                    {React.createElement(data.component)}
+                  </div>
+                )}
+                <p
+                  className={`text-xs md:text-[14px] ${
+                    isNavbarActive ? "text-lightBlack" : "text-white"
+                  }`}
+                >
+                  {data?.name}
+                </p>
+              </Link>
+            ))}
           </div>
         </div>
 
