@@ -66,6 +66,7 @@ export interface CreateProductParams {
   color?: string; // Color of the product
   colorCode?: string; // HEX or RGB color code
   size?: string; // Size details if applicable
+  overview?: {description: string; images: string[]};
   isActive?: boolean; // Whether the product is active
   createdBy: string; // ID of the user/admin creating the product
 }

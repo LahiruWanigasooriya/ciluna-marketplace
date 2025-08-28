@@ -101,7 +101,7 @@ export default function Hero() {
         })}
       </div>
 
-      <div className="absolute hidden md:flex flex-col gap-[8px] w-full text-white text-left top-0 z-9 h-fit md:top-1/4 lg:top-[12%] items-start px-[16px] custom-container">
+      <div className="absolute hidden md:flex flex-col gap-[8px] w-full text-white text-left top-0 z-9 h-fit md:top-1/4 lg:top-[10%] items-start px-[16px] custom-container">
         <p className="font-kaisei text-[28px] leading-[32px] tracking-normal md:text-[42px] md:leading-[48px] lg:text-[48px] lg:leading-[48px] xl:text-[58px] recommend:text-[68px] recommend:leading-[60px]">
           Where Grace Becomes Legacy
         </p>
@@ -112,8 +112,8 @@ export default function Hero() {
         </p>
       </div>
 
-      <div className="absolute flex justify-between w-full z-10 bottom-0 md:pb-[16px] xl:pb-[32px] md:pt-0 custom-container items-center md:backdrop-blur-sm">
-        <div className="flex flex-col gap-[16px] md:gap-[12px] lg:gap-[24px] md:max-w-[495px] md:w-[80%] justify-center md:items-start items-center w-full">
+      <div className="absolute flex justify-between w-full z-10 bottom-0  md:pb-[16px] xl:pb-[32px] md:pt-0 custom-container items-center md:backdrop-blur-sm">
+        <div className="flex flex-col gap-[16px] mb-[-24px] md:mb-0 md:gap-[12px] lg:gap-[24px] md:max-w-[495px] md:w-[80%] justify-center md:items-start items-center w-full">
           <div className="hidden md:flex flex-col gap-[12px] md:w-[75%] xl:w-[495px] ">
             <h1 className="text-white font-kaisei text-[20px] leading-[26px] tracking-normal md:text-[22px] md:leading-[28px] lg:text-[24px] lg:leading-[30px] xl:text-[28px] xl:leading-[32px]">
               {heroes[currentHero].title}
@@ -122,7 +122,7 @@ export default function Hero() {
               {heroes[currentHero].subtitle}
             </p>
           </div>
-          <div className="md:hidden flex flex-col gap-[8px] w-full text-white text-center items-center px-[16px] max-w-[380px]">
+          <div className="md:hidden flex flex-col  gap-[8px] w-full text-white text-center items-center px-[16px] max-w-[380px]">
             <p className="font-kaisei text-[28px] leading-[32px] tracking-normal">
               Where Grace
               <br /> Becomes Legacy

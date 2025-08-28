@@ -18,6 +18,7 @@ interface RatingProps {
   onRatingChange?: (rating: number) => void;
   readOnly?: boolean;
   closePopup: () => void;
+  onReviewSubmit: () => void;
 }
 
 const Review: React.FC<RatingProps> = ({
@@ -26,9 +27,10 @@ const Review: React.FC<RatingProps> = ({
   onRatingChange,
   readOnly = false,
   closePopup,
+  onReviewSubmit,
 }) => {
   const [rating, setRating] = useState<number>(initialRating);
-  const [title, setTitle] = useState<string>("");
+  // const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [errors, setErrors] = useState<{
     title?: string;
@@ -99,7 +101,7 @@ const Review: React.FC<RatingProps> = ({
 
     try {
       await reviewValidationSchema.validate(
-        { title, content, rating },
+        { content, rating },
         { abortEarly: false }
       );
       setErrors({});
@@ -107,22 +109,24 @@ const Review: React.FC<RatingProps> = ({
       const formData = new FormData();
       formData.append("productId", productId);
       formData.append("rating", rating.toString());
-      formData.append("title", title);
+      // formData.append("title", title);
       formData.append("content", content);
-      uploadedImages.forEach((image, index) => {
-        formData.append(`images[${index}]`, image);
+      uploadedImages.forEach((image) => {
+        formData.append("images", image);
       });
       const response = await addReview({
         productId,
         rating,
-        title,
+        // title,
         content,
         token: token ?? undefined,
+        images: uploadedImages,
       });
       setIsSubmitting(false);
 
       if (response.success) {
-        setTitle("");
+        onReviewSubmit?.();
+        // setTitle("");
         setContent("");
         setRating(0);
         setUploadedImages([]);
@@ -253,7 +257,7 @@ const Review: React.FC<RatingProps> = ({
             type="button"
             className="w-full h-[56px] bg-white text-black text-lg md:text-xl leading-6"
             onPress={() => {
-              setTitle("");
+              // setTitle("");
               setContent("");
               setRating(0);
               setErrors({});

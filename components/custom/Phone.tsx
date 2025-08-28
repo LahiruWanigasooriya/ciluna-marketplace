@@ -98,7 +98,8 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
       <p className="font-[400] text-gray">Mobile Number</p>
       <div className="relative w-full" ref={modalRef}>
         <div
-          className={`px-2 h-[44px] bg-white transition duration-200 ease-out rounded-lg flex items-center border border-[#e1e1e1]
+          className={`px-2 h-[44px] bg-white transition duration-200 ease-out rounded-lg flex items-center
+          group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
           [&>[role=progressbar]]:mr-2.5
           [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
           [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
@@ -131,7 +132,8 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
               animate="open"
               exit="closed"
               variants={dropdownVariants}
-              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10 border border-[#252525]  transition duration-200 ease-out flex flex-col items-start border-primary/70 
+              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10 border border-[#252525]  transition duration-200 ease-out flex flex-col items-start border-primary/70 ring-4 ring-primary/20
+            group-invalid:focus-within:border-danger group-invalid:focus-within:ring-danger/20
             [&>[role=progressbar]]:mr-2.5
             [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
             [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
@@ -141,7 +143,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
               {countries.map((country) => (
                 <li
                   key={country.id}
-                  className={`flex items-center p-2 font-[400] text-sm text-black cursor-pointer hover:bg-stone-400 hover:opacity-75 w-full ${
+                  className={`flex items-center p-2 font-[400] text-sm text-gray cursor-pointer hover:opacity-75 w-full ${
                     selectedCountry.id === country.id ? "bg-gray-400" : ""
                   }`}
                   onClick={() => handleCountryChange(country.id)}

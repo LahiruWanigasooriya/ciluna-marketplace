@@ -94,16 +94,14 @@ const LimitedTimeGrace = () => {
 
   return (
     <div className="custom-container py-[24px] sm:py-[32px] lg:py-[96px]">
-     
-        <SwiperCards
-          products={mockProducts}
-          section={{
-            category: "Flash Deals",
-            title: "Limited Time Grace",
-            description: "A fleeting collection of rare beauty.",
-          }}
-        />
-      
+      <SwiperCards
+        products={mockProducts}
+        section={{
+          category: "Flash Deals",
+          title: "Limited Time Grace",
+          description: "A fleeting collection of rare beauty.",
+        }}
+      />
     </div>
   );
 };

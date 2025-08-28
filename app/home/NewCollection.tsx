@@ -17,7 +17,7 @@ import { IconButton } from "@/components/custom/IconButton";
 
 const NewCollection = () => {
   return (
-    <div className="custom-container py-[20px] sm:py-[20px] lg:py-[20px]">
+    <div className="px-[16px]  py-[20px] md:px-[32px] lg:px-[68px] xl:px-[96px]">
       {/* Desktop Slider */}
       <div className="hidden md:block w-full bg-[#F2F2F2] rounded-lg overflow-hidden relative">
         <Swiper
@@ -52,7 +52,7 @@ const NewCollection = () => {
       </div>
 
       {/* Mobile Slider */}
-      <div className="md:hidden w-full bg-[#F2F2F2] rounded-lg overflow-hidden  mt-12 sm:mt-0 relative">
+      <div className="md:hidden w-full bg-[#F2F2F2] rounded-lg overflow-hidden  mt-0  relative">
         <Swiper
           modules={[Autoplay]}
           speed={1200}

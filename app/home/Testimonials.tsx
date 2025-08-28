@@ -46,17 +46,17 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <div className="bg-[#F5F5F5] py-[32px] lg:py-[0px] mt-20 sm:mt-0 relative">
+    <div className="bg-[#F5F5F5] py-[16px] lg:py-[0px]  sm:mt-0 relative">
       <div className="flex flex-col items-center custom-container py-[24px] sm:py-[32px] lg:py-[96px] z-10">
-        <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] sm:mb-[5px]">
+        <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] ">
           Testimonials
         </p>
         <Title title="What Our Clients Say" />
-        <p className="text-[14px] sm:text-[16px] font-inter text-center text-[#707070] leading-[24px] max-w-[843px] ">
+        <p className="text-[14px] sm:text-[16px] font-arial mt-[7px] text-center text-[#707070] leading-[24px] max-w-[750px] ">
           {`The elegance we create finds its meaning in your moments. These are the whispers of those who carry a piece of our soul.`}
         </p>
 
-        <div className=" py-[48px] w-full z-10">
+        <div className=" py-[24px] md:py-[48px] w-full z-10">
           {/* Desktop */}
           <div className="hidden lg:grid grid-cols-3 gap-6">
             {testimonials.map((item, index) => (

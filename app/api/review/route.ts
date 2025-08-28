@@ -59,17 +59,17 @@ export async function POST(request: NextRequest) {
       productId,
       productVariantId,
       rating,
-      title,
+      // title,
       content,
     }: {
       productId: string;
       productVariantId?: string;
       rating: number;
-      title: string;
+      // title: string;
       content: string;
     } = await request.json();
 
-    if (!productId || !rating || !title || !content) {
+    if (!productId || !rating || !content) {
       return NextResponse.json(
         {
           success: false,
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
       productId,
       productVariantId,
       rating,
-      title,
+      // title,
       content,
       token,
     });
