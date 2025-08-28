@@ -71,7 +71,7 @@ export default function Navbar({ categories }: any) {
   const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
 
   useEffect(() => {
-    if (categories.length > 0) {
+    if (categories && categories.length > 0) {
       const timer = setTimeout(() => {
         setIsLoading(false);
       }, 1000);
@@ -410,7 +410,8 @@ export default function Navbar({ categories }: any) {
                           Profile
                         </Link>
                         <Link
-                          href="/profile/history"
+                          href="#"
+                          // href="/profile/history"
                           className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
                             pathname === "/profile/history"
                               ? "font-[Arial] font-bold"
