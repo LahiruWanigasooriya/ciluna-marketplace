@@ -299,6 +299,7 @@ const SignupPage: React.FC = () => {
 
       if (res.success) {
         setIsSuccess(true);
+        toast.success("User created successfully!");
         router.push("/");
       } else {
         toast.error(res.message || "Failed to create user.");
@@ -359,7 +360,7 @@ const SignupPage: React.FC = () => {
         </main>
 
 
-        {/* <Footer /> */}
+
       </div>
   );
 }
