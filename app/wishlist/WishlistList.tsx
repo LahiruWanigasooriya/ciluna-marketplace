@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import ProductCard from "@/app/product/ProductCard";
 import { useWishlistStore } from "@/store/wishlist";
 import Title from "@/components/custom/Title";
+import { IProduct } from "@/types/product";
 
 const WishlistClient = ({ cilunaPrice }: { cilunaPrice: number }) => {
   const { wishlist } = useWishlistStore();
@@ -15,31 +16,27 @@ const WishlistClient = ({ cilunaPrice }: { cilunaPrice: number }) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 md:gap-8 xl:gap-12">
-      <div className="flex flex-col lg:space-y-5 space-y-4">
-        {wishlist.length > 0 ? (
-          <>
-            <Title title="Favorite" className="text-white" />
-            <div className="grid xl:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-4">
-              {wishlist.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
-          </>
-        ) : (
-          <div className="flex items-center justify-center gap-4 text-center">
-            <p className="text-lg font-medium text-white">
-              No items in your wishlist.
-            </p>
-            <div
-              onClick={navigateToProducts}
-              className="text-blue hover:underline hover:opacity-75 cursor-pointer"
-            >
-              Go to Products
-            </div>
+    <div className="flex flex-col gap-6 md:gap-8 font-[Arial] text-black">
+      {wishlist.length > 0 ? (
+        <>
+          <Title title="Favorite" className="text-left" />
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:justify-start">
+            {wishlist.map((product: IProduct) => (
+              <ProductCard key={product._id.toString()} product={product} />
+            ))}
           </div>
-        )}
-      </div>
+        </>
+      ) : (
+        <div className="flex items-center justify-center gap-4 text-center md:text-lg lg:text-xl">
+          <p className="font-medium text-black">No items in your wishlist.</p>
+          <div
+            onClick={navigateToProducts}
+            className="hover:underline hover:opacity-80 cursor-pointer font-bold"
+          >
+            Go to Products
+          </div>
+        </div>
+      )}
     </div>
   );
 };
