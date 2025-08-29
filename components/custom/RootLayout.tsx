@@ -99,7 +99,7 @@ export default function ConditionalLayout({
         </main>
         {!isHiddenRoute}
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
