@@ -83,7 +83,9 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
   };
 
   const isValidPhoneNumber = (phone: string) =>
-    /\d+/.test(phone) && phone.length <= 11;
+    // /\d+/.test(phone) && phone.length <= 11;
+  /\d{10,11}$/.test(phone);
+
 
   const handleInputChange = (phone: string) => {
     const formattedPhone = `${selectedCountry.code}${phone.replace(
