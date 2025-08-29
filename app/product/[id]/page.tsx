@@ -43,7 +43,7 @@ const ProductDetails = async ({
 
   const productres = await getProductById(id);
   const reviewres = await getProductReviewSummary(id);
-  // const relatedres = await getRelatedProducts(id);
+  const relatedres = await getRelatedProducts(id);
   // const productWishcountres = await getProductWishCount(id);
   // const price = await getCilunaPrice();
   // const cilunaPrice = toFixed(Number(price));
@@ -113,52 +113,7 @@ const ProductDetails = async ({
   //   isActive: true,
   // } as IProductVariant;
 
-  // const relatedproduct: IProduct[] = relatedres?.data?.relatedItems;
-  const relatedproduct: IProduct[] = [
-    {
-      _id: "1",
-      name: "ChillWave Jersey",
-      description:
-        "Noise-cancelling over-ear headphones with Bluetooth connectivity.",
-      image: Product6.src,
-      category: { _id: "cat1", name: "Electronics" },
-      rating: 4.5,
-      sold: 120,
-      price: 5001.95,
-      stock: 50,
-      createdBy: "user1",
-      discount: { percentage: 25 },
-      color: "white",
-      colorCode: "#E5E1D8",
-      colors: ["white", "blue", "black", "red"],
-      colorCodes: ["#E5E1D8", "#183B78", "#000000", "#EA0109"],
-    },
-    {
-      _id: "2",
-      name: "Sunny Circle Shades",
-      description: "Fitness-focused smart watch with heart-rate monitoring.",
-      image: Product7.src,
-      category: { _id: "cat2", name: "Wearables" },
-      rating: 4.2,
-      sold: 85,
-      price: 1001,
-      stock: 40,
-      createdBy: "user2",
-      discount: { percentage: 25 },
-    },
-    {
-      _id: "3",
-      name: "Gaming Mouse",
-      description: "High DPI gaming mouse with RGB lighting.",
-      image: Product8.src,
-      category: { _id: "cat3", name: "Accessories" },
-      rating: 4.7,
-      sold: 300,
-      price: 3499,
-      stock: 70,
-      createdBy: "user3",
-    },
-  ];
+  const relatedproduct: IProduct[] = relatedres?.data?.relatedItems;
 
   // const processResponse = (response: any): ProductWishCountResponse => {
   //   if (typeof response.success !== "boolean") {

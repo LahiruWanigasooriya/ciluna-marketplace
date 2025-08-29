@@ -69,7 +69,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
                               : product.image
                           }
                           fill
-                          className="object-cover"
+                          className="object-cover rounded-[8px]"
                           placeholder="blur"
                           blurDataURL="/placeholder-image.jpg"
                         />
@@ -198,7 +198,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
                                   : product.image
                               }
                               fill
-                              className="object-cover"
+                              className="object-cover rounded-[8px]"
                               placeholder="blur"
                               blurDataURL="/placeholder-image.jpg"
                             />

@@ -392,7 +392,7 @@ const Product: React.FC<ProductProps> = ({
                     src={mainImageUrl}
                     alt={product.name}
                     fill
-                    className="w-full h-full rounded-[14px]"
+                    className="w-full h-full rounded-[8px]"
                   />
                   <div className="absolute bottom-2 right-2">
                     {isLoading ? (

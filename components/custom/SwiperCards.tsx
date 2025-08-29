@@ -3,17 +3,20 @@ import ProductCard from "@/app/product/ProductCard";
 import { IProduct } from "@/types/product";
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface SwiperCardsProps {
   products?: IProduct[];
+  className?: string;
+  titleClassName?: string;
   section?: {
-    category: string;
+    category?: string;
     title: string;
     description: string;
   };
 }
 
-const SwiperCards = ({ products, section }: SwiperCardsProps) => {
+const SwiperCards = ({ products, className, titleClassName, section }: SwiperCardsProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const scrollNext = () => {
@@ -38,14 +41,14 @@ const SwiperCards = ({ products, section }: SwiperCardsProps) => {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col gap-[24px] md:gap-[48px] max-w-[1440px] recommend:mx-auto">
+      <div className={cn("flex flex-col gap-[27px] md:gap-[68px] max-w-[1440px] recommend:mx-auto", className)}>
         {section && (
           <div className="flex flex-col w-full">
             <p className="text-[12px] sm:text-[14px] text-center md:text-left font-cinzel text-[#C19F32] pb-0 md:pb-4 leading-5">
               {section.category}
             </p>
-            <div className="flex flex-col ">
-              <h2 className="text-[24px] sm:text-[40px] text-center md:text-left lg:text-[52px] font-kaiseiBold text-gray-900 leading-8 md:leading-[60px]">
+            <div className="flex flex-col gap-3">
+              <h2 className={cn("text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-gray-900 leading-8 md:leading-[60px]", titleClassName)}>
                 {section.title}
               </h2>
               <div className="hidden md:flex items-end w-full justify-between ">
