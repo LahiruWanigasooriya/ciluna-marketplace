@@ -38,6 +38,9 @@ import ColorSelector from "./ColorSelector";
 import ProductInfoTabs from "./ProductInfoTabs";
 import { ReviewSummary } from "@/types/review";
 import BackButton from "@/components/custom/BackButton";
+import AskQuestions from "./AskQuestions";
+import useDisableScroll from "@/hooks/useDisableScroll";
+import ShareLink from "./ShareLink";
 interface ProductProps {
   product: IProduct;
   variants: IProductVariant;
@@ -105,6 +108,13 @@ const Product: React.FC<ProductProps> = ({
   // const addToCartItem = useCartStore((state) => state.addToCart);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const charLimit = 380;
+
+  const [isAskingQuestion, setIsAskingQuestion] = useState<boolean>(false);
+  const [isShare, setIsShare] = useState<boolean>(false);
+  const [link, setLink] = useState("");
+
+  useDisableScroll(isAskingQuestion);
+  useDisableScroll(isShare);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -204,10 +214,10 @@ const Product: React.FC<ProductProps> = ({
     }else{
       variant = variants.find(
         (v: any) =>
-          v.subCategoryIds.some((sub: any) => sub.value === color)
+        v.subCategoryIds.some((sub: any) => sub.value === color)
       );
     }
-    
+
     if (variant) {
       setVariantId(variant._id);
       setSelectedVariant(variant);
@@ -362,14 +372,10 @@ const Product: React.FC<ProductProps> = ({
     }
   };
 
-  const handleShare = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      toast.success("Link copied to clipboard!");
-    } catch (err) {
-      console.error("Failed to copy:", err);
-      toast.error("Failed to copy link");
-    }
+  const handleShare = () => {
+    const currentLink = window.location.href;
+    setLink(currentLink);
+    setIsShare(true);
   };
 
   return (
@@ -620,7 +626,10 @@ const Product: React.FC<ProductProps> = ({
                           </span>
                         )}
                     </p>
-                    <div className="flex gap-2 items-center h-6">
+                    <div
+                      onClick={() => setIsAskingQuestion(true)}
+                      className="flex gap-2 items-center h-6 hover:opacity-70 cursor-pointer w-fit"
+                    >
                       <CiCircleQuestion size={24} strokeWidth={0.5} />{" "}
                       <span className="text-sm">Ask Questions</span>
                     </div>
@@ -726,6 +735,17 @@ const Product: React.FC<ProductProps> = ({
           />
         </div>
       </div>
+
+      {isAskingQuestion && (
+        <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
+          <AskQuestions onClose={() => setIsAskingQuestion(false)} />
+        </div>
+      )}
+      {isShare && (
+        <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
+          <ShareLink onClose={() => setIsShare(false)} link={link}/>
+        </div>
+      )}
     </div>
   );
 };

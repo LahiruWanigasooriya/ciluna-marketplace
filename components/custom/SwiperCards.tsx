@@ -48,7 +48,7 @@ const SwiperCards = ({ products, className, titleClassName, section }: SwiperCar
               {section.category}
             </p>
             <div className="flex flex-col gap-3">
-              <h2 className={cn("text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-gray-900 leading-8 md:leading-[60px]", titleClassName)}>
+              <h2 className={cn("text-[24px] sm:text-[40px] lg:text-[52px] text-center md:text-left font-kaiseiBold text-gray-900 leading-8 md:leading-[60px]", titleClassName)}>
                 {section.title}
               </h2>
               <div className="hidden md:flex items-end w-full justify-between ">
