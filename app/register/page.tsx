@@ -231,8 +231,8 @@ const SignupForm = ({
                     >
               <p className="font-arial text-[#252525] text-sm">I consent to personalized offers from CILUNA based on my preferences.</p>
             </Checkbox>
-            <Link href="/policyConfig">
-                        <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-arialBold"> Privacy Policy.</span></p>
+            <Link href="">
+            <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-arialBold"> Privacy Policy.</span></p>
 
             </Link>
         </div>
