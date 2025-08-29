@@ -82,8 +82,8 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
     }
   };
 
-  // const isValidPhoneNumber = (phone: string) =>
-  //   /\d+/.test(phone) && phone.length <= 11;
+  const isValidPhoneNumber = (phone: string) =>
+    /\d+/.test(phone) && phone.length <= 11;
 
   const handleInputChange = (phone: string) => {
     const formattedPhone = `${selectedCountry.code}${phone.replace(
@@ -119,9 +119,9 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
           />
           <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black`} />
         </div>
-        {/* {!isValidPhoneNumber(value) && value.length > 0 && (
+        {!isValidPhoneNumber(value) && value.length > 0 && (
           <span className="text-xs text-red-500">Invalid phone number</span>
-        )} */}
+        )}
         
         <AnimatePresence>
           

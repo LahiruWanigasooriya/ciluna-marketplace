@@ -97,6 +97,7 @@ const SignupForm = ({
             value={formData.titlelabel}
             onChange={(_field: string, value: string) => handleChange("titlelabel", value)}
           />
+          {errors.titlelabel && <p className="text-red-500 text-xs">{errors.titlelabel}</p>}
         </div>
       <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
         <div className="flex flex-col sm:gap-2  sm:flex-row sm:items-center sm:justify-between">
@@ -147,6 +148,7 @@ const SignupForm = ({
             value={formData.country}
             onChange={(_field: string, value: string) => handleChange("country", value)}
           />
+          {errors.country && <p className="text-red-500 text-xs">{errors.country}</p>}
         </div>
 
         <div>
