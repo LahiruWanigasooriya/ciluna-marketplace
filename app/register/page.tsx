@@ -327,7 +327,7 @@ const SignupPage: React.FC = () => {
 
         <Navbar />
 
-        <main className="flex-grow flex justify-center pt-20 px-4 py-10 relative">
+        <main className="flex-grow flex justify-center pt-8 sm:pt-16  p-4 relative">
         
           <div className="hidden sm:block absolute right-0 top-32 h-[301px] w-[320px]">
             <Image
