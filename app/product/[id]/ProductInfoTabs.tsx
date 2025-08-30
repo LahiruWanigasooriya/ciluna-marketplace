@@ -55,7 +55,7 @@ export default function ProductInfoTabs({ productId, overview, productVariantId 
           </div>
         ))}
       </div>
-      <div className="md:mt-6 md:py-0">
+      <div className="mt-5 md:mt-6 md:py-0">
         <>{renderContent()}</>
       </div>
     </div>
