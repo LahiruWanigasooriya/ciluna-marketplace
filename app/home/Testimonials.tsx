@@ -99,14 +99,14 @@ const Testimonials = () => {
       <Image
         src={BgImg}
         alt="BG Image"
-        className="absolute hidden md:block w-[20%] h-auto object-cover rounded-2xl top-0 left-0 z-0"
+        className="absolute hidden md:block w-[20%] h-auto object-cover rounded-2xl top-0 left-0 z-0 max-w-[290px]"
         placeholder="blur"
       />
 
       <Image
         src={BgImg}
         alt="BG Image"
-        className="absolute hidden md:block w-[20%] h-auto object-cover rounded-2xl top-0 right-0 -scale-x-100 z-0"
+        className="absolute hidden md:block w-[20%] h-auto object-cover rounded-2xl top-0 right-0 -scale-x-100 z-0 max-w-[290px]"
         placeholder="blur"
       />
     </div>

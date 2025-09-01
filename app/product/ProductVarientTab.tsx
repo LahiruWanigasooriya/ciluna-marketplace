@@ -29,7 +29,7 @@ const ProductVarientTab = () => {
     const [active, setActive] = useState<string>("all");
 
     return(
-        <div className = "flex  items-center bg-white w-full overflow-auto scrollbar-hide gap-2.5 whitespace-nowrap">
+        <div className = "flex  items-center w-full overflow-auto scrollbar-hide gap-2.5 whitespace-nowrap bg-neutralGray-50 z-10">
             <button className={`p-4 text-sm leading-5 font-arial ${
                 active === "all"
                 ? "bg-black text-white font-arialBold"
