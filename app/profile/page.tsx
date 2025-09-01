@@ -91,7 +91,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen px-[16px] md:px-[20px] lg:px-[40px] xl:px-[96px] bg-white ">
+    <div className="min-h-screen custom-container md:py-0 bg-white ">
       <div className="flex flex-col mt-[76px] md:mt-[132px]  gap-[24px] md:flex-row ">
         {/* Sidebar for md and up */}
         <aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-lightgray px-[16px] text-[#1E1E1E]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
