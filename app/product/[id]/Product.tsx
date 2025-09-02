@@ -50,6 +50,11 @@ interface ProductProps {
   // cilunaPrice: number;
 }
 
+interface ColorOption {
+  name: string;
+  code: string;
+}
+
 const Product: React.FC<ProductProps> = ({
   product,
   variants,
@@ -67,16 +72,26 @@ const Product: React.FC<ProductProps> = ({
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // For color variant selection
-  const [selectColor, setSelectColor] = useState<string[]>([product.color || ""]);
-  const [selectedColor, setSelectedColor] = useState<string>(selectColor[0] || "");
+  // const [selectColor, setSelectColor] = useState<string[]>([product.colorCode || ""]);
+  const [selectColor, setSelectColor] = useState<ColorOption[]>(
+    product.color && product.colorCode
+      ? [{ name: product.color, code: product.colorCode }]
+      : []
+  );
+  const [selectedColor, setSelectedColor] = useState<string>(
+    selectColor[0]?.name || ""
+  );
   const [selectSize, setSelectSize] = useState<string[]>([product.size || ""]);
+
+  console.log(product);
 
   const availableSizes = availableCombinations
     .filter((c) => c.color === selectedColor)
     .map((c) => c.size);
 
   const [selectedSize, setSelectedSize] = useState<string>(selectSize[0] || "");
-  const [selectedVariant, setSelectedVariant] =useState<IProductVariant | null>(null);
+  const [selectedVariant, setSelectedVariant] =
+    useState<IProductVariant | null>(null);
   const [rating, setRating] = useState();
   const { token } = useAuthStore();
   const [price, setPrice] = useState<number>(product.price);
@@ -135,7 +150,9 @@ const Product: React.FC<ProductProps> = ({
     );
 
     if (colorCategory) {
-      const colors = colorCategory.subCategories.map((sub: any) => sub.value);
+      const colors: ColorOption[] = colorCategory.subCategories.map(
+        (sub: any) => ({name:sub.value, code: sub.subValue})
+      );
       setSelectColor(colors);
     }
   }, [product]);
