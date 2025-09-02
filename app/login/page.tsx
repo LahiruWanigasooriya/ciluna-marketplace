@@ -165,7 +165,7 @@ const LoginPage = () => {
 
   return (
    
-    <div className="flex items-start flex-col  w-full relative justify-between text-black min-h-screen overflow-y-auto overflow-x-hidden sm:overflow-hidden login-page">
+    <div className="flex items-start flex-col  w-full relative justify-between text-black min-h-screen overflow-y-auto overflow-x-hidden sm:overflow-hidden ">
       <Navbar />
             <div className="hidden sm:block absolute -right-0 top-36  h-[301px] w-[320px]" >
           <Image 
