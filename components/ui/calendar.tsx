@@ -172,7 +172,7 @@ const YearMonthPicker = ({ currentDate, onYearMonthSelect, onClose }: YearMonthP
   
 
   const currentYear = currentDate.year
-  const years = Array.from({ length: 91 }, (_, i) => currentYear - 90 + i)
+  const years = Array.from({ length: 51 }, (_, i) => currentYear - 50 + i)
   
   const months = [
     "January", "February", "March", "April", "May", "June",
@@ -198,7 +198,7 @@ const YearMonthPicker = ({ currentDate, onYearMonthSelect, onClose }: YearMonthP
       {/* Year  */}
       <div className="flex-shrink-0">
         <label className="text-xs font-medium text-muted-fg block mb-2">Year</label>
-        <div className="grid grid-cols-4 gap-1 max-h-32 overflow-y-auto border rounded p-2">
+        <div className="grid grid-cols-4 gap-1 max-h-28 overflow-y-auto border rounded p-2">
           {years.map((year) => (
             <button
               key={year}
@@ -257,4 +257,5 @@ const YearMonthPicker = ({ currentDate, onYearMonthSelect, onClose }: YearMonthP
 Calendar.Header = CalendarHeader
 Calendar.GridHeader = CalendarGridHeader
 
-export { Calendar }
+export { Calendar };
+

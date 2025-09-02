@@ -178,7 +178,7 @@ const ProductPage = async ({
             <h2 className="text-2xl md:text-[40px] font- font-kaiseiHarunoUmi mb-3">
               Women's Clothing
             </h2>
-            <p className="text-[14px] font-lora md:text-base sm:leading-6 leading-relaxed">
+            <p className="text-[14px] font-lora font-normal md:text-base sm:leading-6 leading-relaxed">
               An edit of refined essentials designed to express quiet strength
               and lasting beauty. Each piece is crafted with intention made to
               feel effortless, look timeless, and move with you through every
@@ -197,8 +197,16 @@ const ProductPage = async ({
             {products.length} Products
           </div>
           <div className="flex flex-row gap-4 h-[34px]">
-            <Sort />
-            <Filter />
+        <button className="cursor-not-allowed" disabled>
+
+          <Sort />
+          
+        </button>
+          <button className="cursor-not-allowed" disabled>
+
+          <Filter />
+          
+        </button>
           </div>
         </div>
         {hasProducts ? (
