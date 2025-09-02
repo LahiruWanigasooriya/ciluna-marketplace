@@ -322,46 +322,45 @@ const SignupPage: React.FC = () => {
   };
 
   return (
+<>
 
-      <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative">
+  <div className="hidden sm:block">
+    <div className="absolute right-0 top-32 h-[301px] w-[320px] z-20">
+      <Image
+        src={bgpattern}
+        alt="background pattern"
+        fill
+        className="object-right"
+        priority
+      />
+    </div>
+    
+    <div className="absolute left-0 bottom-0 h-[301px] w-[320px] z-20">
+      <Image
+        src={bgpattern}
+        alt="background pattern"
+        fill
+        className="object-right transform scale-x-[-1]"
+        priority
+      />
+    </div>
+  </div>
 
-        <Navbar />
-
-        <main className="flex-grow flex justify-center pt-8 sm:pt-16  p-4 relative">
-        
-          <div className="hidden sm:block absolute right-0 top-32 h-[301px] w-[320px]">
-            <Image
-              src={bgpattern}
-              alt="background pattern"
-              fill
-              className="object-right bg-[#e8e8da"
-              priority
-            />
-          </div>
-          <div className="hidden sm:block absolute left-0 bottom-0 h-[301px] w-[320px]">
-            <Image
-              src={bgpattern}
-              alt="background pattern"
-              fill
-              className="object-right bg-[#e8e8da transform scale-x-[-1]"
-              priority
-            />
-          </div>
-
-          
-          <SignupForm
-            formData={formData}
-            errors={errors}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            isLoading={isLoading}
-            isSuccess={isSuccess}
-          />
-        </main>
-
-
-
-      </div>
+  {/* Main content */}
+  <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative z-10">
+    <Navbar />
+    <main className="flex-grow flex justify-center pt-8 sm:pt-16 p-4 relative">
+      <SignupForm
+        formData={formData}
+        errors={errors}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+      />
+    </main>
+  </div>
+</>
   );
 }
 

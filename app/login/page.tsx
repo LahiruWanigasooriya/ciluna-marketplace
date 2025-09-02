@@ -164,15 +164,15 @@ const LoginPage = () => {
   };
 
   return (
-    <>
-    <div className="flex items-start flex-col  justify-between text-black min-h-screen overflow-y-auto overflow-x-hidden sm:overflow-hidden">
+   
+    <div className="flex items-start flex-col  w-full relative justify-between text-black min-h-screen overflow-y-auto overflow-x-hidden sm:overflow-hidden login-page">
       <Navbar />
             <div className="hidden sm:block absolute -right-0 top-36  h-[301px] w-[320px]" >
           <Image 
           src={bgpattern}
           alt="background pattern"
           fill
-          className="object-right bg-[#e8e8da"
+          className="object-right"
           priority
           />
         </div>
@@ -181,7 +181,7 @@ const LoginPage = () => {
           src={bgpattern}
           alt="background pattern"
           fill
-          className="object-right bg-[#e8e8da transform scale-x-[-1]"
+          className="object-right transform scale-x-[-1]"
           priority
           />
            
@@ -206,9 +206,9 @@ const LoginPage = () => {
       </div>
       
     </div>
-          <div className="w-full absolute items-end justify-center"><Footer/></div>
+ 
 
-    </>
+
   );
 };
 

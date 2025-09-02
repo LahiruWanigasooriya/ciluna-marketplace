@@ -71,6 +71,9 @@ export default function ConditionalLayout({
     if (isWidthFullPages) {
       return "flex flex-col min-h-screen relative w-full";
     }
+      if (isHiddenRoute) {
+    return "flex flex-col min-h-screen relative w-full"; // Login/Register/Forgotpw → full width
+  }
     return "flex flex-col max-w-[1440px] mx-auto min-h-screen relative"; // Default: max width 1440px for all other pages
   };
 
