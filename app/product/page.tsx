@@ -203,7 +203,7 @@ const ProductPage = async ({
         </div>
         {hasProducts ? (
           <>
-            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:justify-start">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:justify-center">
               {products.map((product: IProduct) => (
                 <ProductCard key={product._id.toString()} product={product} />
               ))}
