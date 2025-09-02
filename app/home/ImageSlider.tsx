@@ -147,9 +147,9 @@ export default function Hero() {
 
   return (
     <div
-      className={`relative w-full h-[372px] md:h-screen overflow-hidden flex justify-center md:mt-0 ${
-        mounted && isAuthenticated ? "mt-0" : "mt-[40px] md:mt-0"
-      }`}
+      className={
+        "relative w-full h-[372px] md:h-screen overflow-hidden flex justify-center"
+      }
     >
       {HEROES_DATA.map((hero, index) => (
         <HeroImage
