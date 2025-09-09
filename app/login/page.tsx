@@ -69,7 +69,7 @@ const LoginForm = ({
           >
             <p className="font-arial text-[#252525] text-sm">Remember me</p>
           </Checkbox>
-          <Link href="/forgotpw">
+          <Link href="/#">
             <p className="text-[#252525] cursor-pointer text-sm hover:opacity-75 font-arial">
               Forgot your password?
             </p>
