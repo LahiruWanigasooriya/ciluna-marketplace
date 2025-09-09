@@ -5,6 +5,7 @@ export interface IUser {
   lastName: string;
   nickName?: string;
   gender?: "Male" | "Female" | "Other";
+  dateofbirth?: string;
   addressLine1?: string;
   addressLine2?: string;
   country?: string;
@@ -16,6 +17,8 @@ export interface IUser {
   isDeleted?: boolean;
   role?: "user" | "admin";
   activeStatus?: boolean;
+  recieveUpdates?: boolean;
+  personalizedOffers?: boolean;
   createdAt?: string;
   updatedAt?: string;
   

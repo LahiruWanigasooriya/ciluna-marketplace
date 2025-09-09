@@ -290,10 +290,11 @@ const SignupPage: React.FC = () => {
     try {
       await signupValidationSchema.validate(formData, { abortEarly: false });
 
-      const { firstName, lastName, email, password, phone } = formData;
+      const { firstName, lastName, email, password, phone, dateofbirth, country, recieveUpdates, personalizedOffers } = formData;
       const contactNo = phone;
+      const dateOfBirthString = dateofbirth ? dateofbirth.toDate('UTC').toISOString() : undefined; // convert to string
 
-      const res = await createNewUser({ firstName, lastName, email, password, contactNo });
+      const res = await createNewUser({ firstName, lastName, email, password, contactNo, dateofbirth: dateOfBirthString, country, recieveUpdates, personalizedOffers });
 
       if (res.success) {
         setIsSuccess(true);
