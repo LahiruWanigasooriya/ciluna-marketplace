@@ -28,6 +28,7 @@ import MenMenu from "@/components/custom/Submenus/MenMenu";
 import JewelleryMenu from "@/components/custom/Submenus/JewelleryMenu";
 import OccasionWearMenu from "@/components/custom/Submenus/OccasionWearMenu";
 import ScentsMenu from "@/components/custom/Submenus/ScentsMenu";
+import BackButton from "./BackButton";
 
 export default function Navbar({ categories }: any) {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -246,6 +247,7 @@ export default function Navbar({ categories }: any) {
             className="cursor-pointer flex items-center"
             onClick={() => handleNavigation("Home", "/")}
           >
+            <BackButton className="sm:hidden"/>
             <Image
               src={Logo}
               alt="Logo"

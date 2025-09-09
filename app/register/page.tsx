@@ -97,6 +97,7 @@ const SignupForm = ({
             value={formData.titlelabel}
             onChange={(_field: string, value: string) => handleChange("titlelabel", value)}
           />
+          {errors.titlelabel && <p className="text-red-500 text-xs">{errors.titlelabel}</p>}
         </div>
       <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
         <div className="flex flex-col sm:gap-2  sm:flex-row sm:items-center sm:justify-between">
@@ -147,6 +148,7 @@ const SignupForm = ({
             value={formData.country}
             onChange={(_field: string, value: string) => handleChange("country", value)}
           />
+          {errors.country && <p className="text-red-500 text-xs">{errors.country}</p>}
         </div>
 
         <div>
@@ -231,8 +233,8 @@ const SignupForm = ({
                     >
               <p className="font-arial text-[#252525] text-sm">I consent to personalized offers from CILUNA based on my preferences.</p>
             </Checkbox>
-            <Link href="/policyConfig">
-                        <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-arialBold"> Privacy Policy.</span></p>
+            <Link href="">
+            <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-arialBold"> Privacy Policy.</span></p>
 
             </Link>
         </div>
@@ -298,6 +300,7 @@ const SignupPage: React.FC = () => {
 
       if (res.success) {
         setIsSuccess(true);
+        toast.success("User created successfully!");
         router.push("/");
       } else {
         toast.error(res.message || "Failed to create user.");
@@ -320,46 +323,45 @@ const SignupPage: React.FC = () => {
   };
 
   return (
+<>
 
-      <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative">
+  <div className="hidden sm:block">
+    <div className="absolute right-0 top-32 h-[301px] w-[320px] z-20">
+      <Image
+        src={bgpattern}
+        alt="background pattern"
+        fill
+        className="object-right"
+        priority
+      />
+    </div>
+    
+    <div className="absolute left-0 bottom-0 h-[301px] w-[320px] z-20">
+      <Image
+        src={bgpattern}
+        alt="background pattern"
+        fill
+        className="object-right transform scale-x-[-1]"
+        priority
+      />
+    </div>
+  </div>
 
-        <Navbar />
-
-        <main className="flex-grow flex justify-center pt-20 px-4 py-10 relative">
-        
-          <div className="hidden sm:block absolute right-0 top-32 h-[301px] w-[320px]">
-            <Image
-              src={bgpattern}
-              alt="background pattern"
-              fill
-              className="object-right bg-[#e8e8da"
-              priority
-            />
-          </div>
-          <div className="hidden sm:block absolute left-0 bottom-0 h-[301px] w-[320px]">
-            <Image
-              src={bgpattern}
-              alt="background pattern"
-              fill
-              className="object-right bg-[#e8e8da transform scale-x-[-1]"
-              priority
-            />
-          </div>
-
-          
-          <SignupForm
-            formData={formData}
-            errors={errors}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            isLoading={isLoading}
-            isSuccess={isSuccess}
-          />
-        </main>
-
-
-        <Footer />
-      </div>
+  {/* Main content */}
+  <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative z-10">
+    <Navbar />
+    <main className="flex-grow flex justify-center pt-8 sm:pt-16 p-4 relative">
+      <SignupForm
+        formData={formData}
+        errors={errors}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+        isSuccess={isSuccess}
+      />
+    </main>
+  </div>
+</>
   );
 }
 

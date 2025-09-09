@@ -1,4 +1,3 @@
-// app/products/page.tsx
 import React from "react";
 import Image from "next/image";
 import ProductCard from "./ProductCard";
@@ -8,8 +7,8 @@ import { IProduct } from "@/types/product";
 import Sort from "./Sort";
 import Filter from "./Filter";
 import Pagination from "./Pagination";
-import { getCilunaPrice } from "@/lib/cilunaService";
-import toFixed from "@/functions/cilunaPrice";
+//import { getCilunaPrice } from "@/lib/cilunaService";
+///import toFixed from "@/functions/cilunaPrice";
 import { getSubcategoryById } from "@/actions/subcategories/subcategory";
 import { getAllBrands } from "@/actions/brands/brand";
 import { getAllModels } from "@/actions/model/model";
@@ -21,8 +20,8 @@ const ProductPage = async ({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) => {
   const searchParams = await searchParamsPromise;
-  const price = await getCilunaPrice();
-  const cilunaPrice = toFixed(Number(price));
+  //const price = await getCilunaPrice();
+  //const cilunaPrice = toFixed(Number(price));
   const currentPage = parseInt(searchParams.page || "1", 10);
   const search = searchParams.search || "";
   const sortByParam = searchParams.sortBy || "default";
@@ -127,81 +126,92 @@ const ProductPage = async ({
   const hasProducts = products.length > 0;
 
   return (
-    
-        <div className="flex flex-col pb-[32px] md:pb-[36px] lg:pb-[42px] recommend:pb-[48px]">
-
+    <div className="flex flex-col pb-[32px] md:pb-[36px]">
       <div className="relative">
-        <Image src={bannerImage} alt="bannerimg" className="hidden sm:block w-screen h-[468px] object-cover object-top pt-20"
-        style={{ objectPosition: 'center 10%' }}  />
-       
-        
-        <Image src={bannerImage} alt="bannerImage mobile" className="block sm:hidden w-screen h-[468px] object-cover object-center pt-14 "
-        style={{objectPosition: 'center 10%'}}  />
-        
+        <Image
+          src={bannerImage}
+          alt="bannerimg"
+          className="hidden md:block w-screen h-[468px] object-cover object-top mt-[108px]"
+          style={{ objectPosition: "center 10%" }}
+        />
 
-          <div className="absolute bottom-0 w-full h-2/3 sm:h-1/2"
-              style={{
-                backdropFilter: `blur(8px)`,
-                maskImage: `linear-gradient(
+        <Image
+          src={bannerImage}
+          alt="bannerImage mobile"
+          className="block md:hidden w-screen h-[318px] object-cover object-center pt-14 "
+          style={{ objectPosition: "center 10%" }}
+        />
+
+        <div
+          className="absolute bottom-0 w-full h-2/3 sm:h-1/2"
+          style={{
+            backdropFilter: `blur(8px)`,
+            maskImage: `linear-gradient(
                   0deg, 
                   rgba(0,0,0,1) 0%, 
                   rgba(0,0,0,0.7) 40%, 
                   rgba(0,0,0,0) 86.26%
                 )`,
-                WebkitMaskImage: `linear-gradient(
+            WebkitMaskImage: `linear-gradient(
                   0deg, 
                   rgba(0,0,0,1) 0%, 
                   rgba(0,0,0,0.7) 40%, 
                   rgba(0,0,0,0) 86.26%
-                )`
-              }}>
-          </div>
+                )`,
+          }}
+        ></div>
 
-
-          <div className="absolute bottom-0 w-full h-2/3 "
-              style={{
-                background: `linear-gradient(
+        <div
+          className="absolute bottom-0 w-full h-2/3 "
+          style={{
+            background: `linear-gradient(
                   0deg, 
                   rgba(0,0,0,0.6) 0%, 
                   rgba(0,0,0,0.3) 40%, 
                   transparent 86.26%
-                )`
-              }}>
-          </div>
+                )`,
+          }}
+        ></div>
 
-
-          <div className="absolute bottom-0 sm:bottom-4 w-full h-fit flex items-end sm:items-center justify-center ">
-            <div className="text-white text-center  max-w-2xl pt-8 pb-8 pl-4 pr-4">
-              <h2 className="text-3xl sm:text-[40px] font-bold font-kaiseiHarunoumi mb-3">Women's Clothing</h2>
-              <p className="text-sm font-lora sm:text-base sm:leading-6 leading-relaxed">
-                An edit of refined essentials designed to express quiet strength and lasting beauty. Each piece is crafted
-                with intention made to feel effortless, look timeless, and move with you through every moment.
-              </p>
-            </div>
+        <div className="absolute md:top-[50px] bottom-0 w-full h-full flex items-end md:items-center justify-center">
+          <div className="text-white text-center max-w-2xl p-4 md:max-w-[866px] md:w-full">
+            <h2 className="text-2xl md:text-[40px] font- font-kaiseiHarunoUmi mb-3">
+              Women's Clothing
+            </h2>
+            <p className="text-[14px] font-lora font-normal md:text-base sm:leading-6 leading-relaxed">
+              An edit of refined essentials designed to express quiet strength
+              and lasting beauty. Each piece is crafted with intention made to
+              feel effortless, look timeless, and move with you through every
+              moment.
+            </p>
           </div>
-        
+        </div>
       </div>
-       <div className="flex justify-start mt-0"><ProductVarientTab/></div> 
-      
-      <div className="flex flex-col gap-[20px] justify-center  pt-6 pr-4 pb-8 pl-4">
-        <div className="flex flex-row  h-[34px] justify-between items-start font-loraBold">
-          <div className="font-loraBold text-base leading-6 text-[#252525]">{products.length} Products</div>
-        <div className="flex flex-row gap-4 h-[34px]">
-        <button className="cursor-pointer">
+      <div className="flex justify-start mt-0">
+        <ProductVarientTab />
+      </div>
+
+      <div className="flex flex-col gap-[20px] justify-center  max-w-[1440px] mx-auto w-full custom-container md:py-0">
+        <div className="flex flex-row  h-[34px] justify-between items-start font-[Arial] md:pt-8 md:pb-6">
+          <div className="font-bold text-base leading-6">
+            {products.length} Products
+          </div>
+          <div className="flex flex-row gap-4 h-[34px]">
+        <button className="cursor-not-allowed" disabled>
 
           <Sort />
           
         </button>
-        <button className="cursor-pointer">
+          <button className="cursor-not-allowed" disabled>
 
           <Filter />
           
         </button>
-        </div>
+          </div>
         </div>
         {hasProducts ? (
           <>
-            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:justify-start">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:justify-center">
               {products.map((product: IProduct) => (
                 <ProductCard key={product._id.toString()} product={product} />
               ))}

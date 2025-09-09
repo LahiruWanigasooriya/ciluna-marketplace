@@ -42,17 +42,24 @@ interface RangeCalendarProps<T extends DateValue>
   errorMessage?: string
 }
 
+import React, { useState } from "react"
+
 const RangeCalendar = <T extends DateValue>({
   errorMessage,
   className,
   ...props
 }: RangeCalendarProps<T>) => {
+  const [showYearMonthPicker, setShowYearMonthPicker] = useState(false);
+
   return (
     <RangeCalendarPrimitive
       className={ctr(className, "max-w-[17.5rem] sm:max-w-[15.8rem]")}
       {...props}
     >
-      <Calendar.Header />
+      <Calendar.Header 
+      showYearMonthPicker={showYearMonthPicker}
+      setShowYearMonthPicker={setShowYearMonthPicker}
+      />
       <CalendarGrid className="[&_td]:border-collapse [&_td]:px-0">
         <Calendar.GridHeader />
         <CalendarGridBody>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 //import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/custom/Navbar";
@@ -27,26 +27,19 @@ export default function ConditionalLayout({
   const pathname = usePathname();
   const { isMenuOpen } = useMenuStore();
   const hiddenRoutes = ["/login", "/register", "/forgotpw"];
+  const WidthFullPages = ["/", "/product"];
   const isHomePage = pathname === "/";
-  const logoPages = [
-    "/contact",
-    "/checkout",
-    "/profile",
-    "/product",
-    "/categories",
-    "/category",
-    "/cart",
-    "/wishlist",
-    "/policy",
-    "/condition",
-    "/profile/history",
-  ];
-  const isLogoPages = logoPages.includes(pathname);
   const isHiddenRoute = hiddenRoutes.includes(pathname);
+  const isWidthFullPages =
+    WidthFullPages.includes(pathname) || pathname.startsWith("/product/");
   const { setCart } = useCartStore();
   const { setWishlist } = useWishlistStore();
-  const { token } = useAuthStore();
+  const { token, isAuthenticated } = useAuthStore();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       if (token !== null) {
@@ -68,38 +61,40 @@ export default function ConditionalLayout({
 
   const mainClasses = isHiddenRoute
     // ? "md:overflow-hidden h-screen"
-    // : isLogoPages
-    // ? "flex-1 "
-    // : "flex-1 ";
+      // : isLogoPages
+      // ? "flex-1 "
+      // : "flex-1 ";
       ? "min-h-screen overflow-auto"
-  : "flex-grow overflow-auto";
+    : "flex-grow overflow-auto";
+
+  const getContainerClasses = () => {
+    if (isWidthFullPages) {
+      return "flex flex-col min-h-screen relative w-full";
+    }
+      if (isHiddenRoute) {
+    return "flex flex-col min-h-screen relative w-full"; // Login/Register/Forgotpw → full width
+  }
+    return "flex flex-col max-w-[1440px] mx-auto min-h-screen relative"; // Default: max width 1440px for all other pages
+  };
 
   return (
     <div>
-      <div className="flex flex-col max-w-[1920px] mx-auto min-h-screen relative">
+      <div className={getContainerClasses()}>
         {isHomePage && (
           <div className="absolute flex md:left-0 right-0 recommend:pl-24 top-16 md:-top-4 xl:-top-6 justify-center items-center">
             {/* <Image src={HeaderBanner} alt="Header Banner" /> */}
           </div>
         )}
-        {isLogoPages && (
-          <div
-          // className="hidden lg:block absolute inset-0 -z-10"
-          // style={{
-          //   backgroundImage: `url(${BGIMG.src})`,
-          //   backgroundSize: "contain",
-          //   backgroundPosition: "center",
-          //   backgroundRepeat: "no-repeat",
-          // }}
-          />
-        )}
         {!isHiddenRoute && <Navbar categories={categories} />}
+        {!isHiddenRoute && mounted && !isAuthenticated && (
+          <div className="mt-10 md:mt-0 bg-transparent"></div>
+        )}
         <main className={mainClasses} style={{ opacity: isMenuOpen ? 0.1 : 1 }}>
           {children}
         </main>
         {!isHiddenRoute}
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

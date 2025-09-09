@@ -240,3 +240,27 @@ export const paymentValidationSchema = Yup.object().shape({
 export const shoppingValidationSchema = shippingValidationSchema.concat(
   paymentValidationSchema
 );
+
+export const askQuestionsValidationSchema = Yup.object().shape({
+  customerName: Yup
+    .string()
+    .required('Name is required')
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be less than 50 characters')
+    .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces'),
+
+  customerEmail: Yup
+    .string()
+    .required('Email is required')
+    .email('Please enter a valid email address')
+    .max(100, 'Email must be less than 100 characters'),
+
+  customerMessage: Yup
+    .string()
+    .required('Message is required')
+    .min(10, 'Message must be at least 10 characters')
+    .max(1000, 'Message must be less than 1000 characters'),
+
+  keepMeUpdated: Yup
+    .boolean()
+});
