@@ -9,6 +9,7 @@ import { IProduct } from "@/types/product";
 import { ICategory } from "@/types/category";
 import { ISubCategory } from "@/types/subcategory";
 import SubCategoryCard from "../category/SubCategotyCard";
+import ProductVarientTab from "../product/ProductVarientTab";
 
 interface SearchResults {
   products: IProduct[];
@@ -67,21 +68,30 @@ export default async function SearchResultsPage({
   }
 
   return (
-    <div className="xl:pt-[36px] pb-[90px] md:pb-[60px] xl:pb-[50px] recommend:pb-[40px]">
-      <div className="flex flex-col gap-[32px] md:gap-[36px] lg:gap-[42px] recommend:gap-[48px]">
+    // <div className="xl:pt-[36px] pb-[90px] md:pb-[60px] xl:pb-[50px] recommend:pb-[40px]">
+    //   <div className="flex flex-col gap-[32px] md:gap-[36px] lg:gap-[42px] recommend:gap-[48px]">
+        <div className="flex flex-col pb-[32px] md:pb-[36px] !ml-0 !mr-0">
+      <div className="relative">
         <div>
           <Image
             src={Img}
             alt="Search Banner"
-            className="hidden md:block w-full h-auto"
+            // className="hidden md:block w-full h-auto"
+            className="hidden md:block w-screen h-[468px] object-cover object-top mt-[108px]"
+          style={{ objectPosition: "center 10%" }}
           />
           <Image
             src={ImgM}
             alt="Search Banner Mobile"
-            className="block md:hidden w-full h-auto"
+            // className="block md:hidden w-full h-auto"
+             className="block md:hidden w-screen h-[318px] object-cover object-center pt-14 "
+          style={{ objectPosition: "center 10%" }}
           />
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex justify-start mt-0">
+          <ProductVarientTab/>
+        </div>
+        <div className="flex flex-col gap-4 px-24 pb-5">
           <p className="text-white leading-[19px] text-base text-start">
             Search Results for "{query}"
           </p>
@@ -96,7 +106,7 @@ export default async function SearchResultsPage({
               {results.products.length > 0 && (
                 <div className="flex flex-col gap-4">
                   <p className="text-white/70 leading-[19px]">Products</p>
-                  <div className="grid grid-cols-2 md:flex md:flex-wrap gap-4 md:justify-start">
+                  <div className="grid grid-cols-2 md:flex md:flex-wrap gap-4 md:justify-start ">
                     {results.products.map((product: IProduct) => (
                       <ProductCard
                         key={product._id.toString()}

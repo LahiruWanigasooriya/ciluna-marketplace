@@ -32,7 +32,8 @@ const LoginForm = ({
   <div className="w-full max-w-[598px] mx-auto">
   <form
     onSubmit={handleSubmit}
-    className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5   flex flex-1 flex-col space-y-6 w-full lg:w-[598px] bg-[#FFFFFF]/5"
+    // className="rounded-[9px] px-3 py-4 lg:px-4 lg:py-5   flex flex-1 flex-col space-y-6 w-full lg:w-[598px] bg-[#FFFFFF]/5"
+      className="rounded-[9px]   flex flex-1 flex-col space-y-6 w-full lg:w-[598px] bg-[#FFFFFF]/5"
   >
     <div className="flex items-center justify-center space-x-3">
   
@@ -42,7 +43,7 @@ const LoginForm = ({
     <div className="flex flex-col space-y-3 lg:space-y-4">
       <TextField
         label="Email*"
-        className="[&_label]:font-arial font-arial"
+        className="[&_label]:font-arial font-arial [&_label]:!text-base [&_label]:!leading-6 !px-0 !py-0 "
         placeholder="Enter your Email"
         name="email"
         id="email"
@@ -55,7 +56,7 @@ const LoginForm = ({
           type="password"
           isRevealable
           label="Password*"
-           className="[&_label]:font-arial font-arial"
+          className="[&_label]:font-arial font-arial [&_label]:!text-base [&_label]:!leading-6"
           placeholder="Enter your Password"
           value={formData.password}
           onChange={(value: string) => handleChange("password", value)}
@@ -81,7 +82,7 @@ const LoginForm = ({
     <div className="flex flex-col gap-6 pt-52  sm:pt-3   ">
       <Button
         type="submit"
-        className={`w-full  font-arial text-lg text-[#ffffff] bg-black transition-opacity duration-300 ${
+        className={`w-full !h-[56px] font-arial !text-lg !leading-6 text-[#ffffff] bg-black transition-opacity duration-300 !px-8 !py-4 ${
           isLoading ? "opacity-80" : ""
         }`} 
         isDisabled={isLoading || isSuccess}
@@ -89,10 +90,10 @@ const LoginForm = ({
         {isLoading ? (
           <>
             {" "}
-            <Loader2 size={16} className="animate-spin mr-1" /> Sign In
+            <Loader2 size={16} className="animate-spin mr-1 " /> Sign In
           </>
         ) : (
-          "Sign In"
+          "Sign in"
         )}
       </Button>
       <div className="flex items-center justify-center flex-col sm:flex-row space-x-2 font-arial">
@@ -191,7 +192,7 @@ const LoginPage = () => {
 
 
    
-        <div className="flex items-center justify-between space-x-12 w-full relative">
+        <div className="flex items-center justify-between space-x-12 w-full relative ">
           <LoginForm
             formData={formData}
             handleChange={handleChange}
