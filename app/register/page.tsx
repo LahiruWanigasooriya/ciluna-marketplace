@@ -15,12 +15,10 @@ import { toast } from "sonner";
 import CountryDropdown from "@/components/custom/CountryDropdown";
 import { DateField } from "react-aria-components";
 import type {DateValue} from "react-aria-components";
-import Navbar from "@/components/custom/Navbar";
 import { policyConfig } from "@/config/policy";
 import {parseDate} from "@internationalized/date";
 import bgpattern from "@/public/assets/login/bgpattern.png";
 import TitleLabelDropdown from "@/components/TitleDropDown";
-import Footer from "@/components/custom/Footer";
 
 type FormData = {
   titlelabel:string;
@@ -348,7 +346,6 @@ const SignupPage: React.FC = () => {
 
   {/* Main content */}
   <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative z-10">
-    <Navbar />
     <main className="flex-grow flex justify-center pt-8 sm:pt-16 p-4 relative">
       <SignupForm
         formData={formData}
