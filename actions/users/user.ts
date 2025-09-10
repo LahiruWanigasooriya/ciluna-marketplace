@@ -114,6 +114,8 @@ export async function createNewUser(user: IUser) {
       email: user.email,
       password: hashedPassword,
       contactNo: user.contactNo,
+      dateofbirth: user.dateofbirth,
+      country: user.country,
     });
 
     // Save the new user to the database

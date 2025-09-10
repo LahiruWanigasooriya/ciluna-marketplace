@@ -5,6 +5,7 @@ export interface IUser {
   lastName: string;
   nickName?: string;
   gender?: "Male" | "Female" | "Other";
+  dateofbirth?: Date | null;
   addressLine1?: string;
   addressLine2?: string;
   country?: string;
