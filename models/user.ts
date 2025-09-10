@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema(
       enum: ["Male", "Female", "Other"],
     },
     dateofbirth: {
-      type: String,
+      type: Date,
       required: true,
     },
     addressLine1: {
@@ -60,14 +60,6 @@ const UserSchema = new mongoose.Schema(
       type: String, 
       enum: ["user", "admin"], 
       default: "user" 
-    },
-    recieveUpdates: {
-      type: Boolean,
-      default: false,
-    },
-    personalizedOffers: {
-      type: Boolean,
-      default: false,
     },
     activeStatus: {
       type: Boolean,

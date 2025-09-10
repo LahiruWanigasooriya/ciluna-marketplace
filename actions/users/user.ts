@@ -116,8 +116,6 @@ export async function createNewUser(user: IUser) {
       contactNo: user.contactNo,
       dateofbirth: user.dateofbirth,
       country: user.country,
-      recieveUpdates: user.recieveUpdates,
-      personalizedOffers: user.personalizedOffers,
     });
 
     // Save the new user to the database

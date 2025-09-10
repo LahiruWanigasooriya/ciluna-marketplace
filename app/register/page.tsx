@@ -292,11 +292,13 @@ const SignupPage: React.FC = () => {
     try {
       await signupValidationSchema.validate(formData, { abortEarly: false });
 
-      const { firstName, lastName, email, password, phone, dateofbirth, country, recieveUpdates, personalizedOffers } = formData;
+      const { firstName, lastName, email, password, phone, dateofbirth, country} = formData;
       const contactNo = phone;
-      const dateOfBirthString = dateofbirth ? dateofbirth.toDate('UTC').toISOString() : undefined; // convert to string
-
-      const res = await createNewUser({ firstName, lastName, email, password, contactNo, dateofbirth: dateOfBirthString, country, recieveUpdates, personalizedOffers });
+      let dateOfBirthAsDate: Date | null = null;
+      if (dateofbirth) {
+        dateOfBirthAsDate = dateofbirth.toDate("UTC"); //convert DateValue to date object
+      }
+      const res = await createNewUser({ firstName, lastName, email, password, contactNo, dateofbirth: dateOfBirthAsDate, country });
 
       if (res.success) {
         setIsSuccess(true);
