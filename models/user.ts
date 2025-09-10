@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       enum: ["Male", "Female", "Other"],
     },
+    dateofbirth: {
+      type: Date,
+      required: true,
+    },
     addressLine1: {
       type: String,
     },
