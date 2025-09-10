@@ -2,7 +2,7 @@ export interface ISubSubCategory {
   _id?: string;
   name: string;
   description?: string;
-  image: string;
+  image?: string; // Made optional to match model
   subcategoryId: string;
   categoryId?: string;
   isActive?: boolean;
@@ -22,7 +22,7 @@ export interface GetSubSubCategoriesParams {
 export interface CreateSubSubCategoryParams {
   name: string;
   description?: string;
-  image: string;
+  image?: string; // Made optional to match model
   subcategoryId: string;
   categoryId?: string;
   isActive?: boolean;
@@ -46,5 +46,13 @@ export interface CreateSubSubCategoryResponse {
   success: boolean;
   message: string;
   data?: ISubSubCategory;
+  error?: string;
+}
+
+// Added error response interface for consistency
+export interface ErrorResponse {
+  status: number;
+  success: false;
+  message: string;
   error?: string;
 }

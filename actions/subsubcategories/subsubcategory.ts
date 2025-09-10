@@ -9,20 +9,25 @@ import {
 } from "@/types/subsubcategory";
 import ProductModel from "@/models/product";
 
+// Helper function to validate ObjectId
+const isValidObjectId = (id: string): boolean => {
+  return mongoose.Types.ObjectId.isValid(id);
+};
+
 export const getAllSubSubCategories = async ({
   page = 1,
   limit = 12,
   search = "",
   sortBy = "createdAt",
   sortOrder = "desc",
-  subcategoryId,
+  subcategoryId, // Added missing parameter
 }: {
   page?: number;
   limit?: number;
   search?: string;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
-  subcategoryId?: string;
+  subcategoryId?: string; // Added missing parameter
 }): Promise<SubSubCategoryResponse> => {
   try {
     await dbConnectMarketPlace();
@@ -40,6 +45,14 @@ export const getAllSubSubCategories = async ({
 
     // Filter by subcategoryId if provided
     if (subcategoryId) {
+      // Validate ObjectId format
+      if (!isValidObjectId(subcategoryId)) {
+        return {
+          status: 400,
+          success: false,
+          message: "Invalid subcategoryId format",
+        };
+      }
       query.subcategoryId = new mongoose.Types.ObjectId(subcategoryId);
     }
 
@@ -78,12 +91,22 @@ export const getAllSubSubCategories = async ({
   }
 };
 
-export const getSubSubCategoryById = async (subsubcatId: string) => {
+export const getSubSubCategoryById = async (subsubcategoryId: string) => {
   try {
     await dbConnectMarketPlace();
 
+    // Validate ObjectId format
+    if (!isValidObjectId(subsubcategoryId)) {
+      return {
+        status: 400,
+        success: false,
+        message: "Invalid subsubcategoryId format",
+        data: null,
+      };
+    }
+
     // Fetch the subsubcategory by ID
-    const subsubcategory = await SubSubCategoryModel.findById(subsubcatId);
+    const subsubcategory = await SubSubCategoryModel.findById(subsubcategoryId);
     if (!subsubcategory) {
       return {
         status: 404,
@@ -95,7 +118,7 @@ export const getSubSubCategoryById = async (subsubcatId: string) => {
 
     // Fetch all products related to this subsubcategory
     const products = await ProductModel.find({
-      subsubcategory: new mongoose.Types.ObjectId(subsubcatId),
+      subsubcategory: new mongoose.Types.ObjectId(subsubcategoryId),
     });
 
     return {
@@ -134,13 +157,26 @@ export const createSubSubCategory = async (
       };
     }
 
+    // Validate ObjectId format for subcategoryId
+    if (!isValidObjectId(subcategoryId)) {
+      return {
+        status: 400,
+        success: false,
+        message: "Invalid subcategoryId format",
+      };
+    }
+
     // Check if the subsubcategory name already exists within the same subcategory
-    const existingSubSubCategory = await SubSubCategoryModel.findOne({ name, subcategoryId });
+    const existingSubSubCategory = await SubSubCategoryModel.findOne({
+      name,
+      subcategoryId,
+    });
     if (existingSubSubCategory) {
       return {
         status: 400,
         success: false,
-        message: "Subsubcategory with this name already exists in the specified subcategory",
+        message:
+          "Subsubcategory with this name already exists in the specified subcategory",
       };
     }
 
@@ -174,6 +210,15 @@ export const updateSubSubCategory = async (
   try {
     await dbConnectMarketPlace();
 
+    // Validate ObjectId format for subsubcategoryId
+    if (!isValidObjectId(subsubcategoryId)) {
+      return {
+        status: 400,
+        success: false,
+        message: "Invalid subsubcategoryId format",
+      };
+    }
+
     // Validate required fields
     const { name, description, image, subcategoryId } = subsubcategoryData;
     if (!name || !subcategoryId) {
@@ -184,8 +229,19 @@ export const updateSubSubCategory = async (
       };
     }
 
+    // Validate ObjectId format for subcategoryId
+    if (!isValidObjectId(subcategoryId)) {
+      return {
+        status: 400,
+        success: false,
+        message: "Invalid subcategoryId format",
+      };
+    }
+
     // Check if the subsubcategory exists
-    const existingSubSubCategory = await SubSubCategoryModel.findById(subsubcategoryId);
+    const existingSubSubCategory = await SubSubCategoryModel.findById(
+      subsubcategoryId
+    );
     if (!existingSubSubCategory) {
       return {
         status: 404,
@@ -204,7 +260,8 @@ export const updateSubSubCategory = async (
       return {
         status: 400,
         success: false,
-        message: "Subsubcategory with this name already exists in the specified subcategory",
+        message:
+          "Subsubcategory with this name already exists in the specified subcategory",
       };
     }
 
@@ -240,6 +297,15 @@ export const deleteSubSubCategory = async (subsubcategoryId: string) => {
         status: 400,
         success: false,
         message: "Subsubcategory ID is required",
+      };
+    }
+
+    // Validate ObjectId format
+    if (!isValidObjectId(subsubcategoryId)) {
+      return {
+        status: 400,
+        success: false,
+        message: "Invalid subsubcategoryId format",
       };
     }
 
