@@ -124,7 +124,7 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between relative mx-auto mb-8 md:mb-0 h-screen border">
+    <div className="flex flex-col justify-between relative mx-auto mb-8 md:mb-0 h-screen">
       <div className="hidden md:block absolute -right-0 top-[132px]  h-[301px] w-[320px]">
         <Image
           src={bgpattern}
