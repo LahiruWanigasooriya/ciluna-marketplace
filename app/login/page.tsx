@@ -11,8 +11,6 @@ import { checkUserAndGenerateToken } from "@/actions/users/user";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 import bgpattern from '@/public/assets/login/bgpattern.png';
-import Footer from "@/components/custom/Footer";
-import Navbar from "@/components/custom/Navbar";
 
 const LoginForm = ({
   formData,
@@ -69,7 +67,7 @@ const LoginForm = ({
           >
             <p className="font-arial text-[#252525] text-sm">Remember me</p>
           </Checkbox>
-          <Link href="/#">
+          <Link href="/forgotpw">
             <p className="text-[#252525] cursor-pointer text-sm hover:opacity-75 font-arial">
               Forgot your password?
             </p>
@@ -166,7 +164,6 @@ const LoginPage = () => {
   return (
    
     <div className="flex items-start flex-col  w-full relative justify-between text-black min-h-screen overflow-y-auto overflow-x-hidden sm:overflow-hidden ">
-      <Navbar />
             <div className="hidden sm:block absolute -right-0 top-36  h-[301px] w-[320px]" >
           <Image 
           src={bgpattern}
