@@ -80,7 +80,7 @@ const TextField = ({
             aria-label="Toggle password visibility"
             onPress={handleTogglePasswordVisibility}
          className="absolute right-4 top-3 transform-translate-y-1/2 bg-transparent text-muted-fg focus:outline-none focus-visible:ring-1 border-none focus-visible:ring-primary rounded " >
-            <>{isPasswordVisible ? <IconEyeClosed /> : <IconEye />}</>
+            <>{isPasswordVisible ? <IconEyeClosed className="!w-[16.13px] !h-[13.13px] sm:!w-[18px] sm:!h-[18px]" /> : <IconEye className="!w-[16.13px] !h-[13.13px] sm:!w-[18px] sm:!h-[18px]" />}</>
           </ButtonPrimitive>
         ) : isPending ? (
           <Loader variant="spin" data-slot="suffix" />
