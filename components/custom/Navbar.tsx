@@ -16,13 +16,18 @@ import useMenuStore from "@/store/useMenuStore";
 import { SearchField } from "@/components/ui/search-field";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
+//import { clearAuthToken } from "@/actions/utils/auth";
 import { useAuthStore } from "@/store/authStore";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import MainMenu from "./MainMenu";
 import BackButton from "./BackButton";
+//import { Skeleton } from "@/components/ui";
+//import AuthWrapper from "./AuthWrapper";
+//import Cookies from "js-cookie";
 
 export default function Navbar() {
   const modalRef = useRef<HTMLDivElement>(null);
+  //  const authRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const { isMenuOpen, toggleMenu } = useMenuStore();
@@ -44,6 +49,7 @@ export default function Navbar() {
   useEffect(() => {
     setMounted(true);
   }, []);
+  //  const [authPopup, setAuthPopup] = useState(false);
 
   const shadowIntensity = useTransform(scrollY, [0, 50], [0, 0.5]);
   const shadowStyle = useTransform(
@@ -52,6 +58,7 @@ export default function Navbar() {
   );
 
   useClickOutside(modalRef, () => setSearchOpen(false));
+  //  useClickOutside(authRef, () => setAuthPopup(false));
   useClickOutside(menuRef, () => toggleMenu());
   useClickOutside(profileRef, () => setProfileSelect(false));
   useDisableScroll(isMenuOpen);
@@ -104,6 +111,13 @@ export default function Navbar() {
     }
   };
 
+  {
+    /*  const handleAuthPopup = () => {
+    setAuthPopup(true);
+    setIsNavbarActive(true);
+  }; */
+  }
+
   const handleLogout = async () => {
     setIsNavbarActive(true);
     setTimeout(() => {
@@ -127,6 +141,21 @@ export default function Navbar() {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
   };
+
+  //  const popupVariants2 = {
+  //    hidden: { opacity: 0, x: 20 },
+  //    visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+  //  };
+
+  //  const handleProfileClick = () => {
+  //     toggleMenu();
+  //     setIsNavbarActive(true);
+  //   };
+
+  //   const closePopup = () => {
+  //     setAuthPopup(false);
+  //     setIsNavbarActive(true);
+  //   };
 
   return (
     <div
@@ -404,15 +433,21 @@ export default function Navbar() {
                 </button>
               </motion.div>
             )}
+
+            {/* {authPopup && (
+              <div className="fixed inset-0 flex justify-center items-center py-4 bg-fg/80 z-50">
+                <AuthWrapper ref={authRef} closePopup={closePopup} />
+              </div>
+            )} */}
           </div>
           <div className="md:hidden">
-          <MainMenu
-            isNavbarActive={isNavbarActive}
-            isHomePage={isHomePage}
-            profileSelect={profileSelect}
-            setIsNavbarActive={setIsNavbarActive}
-          />
-        </div>
+            <MainMenu
+              isNavbarActive={isNavbarActive}
+              isHomePage={isHomePage}
+              profileSelect={profileSelect}
+              setIsNavbarActive={setIsNavbarActive}
+            />
+          </div>
         </div>
 
         <div className="hidden md:block">
