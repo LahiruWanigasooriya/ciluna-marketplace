@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import { Heart, Menu, CircleX, ChevronRight } from "lucide-react";
+import { Heart, Menu, CircleX } from "lucide-react";
 import { BsHandbag } from "react-icons/bs";
 import Logo from "../../public/assets/logo.webp";
 import MobLogo from "../../public/assets/mobLogo.webp";
@@ -16,26 +16,15 @@ import useMenuStore from "@/store/useMenuStore";
 import { SearchField } from "@/components/ui/search-field";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
-//import { clearAuthToken } from "@/actions/utils/auth";
 import { useAuthStore } from "@/store/authStore";
 import useDisableScroll from "@/hooks/useDisableScroll";
-import { ICategory } from "@/types/category";
-//import { Skeleton } from "@/components/ui";
-//import AuthWrapper from "./AuthWrapper";
-//import Cookies from "js-cookie";
-import WomenMenu from "@/components/custom/Submenus/WomenMenu";
-import MenMenu from "@/components/custom/Submenus/MenMenu";
-import JewelleryMenu from "@/components/custom/Submenus/JewelleryMenu";
-import OccasionWearMenu from "@/components/custom/Submenus/OccasionWearMenu";
-import ScentsMenu from "@/components/custom/Submenus/ScentsMenu";
+import MainMenu from "./MainMenu";
 import BackButton from "./BackButton";
 
-export default function Navbar({ categories }: any) {
+export default function Navbar() {
   const modalRef = useRef<HTMLDivElement>(null);
-  //  const authRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const { isMenuOpen, toggleMenu } = useMenuStore();
   const router = useRouter();
   const pathname = usePathname();
@@ -49,36 +38,12 @@ export default function Navbar({ categories }: any) {
   const { token, setAuth, clearAuth, isAuthenticated } = useAuthStore();
   const [profileSelect, setProfileSelect] = useState(false);
   const [mobProfileSelect, setmobProfileSelect] = useState(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isMainMenuActive, setIsMainMenuActive] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
+  const [isNavbarActive, setIsNavbarActive] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-  //  const [authPopup, setAuthPopup] = useState(false);
-  const [isNavbarActive, setIsNavbarActive] = useState(false);
-
-  // Dummy data for categories
-  const dummyCategories: ICategory[] = [
-    { _id: "1", name: "Women", component: WomenMenu },
-    { _id: "2", name: "Men", component: MenMenu },
-    { _id: "3", name: "Jewellery", component: JewelleryMenu },
-    { _id: "4", name: "Occasion Wear", component: OccasionWearMenu },
-    { _id: "5", name: "Scents", component: ScentsMenu },
-  ];
-
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeMobileMenu, setActiveMobileMenu] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (categories && categories.length > 0) {
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [categories]);
 
   const shadowIntensity = useTransform(scrollY, [0, 50], [0, 0.5]);
   const shadowStyle = useTransform(
@@ -87,11 +52,9 @@ export default function Navbar({ categories }: any) {
   );
 
   useClickOutside(modalRef, () => setSearchOpen(false));
-  //  useClickOutside(authRef, () => setAuthPopup(false));
   useClickOutside(menuRef, () => toggleMenu());
   useClickOutside(profileRef, () => setProfileSelect(false));
-  useClickOutside(mobileMenuRef, () => setMobileMenuOpen(false));
-  useDisableScroll(isMenuOpen || isMobileMenuOpen); // Added isMobileMenuOpen to disable scroll
+  useDisableScroll(isMenuOpen);
 
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -105,45 +68,27 @@ export default function Navbar({ categories }: any) {
   useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.scrollY > 10;
-      if (
-        scrolled ||
-        !isHomePage ||
-        isMenuOpen ||
-        profileSelect ||
-        isMainMenuActive
-      ) {
+      if (scrolled || !isHomePage || isMenuOpen || profileSelect) {
         setIsNavbarActive(true);
       } else {
         setIsNavbarActive(false);
       }
-
       setShadow(scrolled);
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
-
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomePage, isMenuOpen, profileSelect, isMainMenuActive]);
+  }, [isHomePage, isMenuOpen, profileSelect]);
 
   const handleNavigation = (label: string, href: string) => {
     if (!isHomePage) setIsNavbarActive(true);
-    setMobileMenuOpen(false); // Close mobile menu on navigation
     router.push(href);
   };
-
-  {
-    /*
-    const toggleSearch = () => {
-    setSearchOpen(!searchOpen);
-    setIsNavbarActive(true);
-  }; */
-  }
 
   const handleAuthAction = async () => {
     if (token) {
       try {
-        // await clearAuthToken();
         clearAuth();
         localStorage.removeItem("wishlist-storage");
         localStorage.removeItem("cart-storage");
@@ -158,13 +103,6 @@ export default function Navbar({ categories }: any) {
       router.push("/login");
     }
   };
-
-  {
-    /*  const handleAuthPopup = () => {
-    setAuthPopup(true);
-    setIsNavbarActive(true);
-  }; */
-  }
 
   const handleLogout = async () => {
     setIsNavbarActive(true);
@@ -188,31 +126,6 @@ export default function Navbar({ categories }: any) {
   const popupVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  };
-
-  //  const popupVariants2 = {
-  //    hidden: { opacity: 0, x: 20 },
-  //    visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-  //  };
-
-  //  const handleProfileClick = () => {
-  //     toggleMenu();
-  //     setIsNavbarActive(true);
-  //   };
-
-  //   const closePopup = () => {
-  //     setAuthPopup(false);
-  //     setIsNavbarActive(true);
-  //   };
-
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-
-  const subMenus: Record<string, React.FC> = {
-    Women: WomenMenu,
-    Men: MenMenu,
-    Jewellery: JewelleryMenu,
-    "Occasion Wear": OccasionWearMenu,
-    Scents: ScentsMenu,
   };
 
   return (
@@ -242,12 +155,12 @@ export default function Navbar({ categories }: any) {
         </div>
       </div>
       <div className="flex flex-col items-center justify-between relative">
-        <div className="flex w-full max-w-[1440px] mx-auto md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px] md:pb-[8px] p-[16px] md:pt-[20px] xl:pt-[24px] gap-[12px] lg:gap-[24px] ">
+        <div className="flex w-full max-w-[1440px] mx-auto md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px] md:pb-[8px] p-[16px] md:pt-[20px] xl:pt-[24px] gap-[12px] lg:gap-[24px]">
           <div
             className="cursor-pointer flex items-center"
             onClick={() => handleNavigation("Home", "/")}
           >
-            <BackButton className="sm:hidden"/>
+            <BackButton className="sm:hidden" />
             <Image
               src={Logo}
               alt="Logo"
@@ -341,31 +254,16 @@ export default function Navbar({ categories }: any) {
                   </div>
                 )}
               </Link>
-
-              <div className="flex md:hidden">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(!isMobileMenuOpen);
-                    setIsNavbarActive(true);
-                  }}
-                  aria-label="Toggle mobile menu"
-                >
-                  <Menu
-                    className={`h-[24px] w-[24px] ${
-                      isNavbarActive ? "text-black" : "text-white"
-                    }`}
-                  />
-                </button>
-              </div>
             </div>
-            <div className="items-center justify-center hidden md:flex md:ml-[12px] lg:ml-[16px] ">
+
+            <div className="items-center justify-center hidden md:flex md:ml-[12px] lg:ml-[16px]">
               {mounted && isAuthenticated ? (
                 <>
                   <div className="flex items-center w-full">
                     <span
                       className={`font-lora font-normal not-italic text-[14px] leading-[20px] tracking-[0%] cursor-pointer hidden md:flex ${
                         isNavbarActive ? "text-lightBlack" : "text-white"
-                      } `}
+                      }`}
                     >
                       C Cash : 1,209,436.26
                       <div
@@ -373,7 +271,7 @@ export default function Navbar({ categories }: any) {
                           isNavbarActive ? "bg-lightBlack" : "bg-white"
                         }`}
                       ></div>
-                      C Cash : 4,000
+                      C USD : 4,000
                     </span>
                   </div>
                   <div
@@ -413,7 +311,6 @@ export default function Navbar({ categories }: any) {
                         </Link>
                         <Link
                           href="#"
-                          // href="/profile/history"
                           className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
                             pathname === "/profile/history"
                               ? "font-[Arial] font-bold"
@@ -507,160 +404,25 @@ export default function Navbar({ categories }: any) {
                 </button>
               </motion.div>
             )}
-            {/* {authPopup && (
-              <div className="fixed inset-0 flex justify-center items-center py-4 bg-fg/80 z-50">
-                <AuthWrapper ref={authRef} closePopup={closePopup} />
-              </div>
-            )} */}
           </div>
+          <div className="md:hidden">
+          <MainMenu
+            isNavbarActive={isNavbarActive}
+            isHomePage={isHomePage}
+            profileSelect={profileSelect}
+            setIsNavbarActive={setIsNavbarActive}
+          />
         </div>
-        <div
-          className={` mx-auto w-[80%] max-w-[1248px] hidden md:flex ${
-            isNavbarActive
-              ? "line-gradient-header h-[1px]"
-              : "line-gradient-header h-[0.5px]"
-          }`}
-        ></div>
-
-        <div
-          className={`rounded-[9px] items-center justify-between border-none h-[50px] px-4 md:flex hidden`}
-        >
-          <div className="flex flex-row overflow-x-auto no-scrollbar md:gap-[16px] lg:gap-[24px]">
-            {dummyCategories.map((data: ICategory) => (
-              <Link
-                key={data._id}
-                href={`#`}
-                //href={`/subcategories/${data._id}`}
-                className="cursor-pointer border border-transparent hover:border-solid hover:border-black px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px] "
-                onMouseEnter={() => {
-                  if (!profileSelect) {
-                    setActiveMenu(data.name);
-                    setIsMainMenuActive(true);
-                    setIsNavbarActive(true);
-                  }
-                }}
-                onMouseLeave={() => {
-                  setActiveMenu(null);
-                  setIsMainMenuActive(false);
-                  if (!profileSelect && isHomePage) {
-                    setIsNavbarActive(false);
-                  }
-                }}
-              >
-                {activeMenu === data.name && (
-                  <div className="absolute left-0 shadow-sm w-full  z-10 bg-[#FFFFFFF5] mt-[28px]">
-                    {React.createElement(data.component)}
-                  </div>
-                )}
-                <p
-                  className={`text-xs md:text-[14px] ${
-                    isNavbarActive ? "text-lightBlack" : "text-white"
-                  }`}
-                >
-                  {data?.name}
-                </p>
-              </Link>
-            ))}
-          </div>
         </div>
 
-        {isMobileMenuOpen && (
-          <div
-            ref={mobileMenuRef}
-            className={`md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-[16px] overflow-y-auto ${
-              mounted && isAuthenticated ? "mt-0" : "mt-[40px]"
-            }`}
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between mb- gap-[16px]">
-              {mounted && isAuthenticated && !activeMobileMenu ? (
-                <>
-                  <Link
-                    href="/profile"
-                    className={`flex items-center relative cursor-pointer justify-center rounded-full bg-lightGreen text-gray font-arial text-sm w-[52px] h-[52px] aspect-square `}
-                    onClick={() => {
-                      setProfileSelect(false);
-                      setMobileMenuOpen(!isMobileMenuOpen);
-                      setIsNavbarActive(true);
-                    }}
-                  >
-                    <Image
-                      src={profileIcon}
-                      alt="Profile Icon"
-                      className="object-contain hover:cursor-pointer"
-                      width={48}
-                      height={48}
-                    />
-                  </Link>
-
-                  <div className="flex w-full flex-col">
-                    <div className="font-[Arial] font-bold text-[16px] leading-[24px] text-lightBlack">
-                      Hiran Anuraja
-                    </div>
-                    <div className="font-[Arial] text-[14px] leading-[20px] text-grayNeutralFg">
-                      Last login : Yesterday 11.39am
-                    </div>
-                  </div>
-                </>
-              ) : (
-                ""
-              )}
-
-              {activeMobileMenu ? (
-                <button
-                  onClick={() => setActiveMobileMenu(null)}
-                  className="text-[16px] text-gray-600"
-                >
-                  ❮&nbsp;&nbsp; Back
-                </button>
-              ) : (
-                <div />
-              )}
-              <button
-                className="pb-[8px] "
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setActiveMobileMenu(null);
-                }}
-              >
-                <CircleX size={32} />
-              </button>
-            </div>
-
-            {/* Submenu View */}
-            {activeMobileMenu ? (
-              <div>{React.createElement(subMenus[activeMobileMenu])}</div>
-            ) : (
-              // Main Menu View
-              <div className="space-y-[24px] text-lg font-semibold mt-[16px]">
-                {mounted && isAuthenticated ? (
-                  <div className="flex flex-col gap-[8px] bg-lightgray p-[8px] rounded-[8px]">
-                    <span className="flex justify-between font-[Arial] font-normal text-[16px] leading-[24px]">
-                      C Cash <span className="font-bold"> 1,209,436.26 </span>
-                    </span>
-                    <span className="flex justify-between font-[Arial] font-normal text-[16px] leading-[24px]">
-                      C USD <span className="font-bold"> 4,000 </span>
-                    </span>
-                  </div>
-                ) : (
-                  ""
-                )}
-                {Object.keys(subMenus).map((item) => (
-                  <div
-                    key={item}
-                    className="flex justify-between items-center border-b pb-4 cursor-pointer"
-                    onClick={() => setActiveMobileMenu(item)}
-                  >
-                    <span>{item}</span>
-                    <span>
-                      <ChevronRight />
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+        <div className="hidden md:block">
+          <MainMenu
+            isNavbarActive={isNavbarActive}
+            isHomePage={isHomePage}
+            profileSelect={profileSelect}
+            setIsNavbarActive={setIsNavbarActive}
+          />
+        </div>
       </div>
     </div>
   );

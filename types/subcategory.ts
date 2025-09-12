@@ -1,13 +1,13 @@
 export interface ISubCategory {
-    category: string;
-    _id?: string;
-    name: string; 
-    description?: string; 
-    image: string; 
-    isActive?: boolean; 
-    createdAt?: string; 
-    updatedAt?: string; 
-  }
+  category: string;
+  _id?: string;
+  name: string;
+  description?: string;
+  image: string;
+  isActive?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
   export interface GetSubCategoriesParams {
     page?: number;
