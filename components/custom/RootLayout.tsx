@@ -85,7 +85,7 @@ export default function ConditionalLayout({
             {/* <Image src={HeaderBanner} alt="Header Banner" /> */}
           </div>
         )}
-        <Navbar categories={categories} />
+        <Navbar />
         <main className={mainClasses} style={{ opacity: isMenuOpen ? 0.1 : 1 }}>
           {children}
         </main>
