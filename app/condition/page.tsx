@@ -5,7 +5,7 @@ import { conditionConfig } from "@/config/condition";
 
 const page = () => {
   return (
-    <div className="flex flex-col gap-12 text-white">
+    <div className="hidden flex-col gap-12 text-white">
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-3 items-center md:items-start">
           <Title title="Terms & Conditions" />

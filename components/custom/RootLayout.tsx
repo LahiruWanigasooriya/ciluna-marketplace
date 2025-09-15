@@ -85,14 +85,10 @@ export default function ConditionalLayout({
             {/* <Image src={HeaderBanner} alt="Header Banner" /> */}
           </div>
         )}
-        {!isHiddenRoute && <Navbar categories={categories} />}
-        {!isHiddenRoute && mounted && !isAuthenticated && (
-          <div className="mt-10 md:mt-0 bg-transparent"></div>
-        )}
+        <Navbar categories={categories} />
         <main className={mainClasses} style={{ opacity: isMenuOpen ? 0.1 : 1 }}>
           {children}
         </main>
-        {!isHiddenRoute}
       </div>
       <Footer />
     </div>

@@ -11,7 +11,7 @@ import { checkUserAndGenerateToken } from "@/actions/users/user";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 import bgpattern from '@/public/assets/login/bgpattern.png';
-import Navbar from "@/components/custom/Navbar";
+
 
 const LoginForm = ({
   formData,
@@ -31,9 +31,9 @@ const LoginForm = ({
   <div className="w-full max-w-[598px] mx-auto">
   <form
     onSubmit={handleSubmit}
-      className="rounded-[9px] px-3 py-4 lg:px-0 lg:py-0   flex flex-1 flex-col space-y-6 w-full lg:w-full bg-[#FFFFFF]/5"
+      className="rounded-[9px]   flex flex-1 flex-col space-y-6 w-full lg:w-full bg-[#FFFFFF]/5"
   >
-    <div className="flex items-center justify-center space-x-3">
+    <div className="flex items-center justify-center space-x-3 ">
   
       <Title title="Login" className="mt-20 text-2xl lg:text-[28px] leading-[32px] font-kaiseiHarunoUmi font-bold text-[#252525]" />
     </div>
@@ -43,9 +43,7 @@ const LoginForm = ({
       <TextField 
             label="Email*"
             className="
-
-              [&_label]:font-arial font-arial [&_label]:!text-base [&_label]:!leading-6
-              
+              [&_label]:font-arial font-arial [&_label]:!text-base [&_label]:!leading-6 
               !w-[343px] sm:!w-[598px] !max-w-none
               [&>div]:!w-[343px] sm:[&>div]:!w-[598px] [&>div]:!max-w-none 
               [&>div>input]:!w-[343px] sm:[&>div>input]:!w-[598px] [&>div>input]:!max-w-none 
@@ -66,7 +64,6 @@ const LoginForm = ({
           label="Password*"
         className="
           [&_label]:font-arial font-arial [&_label]:!text-base [&_label]:!leading-6
-          
           !w-[343px] sm:!w-[598px] !max-w-none
           [&>div]:!w-[343px] sm:[&>div]:!w-[598px] [&>div]:!max-w-none 
           [&>div>input]:!w-[343px] sm:[&>div>input]:!w-[598px] [&>div>input]:!max-w-none 
@@ -88,7 +85,7 @@ const LoginForm = ({
           >
             <p className="font-arial text-[#252525] text-sm">Remember me</p>
           </Checkbox>
-          <Link href="/#">
+          <Link href="/forgotpw">
             <p className="text-[#252525] cursor-pointer text-sm hover:opacity-75 font-arial">
               Forgot your password?
             </p>
@@ -97,10 +94,10 @@ const LoginForm = ({
       </div>
     </div>
 
-    <div className="flex flex-col gap-6 pt-52  sm:pt-3 items-center justify-center">
+    <div className="flex flex-col gap-6 pt-52  sm:pt-3 items-center justify-center mx-auto" >
       <Button
         type="submit"
-        className={`w-[343px] sm:w-full !h-[56px] font-arial !text-lg !leading-6 text-[#ffffff] bg-black transition-opacity duration-300 !px-8 !py-4 ${
+        className={`w-[343px] sm:!w-[598px] !h-[56px] font-arial !text-lg !leading-6 text-[#ffffff] bg-black transition-opacity duration-300 !px-8 !py-4 ${
           isLoading ? "opacity-80" : ""
         }`} 
         isDisabled={isLoading || isSuccess}
@@ -186,7 +183,6 @@ const LoginPage = () => {
   return (
    
     <div className="flex items-start flex-col  w-full relative justify-between text-black min-h-screen overflow-y-auto overflow-x-hidden sm:overflow-hidden ">
-      <Navbar />
             <div className="hidden sm:block absolute -right-0 top-36  h-[301px] w-[320px]" >
           <Image 
           src={bgpattern}

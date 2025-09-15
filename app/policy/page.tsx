@@ -3,9 +3,10 @@ import { Dot } from "lucide-react";
 import React from "react";
 import { policyConfig } from "@/config/policy";
 
+
 const page = () => {
   return (
-    <div className="flex flex-col gap-12 text-white">
+    <div className="flex-col gap-12 text-white hidden">
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-3 items-center md:items-start">
           <Title title="Privacy Policy" />

@@ -15,12 +15,10 @@ import { toast } from "sonner";
 import CountryDropdown from "@/components/custom/CountryDropdown";
 import { DateField } from "react-aria-components";
 import type {DateValue} from "react-aria-components";
-import Navbar from "@/components/custom/Navbar";
 import { policyConfig } from "@/config/policy";
 import {parseDate} from "@internationalized/date";
 import bgpattern from "@/public/assets/login/bgpattern.png";
 import TitleLabelDropdown from "@/components/TitleDropDown";
-import Footer from "@/components/custom/Footer";
 
 type FormData = {
   titlelabel:string;
@@ -81,15 +79,15 @@ const SignupForm = ({
 }) => {
   return (
     
-    <div className="w-full max-w-[598px]  mx-auto">
+    <div className="w-full max-w-[598px] !min-w-[343px]  mx-auto">
 
     <form
       onSubmit={handleSubmit}
-      className="max-w-[598px]  mx-auto rounded-[9px] px-3 py-4 lg:px-4 lg:py-5 flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
+      className="max-w-[598px] min-w-[343px] mx-auto rounded-[9px]  flex flex-1 flex-col space-y-6 w-full bg-[#FFFFFF]/5"
     >
-      <div className="flex items-center justify-center space-x-2 text-[#252525] mt-16">
+      <div className="flex items-center justify-center space-x-2 text-[#252525] mt-16 w-full">
         
-        <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  text-2xl lg:text-[32px]" />
+        <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  !text-2xl !leading-[32px] md:!text-[26px] md:!leading-[32px] lg:!text-[28px] lg:!leading-[32px]" />
       </div>
 
         <div>
@@ -106,7 +104,7 @@ const SignupForm = ({
             label="First Name*"
             placeholder="Enter first name"
             value={formData.firstName}
-            className="w-full  "
+            className="w-full [&_label]:!text-base [&_label]:!leading-6 "
             onChange={(value: string) => handleChange("firstName", value)}
           />
           {errors.firstName && <p className="text-red-500 text-xs">{errors.firstName}</p>}
@@ -117,7 +115,7 @@ const SignupForm = ({
             label="Last Name*"
             placeholder="Enter last name"
             value={formData.lastName}
-            className="w-full "
+            className="w-full [&_label]:!text-base [&_label]:!leading-6 "
             onChange={(value: string) => handleChange("lastName", value)}
           />
           {errors.lastName && <p className="text-red-500 text-xs">{errors.lastName}</p>}
@@ -127,11 +125,11 @@ const SignupForm = ({
 
 
       <div className="w-full">
-        <label className="text-sm text-[#252525] font-medium mb-1 block">
+        <label className=" [&_label]:!text-base [&_label]:!leading-6 text-[#252525] font-medium mb-1 block ">
           Date of Birth*
         </label>
         <DatePicker
-          className="w-full"
+          className="w-full "
           placeholder="Select date of birth"
           onChange={(value) => {
             const date = value ? value.toDate("UTC") : null;
@@ -156,9 +154,10 @@ const SignupForm = ({
             label="Email*"
             placeholder="Enter email"
             value={formData.email}
-            className="w-full"
+            className="w-full [&_label]:!text-base [&_label]:!leading-6"
             onChange={(value: string) => handleChange("email", value)}
           />
+          
           {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
         </div>
 
@@ -167,7 +166,7 @@ const SignupForm = ({
             label="Confirm Email*"
             placeholder="Enter email again"
             value={formData.confirmemail}
-            className="w-full"
+            className="w-full [&_label]:!text-base [&_label]:!leading-6"
             onChange={(value: string) => handleChange("confirmemail", value)}
           />
           {errors.confirmemail && <p className="text-red-500 text-xs">{errors.confirmemail}</p>}
@@ -179,10 +178,10 @@ const SignupForm = ({
         </div>
 
         <div className="relative w-full">
-          <label className="text-sm text-[#252525] font-arial flex items-center gap-1 ">
+          <label className=" [&_label]:!text-base [&_label]:!leading-6 text-[#252525] font-arial flex items-center gap-1 ">
             Password* 
             <div className="relative group cursor-pointer">  
-              <Info  className="h-4 w-4 text-black" />
+              <Info  className="h-[18px] w-[18px] text-black" />
               <div className="absolute left-6 top-1/2 mt-0 mb-0 -translate-y-1/2 bg-gray-500 text-black text-xs px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
               Password must contain 8 characters.
               </div>
@@ -193,7 +192,7 @@ const SignupForm = ({
             type="password"
             isRevealable
             placeholder="Enter your password"
-            className="w-full"
+            className="w-full [&_label]:!text-base [&_label]:!leading-6 "
             value={formData.password}
             onChange={(value: string) => handleChange("password", value)}
           
@@ -209,12 +208,12 @@ const SignupForm = ({
             label="Confirm Password*"
             placeholder="Confirm  your password"
             value={formData.confirmpassword}
-            className="w-full"
+            className="w-full [&_label]:!text-base [&_label]:!leading-6"
             onChange={(value: string) => handleChange("confirmpassword", value)}
           />
           {errors.confirmpassword && <p className="text-red-500 text-xs">{errors.confirmpassword}</p>}
         </div>
-        
+
         <div className="flex flex-col gap-[16px]">
             <Checkbox
               isSelected={formData.recieveUpdates}
@@ -239,10 +238,10 @@ const SignupForm = ({
             </Link>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 ">
           <Button
             type="submit"
-            className={`w-full font-arial text-lg leading-6 bg-black text-white transition-opacity duration-300 ${
+            className={`!w-full !h-[56px] font-arial font-normal !text-lg leading-6 !py-4 !px-8 bg-[#252525] text-white transition-opacity duration-300 ${
               isLoading ? "opacity-80" : ""
             }`}
             isDisabled={isLoading || isSuccess}
@@ -252,9 +251,9 @@ const SignupForm = ({
           </Button>
 
           <div className="flex items-center justify-center space-x-2 mt-5">
-            <p className="text-[#252525] font-arial text-sm">Already have a CILUNA account? </p>
+            <p className="text-[#252525] font-arial text-base">Already have a CILUNA account? </p>
             <Link href="/login">
-              <p className="text-[#252525] cursor-pointer font-arialBold  text-sm hover:opacity-75">Login</p>
+              <p className="text-[#252525] cursor-pointer font-arialBold  text-base hover:opacity-75">Login</p>
             </Link>
           </div>
         </div>
@@ -292,10 +291,13 @@ const SignupPage: React.FC = () => {
     try {
       await signupValidationSchema.validate(formData, { abortEarly: false });
 
-      const { firstName, lastName, email, password, phone } = formData;
+      const { firstName, lastName, email, password, phone, dateofbirth, country} = formData;
       const contactNo = phone;
-
-      const res = await createNewUser({ firstName, lastName, email, password, contactNo });
+      let dateOfBirthAsDate: Date | null = null;
+      if (dateofbirth) {
+        dateOfBirthAsDate = dateofbirth.toDate("UTC"); //convert DateValue to date object
+      }
+      const res = await createNewUser({ firstName, lastName, email, password, contactNo, dateofbirth: dateOfBirthAsDate, country });
 
       if (res.success) {
         setIsSuccess(true);
@@ -348,7 +350,6 @@ const SignupPage: React.FC = () => {
 
   {/* Main content */}
   <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative z-10">
-    <Navbar />
     <main className="flex-grow flex justify-center pt-8 sm:pt-16 p-4 relative">
       <SignupForm
         formData={formData}

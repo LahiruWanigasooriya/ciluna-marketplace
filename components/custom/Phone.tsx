@@ -114,12 +114,12 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
           </button>
           <input
             type="text"
-            value={value?.replace(selectedCountry.code, "")} // Strip country code for display
+            value={value?.replace(selectedCountry.code, "")} 
             onChange={(e) => handleInputChange(e.target.value)}
             placeholder="Enter phone number"
             className="ml-2 flex-grow text-gray outline-none text-sm bg-transparent placeholder:font-[400] placeholder-muted-fg  placeholder-[#707070]"
           />
-          <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black`} />
+          <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black  !w-[18px] !h-[18px] min-w-[18px]`} />
         </div>
         {!isValidPhoneNumber(value) && value.length > 0 && (
           <span className="text-xs text-red-500">Invalid phone number</span>
