@@ -25,8 +25,8 @@ const datePickerStyles = tv({
   slots: {
     base: "group flex flex-col gap-y-2.5",
     datePickerIcon:
-      "group mr-1 h-7 [&_[data-slot=icon]]:text-muted-fg w-8 rounded outline-offset-0 hover:bg-transparent pressed:bg-transparent",
-    calendarIcon: "group-open:text-fg",
+      "group mr-0  [&_[data-slot=icon]]:text-muted-fg w-8 rounded outline-offset-0 hover:bg-transparent pressed:bg-transparent !w-[18px] !h-[18px]",
+    calendarIcon: "group-open:text-fg !w-[18px] !h-[18px]  !mb-0 !mt-0 !ml-0 !mr-0",
     datePickerInput: "w-full px-2 text-base lg:text-sm",
     dateRangePickerInputStart: "px-2 lg:text-sm text-base",
     dateRangePickerInputEnd: "flex-1 px-2 py-1.5 lg:text-sm text-base",
@@ -67,7 +67,7 @@ const DatePickerOverlay = ({ closeButton = true, range, ...props }: any) => {
 
 const DatePickerIcon = () => (
   <Button size="square-petite" appearance="plain" className={datePickerIcon()}>
-    <IconCalendarDays aria-hidden className={calendarIcon()} />
+    <IconCalendarDays aria-hidden className={`${calendarIcon()} !w-[18px] !h-[18px]` }  />
   </Button>
 )
 
