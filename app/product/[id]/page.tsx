@@ -31,9 +31,10 @@ import { ReviewSummary } from "@/types/review";
 
 const ProductDetails = async ({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ tab?: string }>;
+  searchParams?: Promise<{ tab?: string }>;
 }) => {
   const id = (await params).id;
   // const id = "1";
