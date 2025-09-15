@@ -41,11 +41,11 @@ const TitleLabelDropdown: React.FC<TitleLabelDropdownProps> = ({
 
   return (
     <div className="flex flex-col  gap-y-[8px] w-full">
-      <p className="text-sm font-[400] font-arial text-black">Title*</p>
+      <p className="text-base leading-6  font-[400] font-arial text-black">Title*</p>
       <div ref={wrapperRef} className="relative">
         <div
           onClick={() => setIsOpen(!isOpen)}
-          className="cursor-pointer flex justify-between items-center px-2 h-10 border border-[#e1e1e1] bg-[#ffffff] transition duration-200 ease-out rounded-lg 
+          className="cursor-pointer flex justify-between items-center p-3 h-11 border border-[#e1e1e1] bg-[#ffffff] transition duration-200 ease-out rounded-lg 
           [&>[role=progressbar]]:mr-2.5
           [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
           [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
@@ -63,7 +63,7 @@ const TitleLabelDropdown: React.FC<TitleLabelDropdownProps> = ({
               setIsOpen(true);
             }}
           />
-          <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black`} />
+          <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black !w-[18px] !h-[18px] min-w-[18px]`} />
         </div>
         {isOpen && (
           <AnimatePresence>

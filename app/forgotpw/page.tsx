@@ -27,13 +27,8 @@ const ForgotPasswordForm = ({
     onSubmit={handleSubmit}
     className="rounded-[9px] px-4 md:px-0 flex flex-1 flex-col space-y-6 w-full font-[Arial] md:max-w-[598px] mx-auto mt-[136px] md:mt-[172px]"
   >
-    <div className="flex items-center space-x-2">
-      <Link
-        href="/"
-        className="flex items-start justify-start cursor-pointer hover:opacity-75"
-      >
-        <ChevronLeft className="" size={30} />
-      </Link>
+    <div className="flex items-center justify-center space-x-2">
+
       <Title
         title="Forgot your password?"
         className="text-[24px] leading-[32px] md:text-[28px] sm:text-[24px] lg:text-[28px] md:leading-[32px] font-kaiseiHarunoUmi"
@@ -59,7 +54,7 @@ const ForgotPasswordForm = ({
       <Button
         type="submit"
         isDisabled={isLoading || isSuccess}
-        className={`w-full text-[18px] leading-6 bg-black hover:bg-obsidian-900 text-white transition-opacity duration-300 ${
+        className={`w-full  text-[18px] leading-6 bg-[#252525] hover:bg-obsidian-900 text-white transition-opacity duration-300 ${
           isLoading ? "opacity-80" : ""
         }`}
       >

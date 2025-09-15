@@ -79,7 +79,7 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
 
   return (
     <div className="flex flex-col  gap-y-[8px] w-full">
-      <p className="text-sm font-[400] font-arial text-black">Country*</p>
+      <p className=" !text-base !leading-6 font-[400] font-arial text-black">Country*</p>
       <div ref={wrapperRef} className="relative">
         <div
           onClick={() => setIsOpen(!isOpen)}
@@ -101,7 +101,7 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
               setIsOpen(true);
             }}
           />
-          <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black`} />
+          <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black  !w-[18px] !h-[18px] min-w-[18px]`} />
         </div>
         {isOpen && (
           <AnimatePresence>

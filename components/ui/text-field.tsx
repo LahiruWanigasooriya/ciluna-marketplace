@@ -67,20 +67,22 @@ const TextField = ({
       className={ctr(className, "group flex flex-col gap-2")}
     >
       {label && <Label>{label}</Label>}
-      <FieldGroup data-loading={isPending ? "true" : undefined} className={cn(groupClassName, "relative")}>
+      <FieldGroup data-loading={isPending ? "true" : undefined} className={cn(groupClassName, "relative ")}>
         {prefix ? (
           <span data-slot="prefix" className="atrs x2e2 !ml-0">
             {prefix}
           </span>
         ) : null}
-        <Input placeholder={placeholder} className={inputClassName}/>
+        <Input placeholder={placeholder} className={inputClassName} />
         {isRevealable ? (
           <ButtonPrimitive
             type="button"
             aria-label="Toggle password visibility"
             onPress={handleTogglePasswordVisibility}
          className="absolute right-4 top-3 transform-translate-y-1/2 bg-transparent text-muted-fg focus:outline-none focus-visible:ring-1 border-none focus-visible:ring-primary rounded " >
-            <>{isPasswordVisible ? <IconEyeClosed /> : <IconEye />}</>
+            <>{isPasswordVisible ? 
+            <IconEyeClosed className="!w-[18px] !h-[18px] " /> 
+            : <IconEye className="!w-[18px] !h-[18px]" />}</>
           </ButtonPrimitive>
         ) : isPending ? (
           <Loader variant="spin" data-slot="suffix" />
