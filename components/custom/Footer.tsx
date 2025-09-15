@@ -139,12 +139,14 @@ const Footer: FC = () => {
                 <input
                   type="text"
                   placeholder="Your email"
-                  className={clsx(
-                    "text-[14px] p-[16px] lg:text-[16px] font- leading-[24px] rounded-lg placeholder:text-white w-full h-[52px] lg:h-[56px] border border-white bg-transparent"
-                  )}
+                  name="email"
+                  autoComplete="email"
+                  className={
+                    "text-[14px] p-4 lg:text-[16px] leading-[24px] rounded-lg placeholder:text-white w-full h-[52px] md:h-[56px] bg-transparent focus:outline-white focus:outline-2 outline outline-1 lg:max-w-[290px] "
+                  }
                 />
-                <Button className="px-12 w-[52px] h-[52px] lg:w-[56px] lg:h-[56px] bg-white">
-                  <IoIosArrowForward className="text-black w-[24px] h-[24px]" />
+                <Button className=" w-[52px] h-[52px] md:w-[56px] md:h-[56px] bg-white !p-3 md:!p-[14px] !border-0">
+                  <IoIosArrowForward className="text-black w-[28px] h-[28px]" />
                 </Button>
               </div>
             </div>
