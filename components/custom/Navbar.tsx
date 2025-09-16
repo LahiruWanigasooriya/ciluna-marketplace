@@ -451,7 +451,7 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex w-full justify-center items-center">
-          <div className="w-[80%] max-w-[1440px] border-t border-[0.5px] line-gradient-header">
+          <div className="w-[100%] max-w-[1920px] border-t border-[0.5px] line-gradient-header">
             <MainMenu
               isNavbarActive={isNavbarActive}
               isHomePage={isHomePage}
