@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import type { StaticImageData } from "next/image";
-import { useAuthStore } from "@/store/authStore";
 import FashionableFrock from "@/public/assets/home/FashionableFrock.webp";
 import FrockThumbnail from "@/public/assets/home/FrockThumbnail.webp";
 import MobileHairloom from "@/public/assets/home/MobHairloom.webp";
@@ -119,12 +118,7 @@ const Thumbnail = ({
 export default function Hero() {
   const [currentHero, setCurrentHero] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const { isAuthenticated } = useAuthStore();
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
   const handleImageLoad = (index: number) => {
     // If first image is loaded, show the hero immediately
     if (index === 0) {
@@ -161,7 +155,7 @@ export default function Hero() {
         />
       ))}
       {!isLoaded && <Skeleton />}
-      <div className="absolute hidden md:flex flex-col gap-2 w-full text-white md:top-1/4 lg:top-[12%] px-4 custom-container z-20">
+      <div className="absolute hidden md:flex flex-col gap-4 w-full text-white md:top-1/4 lg:top-[12%] px-4 custom-container z-20">
         <h1 className="font-kaiseiBold text-[28px] leading-[32px] md:text-[42px] md:leading-[48px] lg:text-[48px] lg:leading-[48px] xl:text-[58px] recommend:text-[68px] recommend:leading-[60px]">
           Where Grace Becomes Legacy
         </h1>
@@ -172,7 +166,7 @@ export default function Hero() {
       </div>
 
       <div className="absolute flex w-full z-10 bottom-0 md:max-w-full items-center md:backdrop-blur-sm">
-        <div className="flex justify-between w-full z-10 md:pb-[16px] xl:pb-[32px] md:pt-0 custom-container items-center">
+        <div className="flex justify-between w-full z-10 pb-0 md:pb-[16px] xl:pb-[32px] md:pt-0 custom-container items-center">
           <div className="flex flex-col gap-[16px] md:gap-[12px] lg:gap-[24px] md:max-w-[495px] md:w-[80%] justify-center md:items-start items-center w-full">
             <div className="hidden md:flex flex-col gap-[12px] md:w-[75%] xl:w-[495px] ">
               <h1 className="text-white font-kaiseiBold text-[20px] leading-[26px] tracking-normal md:text-[22px] md:leading-[28px] lg:text-[24px] lg:leading-[30px] xl:text-[28px] xl:leading-[32px]">
@@ -192,11 +186,11 @@ export default function Hero() {
                 today’s soulful elegance.
               </p>
             </div>
-            <Button className="bg-white text-black px-[24px] py-[12px] w-fit rounded-[8px] font-[Arial] text-[14px] leading-[20px] tracking-normal cursor-pointer transition-colors duration-300 border-none">
+            <Button className="bg-white text-black !px-[24px] !py-[12px]  w-[131px] h-[44px] rounded-[8px] font-[Arial] font-[400] text-[14px] leading-[20px] tracking-normal cursor-pointer transition-colors duration-300 border-none">
               View Product
             </Button>
             {/* Mobile Thumbnail Indicators */}
-            <div className="md:hidden flex gap-2 items-center justify-center mb-[9px]">
+            <div className="md:hidden flex gap-2 items-center justify-center mb-2">
               {HEROES_DATA.map((_, index) => (
                 <button
                   key={index}
