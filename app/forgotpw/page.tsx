@@ -64,7 +64,7 @@ const ForgotPasswordForm = ({
       <div className="flex items-center justify-center space-x-2">
         <p className="text-sm">Remember your password?</p>
         <Link href="/login">
-          <p className=" cursor-pointer underline text-sm hover:opacity-75 font-bold">
+          <p className=" cursor-pointer underline text-sm hover:opacity-75 font-bold hover:bg-[#050505]">
             Sign In
           </p>
         </Link>

@@ -64,7 +64,7 @@ const TextField = ({
     <TextFieldPrimitive
       type={inputType}
       {...props}
-      className={ctr(className, "group flex flex-col gap-2")}
+      className={ctr(className, "group flex flex-col !gap-2")}
     >
       {label && <Label>{label}</Label>}
       <FieldGroup data-loading={isPending ? "true" : undefined} className={cn(groupClassName, "relative ")}>

@@ -92,7 +92,7 @@ const DatePicker = <T extends DateValue>({
       {label && <Label className="text-black">{label}</Label>}
       <FieldGroup className="min-w-40 relative">
         {!value && placeholder ? (
-          <div className="flex items-center justify-between w-full h-10 px-3 text-sm text-[#707070] bg-transparent border-0">
+          <div className="flex items-center justify-between w-full h-11 p-3 text-sm text-[#707070] bg-transparent border-0">
             <span>{placeholder}</span>
             <DatePickerIcon />
           </div>

@@ -40,7 +40,7 @@ const TitleLabelDropdown: React.FC<TitleLabelDropdownProps> = ({
   };
 
   return (
-    <div className="flex flex-col  gap-y-[8px] w-full">
+    <div className="flex flex-col  gap-2 w-full">
       <p className="text-base leading-6  font-[400] font-arial text-black">Title*</p>
       <div ref={wrapperRef} className="relative">
         <div
@@ -54,7 +54,7 @@ const TitleLabelDropdown: React.FC<TitleLabelDropdownProps> = ({
         >
           <input
             type="text"
-            className="bg-white text-sm font-[400] focus:outline-none text-black placeholder:text-sm placeholder:font-[400] placeholder-muted-fg w-full"
+            className="bg-white text-sm font-[400] leading-5 focus:outline-none text-black placeholder:text-sm placeholder:font-[400] placeholder-muted-fg w-full"
             placeholder="Select a title"
             value={searchTerm || value}
             onChange={(e) => setSearchTerm(e.target.value)}

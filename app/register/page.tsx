@@ -90,21 +90,28 @@ const SignupForm = ({
         <Title title="Create Account" className="font-kaiseiHarunoUmi font-bold  !text-2xl !leading-[32px] md:!text-[26px] md:!leading-[32px] lg:!text-[28px] lg:!leading-[32px]" />
       </div>
 
-        <div>
+
+
+      <div className="flex flex-col space-y-6 lg:space-y-4 font-arial">
+
+         <div>
           <TitleLabelDropdown
             value={formData.titlelabel}
             onChange={(_field: string, value: string) => handleChange("titlelabel", value)}
+           
           />
           {errors.titlelabel && <p className="text-red-500 text-xs">{errors.titlelabel}</p>}
         </div>
-      <div className="flex flex-col space-y-3 lg:space-y-4 font-arial">
-        <div className="flex flex-col sm:gap-2  sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex-1">
+
+
+
+        <div className="flex flex-col gap-6 sm:gap-2  sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex-1 ">
           <TextField
             label="First Name*"
             placeholder="Enter first name"
             value={formData.firstName}
-            className="w-full [&_label]:!text-base [&_label]:!leading-6 "
+            className="w-full [&_label]:!text-base [&_label]:!leading-6 [&_label]:border-none [&_input]:!text-sm leading-5 [&_input]:p-3"
             onChange={(value: string) => handleChange("firstName", value)}
           />
           {errors.firstName && <p className="text-red-500 text-xs">{errors.firstName}</p>}
@@ -115,7 +122,7 @@ const SignupForm = ({
             label="Last Name*"
             placeholder="Enter last name"
             value={formData.lastName}
-            className="w-full [&_label]:!text-base [&_label]:!leading-6 "
+            className="w-full [&_label]:!text-base [&_label]:!leading-6 [&_input]:!text-sm leading-5 [&_input]:p-3"
             onChange={(value: string) => handleChange("lastName", value)}
           />
           {errors.lastName && <p className="text-red-500 text-xs">{errors.lastName}</p>}
@@ -125,11 +132,11 @@ const SignupForm = ({
 
 
       <div className="w-full">
-        <label className=" [&_label]:!text-base [&_label]:!leading-6 text-[#252525] font-medium mb-1 block ">
+        <label className=" [&_label]:!text-base [&_label]:!leading-6 text-[#252525] font-medium mb-2 block ">
           Date of Birth*
         </label>
         <DatePicker
-          className="w-full "
+          className="w-full [&_input]:!text-[14px] leading-[20px] [&_input]:p-3"
           placeholder="Select date of birth"
           onChange={(value) => {
             const date = value ? value.toDate("UTC") : null;
@@ -141,10 +148,11 @@ const SignupForm = ({
           <p className="text-red-500 text-xs mt-1">{errors.dateofbirth}</p>
         )}
       </div>
-        <div>
+        <div className="w-full">
           <CountryDropdown
             value={formData.country}
             onChange={(_field: string, value: string) => handleChange("country", value)}
+            
           />
           {errors.country && <p className="text-red-500 text-xs">{errors.country}</p>}
         </div>
@@ -154,7 +162,7 @@ const SignupForm = ({
             label="Email*"
             placeholder="Enter email"
             value={formData.email}
-            className="w-full [&_label]:!text-base [&_label]:!leading-6"
+            className="w-full [&_label]:!text-base [&_label]:!leading-6 [&_input]:!text-sm leading-5 [&_input]:p-3"
             onChange={(value: string) => handleChange("email", value)}
           />
           
@@ -166,19 +174,20 @@ const SignupForm = ({
             label="Confirm Email*"
             placeholder="Enter email again"
             value={formData.confirmemail}
-            className="w-full [&_label]:!text-base [&_label]:!leading-6"
+            className="w-full [&_label]:!text-base [&_label]:!leading-6 [&_input]:!text-sm leading-5 [&_input]:p-3"
             onChange={(value: string) => handleChange("confirmemail", value)}
           />
           {errors.confirmemail && <p className="text-red-500 text-xs">{errors.confirmemail}</p>}
         </div>
 
         <div>
-          <Tel value={formData.phone} onChange={(phone: string) => handleChange("phone", phone)} />
+          <Tel value={formData.phone} onChange={(phone: string) => handleChange("phone", phone)} 
+          className="w-full [&_label]:!text-base [&_label]:!leading-6 [&_input]:!text-sm leading-5 [&_input]:p-3 !p-3" />
           {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
         </div>
 
-        <div className="relative w-full">
-          <label className=" [&_label]:!text-base [&_label]:!leading-6 text-[#252525] font-arial flex items-center gap-1 ">
+        <div className="relative w-full ">
+          <label className="mb-2 [&_label]:!text-base [&_label]:!leading-6 text-[#252525] font-arial flex items-center gap-2 !mt-0 ">
             Password* 
             <div className="relative group cursor-pointer">  
               <Info  className="h-[18px] w-[18px] text-black" />
@@ -192,7 +201,7 @@ const SignupForm = ({
             type="password"
             isRevealable
             placeholder="Enter your password"
-            className="w-full [&_label]:!text-base [&_label]:!leading-6 "
+            className="w-full [&_label]:!text-base [&_label]:!leading-6 [&_input]:!text-sm leading-5 [&_input]:p-3"
             value={formData.password}
             onChange={(value: string) => handleChange("password", value)}
           
@@ -208,20 +217,23 @@ const SignupForm = ({
             label="Confirm Password*"
             placeholder="Confirm  your password"
             value={formData.confirmpassword}
-            className="w-full [&_label]:!text-base [&_label]:!leading-6"
+            className="w-full [&_label]:!text-base [&_label]:!leading-6 [&_input]:!text-sm leading-5 [&_input]:p-3"
             onChange={(value: string) => handleChange("confirmpassword", value)}
           />
           {errors.confirmpassword && <p className="text-red-500 text-xs">{errors.confirmpassword}</p>}
         </div>
 
-        <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[16px] max-w-[572px] min-w-[343px]">
             <Checkbox
               isSelected={formData.recieveUpdates}
               onChange={(isSelected: boolean) =>
                   handleChange("recieveUpdates", isSelected)
                   }
                     >
-              <p className="font-arial text-[#252525] text-sm">I agree to receive CILUNA updates and promotions as per the Privacy Policy.</p>
+
+            <p className="font-arial text-[#252525] text-sm block min-w-[311px] max-w-[566px] h-[40px] sm:h-[20px]">I agree to receive CILUNA updates and promotions as per the Privacy Policy.</p>
+             
+
             </Checkbox>
 
            <Checkbox
@@ -230,30 +242,32 @@ const SignupForm = ({
                   handleChange("personalizedOffers", isSelected)
                   }
                     >
-              <p className="font-arial text-[#252525] text-sm">I consent to personalized offers from CILUNA based on my preferences.</p>
+              <p className="font-arial text-[#252525] text-sm block min-w-[311px] max-w-[566px] h-[40px] sm:h-[20px]">I consent to personalized offers from CILUNA based on my preferences.</p>
             </Checkbox>
             <Link href="">
-            <p className=" font-arial text-black text-sm">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-arialBold"> Privacy Policy.</span></p>
+            <p className=" font-arial text-black text-sm block w-full h-[60px] sm:h-[40px]">By creating an account, you accept our Terms and Conditions and confirm that you have read our <span className="text-sm font-arialBold"> Privacy Policy.</span></p>
 
             </Link>
         </div>
 
-        <div className="flex flex-col gap-2 ">
+        <div className="flex flex-col gap-2 items-center justify-center mx-auto w-full">
           <Button
             type="submit"
-            className={`!w-full !h-[56px] font-arial font-normal !text-lg leading-6 !py-4 !px-8 bg-[#252525] text-white transition-opacity duration-300 ${
+            isDisabled={!(formData.recieveUpdates && formData.personalizedOffers) || isLoading || isSuccess}
+            className={` w-full !h-[56px] font-arial font-normal !text-lg leading-6 !py-4 !px-8 bg-[#252525] text-white transition-opacity duration-300 hover:bg-[#050505]  ${
               isLoading ? "opacity-80" : ""
             }`}
-            isDisabled={isLoading || isSuccess}
           >
             {isLoading && <Loader2 size={16} className="animate-spin mr-1 " />}
+           
+            
             Create Account
           </Button>
 
-          <div className="flex items-center justify-center space-x-2 mt-5">
-            <p className="text-[#252525] font-arial text-base">Already have a CILUNA account? </p>
+          <div className="flex items-center justify-center space-x-2 mt-5 pb-6">
+            <p className="text-[#252525] font-arial text-base ">Already have a CILUNA account? </p>
             <Link href="/login">
-              <p className="text-[#252525] cursor-pointer font-arialBold  text-base hover:opacity-75">Login</p>
+              <p className="text-[#252525] cursor-pointer font-arialBold  text-sm hover:opacity-75">Login</p>
             </Link>
           </div>
         </div>
@@ -326,43 +340,43 @@ const SignupPage: React.FC = () => {
   return (
 <>
 
-  <div className="hidden sm:block">
-    <div className="absolute right-0 top-32 h-[301px] w-[320px] z-20">
-      <Image
-        src={bgpattern}
-        alt="background pattern"
-        fill
-        className="object-right"
-        priority
-      />
+    <div className="hidden sm:block">
+      <div className="absolute right-0 top-32 h-[301px] w-[320px] z-20">
+        <Image
+          src={bgpattern}
+          alt="background pattern"
+          fill
+          className="object-right"
+          priority
+        />
+      </div>
+      
+      <div className="absolute left-0 bottom-0 h-[301px] w-[320px] z-20">
+        <Image
+          src={bgpattern}
+          alt="background pattern"
+          fill
+          className="object-right transform scale-x-[-1]"
+          priority
+        />
+      </div>
     </div>
-    
-    <div className="absolute left-0 bottom-0 h-[301px] w-[320px] z-20">
-      <Image
-        src={bgpattern}
-        alt="background pattern"
-        fill
-        className="object-right transform scale-x-[-1]"
-        priority
-      />
+
+    {/* Main content */}
+    <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative z-10">
+      <main className="flex-grow flex justify-center mt-10 sm:mt-8 sm:pt-16 p-4 relative">
+        <SignupForm
+          formData={formData}
+          errors={errors}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          isLoading={isLoading}
+          isSuccess={isSuccess}
+        />
+      </main>
     </div>
-  </div>
+  </>
+    );
+  }
 
-  {/* Main content */}
-  <div className="flex flex-col min-h-screen bg-white text-black overflow-auto relative z-10">
-    <main className="flex-grow flex justify-center pt-8 sm:pt-16 p-4 relative">
-      <SignupForm
-        formData={formData}
-        errors={errors}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        isLoading={isLoading}
-        isSuccess={isSuccess}
-      />
-    </main>
-  </div>
-</>
-  );
-}
-
-export default SignupPage;
+  export default SignupPage;
