@@ -289,11 +289,11 @@ export const getRelatedProducts = async (
       isActive: true,
       _id: { $ne: productID },
       $or: [
-        { category: product.category?._id },
-        { subcategory: product.subcategory?._id },
+        // { category: product.category?._id },
+        // { subcategory: product.subcategory?._id },
         { brand: product.brand?._id },
-        { model: product.model?._id },
-        { productVariantCategories: { $in: product.productVariantCategories } },
+        // { model: product.model?._id },
+        // { productVariantCategories: { $in: product.productVariantCategories } },
       ],
     };
 
