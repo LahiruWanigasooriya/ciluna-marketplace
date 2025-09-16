@@ -23,7 +23,13 @@ const SubMenu: React.FC<{
   subcategories: ISubCategory[];
   subsubcategories: ISubSubCategory[];
   images: string[];
-}> = ({ categoryName, categoryId, subcategories, subsubcategories, images }) => {
+}> = ({
+  categoryName,
+  categoryId,
+  subcategories,
+  subsubcategories,
+  images,
+}) => {
   const subItemClass =
     "relative text-[#252525] hover:text-yellow-700 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-7 after:bg-yellow-600 after:scale-x-0 after:origin-left hover:after:scale-x-100 after:transition-transform after:duration-200";
 
@@ -41,7 +47,9 @@ const SubMenu: React.FC<{
 
   return (
     <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 custom-container !py-[40px] max-sm:!px-0">
-      <h1 className="sm:hidden font-interBold text-[20px] mb-[16px]">{categoryName}</h1>
+      <h1 className="sm:hidden font-interBold text-[20px] mb-[16px]">
+        {categoryName}
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-[16px] md:gap-y-[30px] w-full">
         {filteredSubcategories.length > 0 ? (
           filteredSubcategories.map((subcat) => (
@@ -55,7 +63,10 @@ const SubMenu: React.FC<{
                 </Link>
               </div>
               <div className="flex flex-col gap-[8px] font-inter font-light">
-                <Link href={`/subcategories/${subcat._id}`} className={subItemClass}>
+                <Link
+                  href={`/subcategories/${subcat._id}`}
+                  className={subItemClass}
+                >
                   View All
                 </Link>
                 {subsubcategories
@@ -78,7 +89,7 @@ const SubMenu: React.FC<{
         )}
       </div>
       <div>
-       {/* <SwiperImages images={images.length > 0 ? images : placeholderImages} /> */}
+        {/* <SwiperImages images={images.length > 0 ? images : placeholderImages} /> */}
         <SwiperImages images={placeholderImages} />
       </div>
     </div>
@@ -105,8 +116,12 @@ export default function MainMenu({
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [subcategories, setSubcategories] = useState<ISubCategory[]>([]);
-  const [subsubcategories, setSubsubcategories] = useState<ISubSubCategory[]>([]);
-  const [subsubcategoryImages, setSubsubcategoryImages] = useState<string[]>([]);
+  const [subsubcategories, setSubsubcategories] = useState<ISubSubCategory[]>(
+    []
+  );
+  const [subsubcategoryImages, setSubsubcategoryImages] = useState<string[]>(
+    []
+  );
   const [error, setError] = useState<string | null>(null);
 
   // Fetch categories from backend
@@ -136,16 +151,23 @@ export default function MainMenu({
     const fetchSubData = async () => {
       if (activeMenu) {
         try {
-          const categoryId = categories.find((cat) => cat.name === activeMenu)?._id;
+          const categoryId = categories.find(
+            (cat) => cat.name === activeMenu
+          )?._id;
           if (!categoryId) {
             console.warn(`No category ID found for activeMenu: ${activeMenu}`);
             return;
           }
 
           // Fetch subcategories
-          const subcatResponse = await fetch(`/api/subcategory?categoryId=${categoryId}`);
+          const subcatResponse = await fetch(
+            `/api/subcategory?categoryId=${categoryId}`
+          );
           const subcatData = await subcatResponse.json();
-          console.log(`Fetched subcategories for category ID ${categoryId}:`, subcatData); // Debugging
+          console.log(
+            `Fetched subcategories for category ID ${categoryId}:`,
+            subcatData
+          ); // Debugging
           if (subcatData.success) {
             setSubcategories(subcatData.data.subcategories || []);
           } else {
@@ -153,24 +175,36 @@ export default function MainMenu({
           }
 
           // Fetch subsubcategories and aggregate images
-          const subsubcatResponse = await fetch(`/api/subsubcategory?categoryId=${categoryId}`);
+          const subsubcatResponse = await fetch(
+            `/api/subsubcategory?categoryId=${categoryId}`
+          );
           const subsubcatData = await subsubcatResponse.json();
-          console.log(`Fetched subsubcategories for category ID ${categoryId}:`, subsubcatData); // Debugging
+          console.log(
+            `Fetched subsubcategories for category ID ${categoryId}:`,
+            subsubcatData
+          ); // Debugging
           if (subsubcatData.success) {
             const subsubcats = subsubcatData.data.subsubcategories || [];
             setSubsubcategories(subsubcats);
             // Aggregate images from subsubcategories (single image field)
             const allImages = subsubcats
-              .filter((subsub: ISubSubCategory) => subsub.image && subsub.image.trim() !== "")
+              .filter(
+                (subsub: ISubSubCategory) =>
+                  subsub.image && subsub.image.trim() !== ""
+              )
               .map((subsub: ISubSubCategory) => subsub.image);
             setSubsubcategoryImages(allImages);
           } else {
-            setError(subsubcatData.message || "Failed to fetch subsubcategories");
+            setError(
+              subsubcatData.message || "Failed to fetch subsubcategories"
+            );
             setSubsubcategoryImages([]);
           }
         } catch (err) {
           console.error("Fetch error:", err);
-          setError("An error occurred while fetching subcategories or subsubcategories");
+          setError(
+            "An error occurred while fetching subcategories or subsubcategories"
+          );
           setSubsubcategoryImages([]);
         }
       } else {
@@ -198,9 +232,8 @@ export default function MainMenu({
 
   return (
     <>
-      <div
-        className={`items-center justify-between h-[50px] px-4 md:flex hidden w-full md:justify-center `}
-      >
+    {/* Desktop Menu */}
+      <div className="relative items-center justify-between md:flex hidden w-full md:justify-center">
         {isLoading ? (
           <div>Loading categories...</div>
         ) : error ? (
@@ -208,54 +241,62 @@ export default function MainMenu({
         ) : categories.length === 0 ? (
           <div>No categories available</div>
         ) : (
-          <div className="flex flex-row overflow-x-auto no-scrollbar md:gap-[16px] lg:gap-[24px]">
-            {categories.map((data: ICategory) => (
-              <Link
-                key={data._id}
-                href={`/categories/${data._id}`}
-                className={`cursor-pointer px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial text-[14px] leading-[20px] tracking- hover:bg-black hover:text-white ${isNavbarActive ? "text-black" : "text-white"}`}
-                onMouseEnter={() => {
-                  if (!profileSelect) {
-                    setActiveMenu(data.name);
-                    setIsMainMenuActive(true);
-                    setIsNavbarActive(true);
-                  }
-                }}
-                onMouseLeave={() => {
-                  setActiveMenu(null);
-                  setIsMainMenuActive(false);
-                  if (!profileSelect && isHomePage && !isMainMenuActive) {
-                    setIsNavbarActive(false);
-                  }
-                }}
-              >
-                {activeMenu === data.name && (
-                  <div className="absolute left-0 shadow-sm w-full z-10 bg-[#FFFFFFF5] mt-[28px]">
-                    <SubMenu
-                      categoryName={data.name}
-                      categoryId={data._id || ""}
-                      subcategories={subcategories}
-                      subsubcategories={subsubcategories}
-                      images={subsubcategoryImages}
-                    />
-                  </div>
-                )}
-                <p
-                  className={`text-xs md:text-[14px]`}
+          <div
+            className="relative flex justify-center w-full"
+            onMouseEnter={() => {
+              if (!profileSelect) {
+                setIsMainMenuActive(true);
+                setIsNavbarActive(true);
+              }
+            }}
+            onMouseLeave={() => {
+              setIsMainMenuActive(false);
+              setActiveMenu(null);
+              if (!profileSelect && isHomePage) setIsNavbarActive(false);
+            }}
+          >
+            {/* categories row */}
+            <div className="flex flex-row overflow-x-auto no-scrollbar md:gap-[16px] lg:gap-[24px]">
+              {categories.map((data) => (
+                <Link
+                  key={data._id}
+                  href={`/categories/${data._id}`}
+                  className={`cursor-pointer px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial text-[14px] leading-[20px] hover:bg-black hover:text-white ${
+                    isNavbarActive ? "text-black" : "text-white"
+                  }`}
+                  onMouseEnter={() => {
+                    if (!profileSelect) {
+                      setActiveMenu(data.name);
+                    }
+                  }}
                 >
-                  {data?.name}
-                </p>
-              </Link>
-            ))}
+                  <p className="text-xs md:text-[14px]">{data.name}</p>
+                </Link>
+              ))}
+            </div>
+
+            {/* submenu */}
+            {isMainMenuActive && activeMenu && (
+              <div className="absolute left-0 top-full shadow-sm w-full z-10 bg-[#FFFFFFF5]">
+                <SubMenu
+                  categoryName={activeMenu}
+                  categoryId={
+                    categories.find((c) => c.name === activeMenu)?._id || ""
+                  }
+                  subcategories={subcategories}
+                  subsubcategories={subsubcategories}
+                  images={subsubcategoryImages}
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
 
+      {/* Mobile Menu */}
+
       <div className="flex md:hidden">
-        <button
-          onClick={handleMenuToggle}
-          aria-label="Toggle mobile menu"
-        >
+        <button onClick={handleMenuToggle} aria-label="Toggle mobile menu">
           <Menu
             className={`h-[24px] w-[24px] ${
               isNavbarActive ? "text-black" : "text-white"
@@ -297,7 +338,9 @@ export default function MainMenu({
             <div>
               <SubMenu
                 categoryName={activeMenu}
-                categoryId={categories.find((cat) => cat.name === activeMenu)?._id || ""}
+                categoryId={
+                  categories.find((cat) => cat.name === activeMenu)?._id || ""
+                }
                 subcategories={subcategories}
                 subsubcategories={subsubcategories}
                 images={subsubcategoryImages}
