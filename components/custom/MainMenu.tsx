@@ -199,15 +199,7 @@ export default function MainMenu({
   return (
     <>
       <div
-        className={`mx-auto w-[80%] max-w-[1248px] hidden md:flex ${
-          isNavbarActive
-            ? "line-gradient-header h-[1px]"
-            : "line-gradient-header h-[0.5px]"
-        }`}
-      ></div>
-
-      <div
-        className={`rounded-[9px] items-center justify-between border-none h-[50px] px-4 md:flex hidden`}
+        className={`items-center justify-between h-[50px] px-4 md:flex hidden w-full md:justify-center `}
       >
         {isLoading ? (
           <div>Loading categories...</div>
@@ -221,7 +213,7 @@ export default function MainMenu({
               <Link
                 key={data._id}
                 href={`/categories/${data._id}`}
-                className="cursor-pointer border border-transparent hover:border-solid hover:border-black px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial leading-[20px]"
+                className={`cursor-pointer px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial text-[14px] leading-[20px] tracking- hover:bg-black hover:text-white ${isNavbarActive ? "text-black" : "text-white"}`}
                 onMouseEnter={() => {
                   if (!profileSelect) {
                     setActiveMenu(data.name);
@@ -232,7 +224,7 @@ export default function MainMenu({
                 onMouseLeave={() => {
                   setActiveMenu(null);
                   setIsMainMenuActive(false);
-                  if (!profileSelect && isHomePage) {
+                  if (!profileSelect && isHomePage && !isMainMenuActive) {
                     setIsNavbarActive(false);
                   }
                 }}
@@ -249,9 +241,7 @@ export default function MainMenu({
                   </div>
                 )}
                 <p
-                  className={`text-xs md:text-[14px] ${
-                    isNavbarActive ? "text-lightBlack" : "text-white"
-                  }`}
+                  className={`text-xs md:text-[14px]`}
                 >
                   {data?.name}
                 </p>
@@ -265,7 +255,6 @@ export default function MainMenu({
         <button
           onClick={handleMenuToggle}
           aria-label="Toggle mobile menu"
-          className="p-2"
         >
           <Menu
             className={`h-[24px] w-[24px] ${

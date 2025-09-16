@@ -194,7 +194,7 @@ export default function Navbar() {
               src={Logo}
               alt="Logo"
               loading="eager"
-              className={`object-contain w-[108px] md:min-w-[130px] ${
+              className={`w-[108px] h-[22px] md:h-[26px] max-w-[108px] md:min-w-[130px] ${
                 isNavbarActive ? "hidden" : "block"
               }`}
             />
@@ -202,7 +202,7 @@ export default function Navbar() {
               src={MobLogo}
               alt="Mobile Logo"
               loading="eager"
-              className={`object-contain w-[108px] md:min-w-[130px] ${
+              className={`w-[108px] h-[22px] md:h-[26px] max-w-[108px] md:min-w-[130px] ${
                 isNavbarActive ? "block" : "hidden"
               }`}
             />
@@ -227,7 +227,7 @@ export default function Navbar() {
                   src={flag.src}
                   loading="lazy"
                   alt="Language Flag"
-                  className="w-[24px] flex h-[24px] ml-[12px] lg:ml-[24px] md:mr-[8px]"
+                  className="min-w-[24px] w-[24px] flex h-[24px] ml-[12px] lg:ml-[24px] md:mr-[8px]"
                 />
                 <p
                   className={`text-xs lg:text-sm font-inter hidden md:flex font-light leading-[24px] ${
@@ -450,13 +450,15 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className="hidden md:block">
-          <MainMenu
-            isNavbarActive={isNavbarActive}
-            isHomePage={isHomePage}
-            profileSelect={profileSelect}
-            setIsNavbarActive={setIsNavbarActive}
-          />
+        <div className="hidden md:flex w-full justify-center items-center">
+          <div className="w-[80%] max-w-[1440px] border-t border-[0.5px] line-gradient-header">
+            <MainMenu
+              isNavbarActive={isNavbarActive}
+              isHomePage={isHomePage}
+              profileSelect={profileSelect}
+              setIsNavbarActive={setIsNavbarActive}
+            />
+          </div>
         </div>
       </div>
     </div>

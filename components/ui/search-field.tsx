@@ -20,9 +20,9 @@ const searchFieldStyles = tv({
     searchIcon:
       "mr-[2px] size-[24px] shrink-0 group-disabled:text-muted-fg forced-colors:group-disabled:text-[GrayText]",
     clearButton: [
-      "mr-1 h-[24px] w-[24px] text- group-empty:invisible pressed:bg border-solid",
+      "mr-1 h-[24px] w-[24px] text- group-empty:invisible pressed:bg border-solid !px-[5px]",
     ],
-    input: "[&::-webkit-search-cancel-button]:hidden text-left text- h-[26px] ",
+    input: "[&::-webkit-search-cancel-button]:hidden text-left text- h-[26px] p-1 md:px-2",
   },
 });
 
@@ -97,7 +97,7 @@ const SearchField = ({
                 : " text-white border-white")
             }
           >
-            <IconX />
+            <IconX className="w-6 h-6"/>
           </Button>
         )}
         <FiSearch

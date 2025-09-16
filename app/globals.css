@@ -461,14 +461,7 @@
 }
 
 .line-gradient-header {
-  border-top-left-radius: 80px;
-  border-top-right-radius: 80px;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(231, 231, 231, 1) 52.88%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  border-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(231, 231, 231, 1) 52.88%, rgba(0, 0, 0, 0) 100%) 1;
 }
 
 .glass-navbar {
