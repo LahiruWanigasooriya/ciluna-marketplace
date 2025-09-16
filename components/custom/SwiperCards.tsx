@@ -71,10 +71,10 @@ const SwiperCards = ({ products, className, titleClassName, section }: SwiperCar
             <p className="text-[12px] sm:text-[14px] text-center sm:text-left font-cinzel text-[#C19F32] pb-0 md:pb-4 leading-5">
               {section.category}
             </p>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-0">
               <h2
                 className={cn(
-                  "text-[24px] sm:text-[40px] lg:text-[52px] text-center sm:text-left font-kaiseiBold text-gray-900 leading-8 sm:leading-[60px]",
+                  "text-[24px] sm:text-[40px] lg:text-[52px] text-center sm:text-left font-kaiseiBold text-gray-900 leading-8 sm:leading-[60px] text-[#252525]",
                   titleClassName
                 )}
               >
@@ -91,7 +91,7 @@ const SwiperCards = ({ products, className, titleClassName, section }: SwiperCar
                   >
                     <ChevronLeft
                       className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]"
-                      size={40}
+                      size={44}
                     />
                   </button>
                   <button
@@ -100,7 +100,7 @@ const SwiperCards = ({ products, className, titleClassName, section }: SwiperCar
                   >
                     <ChevronRight
                       className="text-[#3D3D3D] hover:text-[#B4B4B4] p-[10px]"
-                      size={40}
+                      size={44}
                     />
                   </button>
                 </div>

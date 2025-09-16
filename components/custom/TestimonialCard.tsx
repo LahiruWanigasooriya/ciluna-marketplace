@@ -27,17 +27,17 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       </div>
 
       {/* Review */}
-      <p className="font-inter text-[14px] lg:text-[16px] text-[#5D5D5D] mb-2">
+      <p className="font-inter text-[14px] lg:text-[16px] text-[#5D5D5D] mb-[17px] leading-[24px]">
         {review}
       </p>
-      <p className="font-interSemiBold text-[14px] lg:text-[16px]">{name}</p>
+      <p className="font-interSemiBold text-[14px] lg:text-[16px] text-[#252525] leading-[24px]">{name}</p>
 
       {/* Divider */}
-      <hr className="my-4 text-[#F5F5F5]" />
+      <hr className="my-[16px] text-[#F5F5F5]" />
 
       {/* Product */}
       <div className="flex items-center gap-3">
-        <Image src={productImage} alt={productName} width={50} height={50} />
+        <Image src={productImage} alt={productName} width={56} height={56} />
         <p className="font-inter text-[14px] lg:text-[16px] text-[#252525]">
           {productName}
         </p>

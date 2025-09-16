@@ -37,7 +37,7 @@ const testimonials = [
   {
     rating: 4,
     review:
-      "The scent I chose from LUMINA enveloped me in an aura of elegance, leaving a lasting impression that felt both magical and timeless.",
+      "The scent I chose from LUMINA enveloped me in an aura of elegance,  lasting impression that felt both magical and timeless.",
     name: "Anika Rathnayake",
     productImage: PerfumeImg,
     productName: "VERSACE Eros",
@@ -91,7 +91,7 @@ const Testimonials = () => {
         </div>
 
        
-          <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
+          <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[22px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
             Explore all Testimonials
           </Button>
        
