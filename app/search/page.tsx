@@ -70,7 +70,7 @@ export default async function SearchResultsPage({
   return (
     // <div className="xl:pt-[36px] pb-[90px] md:pb-[60px] xl:pb-[50px] recommend:pb-[40px]">
     //   <div className="flex flex-col gap-[32px] md:gap-[36px] lg:gap-[42px] recommend:gap-[48px]">
-        <div className="flex flex-col pb-[32px] md:pb-[36px] !ml-0 !mr-0">
+        <div className="hidden flex-col pb-[32px] md:pb-[36px] !ml-0 !mr-0">
       <div className="relative">
         <div>
           <Image
