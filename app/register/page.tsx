@@ -254,13 +254,14 @@ const SignupForm = ({
           <Button
             type="submit"
             isDisabled={!(formData.recieveUpdates && formData.personalizedOffers) || isLoading || isSuccess}
-            className={` w-full !h-[56px] font-arial font-normal !text-lg leading-6 !py-4 !px-8 bg-[#252525] text-white transition-opacity duration-300 hover:bg-[#050505]  ${
-              isLoading ? "opacity-80" : ""
+            className={` w-full !h-[56px] font-arial font-normal !text-lg leading-6 !py-4 !px-8 bg-[#252525] text-white transition-opacity duration-300 ${
+              ((!formData.recieveUpdates || !formData.personalizedOffers) && !isLoading && !isSuccess)
+                ? "opacity-50 cursor-none"
+                : "cursor-pointer hover:bg-obsidian-900"
             }`}
           >
             {isLoading && <Loader2 size={16} className="animate-spin mr-1 " />}
-           
-            
+
             Create Account
           </Button>
 

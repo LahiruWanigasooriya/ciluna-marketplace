@@ -11,6 +11,7 @@ import { checkUserAndGenerateToken } from "@/actions/users/user";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 import bgpattern from '@/public/assets/login/bgpattern.png';
+import { loginValidationSchema } from "@/schemas/validationSchemas";
 
 
 const LoginForm = ({
@@ -49,6 +50,7 @@ const LoginForm = ({
         onChange={(value: string) => handleChange("email", value)}
       />
       
+      
       <TextField
         type="password"
         isRevealable
@@ -79,7 +81,7 @@ const LoginForm = ({
     <div className="flex flex-col gap-6 pt-56 sm:pt-3 items-center justify-center mx-auto min-w-[343px] max-w-[598px] w-full">
       <Button
         type="submit"
-        className={`w-full !h-[56px] font-arial !text-lg !leading-6 text-[#ffffff] bg-black transition-opacity duration-300 !px-8 !py-4 ${
+        className={`w-full !h-[56px] font-arial !text-lg !leading-6 text-[#ffffff] bg-black transition-opacity duration-300 !px-8 !py-4 hover:bg-obsidian-900 cursor-pointer${
           isLoading ? "opacity-80" : ""
         }`} 
         isDisabled={isLoading || isSuccess}
@@ -118,6 +120,7 @@ const LoginPage = () => {
     remember: false,
   });
   const [feedback, setFeedback] = useState("");
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
 
   const handleChange = (
@@ -130,6 +133,7 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFeedback("");
+    setErrors({});
     setIsLoading(true);
 
     if (!formData.email || !formData.password) {
@@ -139,6 +143,7 @@ const LoginPage = () => {
     }
 
     try {
+      await loginValidationSchema.validate(formData, { abortEarly: false });
       const { email, password } = formData;
       const res = await checkUserAndGenerateToken({ email, password });
 
@@ -152,11 +157,28 @@ const LoginPage = () => {
       } else {
         toast.error(res.message || "Invalid credentials. Please try again.");
       }
-    } catch (error) {
+    } catch (error:any) {
+      setIsLoading(false);
+      
+      if (error.inner) {
+        const fieldErrors: { email?: string; password?: string } = {};
+        error.inner.forEach((err:any) => {
+          if (err.path.includes("email")) {
+            fieldErrors.email = err.message;
+          }
+          if (err.path.includes("password")) {
+            fieldErrors.password = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+        return;
+      }
+
       toast.error("Login error");
+      setFeedback("An unexpected error occurred during login. Please try again.");
       console.error("Login error:", error);
-      setFeedback("An error occurred during login. Please try again later.");
-    } finally {
+    }
+    finally{
       setIsLoading(false);
     }
   };
