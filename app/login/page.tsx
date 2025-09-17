@@ -41,7 +41,7 @@ const LoginForm = ({
     <div className="flex flex-col space-y-3 mx-auto w-full max-w-[598px] min-w-[343px]">
       <TextField 
         label="Email*"
-        className="w-full min-w-[343px] max-w-[598px] [&_input]:!text-[14px] [&_input]:leading-[20px] [&_input]:p-3 [&_label]:text-[#252525]"
+        className="w-full min-w-[343px] max-w-[598px] [&_input]:!text-[14px] [&_input]:leading-[20px] [&_input]:p-3 [&_label]:text-[16px] [&_label]:text-[#252525]"
         placeholder="Enter your Email"
         name="email"
         id="email"
@@ -55,7 +55,7 @@ const LoginForm = ({
         type="password"
         isRevealable
         label="Password*"
-        className="w-full min-w-[343px] max-w-[598px] [&_input]:!text-[14px] [&_input]:leading-[20px] [&_input]:p-3 [&_label]:text-[#252525]"
+        className="w-full min-w-[343px] max-w-[598px] [&_input]:!text-[14px] [&_input]:leading-[20px] [&_input]:p-3 [&_label]:text-[#252525] [&_label]:text-[16px]"
         placeholder="Enter your Password"
         value={formData.password}
         onChange={(value: string) => handleChange("password", value)}
