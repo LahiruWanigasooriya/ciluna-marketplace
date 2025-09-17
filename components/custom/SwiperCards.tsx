@@ -68,7 +68,7 @@ const SwiperCards = ({ products, className, titleClassName, section }: SwiperCar
       <div className={cn("flex flex-col gap-[27px] md:gap-[68px] max-w-[1440px] recommend:mx-auto", className)}>
         {section && (
           <div className="flex flex-col w-full">
-            <p className="text-[12px] sm:text-[14px] text-center sm:text-left font-cinzel text-[#C19F32] pb-0 md:pb-4 leading-5">
+            <p className="text-[12px] sm:text-[14px] text-center sm:text-left text-[#C19F32] pb-0 md:pb-4 font-kaiseiBold leading-[20px] tracking-[0.2em] uppercase">
               {section.category}
             </p>
             <div className="flex flex-col gap-0">
@@ -81,7 +81,7 @@ const SwiperCards = ({ products, className, titleClassName, section }: SwiperCar
                 {section.title}
               </h2>
               <div className="hidden sm:flex items-end w-full justify-between ">
-                <p className="text-[14px] sm:text-[16px] text-left text-[#707070] font-inter leading-5 sm:leading-6">
+                <p className="text-[14px] sm:text-[16px] text-left text-[#707070] font-arial leading-5 sm:leading-6">
                   {section.description}
                 </p>
                 <div className="flex items-start gap-[24px]">

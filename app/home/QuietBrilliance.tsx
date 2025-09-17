@@ -13,10 +13,10 @@ const QuietBrilliance: React.FC = () => {
       <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 xl:gap-[103px] max-w-[1920px] mx-auto font-inter ">
         {/* Text Content */}
         <div className="flex-1 text-center md:text-start z-10">
-          <p className="text-[12px] sm:text-[14px] font-cinzel text-[#C19F32] sm:mb-[5px]">
+          <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] sm:mb-[5px] uppercase leading-[16px] md:leading-[20px] tracking-[0.2em]">
             About Us
           </p>
-          <h2 className="text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-gray-900 mb-6">
+          <h2 className="text-[24px] sm:text-[40px] lg:text-[52px] font-kaiseiBold text-[#252525] mb-6">
             Quiet Brilliance
           </h2>
           <p className="text-[14px] sm:text-[16px] max-w-[612px] text-[#707070] font-arial leading-relaxed md:mb-4 ">

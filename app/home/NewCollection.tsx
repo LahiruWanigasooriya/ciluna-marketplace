@@ -37,14 +37,14 @@ const NewCollection = () => {
           ))}
         </Swiper>
         <div className="absolute flex flex-col top-[5%] lg:left-[45%] right-[3%] items-end lg:items-start z-10">
-          <p className="text-[#6B6B65] text-[14px] sm:text-[24px] lg:text-[32px] xl:text-[37px] recommend:text-[40px] font-kaisei">
+          <p className="text-[#6B6B65] text-[14px] sm:text-[24px] lg:text-[32px] xl:text-[37px] recommend:text-[40px] font-kaisei leading-[48px] xl:mb-[28px]">
             Introducing our
           </p>
-          <h1 className="text-[24px] sm:text-[44px] lg:text-[50px] xl:text-[60px] recommend:text-[68px] font-cinzel mb-2 whitespace-nowrap">
+          <h1 className="text-[24px] sm:text-[44px] lg:text-[50px] xl:text-[60px] recommend:text-[68px] font-kaiseiBold leading-[60px] lg:mb-[28px] whitespace-nowrap">
             New Collection
           </h1>
           
-            <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
+            <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[22px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
               Explore Now
             </Button>
           

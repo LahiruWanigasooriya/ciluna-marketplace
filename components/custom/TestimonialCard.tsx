@@ -22,23 +22,23 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       {/* Stars */}
       <div className="flex gap-[8px] text-[#252525] mb-[12px]">
         {[...Array(5)].map((_, i) =>
-          i < rating ? <FaStar key={i} /> : <FaRegStar key={i} />
+          i < rating ? <FaStar key={i} size={18} /> : <FaRegStar key={i} size={18} />
         )}
       </div>
 
       {/* Review */}
-      <p className="font-inter text-[14px] lg:text-[16px] text-[#5D5D5D] mb-[17px] leading-[24px]">
+      <p className="font-arial text-[14px] lg:text-[16px] text-[#5D5D5D] mb-[24px] sm:mb-[16px] leading-[20px] sm:leading-[24px]">
         {review}
       </p>
-      <p className="font-interSemiBold text-[14px] lg:text-[16px] text-[#252525] leading-[24px]">{name}</p>
+      <p className="font-arial text-[14px] lg:text-[16px] text-[#252525] leading-[20px] sm:leading-[24px]">{name}</p>
 
       {/* Divider */}
       <hr className="my-[16px] text-[#F5F5F5]" />
 
       {/* Product */}
-      <div className="flex items-center gap-3">
-        <Image src={productImage} alt={productName} width={56} height={56} />
-        <p className="font-inter text-[14px] lg:text-[16px] text-[#252525]">
+      <div className="flex items-center gap-[16px]">
+        <Image src={productImage} alt={productName} className="w-[56px] h-[56px]" />
+        <p className="font-arial text-[14px] lg:text-[16px] text-[#252525] leading-[20px] sm:leading-[24px]">
           {productName}
         </p>
       </div>
