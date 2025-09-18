@@ -46,7 +46,7 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <div className="bg-[#F5F5F5] py-[16px] lg:py-[0px]  sm:mt-0 relative">
+    <div className="bg-[#F5F5F5] py-[0px]  sm:mt-0 relative">
       <div className="flex flex-col items-center custom-container py-[24px] sm:py-[32px] lg:py-[96px] z-10">
         <p className="text-[12px] sm:text-[14px] text-[#C19F32] font-kaiseiBold leading-[20px] tracking-[0.2em] uppercase">
           Testimonials
