@@ -15,7 +15,7 @@ import { motion } from "framer-motion";
 const TimelessExpressions = () => {
   return (
     <div className="flex flex-col  items-center custom-container py-[24px] sm:py-[32px] lg:py-[60px]">
-      <p className="text-[12px] sm:text-[14px] font-cinzel text-[#C19F32] ">
+      <p className="text-[12px] sm:text-[14px] text-[#C19F32] uppercase font-kaiseiBold leading-[20px] tracking-[0.2em] ">
         Our Collection
       </p>
       <Title
@@ -28,12 +28,12 @@ const TimelessExpressions = () => {
 
       <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-x-[24px] gap-y-[14px] w-full h-[400vw] sm:h-[42vw] xl:max-h-[536px] recommend:h-[38vw] mb-[24px] md:mb-[48px]">
         {/* New In - Left Column */}
-        <div className="flex flex-col w-full sm:w-1/3 h-1/3 sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#F1EADA] to-[#DBC99B] p-[14px] xl:p-[24px] relative overflow-hidden cursor-pointer transition-all duration-300">
+        <div className="flex flex-col w-full sm:w-1/3 h-1/3 sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#F1EADA] to-[#DBC99B] px-[16px] py-[24px] sm:px-[14px] sm:py-[14px] xl:py-[24px] xl:px-[24px] relative overflow-hidden cursor-pointer transition-all duration-300">
           <div>
             <h2 className="text-[20px] lg:text-[24px] font-kaiseiBold mb-1">
               New In
             </h2>
-            <p className="text-[14px] lg:text-[16px] text-[#252525] font-inter">
+            <p className="text-[14px] lg:text-[16px] text-[#252525] font-arial">
               Fresh arrivals, timeless intentions.
             </p>
           </div>
@@ -55,11 +55,11 @@ const TimelessExpressions = () => {
         <div className="flex flex-col w-full sm:w-1/3 h-auto  justify-between gap-4 ">
           {/* Occasion Wear */}
           <div className="flex flex-col h-[261px] justify-between rounded-lg bg-gradient-to-br from-[#F6F4E5] to-[#DEDBA5] relative overflow-hidden transition-all duration-300 cursor-pointer">
-            <div className="p-[14px] z-20 xl:p-[24px]">
+            <div className="px-[16px] py-[24px] sm:px-[14px] sm:py-[14px] xl:py-[24px] xl:px-[24px] z-20">
               <h2 className="text-[20px] lg:text-[24px] font-kaiseiBold mb-1 w-[70%]">
                 Occasion Wear
               </h2>
-              <p className="text-[14px] lg:text-[16px] text-[#252525] font-inter w-[80%]">
+              <p className="text-[14px] lg:text-[16px] text-[#252525] font-arial w-[80%]">
                 For the moments that mean more.
               </p>
             </div>
@@ -83,11 +83,11 @@ const TimelessExpressions = () => {
 
           {/* Jewellery */}
           <div className="flex flex-col h-[261px] justify-between rounded-lg bg-gradient-to-br from-[#F2F2F2] to-[#D9D9D9]  relative overflow-hidden transition-all duration-300 cursor-pointer">
-            <div className="p-[14px]  z-20 xl:p-[24px]">
+            <div className="px-[16px] py-[24px] sm:px-[14px] sm:py-[14px] xl:py-[24px] xl:px-[24px] z-20 ">
               <h2 className="text-[20px] lg:text-[24px] font-kaiseiBold mb-1">
                 Jewellery
               </h2>
-              <p className="text-[14px] lg:text-[16px] text-[#252525] font-inter w-[50%]">
+              <p className="text-[14px] lg:text-[16px] text-[#252525] font-arial w-[50%]">
                 Adorn with Story
               </p>
             </div>
@@ -112,11 +112,11 @@ const TimelessExpressions = () => {
 
         {/* Scents - Right Column */}
         <div className="flex flex-col w-full sm:w-1/3 h-1/3 sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#CEDCE9] to-[#7DA1C4] relative overflow-hidden transition-all duration-300 cursor-pointer">
-          <div className="p-[14px] xl:p-[24px]">
+          <div className="px-[16px] py-[24px] sm:px-[14px] sm:py-[14px] xl:py-[24px] xl:px-[24px]">
             <h2 className="text-[20px] mt-[0px] lg:text-[24px] font-kaiseiBold mb-1">
               Scents
             </h2>
-            <p className="text-[14px] lg:text-[16px] text-[#252525] font-inter">
+            <p className="text-[14px] lg:text-[16px] text-[#252525] font-arial">
               Whispers of Memory
             </p>
           </div>

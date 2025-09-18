@@ -18,7 +18,7 @@ interface TitleProps{
 const Title: React.FC<LabelProps> = ({ className='text-[24px] sm:text-[40px] lg:text-[52px]', title }) => {
 
   return (
-    <span className={cn(" font-kaiseiBold font-[700] text-center text-[24px] sm:text-[40px] lg:text-[52px]", className)}>
+    <span className={cn(" font-kaiseiBold font-[700] text-center text-[24px] sm:text-[40px] lg:text-[52px] lg:leading-[60px] text-[#252525]", className)}>
       {title}
     </span>
   );

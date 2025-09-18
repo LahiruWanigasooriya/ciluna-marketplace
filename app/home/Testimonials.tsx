@@ -37,7 +37,7 @@ const testimonials = [
   {
     rating: 4,
     review:
-      "The scent I chose from LUMINA enveloped me in an aura of elegance, leaving a lasting impression that felt both magical and timeless.",
+      "The scent I chose from LUMINA enveloped me in an aura of elegance,  lasting impression that felt both magical and timeless.",
     name: "Anika Rathnayake",
     productImage: PerfumeImg,
     productName: "VERSACE Eros",
@@ -46,13 +46,13 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <div className="bg-[#F5F5F5] py-[16px] lg:py-[0px]  sm:mt-0 relative">
+    <div className="bg-[#F5F5F5] py-[0px]  sm:mt-0 relative">
       <div className="flex flex-col items-center custom-container py-[24px] sm:py-[32px] lg:py-[96px] z-10">
-        <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] tracking-[0.25em] ">
+        <p className="text-[12px] sm:text-[14px] text-[#C19F32] font-kaiseiBold leading-[20px] tracking-[0.2em] uppercase">
           Testimonials
         </p>
         <Title title="What Our Clients Say" />
-        <p className="text-[14px] sm:text-[16px] font-arial mt-[7px] text-center text-[#707070] leading-[24px] max-w-[750px] ">
+        <p className="text-[14px] sm:text-[16px] font-arial mt-[7px] text-center text-[#707070] leading-[20px] max-w-[750px] ">
           {`The elegance we create finds its meaning in your moments. These are the whispers of those who carry a piece of our soul.`}
         </p>
 
@@ -91,7 +91,7 @@ const Testimonials = () => {
         </div>
 
        
-          <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[20px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
+          <Button className="bg-black text-white px-[32px] py-[16px] w-fit rounded-lg font-normal font-[Arial] text-[16px] sm:text-[18px] leading-[22px] tracking-normal cursor-pointer transition-colors border border-transparent hover:bg-transparent hover:border hover:border-black hover:text-black duration-300">
             Explore all Testimonials
           </Button>
        
