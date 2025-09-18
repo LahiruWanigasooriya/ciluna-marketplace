@@ -123,6 +123,21 @@ export default function MainMenu({
     []
   );
   const [error, setError] = useState<string | null>(null);
+  const [isScrolled, setScroll] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 10;
+      if (scrolled) {
+        setScroll(true);
+      } else {
+        setScroll(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isHomePage, setIsNavbarActive]);
 
   // Fetch categories from backend
   useEffect(() => {
@@ -139,6 +154,7 @@ export default function MainMenu({
           setIsLoading(false);
         }
       } catch (err) {
+        console.error("Fetch /api/category error:", err);
         setError("An error occurred while fetching categories");
         setIsLoading(false);
       }
@@ -232,7 +248,7 @@ export default function MainMenu({
 
   return (
     <>
-    {/* Desktop Menu */}
+      {/* Desktop Menu */}
       <div className="relative items-center justify-between md:flex hidden w-full md:justify-center">
         {isLoading ? (
           <div>Loading categories...</div>
@@ -243,16 +259,11 @@ export default function MainMenu({
         ) : (
           <div
             className="relative flex justify-center w-full"
-            onMouseEnter={() => {
-              if (!profileSelect) {
-                setIsMainMenuActive(true);
-                setIsNavbarActive(true);
-              }
-            }}
             onMouseLeave={() => {
-              setIsMainMenuActive(false);
               setActiveMenu(null);
-              if (!profileSelect && isHomePage) setIsNavbarActive(false);
+              if (isHomePage && !isScrolled) {
+                setIsNavbarActive(false);
+              }
             }}
           >
             {/* categories row */}
@@ -267,6 +278,8 @@ export default function MainMenu({
                   onMouseEnter={() => {
                     if (!profileSelect) {
                       setActiveMenu(data.name);
+                      setIsMainMenuActive(true);
+                      setIsNavbarActive(true);
                     }
                   }}
                 >

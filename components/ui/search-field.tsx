@@ -53,7 +53,7 @@ const SearchField = ({
   // Handle form submission
   const handleSubmit = (value: string) => {
     if (value.trim()) {
-      router.push(`/search?query=${encodeURIComponent(value)}`);
+      router.push(`/product?query=${encodeURIComponent(value)}`);
     }
   };
 
