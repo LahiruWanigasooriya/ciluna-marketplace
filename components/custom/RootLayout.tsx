@@ -27,7 +27,7 @@ export default function ConditionalLayout({
   const pathname = usePathname();
   const { isMenuOpen } = useMenuStore();
   const hiddenRoutes = ["/login", "/register", "/forgotpw"];
-  const WidthFullPages = ["/", "/product"];
+  const WidthFullPages = ["/", "/product", "/order-shipping"];
   const isHomePage = pathname === "/";
   const isHiddenRoute = hiddenRoutes.includes(pathname);
   const isWidthFullPages =
@@ -60,20 +60,20 @@ export default function ConditionalLayout({
   }, [token]);
 
   const mainClasses = isHiddenRoute
-    // ? "md:overflow-hidden h-screen"
+    ? // ? "md:overflow-hidden h-screen"
       // : isLogoPages
       // ? "flex-1 "
       // : "flex-1 ";
-      ? "min-h-screen overflow-auto"
+      "min-h-screen overflow-auto"
     : "flex-grow overflow-auto";
 
   const getContainerClasses = () => {
     if (isWidthFullPages) {
       return "flex flex-col min-h-screen relative w-full";
     }
-      if (isHiddenRoute) {
-    return "flex flex-col min-h-screen relative w-full"; // Login/Register/Forgotpw → full width
-  }
+    if (isHiddenRoute) {
+      return "flex flex-col min-h-screen relative w-full"; // Login/Register/Forgotpw → full width
+    }
     return "flex flex-col max-w-[1440px] mx-auto min-h-screen relative"; // Default: max width 1440px for all other pages
   };
 
