@@ -254,16 +254,16 @@ const SignupForm = ({
           <Button
             type="submit"
             isDisabled={!(formData.recieveUpdates && formData.personalizedOffers) || isLoading || isSuccess}
-            className={` w-full !h-[56px] font-arial font-normal !text-lg leading-6 !py-4 !px-8 bg-[#252525] text-white transition-opacity duration-300 ${
-              ((!formData.recieveUpdates || !formData.personalizedOffers) && !isLoading && !isSuccess)
-                ? "opacity-50 cursor-none"
-                : "cursor-pointer hover:bg-obsidian-900"
+
+            className={` w-full !h-[56px] font-arial font-normal !text-lg leading-6 !py-4 !px-8 bg-[#252525] hover:bg-obsidian-900 text-white transition-opacity duration-300 ${
+                isLoading ? "opacity-80" : ""
             }`}
           >
             {isLoading && <Loader2 size={16} className="animate-spin mr-1 " />}
 
             Create Account
           </Button>
+
 
           <div className="flex items-center justify-center space-x-2 mt-5 pb-6">
             <p className="text-[#252525] font-arial text-base ">Already have a CILUNA account? </p>
