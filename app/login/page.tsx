@@ -55,14 +55,14 @@ const LoginForm = ({
         type="password"
         isRevealable
         label="Password*"
-        className="w-full min-w-[343px] max-w-[598px] [&_input]:!text-[14px] font-arial [&_input]:leading-[20px] [&_input]:p-3 [&_label]:text-[#252525] [&_label]:text-[16px]"
+        className="w-full min-w-[343px] max-w-[598px] [&_input]:!text-[14px] font-arial  [&_input]:leading-[20px] [&_input]:p-3 [&_label]:text-[#252525] [&_label]:text-[16px]"
         placeholder="Enter your Password"
         value={formData.password}
         onChange={(value: string) => handleChange("password", value)}
       />
       
       <div className="flex items-center justify-between">
-        <Checkbox
+        <Checkbox 
           isSelected={formData.remember}
           onChange={(isSelected: boolean) =>
             handleChange("remember", isSelected)
