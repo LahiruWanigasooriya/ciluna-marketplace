@@ -13,88 +13,7 @@ import J2 from "@/app/assets/mainmenu-images/J2.webp";
 import J3 from "@/app/assets/mainmenu-images/J3.webp";
 import J4 from "@/app/assets/mainmenu-images/J4.webp";
 
-// Placeholder images (used as fallback)
-const placeholderImages = [J1.src, J2.src, J3.src, J4.src];
-
-// SubMenu component with JewelleryMenu design
-const SubMenu: React.FC<{
-  categoryName: string;
-  categoryId: string;
-  subcategories: ISubCategory[];
-  subsubcategories: ISubSubCategory[];
-  images: string[];
-}> = ({
-  categoryName,
-  categoryId,
-  subcategories,
-  subsubcategories,
-  images,
-}) => {
-  const subItemClass =
-    "relative text-[#252525] hover:text-yellow-700 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-7 after:bg-yellow-600 after:scale-x-0 after:origin-left hover:after:scale-x-100 after:transition-transform after:duration-200";
-
-  // Filter subcategories by categoryId
-  const filteredSubcategories = subcategories.filter(
-    (subcat) => subcat.category === categoryId
-  );
-
-  // Debugging: Log filtered subcategories
-  console.log(`SubMenu for category "${categoryName}" (ID: ${categoryId}):`, {
-    filteredSubcategories,
-    subsubcategories,
-    images,
-  });
-
-  return (
-    <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 custom-container !py-[40px] max-sm:!px-0">
-      <h1 className="sm:hidden font-interBold text-[20px] mb-[16px]">
-        {categoryName}
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-[16px] md:gap-y-[30px] w-full">
-        {filteredSubcategories.length > 0 ? (
-          filteredSubcategories.map((subcat) => (
-            <div key={subcat._id}>
-              <div className="mb-[8px] sm:mb-[12px]">
-                <Link
-                  href={`/subcategories/${subcat._id}`}
-                  className="text-black hover:text-gray-600 font-interBold text-[16px]"
-                >
-                  {subcat.name}
-                </Link>
-              </div>
-              <div className="flex flex-col gap-[8px] font-inter font-light">
-                <Link
-                  href={`/subcategories/${subcat._id}`}
-                  className={subItemClass}
-                >
-                  View All
-                </Link>
-                {subsubcategories
-                  .filter((subsub) => subsub.subcategoryId === subcat._id)
-                  .map((subsub) => (
-                    <Link
-                      key={subsub._id}
-                      href={`/subsubcategories/${subsub._id}`}
-                      className={subItemClass}
-                    >
-                      {subsub.name}
-                    </Link>
-                  ))}
-                <div className="sm:hidden border-b my-[16px]"></div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div>Loading subcategories available for {categoryName}</div>
-        )}
-      </div>
-      <div>
-        {/* <SwiperImages images={images.length > 0 ? images : placeholderImages} /> */}
-        <SwiperImages images={placeholderImages} />
-      </div>
-    </div>
-  );
-};
+// Categories Menu -----------------------------------------------------------------------
 
 interface MainMenuProps {
   isNavbarActive: boolean;
@@ -246,6 +165,15 @@ export default function MainMenu({
     setIsNavbarActive(true);
   };
 
+  // Handle category selection (without navigation)
+  const handleCategoryClick = (categoryName: string) => {
+    if (!profileSelect) {
+      setActiveMenu(categoryName);
+      setIsMainMenuActive(true);
+      setIsNavbarActive(true);
+    }
+  };
+
   return (
     <>
       {/* Desktop Menu */}
@@ -269,22 +197,17 @@ export default function MainMenu({
             {/* categories row */}
             <div className="flex flex-row overflow-x-auto no-scrollbar md:gap-[16px] lg:gap-[24px]">
               {categories.map((data) => (
-                <Link
+                <button
                   key={data._id}
-                  href={`/categories/${data._id}`}
+                  type="button"
                   className={`cursor-pointer px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial text-[14px] leading-[20px] hover:bg-black hover:text-white ${
                     isNavbarActive ? "text-black" : "text-white"
                   }`}
-                  onMouseEnter={() => {
-                    if (!profileSelect) {
-                      setActiveMenu(data.name);
-                      setIsMainMenuActive(true);
-                      setIsNavbarActive(true);
-                    }
-                  }}
+                  onClick={() => handleCategoryClick(data.name)}
+                  onMouseEnter={() => handleCategoryClick(data.name)}
                 >
                   <p className="text-xs md:text-[14px]">{data.name}</p>
-                </Link>
+                </button>
               ))}
             </div>
 
@@ -328,6 +251,7 @@ export default function MainMenu({
           <div className="flex items-center justify-between mb-4 gap-[16px]">
             {activeMenu ? (
               <button
+                type="button"
                 onClick={() => setActiveMenu(null)}
                 className="text-[16px] text-gray-600"
               >
@@ -337,6 +261,7 @@ export default function MainMenu({
               <div />
             )}
             <button
+              type="button"
               className="pb-[8px]"
               onClick={() => {
                 setMobileMenuOpen(false);
@@ -388,3 +313,87 @@ export default function MainMenu({
     </>
   );
 }
+
+// Subcategories,Sub-subcategories Menu -----------------------------------------------------------------------
+
+// Placeholder images (used as fallback)
+const placeholderImages = [J1.src, J2.src, J3.src, J4.src];
+
+const SubMenu: React.FC<{
+  categoryName: string;
+  categoryId: string;
+  subcategories: ISubCategory[];
+  subsubcategories: ISubSubCategory[];
+  images: string[];
+}> = ({
+  categoryName,
+  categoryId,
+  subcategories,
+  subsubcategories,
+  images,
+}) => {
+  const subItemClass =
+    "relative text-[#252525] hover:text-yellow-700 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-7 after:bg-yellow-600 after:scale-x-0 after:origin-left hover:after:scale-x-100 after:transition-transform after:duration-200";
+
+  // Filter subcategories by categoryId
+  const filteredSubcategories = subcategories.filter(
+    (subcat) => subcat.category === categoryId
+  );
+
+  // Debugging: Log filtered subcategories
+  console.log(`SubMenu for category "${categoryName}" (ID: ${categoryId}):`, {
+    filteredSubcategories,
+    subsubcategories,
+    images,
+  });
+
+  return (
+    <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 custom-container !py-[40px] max-sm:!px-0">
+      <h1 className="sm:hidden font-interBold text-[20px] mb-[16px]">
+        {categoryName}
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-[16px] md:gap-y-[30px] w-full">
+        {filteredSubcategories.length > 0 ? (
+          filteredSubcategories.map((subcat) => (
+            <div key={subcat._id}>
+              <div className="mb-[8px] sm:mb-[12px]">
+                <Link
+                  href={`/subcategories/${subcat._id}`}
+                  className="text-black hover:text-gray-600 font-interBold text-[16px]"
+                >
+                  {subcat.name}
+                </Link>
+              </div>
+              <div className="flex flex-col gap-[8px] font-inter font-light">
+                <Link
+                  href={`/subcategories/${subcat._id}`}
+                  className={subItemClass}
+                >
+                  View All
+                </Link>
+                {subsubcategories
+                  .filter((subsub) => subsub.subcategoryId === subcat._id)
+                  .map((subsub) => (
+                    <Link
+                      key={subsub._id}
+                      href={`/subsubcategories/${subsub._id}`}
+                      className={subItemClass}
+                    >
+                      {subsub.name}
+                    </Link>
+                  ))}
+                <div className="sm:hidden border-b my-[16px]"></div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div>Loading subcategories available for {categoryName}</div>
+        )}
+      </div>
+      <div>
+        {/* <SwiperImages images={images.length > 0 ? images : placeholderImages} /> */}
+        <SwiperImages images={placeholderImages} />
+      </div>
+    </div>
+  );
+};
