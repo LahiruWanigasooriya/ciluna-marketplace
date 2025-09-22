@@ -257,7 +257,8 @@ const SignupForm = ({
 
             className={` w-full !h-[56px] font-arial font-normal !text-lg leading-6 !py-4 !px-8 bg-[#252525] hover:bg-obsidian-900 text-white transition-opacity duration-300 ${
                 isLoading ? "opacity-80" : ""
-            }`}
+            }
+            ${!(formData.recieveUpdates && formData.personalizedOffers) ? "cursor-none" :""}`}
           >
             {isLoading && <Loader2 size={16} className="animate-spin mr-1 " />}
 
