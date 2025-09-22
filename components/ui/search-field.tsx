@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { IconX } from "justd-icons";
 import { FiSearch } from "react-icons/fi";
 import {
@@ -12,7 +12,7 @@ import { Button } from "./button";
 import { Description, FieldError, FieldGroup, Input, Label } from "./field";
 import { Loader } from "./loader";
 import { ctr } from "./primitive";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const searchFieldStyles = tv({
   slots: {
@@ -48,7 +48,9 @@ const SearchField = ({
   ...props
 }: SearchFieldProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState("");
 
   // Handle form submission
   const handleSubmit = (value: string) => {
@@ -64,12 +66,27 @@ const SearchField = ({
     }
   };
 
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
+  };
+
+  useEffect(() => {
+    const currentQuery = searchParams.get("query");
+    if (!currentQuery) {
+      setInputValue("");
+    } else {
+      setInputValue(currentQuery);
+    }
+  }, [searchParams]);
+
   return (
     <SearchFieldPrimitive
       aria-label={
         placeholder ?? props["aria-label"] ?? "Search for anything..."
       }
       {...props}
+      value={inputValue}
+      onChange={handleInputChange}
       className={ctr(className, base())}
       onSubmit={handleSubmit}
     >
@@ -97,7 +114,7 @@ const SearchField = ({
                 : " text-white border-white")
             }
           >
-            <IconX className="w-6 h-6"/>
+            <IconX className="w-6 h-6" />
           </Button>
         )}
         <FiSearch
