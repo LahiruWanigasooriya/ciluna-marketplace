@@ -357,16 +357,14 @@ const SubMenu: React.FC<{
           filteredSubcategories.map((subcat) => (
             <div key={subcat._id}>
               <div className="mb-[8px] sm:mb-[12px]">
-                <Link
-                  href={`/subcategories/${subcat._id}`}
-                  className="text-black hover:text-gray-600 font-interBold text-[16px]"
-                >
+                <span className="text-black hover:text-gray-600 font-interBold text-[16px]">
                   {subcat.name}
-                </Link>
+                </span>
               </div>
+
               <div className="flex flex-col gap-[8px] font-inter font-light">
                 <Link
-                  href={`/subcategories/${subcat._id}`}
+                  href={`/productCopy?subcategoryId=${subcat._id}`}
                   className={subItemClass}
                 >
                   View All
@@ -376,7 +374,7 @@ const SubMenu: React.FC<{
                   .map((subsub) => (
                     <Link
                       key={subsub._id}
-                      href={`/subsubcategories/${subsub._id}`}
+                      href={`/productCopy?subsubcategoryId=${subsub._id}`}
                       className={subItemClass}
                     >
                       {subsub.name}
