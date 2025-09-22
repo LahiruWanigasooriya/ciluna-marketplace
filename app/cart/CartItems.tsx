@@ -14,7 +14,12 @@ import Link from "next/link";
 import QuantitySelector from "@/app/product/[id]/QuantitySelector";
 import { useCartStore } from "@/store/cart";
 import { useAuthStore } from "@/store/authStore";
-import { clearCart, getCart, updateCartItem } from "@/actions/carts/cart";
+import {
+  clearCart,
+  getCart,
+  removeCartItem,
+  updateCartItem,
+} from "@/actions/carts/cart";
 import { toast } from "sonner";
 import { UpdateCartItemParams } from "@/types/cart";
 import { getDiscountedPrice } from "@/utils/getDiscountPrice";
@@ -45,11 +50,14 @@ const calculateTotals = (items: any[]) => {
 
 const CartItems = () => {
   const { cart, removeFromCart, setCart, updateQuantity } = useCartStore();
-  const { token } = useAuthStore();
+  const { getToken } = useAuthStore();
+  const token = getToken();
   const [deleteCartItems, setDeleteCartItems] = useState<string[]>([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [removeProduct, setRemoveProduct] = useState<any>();
   const [removeAll, setIsRemoveAll] = useState(false);
+
+  console.log("cart in cart items: ", cart);
 
   useDisableScroll(removeProduct);
   useDisableScroll(removeAll);
@@ -85,14 +93,16 @@ const CartItems = () => {
 
     setDeleteCartItems([]);
     setIsRemoveAll(false);
+    if (token) clearCart();
   };
 
   const handleItemDelete = (product: any) => {
+    console.log(token);
+    removeFromCart(product._id);
     if (token) {
-      removeFromCart(product._id);
-      clearCart();
+      console.log("clearing cart in db");
+      removeCartItem({ itemId: product._id });
     } else {
-      removeFromCart(product._id);
       setDeleteCartItems(
         deleteCartItems.filter((item) => item !== product._id)
       );
@@ -232,10 +242,37 @@ const CartItems = () => {
                                         </Link>
                                       </div>
 
-                                      {product.color && product.size && (
+                                      {/* {product.color && product.size && (
                                         <div className="flex text-gray">
                                           <h2>
                                             {product.color} | {product.size}
+                                          </h2>
+                                          <ChevronRight />
+                                        </div>
+                                      )}
+                                      {!product.color && product.size && (
+                                        <div className="flex text-gray">
+                                          <h2>
+                                            {product.size}
+                                          </h2>
+                                          <ChevronRight />
+                                        </div>
+                                      )}
+                                      {product.color && !product.size && (
+                                        <div className="flex text-gray">
+                                          <h2>
+                                            {product.color}
+                                          </h2>
+                                          <ChevronRight />
+                                        </div>
+                                      )} */}
+
+                                      {(product.color || product.size) && (
+                                        <div className="flex text-gray">
+                                          <h2>
+                                            {[product.color, product.size]
+                                              .filter(Boolean)
+                                              .join(" | ")}
                                           </h2>
                                           <ChevronRight />
                                         </div>
@@ -330,7 +367,9 @@ const CartItems = () => {
                 <Summary to="checkout" text="Checkout" />
 
                 <div className="flex flex-col py-6 px-4 md:p-6 gap-4 text-gray font-arial bg-[#F5F5F5] rounded-[6px]">
-                  <h2 className="text-xl leading-6 font-arialBold ">Pay with</h2>
+                  <h2 className="text-xl leading-6 font-arialBold ">
+                    Pay with
+                  </h2>
                   <div className="flex gap-2 pb-2">
                     {paymentOptions.map((option, index) => (
                       <div
@@ -361,9 +400,7 @@ const CartItems = () => {
             </div>
           </div>
         ) : (
-          <p className="text-center text-lg text-gray">
-            Your cart is empty.
-          </p>
+          <p className="text-center text-lg text-gray">Your cart is empty.</p>
         )}
       </div>
     </div>

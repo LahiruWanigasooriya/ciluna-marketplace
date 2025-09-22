@@ -16,7 +16,11 @@ import { useQuantityStore } from "@/store/quantity";
 import { addToCart, getCart } from "@/actions/carts/cart";
 import { useCartStore } from "@/store/cart";
 import { toast } from "sonner";
-import { fetchExchangeRate, formatPrice } from "@/utils/getDiscountPrice";
+import {
+  fetchExchangeRate,
+  formatPrice,
+  getUSDPrices,
+} from "@/utils/getDiscountPrice";
 
 import { jwtDecode } from "jwt-decode";
 
@@ -28,14 +32,15 @@ interface DecodedToken {
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { token } = useAuthStore();
+  const { getToken } = useAuthStore();
+  const token = getToken(); // this will read from cookie if store token is null
   const [userId, setUserId] = useState("");
   const [selectedColor, setSelectedColor] = useState(product.colorCode);
   const [usdPrices, setUsdPrices] = useState({
     original: "0.00",
     discounted: "0.00",
   });
-  const price = product.price
+  const price = product.price;
   const discount = product.discount?.percentage || null;
   const { quantity } = useQuantityStore();
   const { addToCartItem, setCart } = useCartStore();
@@ -124,7 +129,21 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       try {
         await addToCart(cartData);
         const cartResponse = await getCart(token);
-        const updatedCart = cartResponse?.cart?.items || [];
+
+        const rate = await fetchExchangeRate();
+
+        // const updatedCart = cartResponse?.cart?.items || [];
+        const updatedCart = (cartResponse?.cart?.items || []).map(
+          (item: any) => ({
+            ...item,
+            priceUSD: getUSDPrices(
+              item.price,
+              item.finalTotal,
+              rate
+            ),
+          })
+        );
+        console.log("fetched cart with USD:", updatedCart);
         setCart(updatedCart);
         toast.success(`${product.name} added to cart!`);
       } catch (error) {
@@ -148,6 +167,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         rating: product.rating,
         isActive: product.isActive,
       };
+
+      console.log("local cart: ", cartData);
 
       // Add to local storage (Zustand store)
       await addToCartItem(cartData);

@@ -9,7 +9,7 @@ export interface Checkout {
   district: string;
   town: string;
   zip: string;
-  defaultShippingAddress: boolean;
+  isDefault: boolean;
   paymentMethod: string;
   holderName?: string;
   cardNumber?: string;
@@ -21,7 +21,7 @@ export interface Checkout {
 }
 
 export interface PaymentCardOption {
-  img: StaticImageData;
+  img?: StaticImageData;
   holderName: string;
   cardNumber: string;
   expireMonth: string;
@@ -32,7 +32,7 @@ export interface PaymentCardOption {
 }
 
 export interface Address {
-  id: string;
+  _id: string;
   country: string;
   contactName: string;
   mobileNumber: string;
@@ -41,5 +41,5 @@ export interface Address {
   district: string;
   town: string;
   zip: string;
-  defaultShippingAddress: boolean;
+  isDefault: boolean;
 }

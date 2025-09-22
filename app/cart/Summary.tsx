@@ -130,6 +130,10 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
                       size="extra-large"
                       type="submit"
                       // onPress={() => handlePlaceOrder?.(true)}
+                      onPress={(e) => {
+                        // Don't prevent default - let the form handle submission
+                        console.log("Button clicked - form will submit");
+                      }}
                     >
                       {text}
                     </Button>

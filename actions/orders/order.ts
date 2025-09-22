@@ -6,7 +6,7 @@ import OrderModel from "@/models/order";
 import { processPayment } from "../utils/payment/payment";
 import CartModel from "@/models/cart";
 
-export async function createOrderAction(orderData: any) {
+export async function createOrder(orderData: any) {
   try {
 
    await dbConnectMarketPlace();
@@ -35,7 +35,8 @@ export async function createOrderAction(orderData: any) {
     const savedOrder = await newOrder.save();
 
     // Step 2: Process Payment dynamically
-    const paymentResponse = await processPayment(payment.method, finalPrice, payment.paymentMethodId);
+    // const paymentResponse = await processPayment(payment.method, finalPrice, payment.paymentMethodId);
+    const paymentResponse = { success: true, transactionId: "mock_txn_" + Date.now() }; // use the above line when implementing the payment
 
     if (paymentResponse.success) {
       // Payment successful, update order
@@ -45,9 +46,9 @@ export async function createOrderAction(orderData: any) {
       await savedOrder.save();
 
       // Step 3: Clear Cart
-      await CartModel.findOneAndUpdate({ userId }, { items: [], totalPrice: 0, finalPrice: 0 });
+      await CartModel.findOneAndUpdate({ userId }, { items: [], totalPrice: 0, discount: 0, finalPrice: 0 });
 
-      return { status: 201, success: true, message: "Order placed successfully", data: savedOrder };
+      return { status: 201, success: true, message: "Order placed successfully", data: JSON.parse(JSON.stringify(savedOrder.toObject()))};
     } else {
       savedOrder.payment.status = "failed";
       await savedOrder.save();
