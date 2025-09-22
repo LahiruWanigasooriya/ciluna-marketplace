@@ -145,7 +145,6 @@ export default function MainMenu({
       try {
         const response = await fetch("/api/category");
         const data = await response.json();
-        console.log("Fetched categories:", data); // Debugging
         if (data.success) {
           setCategories(data.data.categories);
           setIsLoading(false);

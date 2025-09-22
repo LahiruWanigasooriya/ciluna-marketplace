@@ -1,6 +1,6 @@
 import Title from "@/components/custom/Title";
 import SelectDropdown from "@/components/ui/select-dropdown";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { TextField } from "@/components/ui/text-field";
 import Tel from "@/components/custom/Phone";
 
@@ -16,6 +16,9 @@ import * as Yup from "yup";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Address } from "@/types/checkout";
+import { createAddress, updateAddress } from "@/actions/users/address";
+import { useAuthStore } from "@/store/authStore";
+import { jwtDecode } from "jwt-decode";
 
 interface OptionType {
   value: string;
@@ -28,13 +31,21 @@ interface ShippingAddressProps {
   title: string;
   selectedAddressForEdit?: Address | null;
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
+  onSuccess?: () => void;
+}
+
+interface DecodedToken {
+  userId: string;
+  exp: number;
 }
 
 const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
   title,
   selectedAddressForEdit,
   onClose,
+  onSuccess,
 }) => {
+  // console.log("selected address for edit: ", selectedAddressForEdit);
   const countryOptions = useMemo(() => countryList().getData(), []);
   const [selectedProvince, setSelectedProvince] = useState<string>(
     selectedAddressForEdit?.province || ""
@@ -42,6 +53,9 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
   const [selectedDistrict, setSelectedDistrict] = useState<string>(
     selectedAddressForEdit?.district || ""
   );
+  const [userId, setUserId] = useState("");
+  const { getToken } = useAuthStore();
+    const token = getToken();
   const districts =
     provinces.find((p) => p.value === selectedProvince)?.districts || [];
   const towns =
@@ -57,8 +71,28 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
   } = useForm({
     resolver: yupResolver(shippingValidationSchema),
     mode: "onBlur",
-    defaultValues: selectedAddressForEdit ?? {defaultShippingAddress: false},
+    defaultValues: selectedAddressForEdit ?? {
+      country: "",
+      contactName: "",
+      mobileNumber: "",
+      street: "",
+      province: "",
+      district: "",
+      town: "",
+      isDefault: false,
+    },
   });
+
+  useEffect(() => {
+      if (token) {
+        try {
+          const decoded: DecodedToken = jwtDecode(token);
+          setUserId(decoded.userId);
+        } catch (error) {
+          console.error("❌ Error fetching data:", error);
+        }
+      }
+    }, [token]);
 
   const formatOptionLabel = ({ value, label }: OptionType) => (
     <div style={{ display: "flex", alignItems: "center" }}>
@@ -70,16 +104,40 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
       <span>{label}</span>
     </div>
   );
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    if (selectedAddressForEdit) {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // simulate the request to update the address
-    } else {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // simulate the request to create a new address
+
+   const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    let address = {
+      contactName: data.contactName,
+      mobileNumber: data.mobileNumber,
+      street: data.street,
+      province: data.province,
+      district: data.district,
+      town: data.town,
+      country: data.country,
+      zip: data.zip,
+      isDefault: data.isDefault,
+    };
+
+    try {
+      if (selectedAddressForEdit) {
+        await updateAddress(userId, selectedAddressForEdit._id, address);
+        console.log("editing")
+      } else {
+        await createAddress(userId, address);
+        console.log("creating")
+      }
+      
+      onClose(false);
+      reset();
+      
+      // Call onSuccess to refetch addresses
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch (error) {
+      console.error("Error saving address:", error);
+      // You might want to show an error message to the user here
     }
-    console.log(errors);
-    console.log("Data to submit: ", data);
-    onClose(false);
-    reset();
   };
 
   return (
@@ -325,16 +383,24 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
 
           <div className="w-fit hover:cursor-pointer">
             <div>
-              <Checkbox
-                onChange={(isSelected: boolean) =>
-                  setValue("defaultShippingAddress", isSelected)
-                }
-              >
-                Set as a default shipping address
-              </Checkbox>
-              {errors.defaultShippingAddress && (
+              <Controller
+                name="isDefault"
+                control={control}
+                render={({ field }) => (
+                  <Checkbox
+                    isSelected={field.value}
+                    onChange={(isSelected: boolean) =>
+                      setValue("isDefault", isSelected)
+                    }
+                  >
+                    Set as a default shipping address
+                  </Checkbox>
+                )}
+              />
+
+              {errors.isDefault && (
                 <p className="text-red-500 text-xs mt-1">
-                  {errors.defaultShippingAddress.message}
+                  {errors.isDefault.message}
                 </p>
               )}
             </div>
