@@ -363,7 +363,7 @@ const SubMenu: React.FC<{
 
               <div className="flex flex-col gap-[8px] font-inter font-light">
                 <Link
-                  href={`/productCopy?subcategoryId=${subcat._id}`}
+                  href={`/product?subcategoryId=${subcat._id}`}
                   className={subItemClass}
                 >
                   View All
@@ -373,7 +373,7 @@ const SubMenu: React.FC<{
                   .map((subsub) => (
                     <Link
                       key={subsub._id}
-                      href={`/productCopy?subsubcategoryId=${subsub._id}`}    //passing the subsubcategoryId through query parameters
+                      href={`/product?subsubcategoryId=${subsub._id}`}    //passing the subsubcategoryId through query parameters
                       className={subItemClass}
                     >
                       {subsub.name}

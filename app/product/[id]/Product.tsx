@@ -32,7 +32,6 @@ import {
   fetchExchangeRate,
   formatPrice,
   getDiscountedPrice,
-  getUSDPrices,
 } from "@/utils/getDiscountPrice";
 import ProductImageSlider from "../ProductImageSlider";
 import ColorSelector from "./ColorSelector";
@@ -94,8 +93,7 @@ const Product: React.FC<ProductProps> = ({
   const [selectedVariant, setSelectedVariant] =
     useState<IProductVariant | null>(null);
   const [rating, setRating] = useState();
-  const { getToken } = useAuthStore();
-  const token = getToken();
+  const { token } = useAuthStore();
   const [price, setPrice] = useState<number>(product.price);
   const [discount, setDiscount] = useState<number | null>(
     product.discount?.percentage || null
@@ -153,7 +151,7 @@ const Product: React.FC<ProductProps> = ({
 
     if (colorCategory) {
       const colors: ColorOption[] = colorCategory.subCategories.map(
-        (sub: any) => ({ name: sub.value, code: sub.subValue })
+        (sub: any) => ({name:sub.value, code: sub.subValue})
       );
       setSelectColor(colors);
     }
@@ -222,16 +220,17 @@ const Product: React.FC<ProductProps> = ({
   const handleColorSelect = (color: any) => {
     setSelectedColor(color);
 
-    let variant: any;
+    let variant: any
 
-    if (selectedSize) {
+    if(selectedSize){
       variant = variants.find(
         (v: any) =>
           v.subCategoryIds.some((sub: any) => sub.value === color) &&
           v.subCategoryIds.some((sub: any) => sub.value === selectedSize)
       );
-    } else {
-      variant = variants.find((v: any) =>
+    }else{
+      variant = variants.find(
+        (v: any) =>
         v.subCategoryIds.some((sub: any) => sub.value === color)
       );
     }
@@ -303,19 +302,10 @@ const Product: React.FC<ProductProps> = ({
             size: selectedSize,
           };
 
-          console.log("cart data to add in prouct: ", cartData);
-
       try {
         await addToCart(cartData);
         const cartResponse = await getCart(token);
-        const rate = await fetchExchangeRate();
-        const updatedCart = (cartResponse?.cart?.items || []).map(
-          (item: any) => ({
-            ...item,
-            priceUSD: getUSDPrices(item.price, item.finalTotal, rate),
-          })
-        );
-        console.log("Updated cart in product: ", updatedCart);
+        const updatedCart = cartResponse?.cart?.items || [];
         setCart(updatedCart);
         toast.success(`${product.name} added to cart!`);
       } catch (error) {
@@ -409,7 +399,7 @@ const Product: React.FC<ProductProps> = ({
     <div className="w-full">
       <div className="flex flex-col px-4 md:px-8 lg:px-[68px] xl:px-[84px] recommend:px-[96px] max-w-[1440px] recommend:mx-auto mt-[74px] md:mt-[132px]">
         <div className="md:pb-6 flex">
-          <BackButton to="/product" className="hidden sm:flex" text="Back" />
+          <BackButton to="/product" className="hidden sm:flex" text="Back"/>
         </div>
         <div className="flex flex-col md:flex-row font-arial justify-between gap-3 md:gap-[24px] lg:gap-[25px] items-start text-gray h-full">
           <div className="flex flex-col md:gap-[12px] lg:gap-4 w-full xl:w-auto">
@@ -524,9 +514,7 @@ const Product: React.FC<ProductProps> = ({
                   <Rating rating={reviews?.avgRating || 0} />
                   <span className="text-sm ml-2 text-[#707070]">
                     {" "}
-                    {reviews?.totalReviews || 0}{" "}
-                    {reviews?.totalReviews === 1 ? "Review" : "Reviews"} |{" "}
-                    {sold}+ Sold
+                    {reviews?.totalReviews || 0} {reviews?.totalReviews === 1 ? 'Review' : 'Reviews'} | {sold}+ Sold
                   </span>
                 </div>
               )}
@@ -566,9 +554,7 @@ const Product: React.FC<ProductProps> = ({
                     <Rating rating={reviews?.avgRating || 0} />
                     <span className="text-xs ml-2 text-[#707070]">
                       {" "}
-                      {reviews?.totalReviews || 0}{" "}
-                      {reviews?.totalReviews === 1 ? "Review" : "Reviews"} |{" "}
-                      {sold}+ Sold
+                      {reviews?.totalReviews || 0} {reviews?.totalReviews === 1 ? 'Review' : 'Reviews'} | {sold}+ Sold
                     </span>
                   </div>
                 )}
@@ -774,7 +760,7 @@ const Product: React.FC<ProductProps> = ({
       )}
       {isShare && (
         <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
-          <ShareLink onClose={() => setIsShare(false)} link={link} />
+          <ShareLink onClose={() => setIsShare(false)} link={link}/>
         </div>
       )}
     </div>
