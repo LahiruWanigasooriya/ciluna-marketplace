@@ -137,7 +137,7 @@ export const reviewValidationSchema = Yup.object().shape({
     .optional(),
 });
 
-// export const shoppingValidationSchema = Yup.object().shape({
+// export const orderValidationSchema = Yup.object().shape({
 //   country: Yup.string().required("Country is required"),
 //   contactName: Yup.string().required("Contact name is required"),
 //   mobileNumber: Yup.string()
@@ -195,7 +195,7 @@ export const shippingValidationSchema = Yup.object().shape({
   district: Yup.string().required("District is required"),
   town: Yup.string().required("Town is required"),
   zip: Yup.string().required("Zip code is required"),
-  defaultShippingAddress: Yup.boolean().required(),
+  isDefault: Yup.boolean().required(),
 });
 
 export const paymentValidationSchema = Yup.object().shape({
@@ -237,7 +237,7 @@ export const paymentValidationSchema = Yup.object().shape({
   }),
 });
 
-export const shoppingValidationSchema = shippingValidationSchema.concat(
+export const orderValidationSchema = shippingValidationSchema.concat(
   paymentValidationSchema
 );
 

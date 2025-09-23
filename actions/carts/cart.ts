@@ -1,6 +1,10 @@
 "use server";
 
-import { AddToCartParams, UpdateCartItemParams, RemoveCartItemParams, } from "@/types/cart";
+import {
+  AddToCartParams,
+  UpdateCartItemParams,
+  RemoveCartItemParams,
+} from "@/types/cart";
 import { dbConnectMarketPlace } from "@/lib/dbConnect";
 import CartModel from "@/models/cart";
 import ProductModel from "@/models/product";
@@ -15,8 +19,6 @@ import "@/models/subcategory";
 import "@/models/productVariant";
 import "@/models/productVariantCategory";
 import "@/models/productVariantSubCategory";
-
-
 
 // Add to cart
 export async function addToCart(params: AddToCartParams, token?: string) {
@@ -61,7 +63,7 @@ export async function addToCart(params: AddToCartParams, token?: string) {
         path: "subCategoryIds",
         select: "value",
       });
-      
+
       if (!variant) {
         return { success: false, message: "Product variant not found" };
       }
@@ -99,7 +101,9 @@ export async function addToCart(params: AddToCartParams, token?: string) {
     if (totalQuantityInCart > stockToCheck) {
       return {
         success: false,
-        message: `Only ${stockToCheck} items available in stock. You already have ${totalQuantityInCart - params.quantity} in your cart.`,
+        message: `Only ${stockToCheck} items available in stock. You already have ${
+          totalQuantityInCart - params.quantity
+        } in your cart.`,
       };
     }
 
@@ -108,22 +112,29 @@ export async function addToCart(params: AddToCartParams, token?: string) {
     const discountAmount = (itemTotal * discount) / 100;
     const finalTotal = itemTotal - discountAmount;
 
+    const { color, size } = params;
+
     if (!cart) {
       // Create new cart
       cart = new CartModel({
         userId,
-        items: [{
+        items: [
+          {
             productId: params.productId,
             productVariantId: params.productVariantId || null,
             quantity: params.quantity,
             price: finalPrice,
-            discount: discountAmount,
+            discount,
+            discountAmount,
             total: itemTotal,
             finalTotal: finalTotal,
-        }],
+          },
+        ],
         totalPrice: itemTotal,
         discount: discountAmount,
         finalPrice: finalTotal,
+        color,
+        size,
       });
     } else {
       // Find existing item in cart
@@ -143,7 +154,8 @@ export async function addToCart(params: AddToCartParams, token?: string) {
         cart.items[existingItemIndex].discount =
           (cart.items[existingItemIndex].total * discount) / 100;
         cart.items[existingItemIndex].finalTotal =
-          cart.items[existingItemIndex].total - cart.items[existingItemIndex].discount;
+          cart.items[existingItemIndex].total -
+          cart.items[existingItemIndex].discount;
       } else {
         // Add new item to cart
         cart.items.push({
@@ -151,16 +163,28 @@ export async function addToCart(params: AddToCartParams, token?: string) {
           productVariantId: params.productVariantId || null,
           quantity: params.quantity,
           price: finalPrice,
-          discount: discountAmount,
+          discount,
+          discountAmount,
           total: itemTotal,
           finalTotal: finalTotal,
+          color,
+          size,
         });
       }
 
       // Recalculate cart totals
-      cart.totalPrice = cart.items.reduce((sum: any, item: any) => sum + item.total, 0);
-      cart.discount = cart.items.reduce((sum: any, item: any) => sum + item.discount, 0);
-      cart.finalPrice = cart.items.reduce((sum: any, item: any) => sum + item.finalTotal, 0);
+      cart.totalPrice = cart.items.reduce(
+        (sum: any, item: any) => sum + item.total,
+        0
+      );
+      cart.discountAmount = cart.items.reduce(
+        (sum: any, item: any) => sum + item.discount,
+        0
+      );
+      cart.finalPrice = cart.items.reduce(
+        (sum: any, item: any) => sum + item.finalTotal,
+        0
+      );
     }
 
     await cart.save();
@@ -168,16 +192,16 @@ export async function addToCart(params: AddToCartParams, token?: string) {
     // Populate cart with product and variant details
     await cart.populate([
       {
-        path: 'items.productId',
-        select: 'name image brand model price discount',
+        path: "items.productId",
+        select: "name image brand model price discount",
       },
       {
-        path: 'items.productVariantId',
-        select: 'price stock',
+        path: "items.productVariantId",
+        select: "price stock",
         populate: {
-          path: 'subCategoryIds',
-          model: 'ProductVariantSubCategory',
-          select: 'value subValue',
+          path: "subCategoryIds",
+          model: "ProductVariantSubCategory",
+          select: "value subValue",
         },
       },
     ]);
@@ -185,21 +209,23 @@ export async function addToCart(params: AddToCartParams, token?: string) {
     return {
       success: true,
       message: "Item added to cart successfully",
-      cart: cart.toObject(),
+      cart: JSON.parse(JSON.stringify(cart.toObject())),
     };
   } catch (error) {
     console.error("Error adding to cart:", error);
     return {
       success: false,
       message: "Failed to add item to cart",
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }
 
-
 // Update cart item
-export async function updateCartItem(params: UpdateCartItemParams, token?: string) {
+export async function updateCartItem(
+  params: UpdateCartItemParams,
+  token?: string
+) {
   try {
     await dbConnectMarketPlace();
 
@@ -252,7 +278,8 @@ export async function updateCartItem(params: UpdateCartItemParams, token?: strin
 
       cartItem.quantity = params.quantity;
       cartItem.total = cartItem.price * params.quantity;
-      cartItem.discount = (cartItem.total * (cartItem.discount / cartItem.total)) || 0;
+      cartItem.discount =
+        cartItem.total * (cartItem.discount / cartItem.total) || 0;
       cartItem.finalTotal = cartItem.total - cartItem.discount;
     }
 
@@ -266,7 +293,9 @@ export async function updateCartItem(params: UpdateCartItemParams, token?: strin
         };
       }
 
-      const variant = await ProductVariantModel.findById(params.productVariantId);
+      const variant = await ProductVariantModel.findById(
+        params.productVariantId
+      );
       if (!variant) {
         return { success: false, message: "Product variant not found" };
       }
@@ -282,30 +311,40 @@ export async function updateCartItem(params: UpdateCartItemParams, token?: strin
       cartItem.productVariantId = params.productVariantId;
       cartItem.price = variant.price; // Update price from variant
       cartItem.total = variant.price * cartItem.quantity;
-      cartItem.discount = (cartItem.total * (variant.discount?.percentage || 0)) / 100;
+      cartItem.discount =
+        (cartItem.total * (variant.discount?.percentage || 0)) / 100;
       cartItem.finalTotal = cartItem.total - cartItem.discount;
     }
 
     // Recalculate cart totals
-    cart.totalPrice = cart.items.reduce((sum: any, item: any) => sum + item.total, 0);
-    cart.discount = cart.items.reduce((sum: any, item: any) => sum + item.discount, 0);
-    cart.finalPrice = cart.items.reduce((sum: any, item: any) => sum + item.finalTotal, 0);
+    cart.totalPrice = cart.items.reduce(
+      (sum: any, item: any) => sum + item.total,
+      0
+    );
+    cart.discount = cart.items.reduce(
+      (sum: any, item: any) => sum + item.discount,
+      0
+    );
+    cart.finalPrice = cart.items.reduce(
+      (sum: any, item: any) => sum + item.finalTotal,
+      0
+    );
 
     await cart.save();
 
     // Populate cart details
     await cart.populate([
       {
-        path: 'items.productId',
-        select: 'name image brand model price discount',
+        path: "items.productId",
+        select: "name image brand model price discount",
       },
       {
-        path: 'items.productVariantId',
-        select: 'price stock',
+        path: "items.productVariantId",
+        select: "price stock",
         populate: {
-          path: 'subCategoryIds',
-          model: 'ProductVariantSubCategory',
-          select: 'value subValue',
+          path: "subCategoryIds",
+          model: "ProductVariantSubCategory",
+          select: "value subValue",
         },
       },
     ]);
@@ -313,24 +352,27 @@ export async function updateCartItem(params: UpdateCartItemParams, token?: strin
     return {
       success: true,
       message: "Cart item updated successfully",
-      cart: cart.toObject(),
+      cart: JSON.parse(JSON.stringify(cart.toObject())),
     };
   } catch (error) {
     console.error("Error updating cart item:", error);
     return {
       success: false,
       message: "Failed to update cart item",
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }
 
-
-
 // Remove item from cart
-export async function removeCartItem(params: RemoveCartItemParams, token?: string) {
+export async function removeCartItem(
+  params: RemoveCartItemParams,
+  token?: string
+) {
   try {
     await dbConnectMarketPlace();
+
+    console.log("params: ", params);
 
     // Get token from cookies if not provided
     const authToken = token || (await cookies()).get("authToken")?.value;
@@ -373,9 +415,18 @@ export async function removeCartItem(params: RemoveCartItemParams, token?: strin
     );
 
     // Recalculate cart totals
-    cart.totalPrice = cart.items.reduce((sum: any, item: any) => sum + item.total, 0);
-    cart.discount = cart.items.reduce((sum: any, item: any) => sum + item.discount, 0);
-    cart.finalPrice = cart.items.reduce((sum: any, item: any) => sum + item.finalTotal, 0);
+    cart.totalPrice = cart.items.reduce(
+      (sum: any, item: any) => sum + item.total,
+      0
+    );
+    cart.discount = cart.items.reduce(
+      (sum: any, item: any) => sum + item.discount,
+      0
+    );
+    cart.finalPrice = cart.items.reduce(
+      (sum: any, item: any) => sum + item.finalTotal,
+      0
+    );
 
     // Reset discount if cart is empty
     if (cart.items.length === 0) {
@@ -388,16 +439,16 @@ export async function removeCartItem(params: RemoveCartItemParams, token?: strin
     // Populate cart details
     await cart.populate([
       {
-        path: 'items.productId',
-        select: 'name image brand model price discount',
+        path: "items.productId",
+        select: "name image brand model price discount",
       },
       {
-        path: 'items.productVariantId',
-        select: 'price stock',
+        path: "items.productVariantId",
+        select: "price stock",
         populate: {
-          path: 'subCategoryIds',
-          model: 'ProductVariantSubCategory',
-          select: 'value subValue',
+          path: "subCategoryIds",
+          model: "ProductVariantSubCategory",
+          select: "value subValue",
         },
       },
     ]);
@@ -405,14 +456,14 @@ export async function removeCartItem(params: RemoveCartItemParams, token?: strin
     return {
       success: true,
       message: "Item removed from cart successfully",
-      cart: cart.toObject(),
+      cart: JSON.parse(JSON.stringify(cart.toObject())),
     };
   } catch (error) {
     console.error("Error removing cart item:", error);
     return {
       success: false,
       message: "Failed to remove cart item",
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }
@@ -444,16 +495,16 @@ export async function getCart(token?: string) {
       isDeleted: false,
     }).populate([
       {
-        path: 'items.productId',
-        select: 'name image brand model price discount',
+        path: "items.productId",
+        select: "name image brand model price discount",
       },
       {
-        path: 'items.productVariantId',
-        select: 'price stock',
+        path: "items.productVariantId",
+        select: "price stock",
         populate: {
-          path: 'subCategoryIds',
-          model: 'ProductVariantSubCategory',
-          select: 'value subValue',
+          path: "subCategoryIds",
+          model: "ProductVariantSubCategory",
+          select: "value subValue",
         },
       },
     ]);
@@ -469,14 +520,14 @@ export async function getCart(token?: string) {
     return {
       success: true,
       message: "Cart retrieved successfully",
-      cart: cart.toObject(),
+      cart: JSON.parse(JSON.stringify(cart.toObject())),
     };
   } catch (error) {
     console.error("Error getting cart:", error);
     return {
       success: false,
       message: "Failed to get cart",
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }
@@ -527,14 +578,14 @@ export async function clearCart(token?: string) {
     return {
       success: true,
       message: "Cart cleared successfully",
-      cart: cart.toObject(),
+      cart: JSON.parse(JSON.stringify(cart.toObject())),
     };
   } catch (error) {
     console.error("Error clearing cart:", error);
     return {
       success: false,
       message: "Failed to clear cart",
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }

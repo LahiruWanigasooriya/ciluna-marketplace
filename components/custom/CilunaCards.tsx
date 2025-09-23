@@ -7,8 +7,8 @@ import {
   RadioGroupProps,
   Label,
 } from "react-aria-components";
-import React from "react";
-import { maskDigits } from "@/utils/maskDigits" 
+import React, { useEffect } from "react";
+import { maskDigits } from "@/utils/maskDigits";
 
 interface Option {
   label: string;
@@ -33,23 +33,29 @@ const CilunaCards: React.FC<CilunaCardsProps> = ({
   onCardSelect,
   ...props
 }) => {
-    const handleSelectionChange = (value: string) => {
+  const handleSelectionChange = (value: string) => {
     onChange(value);
-    
+
     // Pass the full card object to parent
     if (onCardSelect) {
-      const selectedCardObject = options.find(option => option.value === value) || null;
-      if(selectedCardObject && onCardSelect){
-          onCardSelect(selectedCardObject);
+      const selectedCardObject =
+        options.find((option) => option.value === value) || null;
+      if (selectedCardObject && onCardSelect) {
+        onCardSelect(selectedCardObject);
       }
     }
   };
+
+  useEffect(() => {
+    if(onCardSelect) onCardSelect(options[0]);
+  }, []);
+  
   return (
     <RadioGroup
       {...props}
       value={selectedValue}
       onChange={handleSelectionChange}
-      className="flex flex-col gap-8 md:gap-12"
+      className="flex flex-col gap-8 md:gap-12 col-span-3"
     >
       {options.map((option) => (
         <Radio

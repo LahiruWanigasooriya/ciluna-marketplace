@@ -81,6 +81,11 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
       cursor: "pointer",
       fontSize: "14px",
     }),
+    singleValue: (provided) => ({
+      ...provided,
+      overflow: "visible", // allow text to show
+      textOverflow: "unset", // remove ellipsis
+    }),
     control: (provided, state) => ({
       ...provided,
       minHeight: "44px",
@@ -99,6 +104,8 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
       ...provided,
       color: "#707070",
       fontSize: "14px",
+      whiteSpace: "nowrap", // Prevent text wrapping
+      overflow: "hidden", // Hide overflow
     }),
     indicatorSeparator: () => ({
       display: "none",

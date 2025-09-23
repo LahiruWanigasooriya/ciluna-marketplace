@@ -100,7 +100,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
       <p className="font-[400] text-gray">Mobile Number</p>
       <div className="relative w-full" ref={modalRef}>
         <div
-          className={`px-2 h-[44px] bg-white transition duration-200 ease-out rounded-lg flex items-center border border-[#e1e1e1]
+          className={`w-full px-2 h-[44px] bg-white transition duration-200 ease-out rounded-lg flex items-center border border-[#e1e1e1]
           [&>[role=progressbar]]:mr-2.5
           [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
           [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
@@ -117,7 +117,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
             value={value?.replace(selectedCountry.code, "")} 
             onChange={(e) => handleInputChange(e.target.value)}
             placeholder="Enter phone number"
-            className="ml-2 flex-grow text-gray outline-none text-sm bg-transparent placeholder:font-[400] placeholder-muted-fg  placeholder-[#707070]"
+            className="ml-2 flex-grow text-gray outline-none text-sm bg-transparent placeholder:font-[400] placeholder-muted-fg  placeholder-[#707070] w-0 !min-w-0"
           />
           <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black  !w-[18px] !h-[18px] min-w-[18px]`} />
         </div>
