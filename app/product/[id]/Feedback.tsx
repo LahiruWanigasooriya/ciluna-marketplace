@@ -24,7 +24,7 @@ const Feedback = ({ productId, productVariantId }: { productId: string, productV
         </div>
         <Button
           appearance="normal"
-          className="md:w-[200px] lg:w-[260px] md:h-[56px] rounded-[8px]"
+          className="md:w-[215px] h-[56px] rounded-[8px] !text-lg"
           onPress={() => setAddReviewPopup(true)}
         >
           Write a review

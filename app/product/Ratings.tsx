@@ -26,11 +26,11 @@ const Rating: React.FC<RatingProps> = ({ rating }) => {
   return (
   <div className="flex items-center gap-1 text-neutralGray-100 text-sm ">
     {Array.from({ length: Math.max(0, Number(fullStars) || 0) }).map((_, index) => (
-      <FaStar className="w-3 h-3 text-[#E4A70A]" key={index} /> 
+      <FaStar className="w-4 h-4 text-[#E4A70A]" key={index} /> 
     ))}
-    {hasHalfStar && <FaStarHalfAlt className="w-3 h-3" />} 
+    {hasHalfStar && <FaStarHalfAlt className="w-4 h-4" />} 
     {Array.from({ length: Math.max(0, Number(emptyStars) || 0) }).map((_, index) => (
-      <FaStar className="w-3 h-3 text-neutralGray-100" key={index} /> 
+      <FaStar className="w-4 h-4 text-neutralGray-100" key={index} /> 
     ))}
     <span className="text-gray font-arialBold">{rating}</span>
   </div>
