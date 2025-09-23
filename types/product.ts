@@ -45,6 +45,9 @@ export interface GetProductsParams {
   filters?: Record<string, any>; // Additional filters (category, brand, price range, etc.)
   sortBy?: string; // Field to sort by
   sortOrder?: "asc" | "desc"; // Sorting order
+  categoryId?: string;
+  subcategoryId?: string;
+  subsubcategoryId?: string;
 }
 
 export interface CreateProductParams {

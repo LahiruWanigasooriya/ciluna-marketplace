@@ -374,7 +374,7 @@ const SubMenu: React.FC<{
                   .map((subsub) => (
                     <Link
                       key={subsub._id}
-                      href={`/productCopy?subsubcategoryId=${subsub._id}`}
+                      href={`/productCopy?subsubcategoryId=${subsub._id}`}    //passing the subsubcategoryId through query parameters
                       className={subItemClass}
                     >
                       {subsub.name}

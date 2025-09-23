@@ -14,7 +14,9 @@ interface ProductVarientTabProps {
   subcategoryId: string; // receive current subcategory ID
 }
 
-const ProductVarientTab: React.FC<ProductVarientTabProps> = ({ subcategoryId }) => {
+const ProductVarientTab: React.FC<ProductVarientTabProps> = ({
+  subcategoryId,
+}) => {
   const [variants, setVariants] = useState<IVariant[]>([]);
   const [active, setActive] = useState<string>("all");
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -42,7 +44,9 @@ const ProductVarientTab: React.FC<ProductVarientTabProps> = ({ subcategoryId }) 
   useEffect(() => {
     const fetchVariants = async () => {
       try {
-        const res = await fetch(`/api/subsubcategory?subcategoryId=${subcategoryId}`);
+        const res = await fetch(
+          `/api/subsubcategory?subcategoryId=${subcategoryId}`
+        );
         const data = await res.json();
         console.log("Fetched subsubcategories:", data);
         if (data.success && data.data && data.data.subsubcategories) {
@@ -52,7 +56,10 @@ const ProductVarientTab: React.FC<ProductVarientTabProps> = ({ subcategoryId }) 
           );
           setVariants(filteredVariants);
         } else {
-          console.warn("Failed to fetch subsubcategories:", data.message || "No data");
+          console.warn(
+            "Failed to fetch subsubcategories:",
+            data.message || "No data"
+          );
           setVariants([]);
         }
       } catch (err) {
@@ -70,7 +77,8 @@ const ProductVarientTab: React.FC<ProductVarientTabProps> = ({ subcategoryId }) 
 
   const checkScrollability = () => {
     if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
     }
@@ -86,14 +94,20 @@ const ProductVarientTab: React.FC<ProductVarientTabProps> = ({ subcategoryId }) 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       const scrollAmount = 206;
-      scrollContainerRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({
+        left: -scrollAmount,
+        behavior: "smooth",
+      });
     }
   };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
       const scrollAmount = 206;
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -108,8 +122,18 @@ const ProductVarientTab: React.FC<ProductVarientTabProps> = ({ subcategoryId }) 
   const handleViewAllClick = () => {
     setActive("all");
     const params = new URLSearchParams(searchParams.toString());
-    params.delete("subsubcategoryId"); // Remove subsubcategoryId for "View All"
-    params.set("page", "1"); // Reset to page 1
+
+    // remove subsubcategory filter
+    params.delete("subsubcategoryId");
+
+    // force keep current subcategoryId
+    if (subcategoryId) {
+      params.set("subcategoryId", subcategoryId);
+    }
+
+    // reset page
+    params.set("page", "1");
+
     router.push(`?${params.toString()}`);
   };
 
@@ -124,9 +148,10 @@ const ProductVarientTab: React.FC<ProductVarientTabProps> = ({ subcategoryId }) 
         <button
           className={`flex-shrink-0 flex items-center justify-center gap-2 px-6 py-4 min-w-[206px] w-[206px] h-[52px] 
             text-sm leading-5 font-medium 
-            ${active === "all"
-              ? "bg-black text-white"
-              : "bg-gray-50 text-gray-700 hover:text-black"
+            ${
+              active === "all"
+                ? "bg-black text-white"
+                : "bg-gray-50 text-gray-700 hover:text-black"
             }`}
           onClick={handleViewAllClick}
           style={{ width: "206px", minWidth: "206px" }}
@@ -139,9 +164,10 @@ const ProductVarientTab: React.FC<ProductVarientTabProps> = ({ subcategoryId }) 
           <button
             key={variant._id}
             className={`flex-shrink-0 px-6 py-4 min-w-[206px] w-[206px] h-[52px] text-sm leading-5 font-medium 
-              ${active === variant._id
-                ? "bg-black text-white"
-                : "bg-gray-50 text-gray-700 hover:text-black"
+              ${
+                active === variant._id
+                  ? "bg-black text-white"
+                  : "bg-gray-50 text-gray-700 hover:text-black"
               }`}
             onClick={() => handleVariantClick(variant._id)}
             style={{ width: "206px", minWidth: "206px" }}
