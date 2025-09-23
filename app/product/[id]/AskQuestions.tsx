@@ -116,7 +116,7 @@ const AskQuestions: React.FC<AskQuestionsProps> = ({ onClose }) => {
                   value={field.value}
                   onChange={field.onChange}
                   labelClass="text-base mb-[2px] font-arial"
-                  className="bg-white border border-[#E1E1E1] h-[141px] mt-[2px] md:mt-0 placeholder:text-sm"
+                  className="bg-white border border-[#E1E1E1] h-[141px] mt-[2px] md:mt-0 placeholder:text-sm ring-0"
                 />
               )}
             />
