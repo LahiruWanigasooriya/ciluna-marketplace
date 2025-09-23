@@ -21,3 +21,13 @@ export const fetchExchangeRate = async(): Promise<number> => {
   const data = await response.json();
   return data.rates.LKR;
 }
+
+export const getUSDPrices = (price: number, finalPrice: number, rate: number) => {
+  const originalUSD = price / rate;
+  const discountedUSD = finalPrice / rate;
+
+  return {
+    original: formatPrice(originalUSD),
+    discounted: formatPrice(discountedUSD),
+  };
+}

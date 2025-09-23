@@ -1,43 +1,64 @@
 import Title from "@/components/custom/Title";
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
-import { Check, CircleX } from "lucide-react";
+import { Check, ChevronRight, CircleX } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import Card from "@/public/assets/checkout/card.png";
 import { cn } from "@/lib/utils";
 import { useCheckoutStore } from "@/store/checkout";
 import { maskDigits } from "@/utils/maskDigits";
+import { getDiscountedPrice } from "@/utils/getDiscountPrice";
 
 interface OrderDetailsProps {
-  rewardPoints: string;
-  total: string;
-  tax: string;
-  discount: string;
-  shipping: string;
-  estimatedTotal: string;
-  onCancel: React.Dispatch<React.SetStateAction<boolean>>;
+  onCancel: () => void;
 }
 
-const OrderDetails: React.FC<OrderDetailsProps> = ({
-  rewardPoints,
-  total,
-  tax,
-  discount,
-  shipping,
-  estimatedTotal,
-  onCancel,
-}) => {
-  const currentDate = new Date()
-    .toLocaleDateString("en-US", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    })
-    .replace(",", "");
+const OrderDetails: React.FC<OrderDetailsProps> = ({ onCancel }) => {
+  // const currentDate = new Date()
+  //   .toLocaleDateString("en-US", {
+  //     day: "2-digit",
+  //     month: "long",
+  //     year: "numeric",
+  //   })
+  //   .replace(",", "");
+
+  const rewardPoints = "10";
+  const tax = "$0";
+  const shipping = "$0";
+
+  const currentDate = new Date().toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+
+  // Format comes as "22 September 2025", so insert the comma
+  const formattedDate = currentDate.replace(" ", ", ");
+
+  const calculateTotals = (items: any[]) => {
+    const totalPrice = items.reduce(
+      (acc, item) =>
+        acc +
+        getDiscountedPrice(item.priceUSD.original, item.discount) *
+          item.quantity,
+      0
+    );
+    const discount = totalPrice * 0.1; // 10% discount as per your logic
+    const finalPrice = totalPrice - discount;
+
+    return { totalPrice, discount, finalPrice };
+  };
 
   const { cart } = useCartStore();
   const { values: order } = useCheckoutStore();
+
+  console.log("ordaer: ", order);
+
+  const { totalPrice, discount, finalPrice } = useMemo(
+    () => calculateTotals(cart),
+    [cart]
+  );
 
   return (
     <div className="bg-white w-full max-w-[1310px] relative rounded-[12px]">
@@ -47,19 +68,19 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
           color="#252525"
           strokeWidth={2}
           className="cursor-pointer h-5 w-5 hover:opacity-70"
-          onClick={() => onCancel(false)}
+          onClick={() => onCancel()}
         />
       </div>
       <div className="max-h-[90vh] overflow-y-auto p-4 md:p-6 md:pt-7 flex flex-col lg:flex-row gap-6">
         {/* view order and order details */}
         <div className="flex flex-col gap-6 w-full items-center lg:items-start">
-          <div className="w-[70px] h-[70px] shrink-0 rounded-full bg-[#338A92] flex justify-center items-center">
+          <div className="w-[56px] md:w-[70px] h-[56px] md:h-[70px] shrink-0 rounded-full bg-[#338A92] flex justify-center items-center">
             <Check color="white" size={32} />
           </div>
           <div className="flex flex-col gap-2 items-center lg:items-start">
             <Title
               title="Thank you for your purchase"
-              className="text-lg md:text-2xl"
+              className="text-lg md:!text-2xl"
             />
             <p className="mb-3 text-center lg:text-left text-[#707070] text-sm md:text-lg">
               We’ve received your order will ship 5-7 business days. Your order
@@ -72,16 +93,19 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
               View Order
             </Button>
           </div>
-          <div className="bg-[#F5F5F5] p-6 rounded-[6px] flex flex-col gap-3 w-full">
-            <Title title="Order Details" className="!text-lg md:!text-xl" />
+          <div className="bg-[#F5F5F5] p-4 md:p-6 rounded-[6px] flex flex-col gap-3 w-full">
+            <Title
+              title="Order Details"
+              className="!text-lg md:!text-xl text-left"
+            />
             <div className="mt-3 flex flex-col gap-3">
               {[
-                { label: "date", value: currentDate },
+                { label: "date", value: formattedDate },
                 { label: "reward points", value: rewardPoints },
                 { label: "payment method", value: order.paymentMethod },
-                { label: "total bill", value: total },
+                { label: "total bill", value: `$${totalPrice.toFixed(2)}` },
                 { label: "tax (VAT)", value: tax },
-                { label: "discount", value: discount },
+                { label: "discount", value: `- $${discount.toFixed(2)}` },
                 { label: "shipping", value: shipping },
               ].map((item, index) => (
                 <div key={index} className="flex flex-col gap-3">
@@ -97,15 +121,20 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
               <p className="md:font-bold text-sm md:text-base">
                 Estimated Total
               </p>
-              <p className="font-bold text-lg md:text-xl">{estimatedTotal}</p>
+              <p className="font-bold text-lg md:text-xl">
+                {`$${finalPrice.toFixed(2)}`}
+              </p>
             </div>
           </div>
         </div>
 
         {/* customer details and product list */}
         <div className="flex flex-col gap-4 w-full">
-          <div className="bg-[#F5F5F5] p-6 rounded-[6px] flex flex-col gap-4">
-            <Title title="Customer Details" className="text-lg md:!text-xl" />
+          <div className="bg-[#F5F5F5] p-4 md:p-6 rounded-[6px] flex flex-col gap-4">
+            <Title
+              title="Customer Details"
+              className="text-lg md:!text-xl text-left"
+            />
             <div>
               <p className="text-sm font-bold mb-2">Shipping Address</p>
               <p className="mb-1">
@@ -142,31 +171,51 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
             )}
           </div>
 
-          <div className="bg-[#F5F5F5] p-6 rounded-[6px] flex flex-col gap-4">
+          <div className="bg-[#F5F5F5] p-4 md:p-6 rounded-[6px] flex flex-col gap-4">
             <h1 className="text-lg md:text-xl font-bold">
               Product Details ({cart.length})
             </h1>
             <div className="flex flex-col gap-4">
               {cart.map((product, index) => {
+                console.log("cart in order: ", cart);
                 return (
                   <div key={index} className="flex flex-col gap-4">
                     <div className="flex gap-5">
-                      <div className="w-[60px] h-[60px] relative bg-white rounded-[8px]">
+                      <div className="w-[60px] h-[60px] flex-shrink-0 relative bg-white rounded-[8px]">
                         <Image
-                          alt="product"
-                          src={product.image}
+                          // alt="product"
+                          // src={product.image}
+                          alt={
+                            typeof product.productId === "object"
+                              ? product.productId.name
+                              : product.name
+                          }
+                          src={
+                            typeof product.productId === "object"
+                              ? product.productId.image
+                              : product.image
+                          }
                           fill
-                          className="object-cover"
+                          className="object-cover rounded-[8px]"
                           placeholder="blur"
                           blurDataURL="/placeholder-image.jpg"
                         />
                       </div>
                       <div className="flex flex-col sm:flex-row sm:justify-between w-full">
                         <div>
-                          <p className="font-bold">{product.name}</p>
-                          <p className="text-sm">Blue | XL</p>
+                          <p className="font-bold">{product.productId.name}</p>
+                          {(product.color || product.size) && (
+                            <div className="flex text-gray">
+                              <h2 className="text-sm">
+                                {[product.color, product.size]
+                                  .filter(Boolean)
+                                  .join(" | ")}
+                              </h2>
+                              <ChevronRight />
+                            </div>
+                          )}
                         </div>
-                        <div className="font-bold flex flex-col lg:items-end">
+                        <div className="font-bold flex flex-col lg:items-end text-sm md:text-base">
                           <p>{product.price} LKR</p>
                           <p>{product.priceUSD.original} USD</p>
                         </div>

@@ -45,7 +45,7 @@ const checkboxStyles = tv({
 })
 
 const boxStyles = tv({
-    base: "flex size-6 !border-[1px] !mt-0 !ml-0 [&>[data-slot=icon]]:size-5 flex-shrink-0 items-center justify-center rounded-[4px]  text-bg transition hover:cursor-pointer hover:opacity-70",
+    base: "flex size-5  !border-[1px] !mt-0 !ml-0 [&>[data-slot=icon]]:size-6 flex-shrink-0 items-center justify-center rounded-[4px]  text-bg transition hover:cursor-pointer hover:opacity-70",
 
   variants: {
     isSelected: {

@@ -1,5 +1,18 @@
 import mongoose from "mongoose";
 
+const AddressSchema = new mongoose.Schema({
+  _id: { type: mongoose.Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+  contactName: { type: String, required: true },
+  mobileNumber: { type: String, required: true },
+  street: { type: String, required: true },
+  province: { type: String, required: true },
+  district: { type: String, required: true },
+  town: { type: String, required: true },
+  country: { type: String, required: true },
+  zip: { type: String },
+  isDefault: { type: Boolean, default: false },
+})
+
 const UserSchema = new mongoose.Schema(
   {
     firstName: {
@@ -61,6 +74,7 @@ const UserSchema = new mongoose.Schema(
       enum: ["user", "admin"], 
       default: "user" 
     },
+    addresses: [AddressSchema],
     activeStatus: {
       type: Boolean,
       required: true,

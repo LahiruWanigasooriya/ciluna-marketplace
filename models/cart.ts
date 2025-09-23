@@ -5,9 +5,12 @@ interface ICartItem {
   productVariantId?: mongoose.Types.ObjectId; // Optional: Reference to the ProductVariant
   quantity: number; // Quantity of the product/variant
   price: number; // Price at the time of adding to cart
-  discount: number; // Discount for this item
+  discount: number; // Discount percentage for this item
+  discountAmount: number; // Discount for this item
   total: number; // Total price for this item (price * quantity)
   finalTotal: number; // Final price after discount for this item
+  color: string;
+  size: string;
 }
 
 interface ICart {
@@ -42,6 +45,10 @@ const CartItemSchema = new mongoose.Schema<ICartItem>(
     },
     discount: {
       type: Number,
+      default: 0,
+    },
+    discountAmount: {
+      type: Number,
       required: true,
       default: 0, // Default discount is 0
     },
@@ -52,6 +59,14 @@ const CartItemSchema = new mongoose.Schema<ICartItem>(
     finalTotal: {
       type: Number,
       required: true,
+    },
+    color: {
+      type: String,
+      required: false,
+    },
+    size: {
+      type: String,
+      required: false,
     },
   },
   { timestamps: true }
@@ -87,6 +102,8 @@ const CartSchema = new mongoose.Schema<ICart>(
   },
   { timestamps: true }
 );
+
+delete mongoose.models.Cart;
 
 const CartModel = mongoose.models.Cart || mongoose.model<ICart>("Cart", CartSchema);
 export default CartModel;

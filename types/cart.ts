@@ -34,6 +34,8 @@ export interface AddToCartParams {
   productId: string;
   productVariantId?: string;
   quantity: number;
+  color?: string;
+  size?: string;
 }
 
 export interface UpdateCartItemParams {
