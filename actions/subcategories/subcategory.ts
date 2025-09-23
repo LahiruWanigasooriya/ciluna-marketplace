@@ -7,7 +7,7 @@ import {
   GetSubCategoriesParams,
 } from "@/types/subcategory";
 
-import ProductModel from "@/models/product"
+import ProductModel from "@/models/product";
 
 // interface GetSubCategoriesParams {
 //   page?: number;
@@ -23,6 +23,7 @@ export const getAllSubCategories = async ({
   page = 1,
   limit = 12,
   search = "",
+  filters = {},
   sortBy = "createdAt",
   sortOrder = "desc",
 }: GetSubCategoriesParams) => {
@@ -30,7 +31,10 @@ export const getAllSubCategories = async ({
     await dbConnectMarketPlace();
 
     // Build query object
-    const query: any = {};
+    const query: any = {
+      isActive: true,
+      ...filters,
+    };
 
     // Add search functionality (search in name or description)
     if (search) {
@@ -77,7 +81,7 @@ export const getAllSubCategories = async ({
   }
 };
 
-export const getSubcategoryById = async ( subcatId: string) => {
+export const getSubcategoryById = async (subcatId: string) => {
   try {
     await dbConnectMarketPlace();
 
@@ -167,7 +171,10 @@ export const createSubCategory = async (
   }
 };
 
-export const updateSubCategory = async (subcategoryId: string, categoryData: CreateSubCategoryParams) => {
+export const updateSubCategory = async (
+  subcategoryId: string,
+  categoryData: CreateSubCategoryParams
+) => {
   try {
     await dbConnectMarketPlace();
 
@@ -192,7 +199,10 @@ export const updateSubCategory = async (subcategoryId: string, categoryData: Cre
     }
 
     // Check if the new name is already taken by another category
-    const nameConflict = await SubcategoryModel.findOne({ name, _id: { $ne: subcategoryId } });
+    const nameConflict = await SubcategoryModel.findOne({
+      name,
+      _id: { $ne: subcategoryId },
+    });
     if (nameConflict) {
       return {
         status: 400,
@@ -249,7 +259,6 @@ export const deleteSubCategory = async (subcategoryId: string) => {
     // Delete the product
     await SubcategoryModel.findByIdAndDelete(subcategoryId);
 
-
     return {
       status: 200,
       success: true,
@@ -264,4 +273,4 @@ export const deleteSubCategory = async (subcategoryId: string) => {
       error: error.message,
     };
   }
-}
+};

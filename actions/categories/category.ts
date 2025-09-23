@@ -1,15 +1,14 @@
-"use server"
+"use server";
 import { dbConnectMarketPlace } from "@/lib/dbConnect";
 import CategoryModel from "@/models/category";
 import { CreateCategoryParams, GetCategoriesParams } from "@/types/category";
-
-
 
 // Get all categories with pagination, search, and sorting
 export const getAllCategories = async ({
   page = 1,
   limit = 12,
   search = "",
+  filters = {},
   sortBy = "createdAt",
   sortOrder = "desc",
 }: GetCategoriesParams) => {
@@ -17,7 +16,10 @@ export const getAllCategories = async ({
     await dbConnectMarketPlace();
 
     // Build query object
-    const query: any = {};
+    const query: any = {
+      isActive: true,
+      ...filters,
+    };
 
     // Add search functionality (search in name or description)
     if (search) {
@@ -77,7 +79,7 @@ export const getCategoryById = async (categoryId: string) => {
     }
 
     // Find the product and populate related fields
-    const category = await CategoryModel.findById(categoryId)
+    const category = await CategoryModel.findById(categoryId);
     if (!category) {
       return {
         status: 404,
@@ -86,14 +88,12 @@ export const getCategoryById = async (categoryId: string) => {
       };
     }
 
-
     return {
       status: 200,
       success: true,
       message: "Category fetched successfully",
       data: {
-        product: JSON.parse(JSON.stringify(category)), 
-
+        product: JSON.parse(JSON.stringify(category)),
       },
     };
   } catch (error: any) {
@@ -105,10 +105,6 @@ export const getCategoryById = async (categoryId: string) => {
     };
   }
 };
-
-
-
-
 
 // Create a new category
 export const createCategory = async (categoryData: CreateCategoryParams) => {
@@ -158,7 +154,10 @@ export const createCategory = async (categoryData: CreateCategoryParams) => {
   }
 };
 
-export const updateCategory = async (categoryId: string, categoryData: CreateCategoryParams) => {
+export const updateCategory = async (
+  categoryId: string,
+  categoryData: CreateCategoryParams
+) => {
   try {
     await dbConnectMarketPlace();
 
@@ -183,7 +182,10 @@ export const updateCategory = async (categoryId: string, categoryData: CreateCat
     }
 
     // Check if the new name is already taken by another category
-    const nameConflict = await CategoryModel.findOne({ name, _id: { $ne: categoryId } });
+    const nameConflict = await CategoryModel.findOne({
+      name,
+      _id: { $ne: categoryId },
+    });
     if (nameConflict) {
       return {
         status: 400,
@@ -240,7 +242,6 @@ export const deleteCategory = async (categoryId: string) => {
     // Delete the product
     await CategoryModel.findByIdAndDelete(categoryId);
 
-
     return {
       status: 200,
       success: true,
@@ -255,4 +256,4 @@ export const deleteCategory = async (categoryId: string) => {
       error: error.message,
     };
   }
-}
+};

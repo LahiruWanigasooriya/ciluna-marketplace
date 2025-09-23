@@ -9,17 +9,17 @@ export interface ISubCategory {
   updatedAt?: string;
 }
 
-  export interface GetSubCategoriesParams {
-    page?: number;
-    limit?: number;
-    search?: string;
-    sortBy?: string;
-    sortOrder?: "asc" | "desc";
-  }
+export interface GetSubCategoriesParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+  filters?: Record<string, any>;
+}
 
-
-  export interface CreateSubCategoryParams {
-    name: string;
-    description?: string;
-    image: string;
-  }
+export interface CreateSubCategoryParams {
+  name: string;
+  description?: string;
+  image: string;
+}
