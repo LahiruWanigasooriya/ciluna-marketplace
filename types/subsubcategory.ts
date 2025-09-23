@@ -17,6 +17,7 @@ export interface GetSubSubCategoriesParams {
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   subcategoryId?: string;
+  filters?: Record<string, any>;
 }
 
 export interface CreateSubSubCategoryParams {
@@ -33,6 +34,7 @@ export interface SubSubCategoryResponse {
   success: boolean;
   message?: string;
   error?: string;
+  filters?: Record<string, any>;
   data?: {
     subsubcategories: ISubSubCategory[];
     total: number;

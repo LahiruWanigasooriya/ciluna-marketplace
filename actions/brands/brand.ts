@@ -1,22 +1,25 @@
-"use server"
+"use server";
 import { dbConnectMarketPlace } from "@/lib/dbConnect";
 import BrandModel from "@/models/brand";
-import { CreateBrandParams,GetBrandsParams } from "@/types/brand";
-import '@/models/model'; 
-
+import { CreateBrandParams, GetBrandsParams } from "@/types/brand";
+import "@/models/model";
 
 export const getAllBrands = async ({
   page = 1,
   limit = 10,
   search = "",
   sortBy = "createdAt",
+  filters = {},
   sortOrder = "desc",
 }: GetBrandsParams) => {
   try {
     await dbConnectMarketPlace();
 
     // Build query object
-    const query: any = {};
+    const query: any = {
+      isActive: true,
+      ...filters,
+    };
 
     // Add search functionality (search in name or description)
     if (search) {
@@ -76,7 +79,7 @@ export const getBrandById = async (brandId: string) => {
     }
 
     // Find the product and populate related fields
-    const brand = await BrandModel.findById(brandId)
+    const brand = await BrandModel.findById(brandId);
     if (!brand) {
       return {
         status: 404,
@@ -85,14 +88,12 @@ export const getBrandById = async (brandId: string) => {
       };
     }
 
-
     return {
       status: 200,
       success: true,
       message: "brand fetched successfully",
       data: {
-        product: JSON.parse(JSON.stringify(brand)), 
-
+        product: JSON.parse(JSON.stringify(brand)),
       },
     };
   } catch (error: any) {
@@ -105,146 +106,147 @@ export const getBrandById = async (brandId: string) => {
   }
 };
 
-
 // Create a new brand
 export const createBrand = async (brandData: CreateBrandParams) => {
-    try {
-      await dbConnectMarketPlace();
+  try {
+    await dbConnectMarketPlace();
 
-  
-      // Validate required fields
-      const { name, logo } = brandData;
-      if (!name || !logo) {
-        return {
-          status: 400,
-          success: false,
-          message: "Missing required fields: name or logo",
-        };
-      }
-  
-      // Check if the brand name already exists
-      const existingBrand = await BrandModel.findOne({ name });
-      if (existingBrand) {
-        return {
-          status: 400,
-          success: false,
-          message: "Brand with this name already exists",
-        };
-      }
-  
-      // Create a new brand
-      const newBrand = new BrandModel({
-        ...brandData,
-      });
-  
-      const savedBrand = await newBrand.save();
-  
+    // Validate required fields
+    const { name, logo } = brandData;
+    if (!name || !logo) {
       return {
-        status: 201,
-        success: true,
-        message: "Brand created successfully",
-        data: JSON.parse(JSON.stringify(savedBrand)),
-      };
-    } catch (error: any) {
-      return {
-        status: 500,
+        status: 400,
         success: false,
-        message: "An error occurred while creating the brand",
-        error: error.message,
+        message: "Missing required fields: name or logo",
       };
     }
-  };
 
-
-  export const updateBrand = async (brandId: string, brandData: CreateBrandParams) => {
-    try {
-      await dbConnectMarketPlace();
-  
-
-      const { name, description, logo, isActive } = brandData;
-      if (!name || !description || !logo || !isActive) {
-        return {
-          status: 400,
-          success: false,
-          message: "Missing required fields: name, logo, description or Active status",
-        };
-      }
-  
-      const existingBrand = await BrandModel.findById(brandId);
-      if (!existingBrand) {
-        return {
-          status: 404,
-          success: false,
-          message: "Brand not found",
-        };
-      }
-  
-      const nameConflict = await BrandModel.findOne({ name, _id: { $ne: brandId } });
-      if (nameConflict) {
-        return {
-          status: 400,
-          success: false,
-          message: "Brand with this name already exists",
-        };
-      }
-  
-      const updatedBrand = await BrandModel.findByIdAndUpdate(
-        brandId,
-        { ...brandData },
-        { new: true }
-      );
-  
+    // Check if the brand name already exists
+    const existingBrand = await BrandModel.findOne({ name });
+    if (existingBrand) {
       return {
-        status: 200,
-        success: true,
-        message: "Brand updated successfully",
-        data: JSON.parse(JSON.stringify(updatedBrand)),
-      };
-    } catch (error: any) {
-      return {
-        status: 500,
+        status: 400,
         success: false,
-        message: "An error occurred while updating the brand",
-        error: error.message,
+        message: "Brand with this name already exists",
       };
     }
-  };
-  
 
-  export const deleteBrand = async (brandId: string) => {
-    try {
-      await dbConnectMarketPlace();
-  
-      if (!brandId) {
-        return {
-          status: 400,
-          success: false,
-          message: "Category ID is required",
-        };
-      }
-  
-      const brand = await BrandModel.findById(brandId);
-      if (!brand) {
-        return {
-          status: 404,
-          success: false,
-          message: "Brand not found",
-        };
-      }
-      await BrandModel.findByIdAndDelete(brand);
-  
-  
-      return {
-        status: 200,
-        success: true,
-        message: "Brand deleted successfully",
-      };
-    } catch (error: any) {
-      return {
-        status: 500,
-        success: false,
-        message: "An error occurred while deleting the brand",
-        error: error.message,
-      };
-    }
+    // Create a new brand
+    const newBrand = new BrandModel({
+      ...brandData,
+    });
+
+    const savedBrand = await newBrand.save();
+
+    return {
+      status: 201,
+      success: true,
+      message: "Brand created successfully",
+      data: JSON.parse(JSON.stringify(savedBrand)),
+    };
+  } catch (error: any) {
+    return {
+      status: 500,
+      success: false,
+      message: "An error occurred while creating the brand",
+      error: error.message,
+    };
   }
+};
+
+export const updateBrand = async (
+  brandId: string,
+  brandData: CreateBrandParams
+) => {
+  try {
+    await dbConnectMarketPlace();
+
+    const { name, description, logo, isActive } = brandData;
+    if (!name || !description || !logo || !isActive) {
+      return {
+        status: 400,
+        success: false,
+        message:
+          "Missing required fields: name, logo, description or Active status",
+      };
+    }
+
+    const existingBrand = await BrandModel.findById(brandId);
+    if (!existingBrand) {
+      return {
+        status: 404,
+        success: false,
+        message: "Brand not found",
+      };
+    }
+
+    const nameConflict = await BrandModel.findOne({
+      name,
+      _id: { $ne: brandId },
+    });
+    if (nameConflict) {
+      return {
+        status: 400,
+        success: false,
+        message: "Brand with this name already exists",
+      };
+    }
+
+    const updatedBrand = await BrandModel.findByIdAndUpdate(
+      brandId,
+      { ...brandData },
+      { new: true }
+    );
+
+    return {
+      status: 200,
+      success: true,
+      message: "Brand updated successfully",
+      data: JSON.parse(JSON.stringify(updatedBrand)),
+    };
+  } catch (error: any) {
+    return {
+      status: 500,
+      success: false,
+      message: "An error occurred while updating the brand",
+      error: error.message,
+    };
+  }
+};
+
+export const deleteBrand = async (brandId: string) => {
+  try {
+    await dbConnectMarketPlace();
+
+    if (!brandId) {
+      return {
+        status: 400,
+        success: false,
+        message: "Category ID is required",
+      };
+    }
+
+    const brand = await BrandModel.findById(brandId);
+    if (!brand) {
+      return {
+        status: 404,
+        success: false,
+        message: "Brand not found",
+      };
+    }
+    await BrandModel.findByIdAndDelete(brand);
+
+    return {
+      status: 200,
+      success: true,
+      message: "Brand deleted successfully",
+    };
+  } catch (error: any) {
+    return {
+      status: 500,
+      success: false,
+      message: "An error occurred while deleting the brand",
+      error: error.message,
+    };
+  }
+};

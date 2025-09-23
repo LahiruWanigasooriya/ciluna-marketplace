@@ -21,15 +21,14 @@ export const getAllProductVariants = async ({
 
     // Build query object
     const query: any = {
+      isActive: true,
       ...filters,
     };
     if (productId) query.productId = productId; // Filter by product
 
     // Add search functionality (search in subcategories)
     if (search) {
-      query.$or = [
-        { name: { $regex: search, $options: "i" } },
-      ];
+      query.$or = [{ name: { $regex: search, $options: "i" } }];
     }
 
     // Determine sorting order
@@ -46,7 +45,7 @@ export const getAllProductVariants = async ({
       .limit(limit)
       .populate("productId", "name")
       .populate("category", "name")
-      .populate("subCategoryIds", "value"); 
+      .populate("subCategoryIds", "value");
 
     // Total count for pagination
     const total = await ProductVariantModel.countDocuments(query);
@@ -85,9 +84,7 @@ export const getProductVariantById = async (id: string) => {
     }
 
     // Find the product and populate related fields
-    const product = await ProductVariantModel.findById(id)
- 
-
+    const product = await ProductVariantModel.findById(id);
 
     if (!product) {
       return {
@@ -97,11 +94,11 @@ export const getProductVariantById = async (id: string) => {
       };
     }
 
-     // Fetch all variants associated with the product
-     const variants = await ProductVariantModel.find({ id })
-     .populate("subCategoryIds", "value") // Fetch subcategory values (e.g., Color: Black, Size: 24 inch)
-     .select("_id price stock images discount subCategoryIds")
-     .lean();
+    // Fetch all variants associated with the product
+    const variants = await ProductVariantModel.find({ id })
+      .populate("subCategoryIds", "value") // Fetch subcategory values (e.g., Color: Black, Size: 24 inch)
+      .select("_id price stock images discount subCategoryIds")
+      .lean();
 
     return {
       status: 200,
@@ -122,22 +119,29 @@ export const getProductVariantById = async (id: string) => {
   }
 };
 
-
-
-
 // Create a new product variant and validate its linked data
-export const createProductVariant = async (variantData: CreateProductVariantParams) => {
+export const createProductVariant = async (
+  variantData: CreateProductVariantParams
+) => {
   try {
     await dbConnectMarketPlace();
 
-    const { productId, subCategoryIds, price, stock, discount, images } = variantData;
+    const { productId, subCategoryIds, price, stock, discount, images } =
+      variantData;
 
     // Validate required fields
-    if (!productId || !subCategoryIds || subCategoryIds.length === 0 || !price || !stock) {
+    if (
+      !productId ||
+      !subCategoryIds ||
+      subCategoryIds.length === 0 ||
+      !price ||
+      !stock
+    ) {
       return {
         status: 400,
         success: false,
-        message: "Missing required fields: productId, subCategoryIds, price, or stock",
+        message:
+          "Missing required fields: productId, subCategoryIds, price, or stock",
       };
     }
 
@@ -174,7 +178,8 @@ export const createProductVariant = async (variantData: CreateProductVariantPara
       return {
         status: 400,
         success: false,
-        message: "A variant with these subcategories already exists for this product",
+        message:
+          "A variant with these subcategories already exists for this product",
       };
     }
 
@@ -206,7 +211,10 @@ export const createProductVariant = async (variantData: CreateProductVariantPara
   }
 };
 
-export const updateProductVariant = async (id: string, data: CreateProductVariantParams) => {
+export const updateProductVariant = async (
+  id: string,
+  data: CreateProductVariantParams
+) => {
   try {
     await dbConnectMarketPlace();
 
@@ -231,7 +239,9 @@ export const updateProductVariant = async (id: string, data: CreateProductVarian
     }
 
     // Check if the new name is already taken by another category
-    const nameConflict = await ProductVariantModel.findOne({ _id: { $ne: id } });
+    const nameConflict = await ProductVariantModel.findOne({
+      _id: { $ne: id },
+    });
     if (nameConflict) {
       return {
         status: 400,
@@ -262,7 +272,6 @@ export const updateProductVariant = async (id: string, data: CreateProductVarian
     };
   }
 };
-
 
 export const deleteProductVariant = async (id: string) => {
   try {
@@ -306,4 +315,4 @@ export const deleteProductVariant = async (id: string) => {
       error: error.message,
     };
   }
-}
+};
