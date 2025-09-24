@@ -16,12 +16,12 @@ const ShippingReturns = () => {
         </div>
       ))}
       <div className="text-[14px] leading-5">
-        <span>
+        <span className="text-gray">
           📧Email:
           <span className="text-neutralGray-700"> contact@domain.com</span>
         </span>
         <br />
-        <span className="flex items-center">
+        <span className="flex items-center text-gray">
           <FaPhone className="inline w-5" />
           Phone:
           <span className="text-neutralGray-700 ml-1"> +1 (23) 456 789</span>

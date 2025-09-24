@@ -48,7 +48,7 @@ const SearchField = ({
   ...props
 }: SearchFieldProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
 
@@ -70,14 +70,14 @@ const SearchField = ({
     setInputValue(value);
   };
 
-  useEffect(() => {
-    const currentQuery = searchParams.get("query");
-    if (!currentQuery) {
-      setInputValue("");
-    } else {
-      setInputValue(currentQuery);
-    }
-  }, [searchParams]);
+  // useEffect(() => {
+  //   const currentQuery = searchParams.get("query");
+  //   if (!currentQuery) {
+  //     setInputValue("");
+  //   } else {
+  //     setInputValue(currentQuery);
+  //   }
+  // }, [searchParams]);
 
   return (
     <SearchFieldPrimitive

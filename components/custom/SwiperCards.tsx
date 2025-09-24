@@ -116,17 +116,17 @@ const SwiperCards = ({ products, className, titleClassName, section }: SwiperCar
         <div className="relative">
           <div
             ref={containerRef}
-            className="sm:flex overflow-x-hidden no-scrollbar gap-4 recommend:gap-[15px] w-full"
+            className="sm:flex overflow-x-hidden no-scrollbar gap-x-4 recommend:gap-[15px] w-full"
           >
             {/* swiper in mobile view */}
-            <div className="sm:hidden flex overflow-x-auto no-scrollbar gap-4 w-full">
+            <div className="sm:hidden flex overflow-x-auto no-scrollbar w-full">
               {products &&
                 Array.from(
                   { length: Math.ceil(products.length / 4) },
                   (_, pageIndex) => (
                     <div
                       key={pageIndex}
-                      className="grid grid-cols-2 grid-rows-2 gap-4 min-w-full"
+                      className="grid grid-cols-2 grid-rows-2 gap-y-5 gap-x-4 min-w-full h-fit"
                     >
                       {products
                         .slice(pageIndex * 4, (pageIndex + 1) * 4)
@@ -142,7 +142,7 @@ const SwiperCards = ({ products, className, titleClassName, section }: SwiperCar
             </div>
 
             {/* swiper in desktop view */}
-            <div className="hidden sm:flex overflow-x-auto no-scrollbar gap-4 recommend:gap-[15px] w-full">
+            <div className="hidden sm:flex overflow-x-auto no-scrollbar gap-4 recommend:gap-6 w-full">
               {products?.map((product, index) => (
                 <ProductCard product={product} key={index} />
               ))}

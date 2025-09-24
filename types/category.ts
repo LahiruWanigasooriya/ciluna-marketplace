@@ -15,6 +15,7 @@ export interface GetCategoriesParams {
   search?: string;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
+  filters?: Record<string, any>;
 }
 
 export interface CreateCategoryParams {
@@ -22,7 +23,6 @@ export interface CreateCategoryParams {
   description?: string;
   image: string;
 }
-
 
 export interface Category {
   id: number;

@@ -1,9 +1,12 @@
 "use server";
 import { dbConnectMarketPlace } from "@/lib/dbConnect";
 import ProductVariantCategoryModel from "@/models/productVariantCategory";
-import { CreateProductVariantCategoryParams, GetProductVariantCategoriesParams } from "@/types/productVariantCategory";
-import "@/models/product"
-import "@/models/productVariantSubCategory"
+import {
+  CreateProductVariantCategoryParams,
+  GetProductVariantCategoriesParams,
+} from "@/types/productVariantCategory";
+import "@/models/product";
+import "@/models/productVariantSubCategory";
 import ProductModel from "@/models/product";
 
 // Get all product variant categories with pagination, search, and sorting
@@ -11,6 +14,7 @@ export const getAllProductVariantCategories = async ({
   page = 1,
   limit = 10,
   search = "",
+  filters = {},
   sortBy = "createdAt",
   sortOrder = "desc",
 }: GetProductVariantCategoriesParams) => {
@@ -18,8 +22,10 @@ export const getAllProductVariantCategories = async ({
     await dbConnectMarketPlace();
 
     // Build query object
-    const query: any = {};
-
+    const query: any = {
+      isActive: true,
+      ...filters,
+    };
     // Add search functionality (search in name)
     if (search) {
       query.name = { $regex: search, $options: "i" }; // Case-insensitive search
@@ -33,7 +39,9 @@ export const getAllProductVariantCategories = async ({
     const skip = (page - 1) * limit;
 
     // Fetch product variant categories with search, sorting, and pagination
-    const productVariantCategories = await ProductVariantCategoryModel.find(query)
+    const productVariantCategories = await ProductVariantCategoryModel.find(
+      query
+    )
       .sort(sortOptions) // Sort by specified field
       .skip(skip) // Skip documents for pagination
       .limit(limit) // Limit number of documents
@@ -43,14 +51,16 @@ export const getAllProductVariantCategories = async ({
     // Total count for pagination
     const total = await ProductVariantCategoryModel.countDocuments(query);
 
-    console.log(productVariantCategories, 'pp variant category')
+    console.log(productVariantCategories, "pp variant category");
 
     return {
       status: 200,
       success: true,
       message: "Product variant categories fetched successfully",
       data: {
-        productVariantCategories: JSON.parse(JSON.stringify(productVariantCategories)), // Ensure serializability
+        productVariantCategories: JSON.parse(
+          JSON.stringify(productVariantCategories)
+        ), // Ensure serializability
         total,
         totalPages: Math.ceil(total / limit),
         currentPage: page,
@@ -79,7 +89,7 @@ export const getVariantCategoryById = async (id: string) => {
     }
 
     // Find the product and populate related fields
-    const data = await ProductVariantCategoryModel.findById(id)
+    const data = await ProductVariantCategoryModel.findById(id);
     if (!id) {
       return {
         status: 404,
@@ -88,14 +98,12 @@ export const getVariantCategoryById = async (id: string) => {
       };
     }
 
-
     return {
       status: 200,
       success: true,
       message: "Variant Category fetched successfully",
       data: {
-        product: JSON.parse(JSON.stringify(data)), 
-
+        product: JSON.parse(JSON.stringify(data)),
       },
     };
   } catch (error: any) {
@@ -135,7 +143,8 @@ export const createProductVariantCategory = async (
       return {
         status: 400,
         success: false,
-        message: "Product variant category with this name already exists for the product",
+        message:
+          "Product variant category with this name already exists for the product",
       };
     }
 
@@ -160,7 +169,8 @@ export const createProductVariantCategory = async (
     return {
       status: 201,
       success: true,
-      message: "Product variant category created successfully and linked to product",
+      message:
+        "Product variant category created successfully and linked to product",
       data: JSON.parse(JSON.stringify(savedCategory)),
     };
   } catch (error: any) {
@@ -173,11 +183,14 @@ export const createProductVariantCategory = async (
   }
 };
 
-export const updateVariantCategory = async (id: string, Data: CreateProductVariantCategoryParams) => {
+export const updateVariantCategory = async (
+  id: string,
+  Data: CreateProductVariantCategoryParams
+) => {
   try {
     await dbConnectMarketPlace();
 
-    const { productId, name} = Data;
+    const { productId, name } = Data;
     if (!productId || !name) {
       return {
         status: 400,
@@ -195,7 +208,10 @@ export const updateVariantCategory = async (id: string, Data: CreateProductVaria
       };
     }
 
-    const nameConflict = await ProductVariantCategoryModel.findOne({ name, _id: { $ne: id } });
+    const nameConflict = await ProductVariantCategoryModel.findOne({
+      name,
+      _id: { $ne: id },
+    });
     if (nameConflict) {
       return {
         status: 400,
@@ -249,7 +265,6 @@ export const deleteProductVariantCategory = async (id: string) => {
 
     await ProductVariantCategoryModel.findByIdAndDelete(id);
 
-
     return {
       status: 200,
       success: true,
@@ -264,5 +279,4 @@ export const deleteProductVariantCategory = async (id: string) => {
       error: error.message,
     };
   }
-}
-
+};

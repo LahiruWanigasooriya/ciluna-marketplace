@@ -35,11 +35,11 @@ const AskQuestions: React.FC<AskQuestionsProps> = ({ onClose }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="relative bg-white rounded-[8px] md:w-[655px] w-full"
+      className="relative bg-white rounded-[8px] md:w-[655px] md:h-[597px] w-full h-[573px]"
     >
-      <div className="flex flex-col gap-4 max-h-[90vh] lg:max-h-none overflow-y-auto p-4 md:p-6">
-        <div>
-          <Title title="Ask Questions" className="!text-lg leading-6" />
+      <div className="flex flex-col gap-4 overflow-y-auto p-4 md:p-6">
+        <div className="h-6 md:h-8 flex items-center">
+          <Title title="Ask Questions" className="!text-xl md:!text-2xl font-arialBold" />
         </div>
         <div className="absolute top-0 right-0 p-2 z-10">
           <CircleX
@@ -50,7 +50,7 @@ const AskQuestions: React.FC<AskQuestionsProps> = ({ onClose }) => {
             onClick={onClose}
           />
         </div>
-        <div className="gap-y-4 flex flex-col">
+        <div className="gap-y-6 flex flex-col">
           <div className="w-full col-span-3">
             <Controller
               name="customerName"
@@ -61,6 +61,7 @@ const AskQuestions: React.FC<AskQuestionsProps> = ({ onClose }) => {
                   className="custom-textfield"
                   inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray border border-[#E1E1E1]"
                   groupClassName="border border-[#E1E1E1]"
+                  labelClassName="font-arial"
                   placeholder="Enter your name here..."
                   name="customerName"
                   id="customerName"
@@ -87,6 +88,7 @@ const AskQuestions: React.FC<AskQuestionsProps> = ({ onClose }) => {
                   className="custom-textfield"
                   inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray border border-[#E1E1E1] text-sm"
                   groupClassName="border border-[#E1E1E1]"
+                  labelClassName="font-arial"
                   placeholder="Enter your email here..."
                   name="customerEmail"
                   id="customerEmail"
@@ -113,7 +115,8 @@ const AskQuestions: React.FC<AskQuestionsProps> = ({ onClose }) => {
                   placeholder="Type your message here..."
                   value={field.value}
                   onChange={field.onChange}
-                  className="bg-white border border-[#E1E1E1]"
+                  labelClass="text-base mb-[2px] font-arial"
+                  className="bg-white border border-[#E1E1E1] h-[141px] mt-[2px] md:mt-0 placeholder:text-sm ring-0"
                 />
               )}
             />
@@ -124,7 +127,7 @@ const AskQuestions: React.FC<AskQuestionsProps> = ({ onClose }) => {
             )}
           </div>
 
-          <div className="w-fit hover:cursor-pointer">
+          <div className="w-fit hover:cursor-pointer h-6 -mt-2">
             <Checkbox
               onChange={(isSelected: boolean) =>
                 setValue("keepMeUpdated", isSelected)
@@ -138,16 +141,16 @@ const AskQuestions: React.FC<AskQuestionsProps> = ({ onClose }) => {
               </p>
             )}
           </div>
-          <div className="flex gap-3 md:gap-4 mt-4">
+          <div className="flex gap-3 md:gap-4 mt-[3px] md:mt-[5px]">
             <Button
-              className="w-full border !border-gray text-lg"
+              className="w-full border !border-gray text-lg text-gray font-arial"
               size="extra-large"
               onPress={onClose}
             >
               Cancel
             </Button>
             <Button
-              className="w-full text-white bg-gray text-lg"
+              className="w-full text-white bg-gray text-lg font-arial"
               size="extra-large"
               type="submit"
             >

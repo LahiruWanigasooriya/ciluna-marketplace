@@ -19,12 +19,14 @@ export const getAllSubSubCategories = async ({
   limit = 12,
   search = "",
   sortBy = "createdAt",
+  filters = {},
   sortOrder = "desc",
   subcategoryId, // Added missing parameter
 }: {
   page?: number;
   limit?: number;
   search?: string;
+  filters?: Record<string, any>;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   subcategoryId?: string; // Added missing parameter
@@ -33,7 +35,10 @@ export const getAllSubSubCategories = async ({
     await dbConnectMarketPlace();
 
     // Build query object
-    const query: any = {};
+    const query: any = {
+      isActive: true,
+      ...filters,
+    };
 
     // Add search functionality (search in name or description)
     if (search) {

@@ -17,12 +17,11 @@ import { ICategory } from "@/types/category";
 
 interface ConditionalLayoutProps {
   children: React.ReactNode;
-  categories: ICategory;
+  // categories: ICategory;
 }
 
 export default function ConditionalLayout({
   children,
-  categories,
 }: ConditionalLayoutProps) {
   const pathname = usePathname();
   const { isMenuOpen } = useMenuStore();

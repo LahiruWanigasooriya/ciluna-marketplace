@@ -122,7 +122,7 @@ const Product: React.FC<ProductProps> = ({
 
   // const addToCartItem = useCartStore((state) => state.addToCart);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const charLimit = 380;
+  const charLimit = 300;
 
   const [isAskingQuestion, setIsAskingQuestion] = useState<boolean>(false);
   const [isShare, setIsShare] = useState<boolean>(false);
@@ -301,6 +301,8 @@ const Product: React.FC<ProductProps> = ({
             color: selectedColor,
             size: selectedSize,
           };
+
+      console.log("cart data to add in prouct: ", cartData);
 
       try {
         await addToCart(cartData);
@@ -552,7 +554,7 @@ const Product: React.FC<ProductProps> = ({
                 ) : (
                   <div className="flex items-center gap-2">
                     <Rating rating={reviews?.avgRating || 0} />
-                    <span className="text-xs ml-2 text-[#707070]">
+                    <span className="text-sm ml-2 text-[#707070]">
                       {" "}
                       {reviews?.totalReviews || 0} {reviews?.totalReviews === 1 ? 'Review' : 'Reviews'} | {sold}+ Sold
                     </span>
@@ -654,10 +656,12 @@ const Product: React.FC<ProductProps> = ({
                 )}
               </div>
               <div className="flex flex-col items-start justify-between gap-3 lg:gap-4 w-full">
-                <ColorSelector
-                  colors={selectColor}
-                  onColorSelect={handleColorSelect}
-                />
+                <div className="block xl:hidden mb-2">
+                  <ColorSelector
+                    colors={selectColor}
+                    onColorSelect={handleColorSelect}
+                  />
+                </div>
                 <div className="block xl:hidden mb-2">
                   <QuantitySelector
                     initialQuantity={1}
@@ -675,6 +679,12 @@ const Product: React.FC<ProductProps> = ({
                 />
               </div>
               <div className="flex flex-col items-start justify-between gap-5 w-full">
+                <div className="hidden xl:block">
+                  <ColorSelector
+                    colors={selectColor}
+                    onColorSelect={handleColorSelect}
+                  />
+                </div>
                 <div className="hidden xl:block">
                   <QuantitySelector
                     initialQuantity={1}
