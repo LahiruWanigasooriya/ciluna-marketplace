@@ -20,7 +20,7 @@ const ProductImageSlider: React.FC <ProductImageSliderProps> = ({productImages})
       className="relative w-full h-[372px] sm:h-[500px] md:h-[451px] overflow-hidden flex flex-col justify-center rounded-[8px]"
     >
       {/* Background Image */}
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-[353px] sm:h-full">
         {productImages.map((img, index) => {
           const imgSrc = img;
           return (

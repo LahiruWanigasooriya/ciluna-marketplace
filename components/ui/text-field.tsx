@@ -25,6 +25,7 @@ interface BaseTextFieldProps extends TextFieldPrimitiveProps, FieldProps {
   className?: string
   inputClassName?: string
   groupClassName?:string
+  labelClassName?: string
 }
 
 interface RevealableTextFieldProps extends BaseTextFieldProps {
@@ -50,6 +51,7 @@ const TextField = ({
   className,
   inputClassName,
   groupClassName,
+  labelClassName,
   isRevealable,
   type,
   ...props
@@ -66,7 +68,7 @@ const TextField = ({
       {...props}
       className={ctr(className, "group flex flex-col !gap-2")}
     >
-      {label && <Label>{label}</Label>}
+      {label && <Label className={labelClassName}>{label}</Label>}
       <FieldGroup data-loading={isPending ? "true" : undefined} className={cn(groupClassName, "relative ")}>
         {prefix ? (
           <span data-slot="prefix" className="atrs x2e2 !ml-0">

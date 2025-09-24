@@ -42,7 +42,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
                     animate={{ width: `${percentage}%` }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
                   ></motion.div>
-                  <div className="ml-[4px]">
+                  <div className="ml-[4px] text-sm text-[#333333] md:text-gray">
                     {displayValue || cleanValueText}
                   </div>
                 </div>

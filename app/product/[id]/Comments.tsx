@@ -132,7 +132,7 @@ const Comments = ({
             <div className="flex items-center gap-[32px] justify-start w-full md:justify-end">
               <div className="flex">
                 <HiBarsArrowDown className="w-[24px] h-[24px] mr-[8px]" />
-                <div className="min-w-fit">Sort By</div>
+                <div className="min-w-fit font-lora md:font-arial">Sort By</div>
               </div>
               <Button
                 appearance="normal"
@@ -171,7 +171,7 @@ const Comments = ({
                       </p>
                       {/* <Rating rating={comment.rating} /> */}
                     </div>
-                    <p className="text-[14px] leading-5 text-gray-600">
+                    <p className="text-[14px] leading-5 text-neutralGray-700">
                       {comment.timestamp}
                     </p>
                   </div>
