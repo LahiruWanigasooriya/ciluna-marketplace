@@ -16,7 +16,6 @@ const Page = async () => {
     <div className="flex flex-col relative gap-12 recommend:gap-[76px] overflow-hidden">
       <div className="flex flex-col w-full h-full">
         <ImageSlider />
-
         <QuietBrilliance />
         <TimelessExpressions />
         <LimitedTimeGrace/>
