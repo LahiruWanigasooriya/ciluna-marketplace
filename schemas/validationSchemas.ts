@@ -55,12 +55,12 @@ export const contactValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  phone: Yup.string()
-    .matches(
-      /^\+\d{1,4}\d{7,11}$/,
-      "Phone number must include a valid country code and contain 7 to 11 digits"
-    )
-    .required("Phone number is required"),
+//  phone: Yup.string()
+//    .matches(
+//      /^\+\d{1,4}\d{7,11}$/,
+//      "Phone number must include a valid country code and contain 7 to 11 digits"
+//    )
+//    .required("Phone number is required"),
   message: Yup.string()
     .min(10, "Message must be at least 10 characters long")
     .required("Message is required"),
