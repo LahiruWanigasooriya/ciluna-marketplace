@@ -3,7 +3,7 @@ import { Dot } from "lucide-react";
 import React from "react";
 import { conditionConfig } from "@/config/condition";
 
-const page = () => {
+const ConditionPage = async () => {
   return (
     <div className="hidden flex-col gap-12 text-white">
       <div className="flex flex-col gap-3">
@@ -47,4 +47,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ConditionPage;
