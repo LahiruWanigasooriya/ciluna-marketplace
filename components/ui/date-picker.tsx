@@ -26,7 +26,7 @@ const datePickerStyles = tv({
     base: "group flex flex-col gap-y-2.5",
     datePickerIcon:
       "group mr-0  [&_[data-slot=icon]]:text-muted-fg w-8 rounded outline-offset-0 hover:bg-transparent pressed:bg-transparent !w-[18px] !h-[18px]",
-    calendarIcon: "group-open:text-fg !w-[18px] !h-[18px]  !mb-0 !mt-0 !ml-0 !mr-0",
+    calendarIcon: "group-open:text-fg !w-[18px] !h-[18px] ",
     datePickerInput: "w-full px-2 text-base lg:text-sm",
     dateRangePickerInputStart: "px-2 lg:text-sm text-base",
     dateRangePickerInputEnd: "flex-1 px-2 py-1.5 lg:text-sm text-base",
@@ -91,21 +91,16 @@ const DatePicker = <T extends DateValue>({
     <DatePickerPrimitive {...props} className={ctr(className, base())}>
       {label && <Label className="text-black">{label}</Label>}
       <FieldGroup className="min-w-40 relative">
-        {!value && placeholder ? (
-          <div className="flex items-center justify-between w-full h-11 p-3 text-sm text-[#707070] bg-transparent border-0">
-            <span>{placeholder}</span>
+          <div className="flex items-center justify-between w-full h-11 p-3 border-0 bg-transparent">
+            {!value && placeholder ? (
+              <span className="text-sm text-[#707070]">{placeholder}</span>
+            ) : (
+              <DateInput className={datePickerInput()} data-has-value={!!value} />
+            )}
             <DatePickerIcon />
           </div>
-        ) : (
-          <>
-            <DateInput
-              className={datePickerInput()}
-              data-has-value={!!value}
-            />
-            <DatePickerIcon />
-          </>
-        )}
-      </FieldGroup>
+        </FieldGroup>
+
       {description && <Description>{description}</Description>}
       <FieldError>{errorMessage}</FieldError>
       <DatePickerOverlay />
