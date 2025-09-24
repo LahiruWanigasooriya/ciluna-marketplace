@@ -13,17 +13,29 @@ const page = async ({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) => {
   const searchParams = await searchParamsPromise;
-  const currentPage = parseInt(searchParams.page || "1", 12);
+  const currentPage = parseInt(searchParams.page || "1", 10); 
   const search = searchParams.search || "";
   const sortBy = searchParams.sortBy || "createdAt";
 
-  const catresponse = await getAllCategories({
-    page: currentPage,
-    search,
-    sortBy,
-    sortOrder: "desc",
-  });
-  const categories = catresponse?.data?.categories;
+  let catresponse;
+  try {
+    catresponse = await getAllCategories({
+      page: currentPage,
+      search,
+      sortBy,
+      sortOrder: "desc",
+    });
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return (
+      <div>
+        <p>Error loading categories. Please try again later.</p>
+      </div>
+    );
+  }
+
+  const categories = catresponse?.data?.categories || [];
+  const totalPages = catresponse?.data?.totalPages || 1;
 
   return (
     <div className="flex flex-col gap-[32px] md:gap-[36px] lg:gap-[42px] recommend:gap-[48px]">
@@ -31,15 +43,16 @@ const page = async ({
         <Image src={Img} alt="img" className="hidden md:block" />
         <Image src={ImgM} alt="imgm" className="block md:hidden" />
       </div>
-      <div className="grid grid-cols-2 md:flex md:flex-wrap gap-4">
-        {categories?.map((category: ICategory) => (
-          <CategoryCard key={category._id} category={category} />
-        ))}
+      <div className="grid grid-cols-2 md:flex md-flex-wrap gap-4">
+        {categories.length > 0 ? (
+          categories.map((category: ICategory) => (
+            <CategoryCard key={category._id} category={category} />
+          ))
+        ) : (
+          <p>No categories found.</p>
+        )}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={catresponse?.data?.totalPages || 1}
-      />
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </div>
   );
 };
