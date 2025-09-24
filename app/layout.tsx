@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ConditionalLayout from "@/components/custom/RootLayout";
 import { Toast } from "@/components/ui";
-import { getAllCategories } from "@/actions/categories/category";
 //import { isUndefined } from "util";
 
 export const metadata: Metadata = {
@@ -15,8 +14,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const categoriesResponse = await getAllCategories({ page: 1, limit: 12 });
-  const categories = categoriesResponse?.data?.categories;
+
 
   return (
     <html lang="en">
@@ -26,7 +24,7 @@ export default async function RootLayout({
 
       <body className={`mx-auto flex flex-col font-inter bgcolor`}>
         <Toast richColors position="top-right" />
-        <ConditionalLayout categories={categories}>
+        <ConditionalLayout>
           {children}
         </ConditionalLayout>
       </body>
