@@ -1,11 +1,16 @@
 import React from "react";
 import Image from "next/image";
 import careguidebanner from "@/public/assets/careGuides/careguideBanner.webp";
+import CareGuideCard from "@/components/custom/CareGuideCard";
+import Readytowear from "@/public/assets/careGuides/readytowear.webp";
+import Jewellery from "@/public/assets/careGuides/jewellary.webp";
+import Shoes from "@/public/assets/careGuides/shoes.webp";
+import Handbags from "@/public/assets/careGuides/handbags.webp";
+import Perfumes from "@/public/assets/careGuides/perfume.webp";
 
 const CareGuideBanner = () => {
   return (
    
-          // <div className="flex flex-col pb-[32px] md:pb-[36px]">
             <div className="relative ">
               <Image
                 src={careguidebanner}
@@ -21,25 +26,53 @@ const CareGuideBanner = () => {
               />
  
 
-            <div className="absolute top-[79px] md:top-1/2 bottom-0 w-full  flex flex-col  p-[16px] gap-[12px] md:left-1/2 md:gap-[40px] md:-translate-x-1/2 md:-translate-y-1/2 md:mx-auto md:items-center">
+            <div className="absolute top-[79px] md:top-[35%] lg:top-1/2 md:w-full  w-full  flex flex-col  p-[16px] lg:left-1/2  gap-[12px] lg:px-[287px] lg:py-[180px] lg:gap-[12px] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:mx-auto lg:items-center">
             
               <h1 className="flex text-white font-kaiseiBold text-[24px] md:text-[40px] leading-[32px] md:leading-[48px] items-center justify-center">Care Guides</h1>
               <p className="flex text-white items-center justify-center font-arial font-normal text-[14px] md:text-[16px] leading-[20px] md:leading-[24px] text-center">
                 At Ciluna, we believe that providing the best care for your products is just as important as choosing the right one. Our Care Guides offer expert advice on maintaining and using your items to ensure they last for years to come.
               </p>
+            </div>
+            <div className="pl-[16px] pr-[16px] pt-[16px] pb-[32px] gap-x-[10px] gap-y-[32px] md:gap-[24px] md:pr-[96px] md:pl-[96px] md:pt-[40px] md:pb-[40px] flex flex-col md:flex-row flex-wrap md:gap-x-[24px] md:gap-y-[40px]">
+              <CareGuideCard
+              image={Readytowear}
+              title="Ready to Wear"
+              description="Designed for everyday elegance, Ciluna’s ready-to-wear pieces stay fresh and stylish with simple care."
+              buttonText="View More"
+              />
+              <CareGuideCard
+              image={Jewellery}
+              title="Jewellery"
+              description="Keep your Ciluna jewellery shining with simple care tips. Learn how to clean, store, and protect your favourite pieces."
+              buttonText="View More"
+              />
+              <CareGuideCard
+              image={Handbags}
+              title="Leather Goods"
+              description="Crafted for durability and style, Ciluna leather goods stay beautiful with proper care and storage."
+              buttonText="View More"
+              />
+              <CareGuideCard
+              image={Perfumes}
+              title="Perfumes"
+              description="Preserve the elegance of your Ciluna perfumes by storing them in cool, dry places away from direct light."
+              buttonText="View More"
+              />
+              <CareGuideCard
+              image={Shoes}
+              title="Shoes"
+              description="Keep your Ciluna shoes looking sharp by storing them properly and avoiding water or heat damage."
+              buttonText="View More"
+              />
+              
 
-
-           
-
-         
-        
             </div>
 
             </div>
        
 
 
-          // </div>
+          
 
         
       
