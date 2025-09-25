@@ -16,6 +16,7 @@ interface OptionType {
 
 interface SelectDropdownProps {
   label?: string;
+  labelClassName?: string;
   options: OptionType[];
   value?: OptionType | null;
   onChange: (selectedOption: SingleValue<OptionType>) => void;
@@ -27,6 +28,7 @@ interface SelectDropdownProps {
 
 const SelectDropdown: React.FC<SelectDropdownProps> = ({
   label,
+  labelClassName,
   options,
   value,
   onChange,
@@ -122,7 +124,7 @@ const SelectDropdown: React.FC<SelectDropdownProps> = ({
 
   return (
     <div className="group flex flex-col gap-y-[8px] custom-textfield w-full">
-      {label && <Label>{label}</Label>}
+      {label && <Label className={labelClassName}>{label}</Label>}
       <Select<OptionType>
         options={options}
         value={value}
