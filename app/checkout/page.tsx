@@ -70,7 +70,7 @@ interface DecodedToken {
 
 type FormFields = Yup.InferType<typeof orderValidationSchema>;
 
-const CheckoutPage = async () => {
+const CheckoutPage = () => {
   const countryOptions = useMemo(() => countryList().getData(), []);
   const [selectedProvince, setSelectedProvince] = useState<string>();
   const [selectedDistrict, setSelectedDistrict] = useState<string>();
@@ -333,7 +333,7 @@ const CheckoutPage = async () => {
           <ArrowLeft />
           <Title
             title="Shopping Details"
-            className="font-arialBold text-xl lg:text-2xl leading-[32px]"
+            className="!font-arialBold md:!font-dmSansBold !text-xl md:!text-2xl leading-[32px]"
           />
         </Link>
 
@@ -350,9 +350,11 @@ const CheckoutPage = async () => {
                     <div>
                       <Title
                         title="Shipping Address"
-                        className="!text-lg leading-6"
+                        className="!text-base md:!text-lg !leading-6 font-arialBold"
                       />
                     </div>
+
+                    <div className="h-[1px] bg-neutralGray-100"/>
 
                     {addresses.length === 0 ? (
                       <>
@@ -363,6 +365,7 @@ const CheckoutPage = async () => {
                             render={({ field }) => (
                               <SelectDropdown
                                 label="Country*"
+                                labelClassName="font-arial"
                                 options={countryOptions}
                                 value={
                                   countryOptions.find(
@@ -393,7 +396,7 @@ const CheckoutPage = async () => {
                               render={({ field }) => (
                                 <TextField
                                   label="Contact Name*"
-                                  className="custom-textfield w-full"
+                                  className="custom-textfield w-full font-arial"
                                   inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray"
                                   groupClassName="border-none"
                                   placeholder="Enter contact name"
@@ -441,8 +444,8 @@ const CheckoutPage = async () => {
                               control={control}
                               render={({ field }) => (
                                 <TextField
-                                  label="Street name and number"
-                                  className="custom-textfield w-full"
+                                  label="Street name and number*"
+                                  className="custom-textfield w-full font-arial"
                                   inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray"
                                   groupClassName="border-none"
                                   placeholder="Ex: 123, Main street"
@@ -469,6 +472,7 @@ const CheckoutPage = async () => {
                               render={({ field }) => (
                                 <SelectDropdown
                                   label="Province*"
+                                  labelClassName="font-arial"
                                   options={provinces}
                                   value={
                                     provinces.find(
@@ -504,6 +508,7 @@ const CheckoutPage = async () => {
                               render={({ field }) => (
                                 <SelectDropdown
                                   label="District*"
+                                  labelClassName="font-arial"
                                   options={districts}
                                   value={
                                     districts.find(
@@ -537,6 +542,7 @@ const CheckoutPage = async () => {
                               render={({ field }) => (
                                 <SelectDropdown
                                   label="Area/Town*"
+                                  labelClassName="font-arial"
                                   options={towns}
                                   value={
                                     towns.find(
@@ -594,7 +600,7 @@ const CheckoutPage = async () => {
                                 setValue("isDefault", isSelected)
                               }
                             >
-                              Set as a default shipping address
+                              <p className="font-arial">Set as a default shipping address</p>
                             </Checkbox>
                             {errors.isDefault && (
                               <p className="text-red-500 text-xs mt-1">
@@ -628,7 +634,7 @@ const CheckoutPage = async () => {
                     <div>
                       <Title
                         title="Payment Method"
-                        className="text-[1rem] lg:!text-lg leading-6"
+                        className="!text-base md:!text-lg !leading-6 font-arialBold"
                       />
                     </div>
 
@@ -672,7 +678,7 @@ const CheckoutPage = async () => {
                                   render={({ field }) => (
                                     <TextField
                                       label="Name on Card*"
-                                      className="custom-textfield"
+                                      className="custom-textfield font-arial"
                                       inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray"
                                       groupClassName="border-none"
                                       placeholder="Enter name on the card"
@@ -697,7 +703,7 @@ const CheckoutPage = async () => {
                                   render={({ field }) => (
                                     <TextField
                                       label="Card Number"
-                                      className="custom-textfield"
+                                      className="custom-textfield font-arial"
                                       inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray"
                                       groupClassName="border-none"
                                       placeholder="Card Number"
@@ -738,6 +744,7 @@ const CheckoutPage = async () => {
                                     render={({ field }) => (
                                       <SelectDropdown
                                         label="Expiry*"
+                                        labelClassName="font-arial"
                                         options={months}
                                         value={
                                           months.find(
@@ -805,6 +812,7 @@ const CheckoutPage = async () => {
                                     render={({ field }) => (
                                       <TextField
                                         label="CVV*"
+                                        labelClassName="font-arial"
                                         className="custom-textfield w-full"
                                         inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray"
                                         groupClassName="border-none"

@@ -39,6 +39,10 @@ const OrderItemSchema = new mongoose.Schema(
 
 const OrderSchema = new mongoose.Schema(
   {
+    orderId: {
+      type: Number,
+      required: true,
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -163,8 +167,6 @@ const OrderSchema = new mongoose.Schema(
   },
   { timestamps: true } // Timestamps for the order itself
 );
-
-delete mongoose.models.Order;
 
 // Avoid model overwrite error in development
 const OrderModel =
