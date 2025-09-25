@@ -10,10 +10,10 @@ const InquirySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    contactNo: {
-      type: String,
-      required: false,
-    },
+    // contactNo: {
+    //   type: String,
+    //   required: false,
+    // },
     message: {
       type: String,
       required: true,

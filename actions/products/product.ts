@@ -36,15 +36,22 @@ export const getAllProducts = async (
       page = 1,
       limit = 15,
       search = "",
-      filters = {},
       sortBy = "createdAt",
       sortOrder = "desc",
+      subcategoryId,
+      subsubcategoryId,
     } = queryOptions;
 
-    const query: any = {
-      isActive: true,
-      ...filters,
-    };
+    const query: any = { isActive: true };
+
+    // ✅ Add filters
+    if (subcategoryId) {
+      query.subcategory = subcategoryId;
+    }
+
+    if (subsubcategoryId) {
+      query.subsubcategory = subsubcategoryId;
+    }
 
     if (search) {
       query.$or = [
@@ -66,6 +73,7 @@ export const getAllProducts = async (
       .limit(limit)
       .populate("category", "name")
       .populate("subcategory", "name")
+      .populate("subsubcategory", "name") // ✅ add this
       .populate("brand", "name")
       .populate("model", "name")
       .populate("createdBy", "name")
