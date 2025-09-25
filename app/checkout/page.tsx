@@ -70,7 +70,7 @@ interface DecodedToken {
 
 type FormFields = Yup.InferType<typeof orderValidationSchema>;
 
-const CheckoutPage = async () => {
+const CheckoutPage = () => {
   const countryOptions = useMemo(() => countryList().getData(), []);
   const [selectedProvince, setSelectedProvince] = useState<string>();
   const [selectedDistrict, setSelectedDistrict] = useState<string>();

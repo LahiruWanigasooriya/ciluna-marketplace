@@ -103,7 +103,5 @@ const CartSchema = new mongoose.Schema<ICart>(
   { timestamps: true }
 );
 
-delete mongoose.models.Cart;
-
 const CartModel = mongoose.models.Cart || mongoose.model<ICart>("Cart", CartSchema);
 export default CartModel;
