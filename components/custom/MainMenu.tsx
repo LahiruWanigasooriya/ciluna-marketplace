@@ -7,6 +7,8 @@ import { ISubSubCategory } from "@/types/subsubcategory";
 import SwiperImages from "@/components/custom/SwiperImages";
 import useClickOutside from "@/hooks/useClickOutside";
 import useDisableScroll from "@/hooks/useDisableScroll";
+import { motion } from "framer-motion";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import J1 from "@/app/assets/mainmenu-images/J1.webp";
 import J2 from "@/app/assets/mainmenu-images/J2.webp";
@@ -178,9 +180,23 @@ export default function MainMenu({
       {/* Desktop Menu */}
       <div className="relative items-center justify-between md:flex hidden w-full md:justify-center">
         {isLoading ? (
-          <div>Loading categories...</div>
+          <div className="flex items-center justify-center gap-2 py-3">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            >
+              <AiOutlineLoading3Quarters className="text-2xl text-white" />
+            </motion.div>
+            <motion.span
+              className="text-white text-sm font-medium"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              Loading Categories...
+            </motion.span>
+          </div>
         ) : error ? (
-          <div>Error: {error}</div>
+          <div className="text-red-500 font-medium py-6">Error: {error}</div>
         ) : categories.length === 0 ? (
           <div>No categories available</div>
         ) : (
@@ -286,7 +302,25 @@ export default function MainMenu({
           ) : (
             <div className="space-y-[24px] text-lg font-semibold mt-[16px]">
               {isLoading ? (
-                <div>Loading categories...</div>
+                <div className="flex items-center justify-center gap-2 py-3">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 1,
+                      ease: "linear",
+                    }}
+                  >
+                    <AiOutlineLoading3Quarters className="text-2xl text-white" />
+                  </motion.div>
+                  <motion.span
+                    className="text-white text-sm font-medium"
+                    animate={{ opacity: [0.4, 1, 0.4] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    Loading Categories...
+                  </motion.span>
+                </div>
               ) : error ? (
                 <div>Error: {error}</div>
               ) : categories.length === 0 ? (
@@ -373,7 +407,7 @@ const SubMenu: React.FC<{
                   .map((subsub) => (
                     <Link
                       key={subsub._id}
-                      href={`/product?subsubcategoryId=${subsub._id}`}    //passing the subsubcategoryId through query parameters
+                      href={`/product?subsubcategoryId=${subsub._id}`} //passing the subsubcategoryId through query parameters
                       className={subItemClass}
                     >
                       {subsub.name}
@@ -384,7 +418,17 @@ const SubMenu: React.FC<{
             </div>
           ))
         ) : (
-          <div>Loading subcategories available for {categoryName}</div>
+          <div className="flex items-center gap-2 text-gray-600">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            >
+              <AiOutlineLoading3Quarters className="text-xl" />
+            </motion.div>
+            <span className="text-sm font-medium ">
+              Loading subcategories for {categoryName}...
+            </span>
+          </div>
         )}
       </div>
       <div>
