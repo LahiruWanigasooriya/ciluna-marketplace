@@ -33,7 +33,7 @@ export default function BackButton({ to, text, className }: BackButtonProps) {
       className={cn("flex items-center justify-center hover:opacity-70", className)}
     >
       <ChevronLeft className="text-black"/>
-      <p className="font-arial pl-2">{text}</p>
+      <p className="font-arial pl-2 text-gray">{text}</p>
     </button>
   );
 }

@@ -41,7 +41,7 @@ export default function ProductInfoTabs({ productId, overview, productVariantId 
           <div key={tab} className="relative">
             <button
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 font-bold text-[16px] whitespace-nowrap ${
+              className={`px-4 py-2 font-bold text-base md:text-lg whitespace-nowrap ${
                 activeTab === tab ? "text-black" : "text-neutralGray-700"
               }`}
             >

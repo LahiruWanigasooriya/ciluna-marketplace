@@ -37,7 +37,7 @@ const ShareLink: React.FC<SharaLinkProps> = ({ link, onClose }) => {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="font-arialBold">Copy Link</h2>
+        <h2 className="font-arialBold md:font-arial">Copy Link</h2>
         <div className="flex gap-[10px]">
           <Input
             type="text"
@@ -48,7 +48,7 @@ const ShareLink: React.FC<SharaLinkProps> = ({ link, onClose }) => {
           <div className="flex justify-end gap-2">
             <button
               onClick={handleCopy}
-              className="px-4 md:px-[29px] py-[10px] bg-blue-500 text-white bg-gray rounded-[0.5rem] hover:opacity-90"
+              className="px-4 md:px-[29px] py-[10px] w-[70px] md:w-[101px] bg-blue-500 text-white bg-gray rounded-[0.5rem] hover:opacity-90 font-arial md:text-lg"
             >
               Copy
             </button>
@@ -56,7 +56,7 @@ const ShareLink: React.FC<SharaLinkProps> = ({ link, onClose }) => {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <h1 className="font-bold">Share</h1>
+        <h1 className="font-arialBold md:font-arial">Share</h1>
         <div className="flex gap-4">
           {socialIcons.map((icon, index) => (
             <div className="w-[52px] h-[52px] relative hover:opacity-70 cursor-pointer">

@@ -7,15 +7,9 @@ import TruckIcon from "@/public/assets/profile/truck.svg";
 import WalletIcon from "@/public/assets/profile/wallet.svg";
 import { FormValues } from "@/types/profile";
 import User from "@/public/assets/user.png";
-import ProductCard from "@/app/product/ProductCard";
-import { IProduct } from "@/types/product";
-import Product1 from "@/public/assets/product/product1.webp";
-import Product2 from "@/public/assets/product/product2.webp";
-import Product3 from "@/public/assets/product/product3.webp";
-import Product4 from "@/public/assets/product/product4.webp";
 
-import Product5 from "@/public/assets/product/product5.webp";
-import Arrow from "@/public/assets/profile/arrow.svg";
+import { IProduct } from "@/types/product";
+
 import { useEffect, useRef, useState } from "react";
 import React from "react";
 import { getAllProducts } from "@/actions/products/product";
@@ -26,9 +20,9 @@ interface OverviewProps {
 }
 
 const Overview: React.FC<OverviewProps> = ({ userData }) => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  // const scrollContainerRef = useRef<HTMLDivElement>(null);
+  // const [canScrollLeft, setCanScrollLeft] = useState(false);
+  // const [canScrollRight, setCanScrollRight] = useState(true);
   const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
@@ -48,49 +42,49 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
     fetchUserProfile();
   }, []);
 
-  const updateScrollButtons = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } =
-        scrollContainerRef.current;
+  // const updateScrollButtons = () => {
+  //   if (scrollContainerRef.current) {
+  //     const { scrollLeft, scrollWidth, clientWidth } =
+  //       scrollContainerRef.current;
 
-      if (scrollWidth <= clientWidth) {
-        setCanScrollLeft(false);
-        setCanScrollRight(false);
-        return;
-      }
+  //     if (scrollWidth <= clientWidth) {
+  //       setCanScrollLeft(false);
+  //       setCanScrollRight(false);
+  //       return;
+  //     }
 
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
-    }
-  };
+  //     setCanScrollLeft(scrollLeft > 0);
+  //     setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
+  //   }
+  // };
 
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
-      setTimeout(updateScrollButtons, 300);
-    }
-  };
+  // const scrollLeft = () => {
+  //   if (scrollContainerRef.current) {
+  //     scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
+  //     setTimeout(updateScrollButtons, 300);
+  //   }
+  // };
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
-      setTimeout(updateScrollButtons, 300);
-    }
-  };
+  // const scrollRight = () => {
+  //   if (scrollContainerRef.current) {
+  //     scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
+  //     setTimeout(updateScrollButtons, 300);
+  //   }
+  // };
 
-  useEffect(() => {
-    const handleResize = () => {
-      updateScrollButtons();
-    };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     updateScrollButtons();
+  //   };
 
-    window.addEventListener("resize", handleResize);
+  //   window.addEventListener("resize", handleResize);
 
-    updateScrollButtons();
+  //   updateScrollButtons();
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
 
   // Get profile image with fallback
   const profileImage = userData?.profileImage || User;
@@ -247,8 +241,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           ))}
         </div>
       </section> */}
-       <div className="py-[36px] lg:py-[48px]">
-     
+      <div className="py-[36px] lg:py-[48px]">
         <SwiperCards
           products={products}
           className="gap-[24px] md:gap-[24px]"
@@ -258,8 +251,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
             description: "A fleeting collection of rare beauty.",
           }}
         />
-      
-    </div>
+      </div>
     </>
   );
 };

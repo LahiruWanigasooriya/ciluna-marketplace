@@ -64,39 +64,57 @@ export async function GET(request: Request) {
 
     // Extract query parameters
     const productId = searchParams.get("productId");
+    const subcategoryId = searchParams.get("subcategoryId");
+    const subsubcategoryId = searchParams.get("subsubcategoryId");
     const page = parseInt(searchParams.get("page") || "1", 10);
     const limit = parseInt(searchParams.get("limit") || "10", 10);
     const search = searchParams.get("search") || "";
     const sortBy = searchParams.get("sortBy") || "createdAt";
-    const sortOrder = searchParams.get("sortOrder") as "desc" | "asc";
+    const sortOrder = (searchParams.get("sortOrder") as "desc" | "asc") || "desc";
 
-    // If productId is provided, fetch a single product
+    // If productId is provided → fetch single product
     if (productId) {
       const productData = await getProductById(productId);
 
       if (!productData || productData.status === 404) {
         return new Response(
           JSON.stringify({ success: false, message: "Product not found" }),
-          {
-            status: 404,
-            headers: {
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-            },
-          }
+          { status: 404, headers: { "Content-Type": "application/json" } }
         );
       }
 
-      return new Response(JSON.stringify(productData), {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*", // Add CORS header
-        },
-      });
+      return new Response(JSON.stringify(productData), { status: 200 });
     }
 
-    // Fetch all products with pagination and filtering
+    // If subsubcategoryId is provided → filter products
+    if (subsubcategoryId) {
+      const getData = await getAllProducts({
+        page,
+        limit,
+        search,
+        sortBy,
+        sortOrder,
+        subsubcategoryId, // ✅ filter by subsubcategory
+      });
+
+      return new Response(JSON.stringify(getData), { status: 200 });
+    }
+
+    // If subcategoryId is provided → filter products
+    if (subcategoryId) {
+      const getData = await getAllProducts({
+        page,
+        limit,
+        search,
+        sortBy,
+        sortOrder,
+        subcategoryId, // ✅ filter by subcategory
+      });
+
+      return new Response(JSON.stringify(getData), { status: 200 });
+    }
+
+    // Otherwise → fetch all products
     const getData = await getAllProducts({
       page,
       limit,
@@ -105,13 +123,7 @@ export async function GET(request: Request) {
       sortOrder,
     });
 
-    return new Response(JSON.stringify(getData), {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+    return new Response(JSON.stringify(getData), { status: 200 });
   } catch (error: unknown) {
     return new Response(
       JSON.stringify({
@@ -119,16 +131,11 @@ export async function GET(request: Request) {
         message:
           error instanceof Error ? error.message : "Internal server error",
       }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
+      { status: 500 }
     );
   }
 }
+
 
 export async function DELETE(request: Request) {
   try {

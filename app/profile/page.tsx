@@ -12,17 +12,16 @@ import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
 import { useRouter } from "next/navigation";
+import ContactForm from "../contact/ContactForm";
 
 const sidebarItems = [
   "Overview",
   "Orders",
   "Refund & Return",
-  "Feedback",
   "Account Setting",
   "C Wallet",
-  "Help Center",
-  "FAQ",
-  "Terms & Conditions",
+  "Contact Us",
+  "Help / FAQ",
   "Logout",
 ];
 
@@ -198,6 +197,8 @@ export default function ProfilePage() {
             <div className="overflow-x-auto">
               <Overview userData={userData} />
             </div>
+          ) : selected === "Contact Us" ? (
+            <ContactForm />
           ) : (
             <section className="flex h-full items-center justify-center text-xl text-gray-400">
               Select a menu item to view details.

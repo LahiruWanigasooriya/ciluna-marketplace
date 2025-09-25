@@ -98,7 +98,7 @@ const RatingsSummary = ({ productId, refreshFlag }: { productId: string, refresh
                 </p>
                 <div className="flex flex-col gap-2 items-center">
                   <Rating rating={avgRating} />
-                  <p className="text-sm font-[400]">{totalReviews} Reviews</p>
+                  <p className="text-sm font-[400] text-[#333333] md:text-gray">{totalReviews} Reviews</p>
                 </div>
               </div>
               <div className="h-full w-full flex flex-[883]">

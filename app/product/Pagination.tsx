@@ -1,10 +1,10 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import React,{useState} from "react";
+import React from "react";
 
 interface PaginationProps {
-  currentPage: number; 
-  totalPages: number; 
+  currentPage: number;
+  totalPages: number;
 }
 
 const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
@@ -67,19 +67,16 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
 
   return (
     <div className="flex items-center justify-center w-full flex-col">
-      <p className="flex text-[#707070] text-base font-arial">{` ${currentPage} - ${totalPages}`}</p>
-    
-    {currentPage < totalPages &&(
-      <button 
-      onClick={goToNextPage}
-      className="bg-inherit pt-4 pr-8 pb-4 pl-8 gap-2.5 text-[#252525] border rounded-[8px] border-[#252525] w-[176px] h-[56px]">
-        Load 20 more
+      <p className="flex text-[#707070] text-base font-arial">{`${currentPage} - ${totalPages}`}</p>
 
-      </button>
-    )}
-
-
-    
+      {currentPage < totalPages && (
+        <button
+          onClick={goToNextPage}
+          className="bg-inherit pt-4 pr-8 pb-4 pl-8 gap-2.5 text-[#252525] border rounded-[8px] border-[#252525] w-[176px] h-[56px]"
+        >
+          Load 20 more
+        </button>
+      )}
     </div>
   );
 };

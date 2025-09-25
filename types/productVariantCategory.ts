@@ -1,4 +1,3 @@
-
 export interface IProductVariantCategory {
   _id?: string;
   productId: string; // Reference to Product
@@ -14,8 +13,9 @@ export interface GetProductVariantCategoriesParams {
   limit?: number;
   search?: string;
   sortBy?: string;
-  productId?:string;
+  productId?: string;
   sortOrder?: "asc" | "desc";
+  filters?: Record<string, any>;
 }
 
 export interface CreateProductVariantCategoryParams {

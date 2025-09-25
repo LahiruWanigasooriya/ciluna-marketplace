@@ -3,7 +3,7 @@ import bannerImage from "@/public/assets/careGuides/OrderShippingHeroBanner.webp
 import bannerImageMob from "@/public/assets/careGuides/OrderShippingHeroBannerMob.webp";
 import { OrderShippingDetails } from "@/constants/order-shipping";
 
-const page = () => {
+const ShipingPage = async () => {
   return (
     <div className="mt-[60px] md:mt-[108px] relative w-full h-full">
       <div className="flex justify-center items-end md:items-center h-[258px] md:h-[468px] w-full">
@@ -46,4 +46,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ShipingPage;
