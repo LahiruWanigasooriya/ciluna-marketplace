@@ -26,7 +26,7 @@ const HelpFaqDropdown: React.FC<HelpFaqDropdownProps> = ({
     >
       <div className="flex flex-row items-start justify-between  w-full">
         <div>
-          <p className="text-sm md:text-[16px] leading-[24px] text-[#252525] font-arialBold">{question}</p>
+          <p className="text-[16px] leading-[24px] text-[#252525] font-arialBold">{question}</p>
         </div>
         <div>
           <motion.div
@@ -50,7 +50,7 @@ const HelpFaqDropdown: React.FC<HelpFaqDropdownProps> = ({
               transition={{ duration: 0.3, ease: "easeInOut" }}
               className="origin-top"
             >
-              <p className="text-xs md:text-[14px] text-[#252525] font-arial leading-[20px] mb-[4px] mt-[12px]">
+              <p className="text-[14px] text-[#252525] font-arial leading-[20px] mb-[4px] mt-[12px]">
                 {answer}
               </p>
             </motion.div>

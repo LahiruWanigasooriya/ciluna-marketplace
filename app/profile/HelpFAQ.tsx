@@ -2,7 +2,7 @@ import HelpFaqDropdown from "@/components/custom/HelpFaqDropdown";
 
 const HelpFAQ = () => {
   return (
-    <section className="bg-[#F5F5F5] p-[24px] rounded-[8px]">
+    <section className="bg-[#F5F5F5] p-[16px] md:p-[24px] rounded-[8px]">
       <HelpFaqDropdown
         question="How do I place an order?"
         answer="To place an order, simply browse our catalog, select the items you wish to purchase, and click on the 'Add to Cart' button. Once you're ready, go to your cart, review your selections, and proceed to checkout. Fill in your shipping details, choose your payment method, and confirm your order. You'll receive a confirmation email shortly after!"
