@@ -17,20 +17,15 @@ import { addToCart, getCart } from "@/actions/carts/cart";
 import { useCartStore } from "@/store/cart";
 import { toast } from "sonner";
 import { fetchExchangeRate, formatPrice, getUSDPrices } from "@/utils/getDiscountPrice";
-
-import { jwtDecode } from "jwt-decode";
-
-interface DecodedToken {
-  userId: string;
-  exp: number;
-}
+import { useUserId } from "@/hooks/useUserId";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { getToken } = useAuthStore();
   const token = getToken(); 
-  const [userId, setUserId] = useState("");
+  const userId = useUserId();
+
   const [selectedColor, setSelectedColor] = useState(product.colorCode);
   const [usdPrices, setUsdPrices] = useState({
     original: "0.00",
@@ -71,17 +66,6 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
     fetchPrices();
   }, [product.price, product.discount?.percentage]);
-
-  useEffect(() => {
-    if (token) {
-      try {
-        const decoded: DecodedToken = jwtDecode(token);
-        setUserId(decoded.userId);
-      } catch (error) {
-        console.error("❌ Error fetching data:", error);
-      }
-    }
-  }, [token]);
 
   // const isFavorited = false;
   const isFavorited = wishlist?.some((item) => item._id === product._id);

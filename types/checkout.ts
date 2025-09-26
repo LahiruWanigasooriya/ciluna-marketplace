@@ -1,4 +1,6 @@
 import { StaticImageData } from "next/image";
+import * as Yup from "yup";
+import { orderValidationSchema } from "@/schemas/validationSchemas";
 
 export interface Checkout {
   country:string;
@@ -43,3 +45,5 @@ export interface Address {
   zip: string;
   isDefault: boolean;
 }
+
+export type OrderFormFields = Yup.InferType<typeof orderValidationSchema>;

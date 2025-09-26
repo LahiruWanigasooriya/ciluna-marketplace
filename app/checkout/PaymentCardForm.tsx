@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Master from "@/public/assets/checkout/card.png";
 import Title from "@/components/custom/Title";
 import { Button, Checkbox } from "@/components/ui";
@@ -9,22 +9,15 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { paymentValidationSchema } from "@/schemas/validationSchemas";
 import { months, years } from "@/constants/dropdown-items";
-import { CircleX, Info, UserRoundIcon } from "lucide-react";
+import { CircleX, Info } from "lucide-react";
 import * as Yup from "yup";
 import Image from "next/image";
 import { createCard } from "@/actions/users/card";
-import { useAuthStore } from "@/store/authStore";
-import { jwtDecode } from "jwt-decode";
-import { tree } from "next/dist/build/templates/app-page";
+import { useUserId } from "@/hooks/useUserId";
 
 interface OptionType {
   value: string;
   label: string;
-}
-
-interface DecodedToken {
-  userId: string;
-  exp: number;
 }
 
 type FormFields = Yup.InferType<typeof paymentValidationSchema>;
@@ -34,9 +27,7 @@ interface PaymentCardFormProps {
 }
 
 const PaymentCardForm: React.FC<PaymentCardFormProps> = ({ onClose }) => {
-  const [userId, setUserId] = useState("");
-  const { getToken } = useAuthStore();
-  const token = getToken();
+  const userId = useUserId();
 
   const {
     formState: { errors, isSubmitting },
@@ -55,17 +46,6 @@ const PaymentCardForm: React.FC<PaymentCardFormProps> = ({ onClose }) => {
       rememberCardDetails: true,
     },
   });
-
-  useEffect(() => {
-    if (token) {
-      try {
-        const decoded: DecodedToken = jwtDecode(token);
-        setUserId(decoded.userId);
-      } catch (error) {
-        console.error("❌ Error fetching data:", error);
-      }
-    }
-  }, [token]);
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     console.log("Data: ", data);
