@@ -43,7 +43,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
             <div className="flex flex-col text-gray">
               <div className="flex flex-col gap-6 ">
                 <div className="flex justify-between">
-                  <p className="text-lg md:text-xl font-arialBold font-bold leading-[px] md:leading-[24px]">
+                  <p className="text-xl font-arialBold font-bold leading-[px] md:leading-[24px]">
                     Summary
                   </p>
                   <Link href="/cart" className="w-6 h-6 hover:opacity-70">
@@ -164,7 +164,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
                 <div>
                   {isOpenSummary ? (
                     <div className="flex justify-between">
-                      <p className="text-lg md:text-xl font-arialBold font-bold leading-[24px]">
+                      <p className="text-xl font-arialBold leading-[24px]">
                         Summary
                       </p>
                       <Link href="/cart" className="w-6 h-6 hover:opacity-70">
@@ -264,6 +264,9 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
                       size="extra-large"
                       type="submit"
                       // onPress={() => handlePlaceOrder?.(true)}
+                      onPress={(e) => {
+                        console.log("Button clicked - form will submit");
+                      }}
                     >
                       {text}
                     </Button>

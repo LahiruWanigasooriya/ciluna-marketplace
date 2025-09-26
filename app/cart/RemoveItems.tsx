@@ -14,25 +14,27 @@ export const RemoveOne: React.FC<RemoveOneProps> = ({
   product,
 }) => {
   return (
-    <div className="p-4 sm:p-6 bg-white text-gray font-lora gap-6 relative flex flex-col border border-[#E1E1E1] rounded-[8px] w-full sm:w-[600px] md:w-[655px]">
-      <div>
+    <div className="p-4 sm:p-6 bg-white text-gray font-lora gap-[23px] relative flex flex-col border border-[#E1E1E1] rounded-[8px] w-full sm:w-[600px] md:w-[655px]">
+      <div className="h-14">
         <Title
           title="Remove Product"
-          className="font-lora font-bold text-xl sm:text-2xl"
+          className="font-arialBold !text-lg md:!text-xl !leading-6"
         />
-        <p className="text-[1rem] sm:text-lg">Remove item from cart?</p>
+        <p className="font-arial text-base text-neutralGray-700 mt-2">
+          Remove item from cart?
+        </p>
       </div>
-      <hr className="border border-[#E8E8DA]" />
-      <div className="flex gap-2 font-lora">
+      <hr className="bg-neutralGray-100 border-none h-[1px]" />{" "}
+      <div className="flex gap-2 font-arialBold">
         <Button
-          className="w-full border !border-gray text-lg"
+          className="w-full border !border-gray !text-lg"
           size="extra-large"
           onPressChange={() => setIsRemoveProduct(null)}
         >
           Cancel
         </Button>
         <Button
-          className="w-full text-white bg-custom-red text-lg"
+          className="w-full text-white bg-custom-red !text-lg"
           size="extra-large"
           onPress={() => removeOne(product)}
         >
@@ -55,32 +57,37 @@ interface RemoveAllProps {
   removeAll: () => void;
   setIsRemoveAll: React.Dispatch<any>;
   product: any;
+  selectedItems: string[];
 }
 
 export const RemoveAll: React.FC<RemoveAllProps> = ({
   setIsRemoveAll,
   removeAll,
   product,
+  selectedItems
 }) => {
   return (
-    <div className="p-4 sm:p-6 bg-white text-gray font-lora gap-6 relative flex flex-col border border-[#E1E1E1] rounded-[8px] w-full sm:w-[600px] md:w-[655px]">
-      <div>
-        <Title title="Remove All" className="font-lora font-bold text-xl sm:text-2xl" />
-        <p className="text-[1rem] sm:text-lg">
-          This aciton will remove these items from your shopping cart
+    <div className="p-4 sm:p-6 bg-white text-gray font-lora gap-[23px] relative flex flex-col border border-[#E1E1E1] rounded-[8px] w-full sm:w-[600px] md:w-[655px]">
+      <div className="h-14">
+        <Title
+          title={selectedItems.length === 1 ? "Remove Product": "Remove All"}
+          className="font-arialBold !text-lg md:!text-xl !leading-6"
+        />
+        <p className="font-arial text-base text-neutralGray-700 mt-2">
+          {selectedItems.length === 1 ? "Remove item from cart?" :"This aciton will remove these items from your shopping cart"}
         </p>
       </div>
-      <hr className="border border-[#E8E8DA]" />
-      <div className="flex gap-2">
+      <hr className="bg-neutralGray-100 border-none h-[1px]" />
+      <div className="flex gap-2  font-arialBold">
         <Button
-          className="w-full border !border-gray"
+          className="w-full border !border-gray !text-lg"
           size="extra-large"
           onPressChange={() => setIsRemoveAll(false)}
         >
           Cancel
         </Button>
         <Button
-          className="w-full text-white bg-custom-red"
+          className="w-full text-white bg-custom-red !text-lg"
           size="extra-large"
           onPress={() => removeAll()}
         >

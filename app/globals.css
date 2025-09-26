@@ -245,6 +245,23 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: "Dm-Sans-Regular";
+  src: url("../public/assets/font/dmSans/DMSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Dm-Sans-Bold";
+  src: url("../public/assets/font/dmSans/DMSans-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .custom-textfield label {
   color: #252525;
   font-weight: 400;

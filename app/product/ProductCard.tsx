@@ -16,11 +16,7 @@ import { useQuantityStore } from "@/store/quantity";
 import { addToCart, getCart } from "@/actions/carts/cart";
 import { useCartStore } from "@/store/cart";
 import { toast } from "sonner";
-import {
-  fetchExchangeRate,
-  formatPrice,
-  getUSDPrices,
-} from "@/utils/getDiscountPrice";
+import { fetchExchangeRate, formatPrice, getUSDPrices } from "@/utils/getDiscountPrice";
 
 import { jwtDecode } from "jwt-decode";
 
@@ -33,7 +29,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { getToken } = useAuthStore();
-  const token = getToken(); // this will read from cookie if store token is null
+  const token = getToken(); 
   const [userId, setUserId] = useState("");
   const [selectedColor, setSelectedColor] = useState(product.colorCode);
   const [usdPrices, setUsdPrices] = useState({
@@ -129,7 +125,6 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       try {
         await addToCart(cartData);
         const cartResponse = await getCart(token);
-
         const rate = await fetchExchangeRate();
 
         // const updatedCart = cartResponse?.cart?.items || [];

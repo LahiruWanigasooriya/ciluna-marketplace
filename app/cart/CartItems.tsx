@@ -31,6 +31,7 @@ import applePay from "@/public/assets/cart/applePay.webp";
 import { RemoveOne, RemoveAll } from "./RemoveItems";
 import Summary from "./Summary";
 import useDisableScroll from "@/hooks/useDisableScroll";
+import { sizeDisplayMap } from "../product/[id]/SizeSelector";
 
 const paymentOptions = [visa, mastercard, amex, applePay];
 
@@ -56,8 +57,6 @@ const CartItems = () => {
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [removeProduct, setRemoveProduct] = useState<any>();
   const [removeAll, setIsRemoveAll] = useState(false);
-
-  console.log("cart in cart items: ", cart);
 
   useDisableScroll(removeProduct);
   useDisableScroll(removeAll);
@@ -140,7 +139,7 @@ const CartItems = () => {
                         }
                       }}
                     />
-                    <h2 className="text-[1rem] lg:text-lg text-[#1E1E1E] font-arialBold font-bold">
+                    <h2 className="text-[1rem] lg:text-lg text-gray font-arialBold font-bold">
                       Product ({deleteCartItems.length})
                     </h2>
                   </div>
@@ -157,7 +156,7 @@ const CartItems = () => {
                     <div className="w-6 h-6 flex items-center justify-center group-hover:opacity-50">
                       <Trash2 color="#A70000" size={24} />
                     </div>
-                    <p className="text-[0.875rem] text-[#A70000] underline font-bold group-hover:opacity-70">
+                    <p className="text-[0.875rem] w-[83px] text-[#A70000] underline font-arialBold group-hover:opacity-70">
                       Delete Items
                     </p>
                   </div>
@@ -171,32 +170,41 @@ const CartItems = () => {
                     return (
                       <React.Fragment key={product._id}>
                         <div className="flex flex-col md:flex-row items-start md:items-center gap-y-6 md:gap-x-8 py-4 justify-between bg-[#FFFFFF0D]/5 border-t-[1px] border-[#E8E8DA] relative transition-all duration-300 ease-in-out">
-                          <div className="flex flex-col md:flex-row gap-[14px] md:gap-[10px]">
-                            <div className="text-black">
-                              <Checkbox
-                                isSelected={isAllSelected || isSelected}
-                                onChange={(isSelected: boolean) => {
-                                  if (isSelected) {
-                                    setDeleteCartItems([
-                                      ...deleteCartItems,
-                                      product._id,
-                                    ]);
-                                    if (
-                                      deleteCartItems.length ===
-                                      cart.length - 1
-                                    ) {
-                                      setIsAllSelected(true);
+                          <div className="flex flex-col md:flex-row gap-[14px] md:gap-[10px] relative w-full">
+                            <div>
+                              <div className="text-black">
+                                <Checkbox
+                                  isSelected={isAllSelected || isSelected}
+                                  onChange={(isSelected: boolean) => {
+                                    if (isSelected) {
+                                      setDeleteCartItems([
+                                        ...deleteCartItems,
+                                        product._id,
+                                      ]);
+                                      if (
+                                        deleteCartItems.length ===
+                                        cart.length - 1
+                                      ) {
+                                        setIsAllSelected(true);
+                                      }
+                                    } else {
+                                      setDeleteCartItems(
+                                        deleteCartItems.filter(
+                                          (item) => item !== product._id
+                                        )
+                                      );
+                                      setIsAllSelected(false);
                                     }
-                                  } else {
-                                    setDeleteCartItems(
-                                      deleteCartItems.filter(
-                                        (item) => item !== product._id
-                                      )
-                                    );
-                                    setIsAllSelected(false);
-                                  }
-                                }}
-                              />
+                                  }}
+                                />
+                              </div>
+                              <div className="absolute top-0 right-0 md:hidden">
+                                <CircleX
+                                  color="black"
+                                  className="cursor-pointer h-6 w-6"
+                                  onClick={() => setRemoveProduct(product)}
+                                />
+                              </div>
                             </div>
 
                             <div className="flex gap-5">
@@ -206,7 +214,7 @@ const CartItems = () => {
                                     ? product.productId._id
                                     : product.productId
                                 }`}
-                                className="w-[100px] h-[100px] relative bg-white rounded-[8px]"
+                                className="w-[100px] h-[100px] relative bg-white rounded-[8px] shrink-0"
                               >
                                 <Image
                                   alt={
@@ -233,7 +241,7 @@ const CartItems = () => {
                                     <div className="flex flex-col gap-1">
                                       <div className="flex items-center justify-between">
                                         <Link href={`/product/${product._id}`}>
-                                          <p className="font-bold text-base leading-[24px] text-[#1E1E1E]">
+                                          <p className="font-arialBold text-base leading-[24px] text-gray">
                                             {typeof product.productId ===
                                             "object"
                                               ? product.productId.name
@@ -242,35 +250,17 @@ const CartItems = () => {
                                         </Link>
                                       </div>
 
-                                      {/* {product.color && product.size && (
-                                        <div className="flex text-gray">
-                                          <h2>
-                                            {product.color} | {product.size}
-                                          </h2>
-                                          <ChevronRight />
-                                        </div>
-                                      )}
-                                      {!product.color && product.size && (
-                                        <div className="flex text-gray">
-                                          <h2>
-                                            {product.size}
-                                          </h2>
-                                          <ChevronRight />
-                                        </div>
-                                      )}
-                                      {product.color && !product.size && (
-                                        <div className="flex text-gray">
-                                          <h2>
-                                            {product.color}
-                                          </h2>
-                                          <ChevronRight />
-                                        </div>
-                                      )} */}
-
                                       {(product.color || product.size) && (
                                         <div className="flex text-gray">
                                           <h2>
-                                            {[product.color, product.size]
+                                            {[
+                                              product.color,
+                                              product.size
+                                                ? sizeDisplayMap[
+                                                    product.size
+                                                  ] || product.size
+                                                : null,
+                                            ]
                                               .filter(Boolean)
                                               .join(" | ")}
                                           </h2>
@@ -279,8 +269,8 @@ const CartItems = () => {
                                       )}
 
                                       <div className="flex flex-col items-start justify-between">
-                                        <div className="flex justify-center items-center gap-4">
-                                          <p className="text-[0.75rem] lg:text-[0.75rem] text-[#909090] line-through leading-[18px] lg:leading-[20px]">
+                                        <div className="flex flex-col md:flex-row justify-center md:items-center gap-x-4">
+                                          <p className="text-sm text-neutralGray-700 line-through leading-[20px]">
                                             {product.price.toFixed(2)}LKR
                                           </p>
                                           <p className="text-base text-[#252525] font-arialBold font-bold leading-[24px]">
@@ -291,8 +281,8 @@ const CartItems = () => {
                                             LKR
                                           </p>
                                         </div>
-                                        <div className="flex justify-center items-center gap-4">
-                                          <p className="text-[0.75rem] text-[#909090] line-through leading-[18px] lg:leading-[20px]">
+                                        <div className="flex flex-col md:flex-row justify-center md:items-center gap-x-4">
+                                          <p className="text-sm text-neutralGray-700 line-through leading-[20px]">
                                             {product.priceUSD.original}USD
                                           </p>
                                           <p className="text-base text-[#252525] font-arialBold font-bold leading-[24px]">
@@ -300,6 +290,20 @@ const CartItems = () => {
                                             USD
                                           </p>
                                         </div>
+                                      </div>
+                                      <div className="md:hidden w-fit mt-1">
+                                        <QuantitySelector
+                                          productId={product._id}
+                                          initialQuantity={product.quantity}
+                                          countShow={false}
+                                          isCartContext={true}
+                                          onQuantityChange={(newQuantity) =>
+                                            handleQuantityUpdate(
+                                              product,
+                                              newQuantity
+                                            )
+                                          }
+                                        />
                                       </div>
                                     </div>
                                   </div>
@@ -310,29 +314,23 @@ const CartItems = () => {
 
                           <div className="flex flex-col gap-3">
                             <div className="flex items-center justify-between gap-8 md:p-0">
-                              <QuantitySelector
-                                productId={product._id}
-                                initialQuantity={product.quantity}
-                                countShow={false}
-                                isCartContext={true}
-                                onQuantityChange={(newQuantity) =>
-                                  handleQuantityUpdate(product, newQuantity)
-                                }
-                              />
+                              <div className="hidden md:block">
+                                <QuantitySelector
+                                  productId={product._id}
+                                  initialQuantity={product.quantity}
+                                  countShow={false}
+                                  isCartContext={true}
+                                  onQuantityChange={(newQuantity) =>
+                                    handleQuantityUpdate(product, newQuantity)
+                                  }
+                                />
+                              </div>
 
                               <div className="hidden md:flex items-center justify-end gap-4">
                                 <CircleX
                                   color="black"
                                   strokeWidth={1}
                                   className="cursor-pointer h-6 w-6 hover:opacity-70"
-                                  onClick={() => setRemoveProduct(product)}
-                                />
-                              </div>
-
-                              <div className="flex items-center gap-4 md:hidden">
-                                <CircleX
-                                  color="black"
-                                  className="cursor-pointer h-6 w-6"
                                   onClick={() => setRemoveProduct(product)}
                                 />
                               </div>
@@ -358,6 +356,7 @@ const CartItems = () => {
                       removeAll={handleDeleteItems}
                       setIsRemoveAll={setIsRemoveAll}
                       product={removeProduct}
+                      selectedItems={deleteCartItems}
                     />
                   </div>
                 )}
@@ -366,35 +365,39 @@ const CartItems = () => {
               <div className="flex flex-col w-full lg:max-w-[320px] recommend:max-w-[400px] gap-3">
                 <Summary to="checkout" text="Checkout" />
 
-                <div className="flex flex-col py-6 px-4 md:p-6 gap-4 text-gray font-arial bg-[#F5F5F5] rounded-[6px]">
-                  <h2 className="text-xl leading-6 font-arialBold ">
-                    Pay with
-                  </h2>
-                  <div className="flex gap-2 pb-2">
-                    {paymentOptions.map((option, index) => (
-                      <div
-                        className="w-[40px] h-[24px] relative bg-[#F5F5F5] rounded-[8px]"
-                        key={index}
-                      >
-                        <Image
-                          alt="option"
-                          src={option.src}
-                          fill
-                          className="object-cover"
-                          placeholder="blur"
-                          blurDataURL="/placeholder-image.jpg"
-                        />
-                      </div>
-                    ))}
+                <div className="flex flex-col py-6 px-4 md:p-6 gap-6 text-gray font-arial bg-[#F5F5F5] rounded-[6px]">
+                  <div className="gap-2 md:gap-3 flex flex-col">
+                    <h2 className="text-xl leading-6 font-arialBold ">
+                      Pay with
+                    </h2>
+                    <div className="flex gap-2">
+                      {paymentOptions.map((option, index) => (
+                        <div
+                          className="w-[40px] h-[24px] relative bg-[#F5F5F5] rounded-[8px]"
+                          key={index}
+                        >
+                          <Image
+                            alt="option"
+                            src={option.src}
+                            fill
+                            className="object-cover"
+                            placeholder="blur"
+                            blurDataURL="/placeholder-image.jpg"
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <hr className="border-t border-[#E8E8DA]" />{" "}
-                  <h2 className="text-xl leading-6 font-arialBold">
-                    Buyer protection
-                  </h2>
-                  <p>
-                    Get a full refund if the item is not as described or not
-                    deliverd
-                  </p>
+                  <div className="flex flex-col gap-2 md:gap-3">
+                    <hr className="h-[1px] bg-neutralGray-100 mb-2 md:mb-1 border-none" />
+                    <h2 className="text-xl leading-6 font-arialBold">
+                      Buyer protection
+                    </h2>
+                    <p>
+                      Get a full refund if the item is not as described or not
+                      deliverd
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

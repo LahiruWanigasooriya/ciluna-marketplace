@@ -32,6 +32,7 @@ import {
   fetchExchangeRate,
   formatPrice,
   getDiscountedPrice,
+  getUSDPrices,
 } from "@/utils/getDiscountPrice";
 import ProductImageSlider from "../ProductImageSlider";
 import ColorSelector from "./ColorSelector";
@@ -93,7 +94,8 @@ const Product: React.FC<ProductProps> = ({
   const [selectedVariant, setSelectedVariant] =
     useState<IProductVariant | null>(null);
   const [rating, setRating] = useState();
-  const { token } = useAuthStore();
+  const { getToken } = useAuthStore();
+  const token = getToken();
   const [price, setPrice] = useState<number>(product.price);
   const [discount, setDiscount] = useState<number | null>(
     product.discount?.percentage || null
@@ -307,7 +309,13 @@ const Product: React.FC<ProductProps> = ({
       try {
         await addToCart(cartData);
         const cartResponse = await getCart(token);
-        const updatedCart = cartResponse?.cart?.items || [];
+        const rate = await fetchExchangeRate();
+        const updatedCart = (cartResponse?.cart?.items || []).map(
+          (item: any) => ({
+            ...item,
+            priceUSD: getUSDPrices(item.price, item.finalTotal, rate),
+          })
+        );
         setCart(updatedCart);
         toast.success(`${product.name} added to cart!`);
       } catch (error) {
