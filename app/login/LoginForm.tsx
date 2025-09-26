@@ -154,12 +154,12 @@ const LoginForm = () => {
             )}
           </Button>
 
-          <div className="flex items-center justify-center flex-col sm:flex-row space-x-2 font-arial">
-            <p className="text-black text-base sm:text-sm">
+          <div className="flex items-center justify-center flex-col sm:flex-row space-x-2 ">
+            <p className="text-black text-base font-arial leading-[24px] sm:leading-[20px] sm:text-sm">
               Don't have a CILUNA account yet?
             </p>
             <Link href="/register">
-              <p className="text-black cursor-pointer font-arialBold font-bold text-base sm:text-sm hover:opacity-75">
+              <p className="text-black cursor-pointer font-arialBold leading-[24px] sm:leading-[20px] text-base sm:text-sm hover:opacity-75">
                 Create Account
               </p>
             </Link>

@@ -267,9 +267,9 @@ const SignupForm = ({
 
 
           <div className="flex items-center justify-center space-x-2 mt-5 pb-6">
-            <p className="text-[#252525] font-arial text-base ">Already have a CILUNA account? </p>
+            <p className="text-[#252525] font-arial text-base leading-[24px] sm:leading-[20px]">Already have a CILUNA account? </p>
             <Link href="/login">
-              <p className="text-[#252525] cursor-pointer font-arialBold  text-sm hover:opacity-75">Login</p>
+              <p className="text-[#252525] cursor-pointer font-arialBold leading-[24px] sm:leading-[20px] text-base hover:opacity-75">Login</p>
             </Link>
           </div>
         </div>

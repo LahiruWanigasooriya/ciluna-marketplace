@@ -133,7 +133,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
               animate="open"
               exit="closed"
               variants={dropdownVariants}
-              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10 border border-[#252525]  transition duration-200 ease-out flex flex-col items-start border-primary/70 
+              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10  transition duration-200 ease-out flex flex-col items-start 
             [&>[role=progressbar]]:mr-2.5
             [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
             [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
