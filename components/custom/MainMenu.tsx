@@ -7,6 +7,8 @@ import { ISubSubCategory } from "@/types/subsubcategory";
 import SwiperImages from "@/components/custom/SwiperImages";
 import useClickOutside from "@/hooks/useClickOutside";
 import useDisableScroll from "@/hooks/useDisableScroll";
+import { motion, AnimatePresence } from "framer-motion";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import J1 from "@/app/assets/mainmenu-images/J1.webp";
 import J2 from "@/app/assets/mainmenu-images/J2.webp";
@@ -178,9 +180,23 @@ export default function MainMenu({
       {/* Desktop Menu */}
       <div className="relative items-center justify-between md:flex hidden w-full md:justify-center">
         {isLoading ? (
-          <div>Loading categories...</div>
+          <div className="flex items-center justify-center gap-2 py-3">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            >
+              <AiOutlineLoading3Quarters className="text-2xl text-white" />
+            </motion.div>
+            <motion.span
+              className="text-white text-sm font-medium"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              Loading Categories...
+            </motion.span>
+          </div>
         ) : error ? (
-          <div>Error: {error}</div>
+          <div className="text-red-500 font-medium py-6">Error: {error}</div>
         ) : categories.length === 0 ? (
           <div>No categories available</div>
         ) : (
@@ -194,25 +210,34 @@ export default function MainMenu({
             }}
           >
             {/* categories row */}
-            <div className="flex flex-row overflow-x-auto no-scrollbar md:gap-[16px] lg:gap-[24px]">
-              {categories.map((data) => (
-                <button
-                  key={data._id}
-                  type="button"
-                  className={`cursor-pointer px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial text-[14px] leading-[20px] hover:bg-black hover:text-white ${
-                    isNavbarActive ? "text-black" : "text-white"
-                  }`}
-                  onClick={() => handleCategoryClick(data.name)}
-                  onMouseEnter={() => handleCategoryClick(data.name)}
-                >
-                  <p className="text-xs md:text-[14px]">{data.name}</p>
-                </button>
-              ))}
+            <div className="flex flex-row overflow-x-auto no-scrollbar md:gap-[16px] lg:gap-[24px] relative">
+              {categories.map((data) => {
+                const isActive = activeMenu === data.name;
+                return (
+                  <button
+                    key={data._id}
+                    type="button"
+                    className={`relative cursor-pointer px-[12px] py-[6px] my-[9px] rounded-[4px] font-arial text-[14px] leading-[20px] transition-colors ${
+                      isNavbarActive ? "text-black" : "text-white"
+                    } hover:bg-black hover:text-white`}
+                    onClick={() => handleCategoryClick(data.name)}
+                    onMouseEnter={() => handleCategoryClick(data.name)}
+                  >
+                    <p className="text-xs md:text-[14px]">{data.name}</p>
+                  </button>
+                );
+              })}
             </div>
 
             {/* submenu */}
             {isMainMenuActive && activeMenu && (
-              <div className="absolute left-0 top-full shadow-sm w-full z-10 bg-[#FFFFFFF5]">
+              <motion.div
+                className="absolute left-0 top-full shadow-sm w-full z-10 bg-[#FFFFFFF5]"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
                 <SubMenu
                   categoryName={activeMenu}
                   categoryId={
@@ -221,8 +246,10 @@ export default function MainMenu({
                   subcategories={subcategories}
                   subsubcategories={subsubcategories}
                   images={subsubcategoryImages}
+                  setMobileMenuOpen={setMobileMenuOpen}
+                  setActiveMenu={setActiveMenu}
                 />
-              </div>
+              </motion.div>
             )}
           </div>
         )}
@@ -240,75 +267,115 @@ export default function MainMenu({
         </button>
       </div>
 
-      {isMobileMenuOpen && (
-        <div
-          ref={mobileMenuRef}
-          className={`md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-[16px] overflow-y-auto ${
-            isMobileMenuOpen ? "mt-0" : "mt-[40px]"
-          }`}
-        >
-          <div className="flex items-center justify-between mb-4 gap-[16px]">
-            {activeMenu ? (
-              <button
-                type="button"
-                onClick={() => setActiveMenu(null)}
-                className="text-[16px] text-gray-600"
-              >
-                ❮&nbsp;&nbsp; Back
-              </button>
-            ) : (
-              <div />
-            )}
-            <button
-              type="button"
-              className="pb-[8px]"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setActiveMenu(null);
-              }}
-            >
-              <CircleX size={32} />
-            </button>
-          </div>
-
-          {activeMenu ? (
-            <div>
-              <SubMenu
-                categoryName={activeMenu}
-                categoryId={
-                  categories.find((cat) => cat.name === activeMenu)?._id || ""
-                }
-                subcategories={subcategories}
-                subsubcategories={subsubcategories}
-                images={subsubcategoryImages}
-              />
-            </div>
-          ) : (
-            <div className="space-y-[24px] text-lg font-semibold mt-[16px]">
-              {isLoading ? (
-                <div>Loading categories...</div>
-              ) : error ? (
-                <div>Error: {error}</div>
-              ) : categories.length === 0 ? (
-                <div>No categories available</div>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            ref={mobileMenuRef}
+            className="md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-[16px] overflow-y-auto"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -50, opacity: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            <div className="flex items-center justify-between mb-4 gap-[16px]">
+              {activeMenu ? (
+                <motion.button
+                  type="button"
+                  onClick={() => setActiveMenu(null)}
+                  className="text-[16px] text-gray-600"
+                  whileTap={{ scale: 0.95 }}
+                >
+                  ❮&nbsp;&nbsp; Back
+                </motion.button>
               ) : (
-                categories.map((item) => (
-                  <div
-                    key={item._id}
-                    className="flex justify-between items-center border-b pb-4 cursor-pointer"
-                    onClick={() => setActiveMenu(item.name)}
-                  >
-                    <span>{item.name}</span>
-                    <span>
-                      <ChevronRight />
-                    </span>
-                  </div>
-                ))
+                <div />
               )}
+              <motion.button
+                type="button"
+                className="pb-[8px]"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setActiveMenu(null);
+                }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <CircleX size={32} />
+              </motion.button>
             </div>
-          )}
-        </div>
-      )}
+
+            <AnimatePresence mode="wait">
+              {activeMenu ? (
+                <motion.div
+                  key="submenu"
+                  initial={{ x: 50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: 50, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                >
+                  <SubMenu
+                    categoryName={activeMenu}
+                    categoryId={
+                      categories.find((cat) => cat.name === activeMenu)?._id ||
+                      ""
+                    }
+                    subcategories={subcategories}
+                    subsubcategories={subsubcategories}
+                    images={subsubcategoryImages}
+                    setMobileMenuOpen={setMobileMenuOpen}
+                    setActiveMenu={setActiveMenu} 
+                  />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="mainmenu"
+                  className="space-y-[24px] text-lg font-semibold mt-[16px]"
+                  initial={{ x: -1000, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -1000, opacity: 0 }}
+                  transition={{ duration: 0.55, ease: "easeInOut" }}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center gap-2 py-3">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 1,
+                          ease: "linear",
+                        }}
+                      >
+                        <AiOutlineLoading3Quarters className="text-2xl text-gray-600" />
+                      </motion.div>
+                      <span className="text-gray-600 text-sm font-medium">
+                        Loading Categories...
+                      </span>
+                    </div>
+                  ) : error ? (
+                    <div className="text-red-500">Error: {error}</div>
+                  ) : categories.length === 0 ? (
+                    <div className="text-gray-600">No categories available</div>
+                  ) : (
+                    categories.map((item) => (
+                      <motion.div
+                        key={item._id}
+                        className="flex justify-between items-center border-b pb-4 cursor-pointer"
+                        onClick={() => setActiveMenu(item.name)}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <span>{item.name}</span>
+                        <span>
+                          <ChevronRight />
+                        </span>
+                      </motion.div>
+                    ))
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
@@ -324,12 +391,16 @@ const SubMenu: React.FC<{
   subcategories: ISubCategory[];
   subsubcategories: ISubSubCategory[];
   images: string[];
+  setMobileMenuOpen: (open: boolean) => void;
+  setActiveMenu: (menu: string | null) => void;
 }> = ({
   categoryName,
   categoryId,
   subcategories,
   subsubcategories,
   images,
+  setMobileMenuOpen,
+  setActiveMenu,
 }) => {
   const subItemClass =
     "relative text-[#252525] hover:text-yellow-700 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-7 after:bg-yellow-600 after:scale-x-0 after:origin-left hover:after:scale-x-100 after:transition-transform after:duration-200";
@@ -345,6 +416,12 @@ const SubMenu: React.FC<{
     subsubcategories,
     images,
   });
+
+  const handleSubSubCategoryClick = (subsubName: string) => {
+    console.log(`Clicked sub-subcategory: ${subsubName}`); // Debug log
+    setMobileMenuOpen(false);
+    setActiveMenu(null);
+  };
 
   return (
     <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 custom-container !py-[40px] max-sm:!px-0">
@@ -365,6 +442,13 @@ const SubMenu: React.FC<{
                 <Link
                   href={`/product?subcategoryId=${subcat._id}`}
                   className={subItemClass}
+                  onClick={() => {
+                    console.log(
+                      `Clicked View All for subcategory: ${subcat.name}`
+                    ); // Debug log
+                    setMobileMenuOpen(false);
+                    setActiveMenu(null);
+                  }}
                 >
                   View All
                 </Link>
@@ -373,8 +457,9 @@ const SubMenu: React.FC<{
                   .map((subsub) => (
                     <Link
                       key={subsub._id}
-                      href={`/product?subsubcategoryId=${subsub._id}`}    //passing the subsubcategoryId through query parameters
+                      href={`/product?subsubcategoryId=${subsub._id}`}
                       className={subItemClass}
+                      onClick={() => handleSubSubCategoryClick(subsub.name)}
                     >
                       {subsub.name}
                     </Link>
@@ -384,11 +469,20 @@ const SubMenu: React.FC<{
             </div>
           ))
         ) : (
-          <div>Loading subcategories available for {categoryName}</div>
+          <div className="flex items-center gap-2 text-gray-600">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            >
+              <AiOutlineLoading3Quarters className="text-xl" />
+            </motion.div>
+            <span className="text-sm font-medium">
+              Loading subcategories for {categoryName}...
+            </span>
+          </div>
         )}
       </div>
       <div>
-        {/* <SwiperImages images={images.length > 0 ? images : placeholderImages} /> */}
         <SwiperImages images={placeholderImages} />
       </div>
     </div>

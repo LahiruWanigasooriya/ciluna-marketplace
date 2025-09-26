@@ -89,7 +89,7 @@ export default async function SearchResultsPage({
           />
         </div>
         <div className="flex justify-start mt-0">
-          <ProductVarientTab/>
+          {/* <ProductVarientTab/> */}
         </div>
         <div className="flex flex-col gap-4 px-24 pb-5">
           <p className="text-white leading-[19px] text-base text-start">
