@@ -17,8 +17,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Address } from "@/types/checkout";
 import { createAddress, updateAddress } from "@/actions/users/address";
-import { useAuthStore } from "@/store/authStore";
-import { jwtDecode } from "jwt-decode";
+import { useUserId } from "@/hooks/useUserId";
 
 interface OptionType {
   value: string;
@@ -32,11 +31,6 @@ interface ShippingAddressProps {
   selectedAddressForEdit?: Address | null;
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
   onSuccess?: () => void;
-}
-
-interface DecodedToken {
-  userId: string;
-  exp: number;
 }
 
 const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
@@ -53,9 +47,9 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
   const [selectedDistrict, setSelectedDistrict] = useState<string>(
     selectedAddressForEdit?.district || ""
   );
-  const [userId, setUserId] = useState("");
-  const { getToken } = useAuthStore();
-    const token = getToken();
+
+  const userId = useUserId();
+
   const districts =
     provinces.find((p) => p.value === selectedProvince)?.districts || [];
   const towns =
@@ -83,17 +77,6 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
     },
   });
 
-  useEffect(() => {
-      if (token) {
-        try {
-          const decoded: DecodedToken = jwtDecode(token);
-          setUserId(decoded.userId);
-        } catch (error) {
-          console.error("❌ Error fetching data:", error);
-        }
-      }
-    }, [token]);
-
   const formatOptionLabel = ({ value, label }: OptionType) => (
     <div style={{ display: "flex", alignItems: "center" }}>
       <ReactCountryFlag
@@ -105,7 +88,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
     </div>
   );
 
-   const onSubmit: SubmitHandler<FormFields> = async (data) => {
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
     let address = {
       contactName: data.contactName,
       mobileNumber: data.mobileNumber,
@@ -121,15 +104,13 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
     try {
       if (selectedAddressForEdit) {
         await updateAddress(userId, selectedAddressForEdit._id, address);
-        console.log("editing")
       } else {
         await createAddress(userId, address);
-        console.log("creating")
       }
-      
+
       onClose(false);
       reset();
-      
+
       // Call onSuccess to refetch addresses
       if (onSuccess) {
         onSuccess();

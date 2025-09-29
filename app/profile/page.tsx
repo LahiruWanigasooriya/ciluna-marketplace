@@ -12,6 +12,7 @@ import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
 import { useRouter } from "next/navigation";
+import HelpFAQ from "./HelpFAQ";
 import ContactForm from "../contact/ContactForm";
 
 const sidebarItems = [
@@ -104,7 +105,7 @@ export default function ProfilePage() {
                   <div className="col-span-2 my-0.5 mb-[8px] h-px w-full bg-lightgrayBorders"></div>
                 )}
                 <button
-                  className={`cursor-pointer rounded-md w-full px-[16px] py-[8px] text-left ${
+                  className={`cursor-pointer rounded-[8px] w-full px-[16px] py-[8px] text-left ${
                     selected === item
                       ? "font-arial bg-neutral-900 text-white"
                       : "font-arial hover:bg-[#a7a5a5]"
@@ -193,6 +194,8 @@ export default function ProfilePage() {
         <main className="flex flex-1 flex-col gap-6 overflow-hidden">
           {selected === "C Wallet" ? (
             <CilunaWallet />
+          ) : selected === "Help / FAQ" ? (
+            <HelpFAQ />
           ) : selected === "Overview" ? (
             <div className="overflow-x-auto">
               <Overview userData={userData} />

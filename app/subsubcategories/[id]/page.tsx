@@ -23,20 +23,37 @@ interface SearchResults {
   error?: string;
 }
 
-const ProductPage = async ({
-  params,
-  searchParams: searchParamsPromise,
-}: {
+interface ProductPageProps {
   params: { id: string };
-  searchParams: Promise<{ [key: string]: string | undefined }>;
-}) => {
-  const searchParams = await searchParamsPromise;
-  const currentPage = parseInt(searchParams.page || "1", 10);
-  const search = searchParams.search || "";
-  const sortByParam = searchParams.sortBy || "default";
-  const brandFilter = searchParams.brand;
-  const modelFilter = searchParams.model;
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
 
+const ProductPage:any = async ({
+  params,
+  searchParams = {},
+}: ProductPageProps) => {
+  const id = params.id;
+
+  const currentPage = parseInt(
+    (Array.isArray(searchParams.page) ? searchParams.page[0] : searchParams.page) || "1",
+    10
+  );
+
+  const search = Array.isArray(searchParams.search)
+    ? searchParams.search[0]
+    : searchParams.search || "";
+
+  const sortByParam = Array.isArray(searchParams.sortBy)
+    ? searchParams.sortBy[0]
+    : searchParams.sortBy || "default";
+
+  const brandFilter = Array.isArray(searchParams.brand)
+    ? searchParams.brand[0]
+    : searchParams.brand;
+
+  const modelFilter = Array.isArray(searchParams.model)
+    ? searchParams.model[0]
+    : searchParams.model;
   let sortBy = "createdAt";
   let sortOrder: "asc" | "desc" = "desc";
 
@@ -225,7 +242,7 @@ const ProductPage = async ({
         </div>
       </div>
       <div className="flex justify-start mt-0">
-        <ProductVarientTab />
+        <ProductVarientTab subcategoryId={subsubcategory.subcategoryId} />
       </div>
 
       <div className="flex flex-col gap-[20px] justify-center max-w-[1440px] mx-auto w-full custom-container md:py-0">

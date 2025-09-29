@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui";
 import { Label, Radio, RadioGroup } from "react-aria-components";
 import { updateAddress } from "@/actions/users/address";
-import { useAuthStore } from "@/store/authStore";
-import { jwtDecode } from "jwt-decode";
+import { useUserId } from "@/hooks/useUserId";
 
 interface Address {
   _id: string;
@@ -17,11 +16,6 @@ interface Address {
   town: string;
   zip: string;
   isDefault: boolean;
-}
-
-interface DecodedToken {
-  userId: string;
-  exp: number;
 }
 
 interface AddressCardProps {
@@ -44,9 +38,7 @@ const AddressCards = ({
   refetch,
   ...props
 }: AddressCardProps) => {
-  const { getToken } = useAuthStore();
-  const token = getToken();
-  const [userId, setUserId] = useState("");
+  const userId = useUserId();
   // const [selectedAddressId, setSelectedAddressId] = useState<string>(
   //   options.find((item) => item.isDefault === true)?._id || ""
   // );
@@ -78,17 +70,6 @@ const AddressCards = ({
     }
     handleAddressChange(selectedAddressId);
   }, [options]);
-
-  useEffect(() => {
-    if (token) {
-      try {
-        const decoded: DecodedToken = jwtDecode(token);
-        setUserId(decoded.userId);
-      } catch (error) {
-        console.error("❌ Error fetching data:", error);
-      }
-    }
-  }, [token]);
 
   const handleSetDefault = async (addressId: string) => {
     setDefaultAddressId(addressId); // immediate UI response
