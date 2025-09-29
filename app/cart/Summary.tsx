@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp, PencilLine } from "lucide-react";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
 import Image from "next/image";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 interface SummaryProps {
   text: string;
@@ -13,11 +14,18 @@ interface SummaryProps {
   editCart?: boolean;
 }
 
-const calculateTotals = (items: any[]) => {
+const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
+  const { cart } = useCartStore();
+  const [isOpenSummary, setIsOpenSummary] = useState(false);
+    const { rate, error } = useExchangeRate();
+
+  {error && console.error("Failed to fetch rate:", error)}
+
+  const calculateTotals = (items: any[]) => {
   const totalPrice = items.reduce(
     (acc, item) =>
       acc +
-      getDiscountedPrice(item.priceUSD.original, item.discount) * item.quantity,
+      getDiscountedPrice((item.price/rate), item.discount) * item.quantity,
     0
   );
   const discount = totalPrice * 0.1; // 10% discount as per your logic
@@ -25,10 +33,6 @@ const calculateTotals = (items: any[]) => {
 
   return { totalPrice, discount, finalPrice };
 };
-
-const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
-  const { cart } = useCartStore();
-  const [isOpenSummary, setIsOpenSummary] = useState(false);
 
   const { totalPrice, discount, finalPrice } = useMemo(
     () => calculateTotals(cart),

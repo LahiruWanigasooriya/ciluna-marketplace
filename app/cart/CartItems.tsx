@@ -2,10 +2,7 @@
 
 import Image from "next/image";
 import {
-  ChevronDown,
-  ChevronLeft,
   ChevronRight,
-  ChevronUp,
   CircleX,
   Trash2,
 } from "lucide-react";
@@ -22,7 +19,10 @@ import {
 } from "@/actions/carts/cart";
 import { toast } from "sonner";
 import { UpdateCartItemParams } from "@/types/cart";
-import { getDiscountedPrice } from "@/utils/getDiscountPrice";
+import {
+  formatPrice,
+  getDiscountedPrice,
+} from "@/utils/getDiscountPrice";
 import { Checkbox } from "@/components/ui";
 import amex from "@/public/assets/cart/amex.webp";
 import visa from "@/public/assets/cart/visa.webp";
@@ -32,6 +32,7 @@ import { RemoveOne, RemoveAll } from "./RemoveItems";
 import Summary from "./Summary";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import { sizeDisplayMap } from "../product/[id]/SizeSelector";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 const paymentOptions = [visa, mastercard, amex, applePay];
 
@@ -57,6 +58,9 @@ const CartItems = () => {
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [removeProduct, setRemoveProduct] = useState<any>();
   const [removeAll, setIsRemoveAll] = useState(false);
+  const { rate, error } = useExchangeRate();
+
+  {error && console.error("Failed to fetch rate:", error)}
 
   useDisableScroll(removeProduct);
   useDisableScroll(removeAll);
@@ -167,6 +171,11 @@ const CartItems = () => {
                       deleteCartItems.find((item) => item === product._id) !==
                       undefined;
 
+                    const discountPrice = getDiscountedPrice(
+                      product.price,
+                      product.discount
+                    );
+
                     return (
                       <React.Fragment key={product._id}>
                         <div className="flex flex-col md:flex-row items-start md:items-center gap-y-6 md:gap-x-8 py-4 justify-between bg-[#FFFFFF0D]/5 border-t-[1px] border-[#E8E8DA] relative transition-all duration-300 ease-in-out">
@@ -271,22 +280,19 @@ const CartItems = () => {
                                       <div className="flex flex-col items-start justify-between">
                                         <div className="flex flex-col md:flex-row justify-center md:items-center gap-x-4">
                                           <p className="text-sm text-neutralGray-700 line-through leading-[20px]">
-                                            {product.price.toFixed(2)}LKR
+                                            {formatPrice(product.price)}LKR
                                           </p>
                                           <p className="text-base text-[#252525] font-arialBold font-bold leading-[24px]">
-                                            {getDiscountedPrice(
-                                              product.price,
-                                              product.discount
-                                            ).toFixed(2)}
-                                            LKR
+                                            {formatPrice(discountPrice)}LKR
                                           </p>
                                         </div>
                                         <div className="flex flex-col md:flex-row justify-center md:items-center gap-x-4">
                                           <p className="text-sm text-neutralGray-700 line-through leading-[20px]">
-                                            {product.priceUSD.original}USD
+                                            {formatPrice(product.price / rate)}
+                                            USD
                                           </p>
                                           <p className="text-base text-[#252525] font-arialBold font-bold leading-[24px]">
-                                            {product.priceUSD.discounted}
+                                            {formatPrice(discountPrice / rate)}
                                             USD
                                           </p>
                                         </div>
