@@ -20,17 +20,34 @@ const QuantitySelector: React.FC<QuantityProps> = ({
   onQuantityChange,
 }) => {
   const { cart, updateQuantity } = useCartStore();
-  const [quantity, setQuantity] = React.useState(initialQuantity); // Local state per item
+  // const [quantity, setQuantity] = React.useState(initialQuantity); // Local state per item
+  const [quantity, setQuantity] = React.useState(() => {
+    // Initialize from cart if it exists
+    if (isCartContext && productId) {
+      const cartItem = cart.find((item) => item.productId._id === productId);
+      return cartItem?.quantity || initialQuantity;
+    }
+    return initialQuantity;
+  });
 
   // Sync local quantity with cart on mount or cart change
+  // React.useEffect(() => {
+  //   if (isCartContext && productId) {
+  //     const cartItem = cart.find((item) => item.productId._id === productId);
+  //     if (cartItem && cartItem.quantity !== quantity) {
+  //       setQuantity(cartItem.quantity);
+  //     }
+  //   }
+  // }, [cart, productId, isCartContext, initialQuantity]);
+
   React.useEffect(() => {
-    if (isCartContext && productId) {
-      const cartItem = cart.find((item) => item._id === productId);
-      if (cartItem && cartItem.quantity !== quantity) {
-        setQuantity(cartItem.quantity);
-      }
+    if (!isCartContext) return;
+
+    const cartItem = cart.find((item) => item.productId._id === productId);
+    if (cartItem && cartItem.quantity !== quantity) {
+      setQuantity(cartItem.quantity);
     }
-  }, [cart, productId, isCartContext, initialQuantity]);
+  }, [cart.length]);
 
   const increaseQuantity = () => {
     const newQuantity = quantity + 1;
@@ -59,19 +76,27 @@ const QuantitySelector: React.FC<QuantityProps> = ({
 
   return (
     <div className="flex flex-col gap-2 text-[#252525] font-arial bg-white">
-      <span className={`text-base leading-[19px] ${countShow ? "block" : "hidden"}`}>
+      <span
+        className={`text-base leading-[19px] ${countShow ? "block" : "hidden"}`}
+      >
         {/* <span className="font-arial">Quantity:</span> {quantity} */}
         <span className="font-arial leading-6">Quantity</span>
       </span>
       <div className="flex items-center border border-[#252525] rounded-[0.5rem]">
-        <div onClick={decreaseQuantity} className={`${buttonStyle} rounded-tl-[0.5rem] rounded-bl-[0.5rem]`}>
-          <Minus className="p-2 md:p-1.5" size={24}/>
+        <div
+          onClick={decreaseQuantity}
+          className={`${buttonStyle} rounded-tl-[0.5rem] rounded-bl-[0.5rem]`}
+        >
+          <Minus className="p-2 md:p-1.5" size={24} />
         </div>
         <div className="text-base h-[40px] w-[34px] cursor-default flex items-center justify-center font-arialBold">
           {quantity}
         </div>
-        <div onClick={increaseQuantity} className={`${buttonStyle} rounded-tr-[0.5rem] rounded-br-[0.5rem]`}>
-          <Plus className="p-2 md:p-1.5" size={24}/>
+        <div
+          onClick={increaseQuantity}
+          className={`${buttonStyle} rounded-tr-[0.5rem] rounded-br-[0.5rem]`}
+        >
+          <Plus className="p-2 md:p-1.5" size={24} />
         </div>
       </div>
     </div>

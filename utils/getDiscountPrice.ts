@@ -22,9 +22,13 @@ export const fetchExchangeRate = async(): Promise<number> => {
   return data.rates.LKR;
 }
 
-export const getUSDPrices = (price: number, finalPrice: number, rate: number) => {
+export const getUSDPrices = (price: number, finalPrice: number, quantity: number, rate: number) => {
   const originalUSD = price / rate;
-  const discountedUSD = finalPrice / rate;
+  const discountedUSD = (finalPrice/quantity) / rate;
+
+  console.log("Final price: ", finalPrice);
+  console.log("Quantity: ", quantity);
+  console.log("Discounted: ", discountedUSD);
 
   return {
     original: formatPrice(originalUSD),
