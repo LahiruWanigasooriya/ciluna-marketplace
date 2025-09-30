@@ -92,14 +92,12 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
         >
           <input
             type="text"
-            className="bg-white text-sm font-[400] focus:outline-none text-black placeholder:text-sm placeholder:font-[400] placeholder-muted-fg w-full"
+            readOnly
+            className="bg-white text-sm font-[400] 
+            focus:outline-none text-black placeholder:text-sm placeholder:font-[400] placeholder-muted-fg w-full appearance-none"
             placeholder="Select a country"
-            value={searchTerm || value}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsOpen(true);
-            }}
+            value={ value}
+
           />
           <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black  !w-[18px] !h-[18px] min-w-[18px]`} />
         </div>
@@ -110,12 +108,13 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
                 animate="open"
                 exit="closed"
                 variants={dropdownVariants}
-              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10 border border-[#252525]  transition duration-200 ease-out flex flex-col items-start border-primary/70 
+              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg  max-h-64 overflow-y-auto z-10 border border-[#252525]  
+              transition duration-200 ease-out flex flex-col items-start border-primary/70 
             [&>[role=progressbar]]:mr-2.5
             [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
             [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
             [&>[data-slot=prefix]]:ml-2.5 [&>[data-slot=prefix]]:text-muted-fg
-            group-disabled:opacity-50"
+            group-disabled:opacity-50 "
             >
               {countries
                 .filter((country) =>
@@ -132,10 +131,13 @@ const CountryDropdown: React.FC<CountryDropdownProps> = ({
                 ))}
             </motion.div>
           </AnimatePresence>
+
         )}
       </div>
     </div>
   );
 };
+
+ 
 
 export default CountryDropdown;

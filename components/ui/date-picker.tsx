@@ -20,6 +20,7 @@ import { Description, FieldError, FieldGroup, Label } from "./field"
 import { Popover } from "./popover"
 import { ctr } from "./primitive"
 import { RangeCalendar } from "./range-calendar"
+import { CalendarWithYearPicker } from "../custom/CalendarWithYearPicker"
 
 const datePickerStyles = tv({
   slots: {
@@ -53,7 +54,7 @@ const DatePickerOverlay = ({ closeButton = true, range, ...props }: any) => {
       className="flex justify-center p-4 sm:p-2 sm:pt-3 sm:max-w-[17.2rem] sm:min-w-[17rem]"
       {...props}
     >
-      {range ? <RangeCalendar /> : <Calendar />}
+      {range ? <RangeCalendar /> : <CalendarWithYearPicker />}
       {closeButton && (
         <div className="sm:hidden py-2.5 flex justify-center mx-auto w-full max-w-[inherit]">
           <Popover.Close shape="circle" className="w-full">
@@ -91,7 +92,7 @@ const DatePicker = <T extends DateValue>({
     <DatePickerPrimitive {...props} className={ctr(className, base())}>
       {label && <Label className="text-black">{label}</Label>}
       <FieldGroup className="min-w-40 relative">
-          <div className="flex items-center justify-between w-full h-11 p-3 border-0 bg-transparent">
+          <div className="flex items-center justify-between w-full h-11 !p-3 border-0 bg-transparent">
             {!value && placeholder ? (
               <span className="text-sm text-[#707070]">{placeholder}</span>
             ) : (
@@ -115,3 +116,4 @@ export {
   type DateValue,
   type ValidationResult
 }
+
