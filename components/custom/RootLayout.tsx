@@ -14,6 +14,7 @@ import { getCart } from "@/actions/carts/cart";
 import { useWishlistStore } from "@/store/wishlist";
 import { getUserWishlist } from "@/actions/wishlists/wishlist";
 import { ICategory } from "@/types/category";
+import trackyourorder from "@/app/trackyourorder/page";
 
 interface ConditionalLayoutProps {
   children: React.ReactNode;
@@ -26,7 +27,7 @@ export default function ConditionalLayout({
   const pathname = usePathname();
   const { isMenuOpen } = useMenuStore();
   const hiddenRoutes = ["/login", "/register", "/forgotpw"];
-  const WidthFullPages = ["/", "/product", "/order-shipping", "/careguide"];
+  const WidthFullPages = ["/", "/product", "/order-shipping", "/careguide","/trackyourorder"];
   const isHomePage = pathname === "/";
   const isHiddenRoute = hiddenRoutes.includes(pathname);
   const isWidthFullPages =
