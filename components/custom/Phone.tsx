@@ -97,7 +97,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
 
   return (
     <div className="flex flex-col gap-y-2 w-full text-white/90">
-      <p className="font-[400] font-arial text-gray">Mobile Number*</p>
+      <p className="font-[400] text-gray">Mobile Number</p>
       <div className="relative w-full" ref={modalRef}>
         <div
           className={`w-full px-2 h-[44px] bg-white transition duration-200 ease-out rounded-lg flex items-center border border-[#e1e1e1]
@@ -108,9 +108,9 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
           group-disabled:opacity-50 ${className}`}
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          <button className="flex text-sm items-center space-x-2 text-gray">
-            <span className="text-lg">{selectedCountry.flag}</span>
-            <span>{selectedCountry.code}</span>
+          <button className="flex items-center justify-center h-full space-x-2 text-gray">
+            <span className="text-lg leading-none">{selectedCountry.flag}</span>
+            <span className="leading-none ">{selectedCountry.code}</span>
           </button>
           <input
             type="text"
@@ -133,7 +133,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
               animate="open"
               exit="closed"
               variants={dropdownVariants}
-              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10  transition duration-200 ease-out flex flex-col items-start 
+              className="absolute top-14 left-0 w-full bg-[#ffffff] rounded-lg shadow-lg max-h-64 overflow-y-auto z-10 border border-[#252525]  transition duration-200 ease-out flex flex-col items-start border-primary/70 
             [&>[role=progressbar]]:mr-2.5
             [&_[data-slot=icon]]:size-4 [&_[data-slot=icon]]:shrink-0
             [&>[data-slot=suffix]]:mr-2.5 [&>[data-slot=suffix]]:text-muted-fg
