@@ -9,19 +9,16 @@ import { cn } from "@/lib/utils";
 import { useCheckoutStore } from "@/store/checkout";
 import { maskDigits } from "@/utils/maskDigits";
 import { getDiscountedPrice } from "@/utils/getDiscountPrice";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 interface OrderDetailsProps {
   onCancel: () => void;
 }
 
 const OrderDetails: React.FC<OrderDetailsProps> = ({ onCancel }) => {
-  // const currentDate = new Date()
-  //   .toLocaleDateString("en-US", {
-  //     day: "2-digit",
-  //     month: "long",
-  //     year: "numeric",
-  //   })
-  //   .replace(",", "");
+  const { rate, error } = useExchangeRate();
+
+  {error && console.error("Failed to fetch rate:", error)}
 
   const rewardPoints = "10";
   const tax = "$0";
@@ -40,20 +37,18 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ onCancel }) => {
     const totalPrice = items.reduce(
       (acc, item) =>
         acc +
-        getDiscountedPrice(item.priceUSD.original, item.discount) *
+        getDiscountedPrice(item.price, item.discount) *
           item.quantity,
       0
     );
     const discount = totalPrice * 0.1; // 10% discount as per your logic
-    const finalPrice = totalPrice - discount;
+    const finalPrice = (totalPrice - discount)/rate;
 
     return { totalPrice, discount, finalPrice };
   };
 
   const { cart } = useCartStore();
   const { values: order } = useCheckoutStore();
-
-  console.log("ordaer: ", order);
 
   const { totalPrice, discount, finalPrice } = useMemo(
     () => calculateTotals(cart),
@@ -218,8 +213,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ onCancel }) => {
                           )}
                         </div>
                         <div className="font-bold flex flex-col lg:items-end text-sm md:text-base">
-                          <p>{product.price} LKR</p>
-                          <p>{product.priceUSD.original} USD</p>
+                          <p>{(product.price).toFixed(2)} LKR</p>
+                          <p>{(product.price/rate).toFixed(2)} USD</p>
                         </div>
                       </div>
                     </div>
