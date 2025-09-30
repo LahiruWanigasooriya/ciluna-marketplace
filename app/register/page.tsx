@@ -15,13 +15,10 @@ import { useRouter } from "next/navigation";
 import { ValidationError } from "yup";
 import { toast } from "sonner";
 import CountryDropdown from "@/components/custom/CountryDropdown";
-import { DateField } from "react-aria-components";
 import type {DateValue} from "react-aria-components";
-import { policyConfig } from "@/config/policy";
 import {parseDate} from "@internationalized/date";
 import bgpattern from "@/public/assets/login/bgpattern.png";
 import TitleLabelDropdown from "@/components/TitleDropDown";
-import {CalendarWithYearPicker} from "@/components/custom/CalendarWithYearPicker";
 
 
 type FormData = {

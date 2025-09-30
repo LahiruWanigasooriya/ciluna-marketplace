@@ -128,6 +128,7 @@ const CalendarHeader = ({
       
       <Heading className={heading()} />
 
+    <div className="flex items-center gap-2">
       <input
           type="number"
           value={year === null ? "" : year}
@@ -168,6 +169,7 @@ const CalendarHeader = ({
         >
           {direction === "rtl" ? <IconChevronLgLeft /> : <IconChevronLgRight />}
         </Button>
+      </div>
       </div>
     </header>
   )
