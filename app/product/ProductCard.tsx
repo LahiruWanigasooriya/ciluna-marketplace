@@ -16,11 +16,7 @@ import { useQuantityStore } from "@/store/quantity";
 import { addToCart, getCart } from "@/actions/carts/cart";
 import { useCartStore } from "@/store/cart";
 import { toast } from "sonner";
-import {
-  fetchExchangeRate,
-  formatPrice,
-  getUSDPrices,
-} from "@/utils/getDiscountPrice";
+import { formatPrice } from "@/utils/getDiscountPrice";
 import { useUserId } from "@/hooks/useUserId";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 
@@ -106,6 +102,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const handleAddToCart = async (event: React.MouseEvent<SVGElement>) => {
     event.preventDefault();
     event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
     const cartItemId = uuidv4();
 
     if (token) {

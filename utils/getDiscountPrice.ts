@@ -26,10 +26,6 @@ export const getUSDPrices = (price: number, finalPrice: number, quantity: number
   const originalUSD = price / rate;
   const discountedUSD = (finalPrice/quantity) / rate;
 
-  console.log("Final price: ", finalPrice);
-  console.log("Quantity: ", quantity);
-  console.log("Discounted: ", discountedUSD);
-
   return {
     original: formatPrice(originalUSD),
     discounted: formatPrice(discountedUSD),
