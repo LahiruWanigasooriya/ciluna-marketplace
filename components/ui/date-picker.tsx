@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { IconCalendarDays } from "justd-icons"
+import { IoCalendarClearOutline } from "react-icons/io5";
 import {
   DatePicker as DatePickerPrimitive,
   type DatePickerProps as DatePickerPrimitiveProps,
@@ -27,7 +27,7 @@ const datePickerStyles = tv({
     datePickerIcon:
       "group mr-0  [&_[data-slot=icon]]:text-muted-fg w-8 rounded outline-offset-0 hover:bg-transparent pressed:bg-transparent !w-[18px] !h-[18px]",
     calendarIcon: "group-open:text-fg !w-[18px] !h-[18px]  !mb-0 !mt-0 !ml-0 !mr-0",
-    datePickerInput: "w-full px-2 text-base lg:text-sm",
+    datePickerInput: "w-full text-base lg:text-sm",
     dateRangePickerInputStart: "px-2 lg:text-sm text-base",
     dateRangePickerInputEnd: "flex-1 px-2 py-1.5 lg:text-sm text-base",
     dateRangePickerDash:
@@ -67,7 +67,7 @@ const DatePickerOverlay = ({ closeButton = true, range, ...props }: any) => {
 
 const DatePickerIcon = () => (
   <Button size="square-petite" appearance="plain" className={datePickerIcon()}>
-    <IconCalendarDays aria-hidden className={`${calendarIcon()} !w-[18px] !h-[18px]` }  />
+    <IoCalendarClearOutline  aria-hidden className={`${calendarIcon()} !w-[18px] !h-[18px]` }  />
   </Button>
 )
 
@@ -97,13 +97,13 @@ const DatePicker = <T extends DateValue>({
             <DatePickerIcon />
           </div>
         ) : (
-          <>
+          <div className="flex items-center justify-between w-full pr-3">
             <DateInput
               className={datePickerInput()}
               data-has-value={!!value}
             />
             <DatePickerIcon />
-          </>
+          </div>
         )}
       </FieldGroup>
       {description && <Description>{description}</Description>}

@@ -11,6 +11,8 @@ export interface FormValues {
   gender?: "Male" | "Female" | "Other"; 
   country: string;
   profileImage: string;
+  dateofbirth: Date | null;
+  createdAt: string;
 }
 
 

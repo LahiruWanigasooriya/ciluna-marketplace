@@ -571,6 +571,7 @@ export async function updateUserProfile(updateData: Partial<IUser>, token?: stri
       "city",
       "postalCode",
       "contactNo",
+      "dateofbirth",
       "notificationSettings",
     ];
 

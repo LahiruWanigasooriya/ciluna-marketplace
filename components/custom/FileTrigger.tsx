@@ -1,5 +1,5 @@
 import React from "react";
-import { Camera } from "lucide-react";
+import { CiImageOn } from "react-icons/ci";
 
 interface FileTriggerProps {
   onFileChange: (file: File) => void;
@@ -20,7 +20,7 @@ export const FileTrigger: React.FC<FileTriggerProps> = ({
   };
 
   return (
-    <label className="cursor-pointer">
+    <label className="cursor-pointer flex items-center">
       <input
         type="file"
         style={{ display: "none" }}
@@ -28,7 +28,11 @@ export const FileTrigger: React.FC<FileTriggerProps> = ({
         onChange={handleFileInput}
         disabled={isDisabled}
       />
-      <Camera size={30} className="text-blue cursor-pointer hover:scale-105" />
+      <CiImageOn
+        size={24}
+        className="text-black cursor-pointer stroke-[0.7px]"
+      />
+      <div className="ml-2">Upload Image</div>
     </label>
   );
 };
