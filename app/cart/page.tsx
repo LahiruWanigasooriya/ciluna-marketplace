@@ -6,6 +6,7 @@ import { IProduct } from "@/types/product";
 
 const CartPage = async () => {
   const productres = await getAllProducts();
+  console.log("productres", productres);
 
   if (!productres.success || !productres.data) {
     return (
@@ -15,7 +16,7 @@ const CartPage = async () => {
     );
   }
 
-  const products: IProduct[] = productres.data?.products;
+  const products: IProduct[] = productres.data?.products || [];
 
   return (
     <div className="flex flex-col bg-white pt-[120px] lg:pt-[132px] px-[16px] md:px-[32px] lg:px-[72px] xl:px-[84px] recommend:px-[96px]">

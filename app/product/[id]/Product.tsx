@@ -42,6 +42,7 @@ import BackButton from "@/components/custom/BackButton";
 import AskQuestions from "./AskQuestions";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import ShareLink from "./ShareLink";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 interface ProductProps {
   product: IProduct;
   variants: IProductVariant;
@@ -64,6 +65,9 @@ const Product: React.FC<ProductProps> = ({
   // wishCount,
   // cilunaPrice,
 }) => {
+  const { rate, error } = useExchangeRate();
+
+  {error && console.error("Failed to fetch rate:", error)}
   // Combine the main image and additional images
   const initialImages = useRef<string[]>([
     ...new Set([product.image, ...(product.images || [])]),
@@ -72,6 +76,12 @@ const Product: React.FC<ProductProps> = ({
   const [allImages, setAllImages] = useState<string[]>(initialImages.current);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const { quantity, setQuantity } = useQuantityStore();
+
+  const { cart, addToCartItem, setCart, updateQuantity } = useCartStore();
+
+  const [isCartContext, setIsCartContext] = useState<boolean>(cart.find((item) => item.productId._id === product._id) ? true : false);
   // For color variant selection
   // const [selectColor, setSelectColor] = useState<string[]>([product.colorCode || ""]);
   const [selectColor, setSelectColor] = useState<ColorOption[]>(
@@ -105,10 +115,6 @@ const Product: React.FC<ProductProps> = ({
   const [isActive, setIsActive] = useState();
 
   const discountPrice = getDiscountedPrice(price, discount);
-  const [usdPrices, setUsdPrices] = useState({
-    original: "0.00",
-    discounted: "0.00",
-  });
 
   const [thumbnails, setThumbnails] = useState(
     allImages.filter((img) => img !== mainImageUrl)
@@ -117,10 +123,6 @@ const Product: React.FC<ProductProps> = ({
   // const thumbnails = allImages.filter((img) => img !== mainImageUrl);
 
   const [stock, setStock] = useState<number>(product.stock);
-
-  const { quantity, setQuantity } = useQuantityStore();
-
-  const { cart, addToCartItem, setCart, updateQuantity } = useCartStore();
 
   // const addToCartItem = useCartStore((state) => state.addToCart);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -180,31 +182,6 @@ const Product: React.FC<ProductProps> = ({
       setIsActive(variant.isActive);
     }
   };
-
-  useEffect(() => {
-    const fetchPrices = async () => {
-      try {
-        const rate = await fetchExchangeRate();
-        const originalUSD = price / rate;
-        const discountedUSD = getDiscountedPrice(price, discount || 0) / rate;
-
-        setUsdPrices({
-          original: formatPrice(originalUSD),
-          discounted: formatPrice(discountedUSD),
-        });
-      } catch (error) {
-        console.error("Failed to fetch exchange rate", error);
-        setUsdPrices({
-          original: formatPrice(price / 300),
-          discounted: formatPrice(
-            getDiscountedPrice(price, discount || 0) / 300
-          ),
-        });
-      }
-    };
-
-    fetchPrices();
-  }, [price, discount]);
 
   const handleImageClick = (img: string, index: number) => {
     if (img !== mainImageUrl) {
@@ -286,7 +263,15 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleAddToCart = async () => {
+    const cartItem = cart.find((item) => item.productId._id === product._id);
+     if (cartItem) {
+      toast.error("Product is already in the cart");
+      return;
+    }
+
     const cartItemId = uuidv4();
+
+    setIsCartContext(true);
 
     if (token) {
       const cartData = variantId
@@ -309,13 +294,7 @@ const Product: React.FC<ProductProps> = ({
       try {
         await addToCart(cartData);
         const cartResponse = await getCart(token);
-        const rate = await fetchExchangeRate();
-        const updatedCart = (cartResponse?.cart?.items || []).map(
-          (item: any) => ({
-            ...item,
-            priceUSD: getUSDPrices(item.price, item.finalTotal, rate),
-          })
-        );
+        const updatedCart = cartResponse?.cart?.items || [];
         setCart(updatedCart);
         toast.success(`${product.name} added to cart!`);
       } catch (error) {
@@ -336,7 +315,6 @@ const Product: React.FC<ProductProps> = ({
             quantity: quantity,
             image: mainImageUrl,
             price: discountedPrice,
-            priceUSD: usdPrices,
             rating: rating,
             sold: sold,
             isActive: isActive,
@@ -354,7 +332,6 @@ const Product: React.FC<ProductProps> = ({
             quantity: quantity,
             image: product.image,
             price: discountedPrice,
-            priceUSD: usdPrices,
             sold: product.sold,
             rating: product.rating,
             isActive: product.isActive,
@@ -371,7 +348,7 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleQuantityUpdate = async (product: any, newQuantity: number) => {
-    const cartItem = cart.find((item) => item.productId === product._id);
+    const cartItem = cart.find((item) => item.productId._id === product._id);
     setQuantity(newQuantity);
 
     if (!cartItem) {
@@ -600,17 +577,17 @@ const Product: React.FC<ProductProps> = ({
                         {discount ? (
                           <>
                             <p className="line-through flex items-center text-sm xl:text-xs recommend:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#909090]">
-                              {usdPrices.original}{" "}
+                              {formatPrice(price/rate)}{" "}
                               <span className="ml-[2px]">USD</span>
                             </p>
                             <p className="text-lg recommend:text-xl text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
-                              {usdPrices.discounted}{" "}
+                              {formatPrice(discountPrice/rate)}{" "}
                               <span className="ml-[2px]">USD</span>
                             </p>
                           </>
                         ) : (
                           <p className="text-lg recommend:text-xl text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
-                            {usdPrices.original}{" "}
+                            {formatPrice(price/rate)}{" "}
                             <span className="ml-[2px]">USD</span>
                           </p>
                         )}
@@ -674,7 +651,10 @@ const Product: React.FC<ProductProps> = ({
                   <QuantitySelector
                     initialQuantity={1}
                     productId={product._id}
-                    isCartContext={false}
+                    isCartContext={isCartContext}
+                    onQuantityChange={(newQuantity) =>
+                      handleQuantityUpdate(product, newQuantity)
+                    }
                   />
                 </div>
               </div>
@@ -697,7 +677,7 @@ const Product: React.FC<ProductProps> = ({
                   <QuantitySelector
                     initialQuantity={1}
                     productId={product._id}
-                    isCartContext={true}
+                    isCartContext={isCartContext}
                     onQuantityChange={(newQuantity) =>
                       handleQuantityUpdate(product, newQuantity)
                     }

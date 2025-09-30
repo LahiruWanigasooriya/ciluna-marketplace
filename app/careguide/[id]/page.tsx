@@ -4,9 +4,9 @@ import careguidedetails from "../careguidedetails";
 export default async function CareGuideDetailsPage({ 
     params,
  }: {
-     params: { id: string };
+     params: Promise<{ id: string }>
     }) {
-        const {id} =  params;
+        const {id} =  await params;
         const guide = careguidedetails[id];
     if (!guide) {
         return <div>Care guide not found</div>;

@@ -16,56 +16,60 @@ import { useQuantityStore } from "@/store/quantity";
 import { addToCart, getCart } from "@/actions/carts/cart";
 import { useCartStore } from "@/store/cart";
 import { toast } from "sonner";
-import { fetchExchangeRate, formatPrice, getUSDPrices } from "@/utils/getDiscountPrice";
+import { formatPrice } from "@/utils/getDiscountPrice";
 import { useUserId } from "@/hooks/useUserId";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { getToken } = useAuthStore();
-  const token = getToken(); 
+  const token = getToken();
   const userId = useUserId();
+  const { rate, error } = useExchangeRate();
+
+  {error && console.error("Failed to fetch rate:", error)}
 
   const [selectedColor, setSelectedColor] = useState(product.colorCode);
-  const [usdPrices, setUsdPrices] = useState({
-    original: "0.00",
-    discounted: "0.00",
-  });
+  // const [usdPrices, setUsdPrices] = useState({
+  //   original: "0.00",
+  //   discounted: "0.00",
+  // });
   const price = product.price;
   const discount = product.discount?.percentage || null;
   const { quantity } = useQuantityStore();
   const { addToCartItem, setCart } = useCartStore();
   const discountPrice = getDiscountedPrice(price, discount);
 
-  useEffect(() => {
-    const fetchPrices = async () => {
-      try {
-        const rate = await fetchExchangeRate();
-        const originalUSD = product.price / rate;
-        const discountedUSD =
-          getDiscountedPrice(product.price, product.discount?.percentage || 0) /
-          rate;
+  // useEffect(() => {
+  //   const fetchPrices = async () => {
+  //     try {
+  //       const rate = await fetchExchangeRate();
+  //       const originalUSD = product.price / rate;
+  //       const discountedUSD =
+  //         getDiscountedPrice(product.price, product.discount?.percentage || 0) /
+  //         rate;
 
-        setUsdPrices({
-          original: formatPrice(originalUSD),
-          discounted: formatPrice(discountedUSD),
-        });
-      } catch (error) {
-        console.error("Failed to fetch exchange rate", error);
-        setUsdPrices({
-          original: formatPrice(product.price / 300),
-          discounted: formatPrice(
-            getDiscountedPrice(
-              product.price,
-              product.discount?.percentage || 0
-            ) / 300
-          ),
-        });
-      }
-    };
+  //       setUsdPrices({
+  //         original: formatPrice(originalUSD),
+  //         discounted: formatPrice(discountedUSD),
+  //       });
+  //     } catch (error) {
+  //       console.error("Failed to fetch exchange rate", error);
+  //       setUsdPrices({
+  //         original: formatPrice(product.price / 300),
+  //         discounted: formatPrice(
+  //           getDiscountedPrice(
+  //             product.price,
+  //             product.discount?.percentage || 0
+  //           ) / 300
+  //         ),
+  //       });
+  //     }
+  //   };
 
-    fetchPrices();
-  }, [product.price, product.discount?.percentage]);
+  //   fetchPrices();
+  // }, [product.price, product.discount?.percentage]);
 
   // const isFavorited = false;
   const isFavorited = wishlist?.some((item) => item._id === product._id);
@@ -98,6 +102,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const handleAddToCart = async (event: React.MouseEvent<SVGElement>) => {
     event.preventDefault();
     event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
     const cartItemId = uuidv4();
 
     if (token) {
@@ -109,20 +115,21 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       try {
         await addToCart(cartData);
         const cartResponse = await getCart(token);
-        const rate = await fetchExchangeRate();
+        // const rate = await fetchExchangeRate();
 
-        // const updatedCart = cartResponse?.cart?.items || [];
-        const updatedCart = (cartResponse?.cart?.items || []).map(
-          (item: any) => ({
-            ...item,
-            priceUSD: getUSDPrices(
-              item.price,
-              item.finalTotal,
-              rate
-            ),
-          })
-        );
-        console.log("fetched cart with USD:", updatedCart);
+        const updatedCart = cartResponse?.cart?.items || [];
+        // const updatedCart = (cartResponse?.cart?.items || []).map(
+        //   (item: any) => ({
+        //     ...item,
+        //     priceUSD: getUSDPrices(
+        //       item.price,
+        //       item.finalTotal,
+        //       item.quantity,
+        //       rate
+        //     ),
+        //   })
+        // );
+        // console.log("fetched cart with USD:", updatedCart);
         setCart(updatedCart);
         toast.success(`${product.name} added to cart!`);
       } catch (error) {
@@ -141,7 +148,6 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         quantity: quantity,
         image: product.image,
         price: price,
-        priceUSD: usdPrices,
         sold: product.sold,
         rating: product.rating,
         isActive: product.isActive,
@@ -274,11 +280,13 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               </p>
             </div>
             <div className="flex items-center gap-1">
-              <p className="line-through text-[0.75rem] tracking-tight md:tracking-normal leading-[20px] text-[#909090]">
-                {usdPrices.original} <span className="ml-[2px]">USD</span>
+              <p className="line-through text-xs md:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#909090] md:text-[#707070]  font-arial">
+                {formatPrice(price / rate)}{" "}
+                <span className="ml-[2px]">USD</span>
               </p>
-              <p className="text-[0.875rem] md:text-[1rem] text-[#252525] font-bold leading-[20px] md:leading-[24px]">
-                {usdPrices.discounted} <span className="ml-[2px]">USD</span>
+              <p className="text-[0.875rem] md:text-[1rem] text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
+                {formatPrice(discountPrice / rate)}{" "}
+                <span className="ml-[2px]">USD</span>
               </p>
             </div>
           </div>
