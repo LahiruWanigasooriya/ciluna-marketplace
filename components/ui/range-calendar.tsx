@@ -49,7 +49,7 @@ const RangeCalendar = <T extends DateValue>({
   className,
   ...props
 }: RangeCalendarProps<T>) => {
-  const [showYearMonthPicker, setShowYearMonthPicker] = useState(false);
+
 
   return (
     <RangeCalendarPrimitive
@@ -57,8 +57,6 @@ const RangeCalendar = <T extends DateValue>({
       {...props}
     >
       <Calendar.Header 
-      showYearMonthPicker={showYearMonthPicker}
-      setShowYearMonthPicker={setShowYearMonthPicker}
       />
       <CalendarGrid className="[&_td]:border-collapse [&_td]:px-0">
         <Calendar.GridHeader />

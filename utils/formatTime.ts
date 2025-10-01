@@ -13,3 +13,11 @@ export function formatTimeAgo(date: Date): string {
   if (minutes > 0) return formatter.format(-minutes, 'minute');
   return formatter.format(-seconds, 'second');
 }
+
+export function formatDate(date: Date | string): string {
+  return new Date(date).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
