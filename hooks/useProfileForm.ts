@@ -11,7 +11,9 @@ const defaultValues: FormValues = {
   contactNo: "",
   gender: "Male",
   country: "",
-  profileImage: ""
+  profileImage: "",
+  dateofbirth: null,
+  createdAt: ""
 };
 
 export const useProfileForm = () => {
