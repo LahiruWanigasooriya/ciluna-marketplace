@@ -3,6 +3,9 @@ import { forgotPasswordValidationSchema } from "@/schemas/validationSchemas";
 import React, { useEffect, useState } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { ValidationError } from "yup";
+import SuccessIcon from "@/public/assets/profile/SuccessIcon.svg";
+import ErrorIcon from "@/public/assets/profile/ErrorIcon.svg";
+import Image from "next/image";
 
 interface EmailVerificationProps {
   email: string;
@@ -116,7 +119,7 @@ const ChangeEmail: React.FC<EmailVerificationProps> = ({ email }) => {
               below.
             </p>
             <div className="h-[1px] bg-neutralGray-100 w-full my-6 z-10"></div>
-            <div className="flex mb-3 justify-between space-x-5">
+            <div className="flex mb-3 justify-between md:space-x-5">
               {code.map((digit, i) => (
                 <TextField
                   key={i}
@@ -129,7 +132,7 @@ const ChangeEmail: React.FC<EmailVerificationProps> = ({ email }) => {
                   onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                     handleKeyDown(i, e)
                   }
-                  inputClassName="!w-14 !h-14 text-center !text-lg leading-6 p-0"
+                  inputClassName="!w-[45px] !h-[45px] md:!w-14 md:!h-14 text-center !text-lg leading-6 p-0"
                   aria-label={`Code digit ${i + 1}`}
                 />
               ))}
@@ -206,19 +209,18 @@ const ChangeEmail: React.FC<EmailVerificationProps> = ({ email }) => {
       </div>
 
       {isSuccess && popupOpen && (
-        <div className="absolute inset-0 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-[12px] bg-black/65 text-center">
-          <div className="bg-white p-6 rounded-[8px] relative w-[520px] h-[286px]">
+        <div className="absolute inset-0 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-[12px] bg-black/65 text-center px-4 md:px-0">
+          <div className="bg-white p-6 rounded-[8px] relative w-[520px]">
             <button
               type="button"
               onClick={() => setPopupOpen(false)}
               aria-label="Close popup"
+              className="absolute top-2 right-2"
             >
-              <IoIosCloseCircleOutline className="absolute top-2 right-2 text-neutralGray-500 w-5 h-5 cursor-pointer" />
+              <IoIosCloseCircleOutline className=" text-neutralGray-500 w-5 h-5 cursor-pointer" />
             </button>
-            <div className="flex justify-center mb-4">
-              <span className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full">
-                <span className="text-green-500 text-2xl">✔</span>
-              </span>
+            <div className="flex justify-center mb-6">
+              <Image src={SuccessIcon} alt="Success" width={50} height={50} />
             </div>
             <h1 className="text-xl leading-6 mb-3 font-arialBold">Success</h1>
             <p className="text-[18px] leading-6 mb-6">
@@ -227,7 +229,34 @@ const ChangeEmail: React.FC<EmailVerificationProps> = ({ email }) => {
             <div className="h-[1px] bg-neutralGray-100 w-full my-6 z-10"></div>
             <Button
               type="button"
-              className="w-full !h-[56px] bg-black text-white"
+              className="w-full !h-[56px] bg-black text-white !text-[18px] leading-6"
+              onClick={() => setPopupOpen(false)}
+            >
+              OK
+            </Button>
+          </div>
+
+          {/* Error Popup Hidden */}
+          <div className="bg-white p-6 rounded-[8px] relative w-[520px] hidden">
+            <button
+              type="button"
+              onClick={() => setPopupOpen(false)}
+              aria-label="Close popup"
+              className="absolute top-2 right-2"
+            >
+              <IoIosCloseCircleOutline className=" text-neutralGray-500 w-5 h-5 cursor-pointer" />
+            </button>
+            <div className="flex justify-center mb-6">
+              <Image src={ErrorIcon} alt="Error" width={50} height={50} />
+            </div>
+            <h1 className="text-xl leading-6 mb-3 font-arialBold">Error</h1>
+            <p className="text-[18px] leading-6 mb-6">
+              Unable to update your email address. Please try again.
+            </p>
+            <div className="h-[1px] bg-neutralGray-100 w-full my-6 z-10"></div>
+            <Button
+              type="button"
+              className="w-full !h-[56px] bg-black text-white !text-[18px] leading-6"
               onClick={() => setPopupOpen(false)}
             >
               OK

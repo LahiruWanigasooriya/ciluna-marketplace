@@ -67,12 +67,12 @@ const SecurityCheck: React.FC<SecurityCheckProps> = ({ onSelectMethod }) => {
   ];
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="p-6 bg-neutralGray-50 w-[505px] mx-auto rounded-[8px] max-h-[360px] h-screen">
+    <div className="flex items-center justify-center min-h-screen px-4 md:px-0 w-full">
+      <div className="p-4 md:p-6 bg-neutralGray-50 w-[505px] mx-auto rounded-[8px] max-h-[360px] h-screen">
         <h1 className="text-lg leading-6 mb-2 font-arialBold">
           Security Check
         </h1>
-        <p className="text-[14px] leading-5 mb-8">
+        <p className="text-[14px] leading-5">
           Please verify your identity using one of the options below.
         </p>
         <div className="h-[1px] bg-neutralGray-100 w-full my-6"></div>

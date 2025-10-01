@@ -103,12 +103,10 @@ const VerifyUsingEmail: React.FC<EmailVerificationProps> = ({
   };
 
   const isCodeComplete = code.every((d) => d !== "");
-  const isEmailComplete =
-    formData.email !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-full">
-      <div className="p-6 bg-neutralGray-50 max-w-[505px] mx-auto rounded-[8px] w-full flex flex-col">
+    <div className="flex items-center justify-center min-h-screen px-4 md:px-0 w-full">
+      <div className="p-4 md:p-6 bg-neutralGray-50 max-w-[505px] mx-auto rounded-[8px] w-full flex flex-col">
         {verify ? (
           <ChangeEmail email={formData.email} />
         ) : (
@@ -122,7 +120,7 @@ const VerifyUsingEmail: React.FC<EmailVerificationProps> = ({
               enter it below.
             </p>
             <div className="h-[1px] bg-neutralGray-100 w-full my-6 z-10"></div>{" "}
-            <div className="flex mb-3 justify-between space-x-5">
+            <div className="flex mb-3 justify-between">
               {code.map((digit, i) => (
                 <TextField
                   key={i}
@@ -135,7 +133,7 @@ const VerifyUsingEmail: React.FC<EmailVerificationProps> = ({
                   onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
                     handleKeyDown(i, e)
                   }
-                  inputClassName="!w-14 !h-14 text-center !text-lg leading-6 p-0"
+                  inputClassName="!w-[45px] !h-[45px] md:!w-14 md:!h-14 text-center !text-lg leading-6 p-0"
                   aria-label={`Code digit ${i + 1}`}
                 />
               ))}

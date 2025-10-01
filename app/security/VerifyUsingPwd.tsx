@@ -26,8 +26,8 @@ const VerifyUsingPwd: React.FC<PasswordVerificationProps> = ({
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-full">
-      <div className="p-6 bg-neutralGray-50 max-w-[505px] mx-auto rounded-[8px]  w-full flex flex-col">
+    <div className="flex items-center justify-center min-h-screen px-4 md:px-0 w-full">
+      <div className="p-4 md:p-6 bg-neutralGray-50 max-w-[505px] mx-auto rounded-[8px]  w-full flex flex-col">
         {isVerified ? (
           <ChangeEmail email={formData.email} />
         ) : (
@@ -46,7 +46,7 @@ const VerifyUsingPwd: React.FC<PasswordVerificationProps> = ({
                   type="password"
                   isRevealable
                   label="Password*"
-                  className="w-full min-w-[343px] max-w-[598px] [&_input]:!text-[14px] font-arial  [&_input]:leading-[20px] [&_input]:p-3 [&_label]:text-[#252525] [&_label]:text-[16px]"
+                  className="w-full max-w-[598px] [&_input]:!text-[14px] font-arial  [&_input]:leading-[20px] [&_input]:p-3 [&_label]:text-[#252525] [&_label]:text-[16px]"
                   placeholder="Enter your Password"
                   value={formData.password}
                   onChange={(value: string) => handleChange("password", value)}
