@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import {  Loader2,Info } from "lucide-react";
 import Title from "@/components/custom/Title";
-import { TextField, Button, DatePicker,Checkbox } from "@/components/ui";
+import { TextField, DatePicker,Button, Checkbox } from "@/components/ui";
+
+// import { TextField, Button, DatePicker,Checkbox } from "@/components/ui";
 import Link from "next/link";
 import Tel from "@/components/custom/Phone";
 import { signupValidationSchema } from "@/schemas/validationSchemas";
@@ -13,12 +15,11 @@ import { useRouter } from "next/navigation";
 import { ValidationError } from "yup";
 import { toast } from "sonner";
 import CountryDropdown from "@/components/custom/CountryDropdown";
-import { DateField } from "react-aria-components";
 import type {DateValue} from "react-aria-components";
-import { policyConfig } from "@/config/policy";
 import {parseDate} from "@internationalized/date";
 import bgpattern from "@/public/assets/login/bgpattern.png";
 import TitleLabelDropdown from "@/components/TitleDropDown";
+
 
 type FormData = {
   titlelabel:string;
@@ -130,24 +131,29 @@ const SignupForm = ({
         </div>
        
 
-
       <div className="w-full">
         <label className=" [&_label]:!text-base [&_label]:!leading-6 text-[#252525] font-medium mb-2 block ">
           Date of Birth*
         </label>
-        <DatePicker
-          className="w-full [&_input]:!text-[14px] leading-[20px] [&_input]:p-3"
-          placeholder="Select date of birth"
-          onChange={(value) => {
-            const date = value ? value.toDate("UTC") : null;
-            handleChange("dateofbirth", date);
-          }}
-          value={formData.dateofbirth instanceof Date ? parseDate(formData.dateofbirth.toISOString().split("T")[0]) : formData.dateofbirth}
-        />
-        {errors.dateofbirth && (
+                    <DatePicker
+                className="w-full [&_input]:!text-[14px] leading-[20px] [&_input]:!p-3 [&_input]:!text-[#252525]"
+                placeholder="Select date of birth"
+                onChange={(value: DateValue | null) => {
+                  const date = value ? value.toDate("UTC") : null;
+                  handleChange("dateofbirth", date);
+                }}
+                value={
+                  formData.dateofbirth instanceof Date
+                    ? parseDate(formData.dateofbirth.toISOString().split("T")[0])
+                    : formData.dateofbirth
+                }
+/>
+                        {errors.dateofbirth && (
           <p className="text-red-500 text-xs mt-1">{errors.dateofbirth}</p>
         )}
+
       </div>
+
         <div className="w-full">
           <CountryDropdown
             value={formData.country}
@@ -189,9 +195,9 @@ const SignupForm = ({
         <div className="relative w-full ">
           <label className="mb-2 [&_label]:!text-base [&_label]:!leading-6 text-[#252525] font-arial flex items-center gap-2 !mt-0 ">
             Password* 
-            <div className="relative group cursor-pointer">  
+            <div className="relative group cursor-pointer ">  
               <Info  className="h-[18px] w-[18px] text-black" />
-              <div className="absolute left-6 top-1/2 mt-0 mb-0 -translate-y-1/2 bg-gray-500 text-black text-xs px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+              <div className="absolute left-6 top-1/2 mt-0 mb-0 -translate-y-1/2 bg-gray-500 text-black text-xs px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
               Password must contain 8 characters.
               </div>
               </div>
@@ -267,9 +273,9 @@ const SignupForm = ({
 
 
           <div className="flex items-center justify-center space-x-2 mt-5 pb-6">
-            <p className="text-[#252525] font-arial text-base ">Already have a CILUNA account? </p>
+            <p className="text-[#252525] font-arial text-base leading-[24px] sm:leading-[20px]">Already have a CILUNA account? </p>
             <Link href="/login">
-              <p className="text-[#252525] cursor-pointer font-arialBold  text-sm hover:opacity-75">Login</p>
+              <p className="text-[#252525] cursor-pointer font-arialBold leading-[24px] sm:leading-[20px] text-base hover:opacity-75">Login</p>
             </Link>
           </div>
         </div>

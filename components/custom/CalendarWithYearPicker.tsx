@@ -16,9 +16,13 @@ import {
   useLocale
 } from "react-aria-components"
 import { tv } from "tailwind-variants"
+import { today, getLocalTimeZone, CalendarDate } from "@internationalized/date"
 
-import { Button } from "./button"
-import { ctr, focusRing } from "./primitive"
+import { Button } from "../ui/button"
+import { ctr, focusRing } from "../ui/primitive"
+import React from "react"
+
+
 
 const cellStyles = tv({
   extend: focusRing,
@@ -35,17 +39,37 @@ const cellStyles = tv({
   }
 })
 
-interface CalendarProps<T extends DateValue>
+interface CalendarWithYearPickerProps<T extends DateValue>
   extends Omit<CalendarPrimitiveProps<T>, "visibleDuration"> {
   errorMessage?: string
   className?: string
-  placeholder?:string
+  placeholder?: string
 }
 
-const Calendar = <T extends DateValue>({ errorMessage, className, ...props }: CalendarProps<T>) => {
+const CalendarWithYearPicker = <T extends DateValue>({
+  errorMessage,
+  className,
+  ...props
+}: CalendarWithYearPickerProps<T>) => {
+  const [year, setYear] = React.useState(new Date().getFullYear());
+  const [focusedDate, setFocusedDate] = React.useState<DateValue>(
+    today(getLocalTimeZone())
+  )
+
   return (
-    <CalendarPrimitive className={ctr(className, "max-w-[17.5rem] sm:max-w-[15.8rem]")} {...props}>
-      <CalendarHeader />
+    <CalendarPrimitive
+      {...props}
+      focusedValue={focusedDate}
+      onFocusChange={setFocusedDate}
+      maxValue={today(getLocalTimeZone())}
+      className={ctr(className, "max-w-[17.5rem] sm:max-w-[15.8rem]")}
+    >
+      <CalendarWithYearPicker.Header
+        year={focusedDate.year}
+        setYear={(newYear) => {
+          setFocusedDate(focusedDate.set({ year: newYear }))
+        }}
+      />
       <CalendarGrid className="[&_td]:border-collapse [&_td]:px-0">
         <CalendarGridHeader />
         <CalendarGridBody>
@@ -81,12 +105,51 @@ const calendarHeaderStyles = tv({
 
 const { header, heading, calendarGridHeaderCell } = calendarHeaderStyles()
 
-const CalendarHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+const CalendarHeader = ({
+  className,
+  year,
+  setYear,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & {
+  year: number
+  setYear: (year: number) => void
+}) => {
   const { direction } = useLocale()
+  const currentYear = new Date().getFullYear();
 
+  React.useEffect(() => {
+    const event = new CustomEvent('setYear', { detail: currentYear });
+    window.dispatchEvent(event);
+  }, [year]);
+
+  
   return (
     <header className={header({ className })} {...props}>
+      
       <Heading className={heading()} />
+
+    <div className="flex items-center gap-2">
+      <input
+          type="number"
+          value={year === null ? "" : year}
+          onChange={(e) => {
+            const val = e.target.value
+            if (val === "") {
+              
+              return
+            }
+            const newYear = Number(val)
+            if (!isNaN(newYear)) {
+              if (newYear > currentYear) {
+                setYear(currentYear) 
+              } else {
+                setYear(newYear)
+              }
+            }
+          }}
+          className="w-16 border rounded px-1 py-0.5 text-sm text-center focus:outline-none focus:ring-0 focus:border-black"
+        />
+
       <div className="flex items-center gap-1">
         <Button
           size="square-petite"
@@ -107,6 +170,7 @@ const CalendarHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEle
           {direction === "rtl" ? <IconChevronLgLeft /> : <IconChevronLgRight />}
         </Button>
       </div>
+      </div>
     </header>
   )
 }
@@ -114,11 +178,14 @@ const CalendarHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEle
 const CalendarGridHeader = () => {
   return (
     <CalendarGridHeaderPrimitive>
-      {(day) => <CalendarHeaderCell className={calendarGridHeaderCell()}>{day}</CalendarHeaderCell>}
+      {(day) => (
+        <CalendarHeaderCell className={calendarGridHeaderCell()}>{day}</CalendarHeaderCell>
+      )}
     </CalendarGridHeaderPrimitive>
   )
 }
 
-Calendar.Header = CalendarHeader
-Calendar.GridHeader = CalendarGridHeader
-export { Calendar }
+CalendarWithYearPicker.Header = CalendarHeader
+CalendarWithYearPicker.GridHeader = CalendarGridHeader
+
+export { CalendarWithYearPicker }
