@@ -9,12 +9,21 @@ interface SizeSelectorProps {
   availableSizes: string[];
 }
 
-const sizeDisplayMap: Record<string, string> = {
+export const sizeDisplayMap: Record<string, string> = {
+  "Extra Small": "XS",
   Small: "S",
   Medium: "M",
   Large: "L",
   "Extra Large": "XL",
+  "2XL": "2XL",
+  "3XL": "3XL",
+  "4XL": "4XL",
+  "5XL": "5XL",
+  "6XL": "6XL",
+  "7XL": "7XL",
+  "8XL": "8XL",
 };
+
 const SizeSelector: React.FC<SizeSelectorProps> = ({
   sizes,
   selectedSize,

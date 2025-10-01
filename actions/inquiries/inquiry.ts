@@ -70,7 +70,7 @@ export const createInquiry = async (inquiryData: CreateInquiryParams) => {
       await dbConnectMarketPlace();
   
       // Validate required fields
-      const { name, email, message, contactNo } = inquiryData;
+      const { name, email, message } = inquiryData;
       if (!name || !email || !message) {
         return {
           status: 400,
@@ -83,7 +83,6 @@ export const createInquiry = async (inquiryData: CreateInquiryParams) => {
       const newInquiry = new InquiryModel({
         name,
         email,
-        contactNo: contactNo || null,
         message,
         status: "pending", // Default status
       });

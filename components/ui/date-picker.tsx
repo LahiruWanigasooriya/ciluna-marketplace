@@ -20,13 +20,14 @@ import { Description, FieldError, FieldGroup, Label } from "./field"
 import { Popover } from "./popover"
 import { ctr } from "./primitive"
 import { RangeCalendar } from "./range-calendar"
+import { CalendarWithYearPicker } from "../custom/CalendarWithYearPicker"
 
 const datePickerStyles = tv({
   slots: {
     base: "group flex flex-col gap-y-2.5",
     datePickerIcon:
       "group mr-0  [&_[data-slot=icon]]:text-muted-fg w-8 rounded outline-offset-0 hover:bg-transparent pressed:bg-transparent !w-[18px] !h-[18px]",
-    calendarIcon: "group-open:text-fg !w-[18px] !h-[18px]  !mb-0 !mt-0 !ml-0 !mr-0",
+    calendarIcon: "group-open:text-fg !w-[18px] !h-[18px] ",
     datePickerInput: "w-full text-base lg:text-sm",
     dateRangePickerInputStart: "px-2 lg:text-sm text-base",
     dateRangePickerInputEnd: "flex-1 px-2 py-1.5 lg:text-sm text-base",
@@ -53,7 +54,7 @@ const DatePickerOverlay = ({ closeButton = true, range, ...props }: any) => {
       className="flex justify-center p-4 sm:p-2 sm:pt-3 sm:max-w-[17.2rem] sm:min-w-[17rem]"
       {...props}
     >
-      {range ? <RangeCalendar /> : <Calendar />}
+      {range ? <RangeCalendar /> : <CalendarWithYearPicker />}
       {closeButton && (
         <div className="sm:hidden py-2.5 flex justify-center mx-auto w-full max-w-[inherit]">
           <Popover.Close shape="circle" className="w-full">
@@ -67,7 +68,7 @@ const DatePickerOverlay = ({ closeButton = true, range, ...props }: any) => {
 
 const DatePickerIcon = () => (
   <Button size="square-petite" appearance="plain" className={datePickerIcon()}>
-    <IoCalendarClearOutline  aria-hidden className={`${calendarIcon()} !w-[18px] !h-[18px]` }  />
+    <IoCalendarClearOutline aria-hidden className={`${calendarIcon()} `} />
   </Button>
 )
 
@@ -91,21 +92,16 @@ const DatePicker = <T extends DateValue>({
     <DatePickerPrimitive {...props} className={ctr(className, base())}>
       {label && <Label className="text-black">{label}</Label>}
       <FieldGroup className="min-w-40 relative">
-        {!value && placeholder ? (
-          <div className="flex items-center justify-between w-full h-11 p-3 text-sm text-[#707070] bg-transparent border-0">
-            <span>{placeholder}</span>
+          <div className="flex items-center justify-between w-full h-11 !p-3 border-0 bg-transparent">
+            {!value && placeholder ? (
+              <span className="text-sm text-[#707070]">{placeholder}</span>
+            ) : (
+              <DateInput className={datePickerInput()} data-has-value={!!value} />
+            )}
             <DatePickerIcon />
           </div>
-        ) : (
-          <div className="flex items-center justify-between w-full pr-3">
-            <DateInput
-              className={datePickerInput()}
-              data-has-value={!!value}
-            />
-            <DatePickerIcon />
-          </div>
-        )}
-      </FieldGroup>
+        </FieldGroup>
+
       {description && <Description>{description}</Description>}
       <FieldError>{errorMessage}</FieldError>
       <DatePickerOverlay />

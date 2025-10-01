@@ -5,6 +5,7 @@ import { dbConnectMarketPlace } from "@/lib/dbConnect";
 import OrderModel from "@/models/order";
 import { processPayment } from "../utils/payment/payment";
 import CartModel from "@/models/cart";
+import { generateOrderId } from "@/utils/order";
 
 export async function createOrder(orderData: any) {
   try {
@@ -17,8 +18,11 @@ export async function createOrder(orderData: any) {
       return { status: 400, success: false, message: "Missing required fields" };
     }
 
+    const orderId = generateOrderId();
+
     // Step 1: Create Order (Initially Pending)
     const newOrder = new OrderModel({
+      orderId,
       userId,
       items,
       totalPrice,

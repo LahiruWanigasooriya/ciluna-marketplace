@@ -108,9 +108,9 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className }) => {
           group-disabled:opacity-50 ${className}`}
           onClick={() => setIsOpen((prev) => !prev)}
         >
-          <button className="flex text-sm items-center space-x-2 text-gray">
-            <span className="text-lg">{selectedCountry.flag}</span>
-            <span>{selectedCountry.code}</span>
+          <button className="flex items-center justify-center h-full space-x-2 text-gray">
+            <span className="text-lg leading-none">{selectedCountry.flag}</span>
+            <span className="leading-none ">{selectedCountry.code}</span>
           </button>
           <input
             type="text"

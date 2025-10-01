@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp, PencilLine } from "lucide-react";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
 import Image from "next/image";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 interface SummaryProps {
   text: string;
@@ -13,11 +14,18 @@ interface SummaryProps {
   editCart?: boolean;
 }
 
-const calculateTotals = (items: any[]) => {
+const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
+  const { cart } = useCartStore();
+  const [isOpenSummary, setIsOpenSummary] = useState(false);
+    const { rate, error } = useExchangeRate();
+
+  {error && console.error("Failed to fetch rate:", error)}
+
+  const calculateTotals = (items: any[]) => {
   const totalPrice = items.reduce(
     (acc, item) =>
       acc +
-      getDiscountedPrice(item.priceUSD.original, item.discount) * item.quantity,
+      getDiscountedPrice((item.price/rate), item.discount) * item.quantity,
     0
   );
   const discount = totalPrice * 0.1; // 10% discount as per your logic
@@ -25,10 +33,6 @@ const calculateTotals = (items: any[]) => {
 
   return { totalPrice, discount, finalPrice };
 };
-
-const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
-  const { cart } = useCartStore();
-  const [isOpenSummary, setIsOpenSummary] = useState(false);
 
   const { totalPrice, discount, finalPrice } = useMemo(
     () => calculateTotals(cart),
@@ -43,7 +47,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
             <div className="flex flex-col text-gray">
               <div className="flex flex-col gap-6 ">
                 <div className="flex justify-between">
-                  <p className="text-lg md:text-xl font-arialBold font-bold leading-[px] md:leading-[24px]">
+                  <p className="text-xl font-arialBold font-bold leading-[px] md:leading-[24px]">
                     Summary
                   </p>
                   <Link href="/cart" className="w-6 h-6 hover:opacity-70">
@@ -164,7 +168,7 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
                 <div>
                   {isOpenSummary ? (
                     <div className="flex justify-between">
-                      <p className="text-lg md:text-xl font-arialBold font-bold leading-[24px]">
+                      <p className="text-xl font-arialBold leading-[24px]">
                         Summary
                       </p>
                       <Link href="/cart" className="w-6 h-6 hover:opacity-70">
@@ -264,6 +268,9 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
                       size="extra-large"
                       type="submit"
                       // onPress={() => handlePlaceOrder?.(true)}
+                      onPress={(e) => {
+                        console.log("Button clicked - form will submit");
+                      }}
                     >
                       {text}
                     </Button>

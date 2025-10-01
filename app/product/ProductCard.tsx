@@ -16,76 +16,60 @@ import { useQuantityStore } from "@/store/quantity";
 import { addToCart, getCart } from "@/actions/carts/cart";
 import { useCartStore } from "@/store/cart";
 import { toast } from "sonner";
-import {
-  fetchExchangeRate,
-  formatPrice,
-  getUSDPrices,
-} from "@/utils/getDiscountPrice";
-
-import { jwtDecode } from "jwt-decode";
-
-interface DecodedToken {
-  userId: string;
-  exp: number;
-}
+import { formatPrice } from "@/utils/getDiscountPrice";
+import { useUserId } from "@/hooks/useUserId";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { getToken } = useAuthStore();
-  const token = getToken(); // this will read from cookie if store token is null
-  const [userId, setUserId] = useState("");
+  const token = getToken();
+  const userId = useUserId();
+  const { rate, error } = useExchangeRate();
+
+  {error && console.error("Failed to fetch rate:", error)}
+
   const [selectedColor, setSelectedColor] = useState(product.colorCode);
-  const [usdPrices, setUsdPrices] = useState({
-    original: "0.00",
-    discounted: "0.00",
-  });
+  // const [usdPrices, setUsdPrices] = useState({
+  //   original: "0.00",
+  //   discounted: "0.00",
+  // });
   const price = product.price;
   const discount = product.discount?.percentage || null;
   const { quantity } = useQuantityStore();
   const { addToCartItem, setCart } = useCartStore();
   const discountPrice = getDiscountedPrice(price, discount);
 
-  useEffect(() => {
-    const fetchPrices = async () => {
-      try {
-        const rate = await fetchExchangeRate();
-        const originalUSD = product.price / rate;
-        const discountedUSD =
-          getDiscountedPrice(product.price, product.discount?.percentage || 0) /
-          rate;
+  // useEffect(() => {
+  //   const fetchPrices = async () => {
+  //     try {
+  //       const rate = await fetchExchangeRate();
+  //       const originalUSD = product.price / rate;
+  //       const discountedUSD =
+  //         getDiscountedPrice(product.price, product.discount?.percentage || 0) /
+  //         rate;
 
-        setUsdPrices({
-          original: formatPrice(originalUSD),
-          discounted: formatPrice(discountedUSD),
-        });
-      } catch (error) {
-        console.error("Failed to fetch exchange rate", error);
-        setUsdPrices({
-          original: formatPrice(product.price / 300),
-          discounted: formatPrice(
-            getDiscountedPrice(
-              product.price,
-              product.discount?.percentage || 0
-            ) / 300
-          ),
-        });
-      }
-    };
+  //       setUsdPrices({
+  //         original: formatPrice(originalUSD),
+  //         discounted: formatPrice(discountedUSD),
+  //       });
+  //     } catch (error) {
+  //       console.error("Failed to fetch exchange rate", error);
+  //       setUsdPrices({
+  //         original: formatPrice(product.price / 300),
+  //         discounted: formatPrice(
+  //           getDiscountedPrice(
+  //             product.price,
+  //             product.discount?.percentage || 0
+  //           ) / 300
+  //         ),
+  //       });
+  //     }
+  //   };
 
-    fetchPrices();
-  }, [product.price, product.discount?.percentage]);
-
-  useEffect(() => {
-    if (token) {
-      try {
-        const decoded: DecodedToken = jwtDecode(token);
-        setUserId(decoded.userId);
-      } catch (error) {
-        console.error("❌ Error fetching data:", error);
-      }
-    }
-  }, [token]);
+  //   fetchPrices();
+  // }, [product.price, product.discount?.percentage]);
 
   // const isFavorited = false;
   const isFavorited = wishlist?.some((item) => item._id === product._id);
@@ -118,6 +102,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const handleAddToCart = async (event: React.MouseEvent<SVGElement>) => {
     event.preventDefault();
     event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
     const cartItemId = uuidv4();
 
     if (token) {
@@ -129,21 +115,21 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       try {
         await addToCart(cartData);
         const cartResponse = await getCart(token);
+        // const rate = await fetchExchangeRate();
 
-        const rate = await fetchExchangeRate();
-
-        // const updatedCart = cartResponse?.cart?.items || [];
-        const updatedCart = (cartResponse?.cart?.items || []).map(
-          (item: any) => ({
-            ...item,
-            priceUSD: getUSDPrices(
-              item.price,
-              item.finalTotal,
-              rate
-            ),
-          })
-        );
-        console.log("fetched cart with USD:", updatedCart);
+        const updatedCart = cartResponse?.cart?.items || [];
+        // const updatedCart = (cartResponse?.cart?.items || []).map(
+        //   (item: any) => ({
+        //     ...item,
+        //     priceUSD: getUSDPrices(
+        //       item.price,
+        //       item.finalTotal,
+        //       item.quantity,
+        //       rate
+        //     ),
+        //   })
+        // );
+        // console.log("fetched cart with USD:", updatedCart);
         setCart(updatedCart);
         toast.success(`${product.name} added to cart!`);
       } catch (error) {
@@ -162,7 +148,6 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         quantity: quantity,
         image: product.image,
         price: price,
-        priceUSD: usdPrices,
         sold: product.sold,
         rating: product.rating,
         isActive: product.isActive,
@@ -209,7 +194,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     <Link
       key={product._id}
       href={`/product/${product._id}`}
-      className="flex flex-col gap-2 md:gap-5 font-inter border border-[#ffffff00] h-fit bg-white recommend:min-w-[294px] transition-all duration-300 ease-in-out min-w-[164px] sm:w-[calc(33%-0.75rem)] lg:w-[calc(23.33%-0.833rem)] xl:w-[calc(18.33%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
+      className="flex flex-col gap-2 md:gap-5 font-inter border border-[#ffffff00] bg-white recommend:min-w-[294px] transition-all duration-300 ease-in-out min-w-[164px] sm:w-[calc(33%-0.75rem)] lg:w-[calc(23.33%-0.833rem)] xl:w-[calc(18.33%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
     >
       <div className="h-[177px] recommend:h-[317px]">
         {isLoading ? (
@@ -231,14 +216,14 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               ) : isFavorited ? (
                 <div className="rounded-full">
                   <RiHeart3Fill
-                    className="text-[#252525] hover:opacity-75 cursor-pointer w-6 h-6"
+                    className="text-[#252525] hover:opacity-75 cursor-pointer w-[21.5px] h-5"
                     onClick={handleFavoriteClick}
                   />
                 </div>
               ) : (
                 <div className="rounded-full">
                   <RiHeart3Line
-                    className="text-black hover:opacity-75 cursor-pointer w-6 h-6"
+                    className="text-black hover:opacity-75 cursor-pointer w-[21.5px] h-5"
                     onClick={handleFavoriteClick}
                   />
                 </div>
@@ -248,9 +233,9 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               {isLoading ? (
                 <Skeleton className="w-6 h-6" />
               ) : product.discount ? (
-                <div className="rounded-[0.5rem] font-arial text-white bg-[#252525] flex items-center justify-center w-[60px] h-6 md:w-[67px] md:h-8 text-xs md:text-sm leading-4 md:leading-5">
+                <div className="rounded-[0.5rem] text-white py-[2px] md:py-1 px-2 bg-[#252525] flex">
                   {product.discount.percentage}%{" "}
-                  <span className="ml-1"> Off</span>
+                  <span className="hidden md:block ml-1"> Off</span>
                 </div>
               ) : (
                 <div className="rounded-full p-1"></div>
@@ -276,7 +261,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           <Skeleton className="w-full h-5" />
         ) : (
           <>
-            <p className="truncate recommend:text-[1rem] font-arial text-sm md:text-base leading-5 md:leading-6 text-[#252525]">
+            <p className="truncate recommend:text-[1rem] leading-[24px] text-[#252525]">
               {truncatedName}
             </p>
           </>
@@ -286,20 +271,22 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         ) : (
           <div>
             <div className="flex items-center gap-1">
-              <p className="line-through text-xs md:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#909090] md:text-[#707070]  font-arial">
+              <p className="line-through text-[0.75rem] tracking-tight md:tracking-normal leading-[20px] text-[#909090]">
                 {formatPrice(price)} <span className="ml-[2px]">LKR</span>
               </p>
-              <p className="text-[0.875rem] md:text-[1rem] text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
+              <p className="text-[0.875rem] md:text-[1rem] text-[#252525] font-bold leading-[20px] md:leading-[24px]">
                 {formatPrice(discountPrice)}{" "}
                 <span className="ml-[2px]">LKR</span>
               </p>
             </div>
             <div className="flex items-center gap-1">
               <p className="line-through text-xs md:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#909090] md:text-[#707070]  font-arial">
-                {usdPrices.original} <span className="ml-[2px]">USD</span>
+                {formatPrice(price / rate)}{" "}
+                <span className="ml-[2px]">USD</span>
               </p>
               <p className="text-[0.875rem] md:text-[1rem] text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
-                {usdPrices.discounted} <span className="ml-[2px]">USD</span>
+                {formatPrice(discountPrice / rate)}{" "}
+                <span className="ml-[2px]">USD</span>
               </p>
             </div>
           </div>

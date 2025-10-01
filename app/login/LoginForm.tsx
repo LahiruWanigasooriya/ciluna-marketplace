@@ -10,6 +10,8 @@ import { checkUserAndGenerateToken } from "@/actions/users/user";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 import { loginValidationSchema } from "@/schemas/validationSchemas";
+import { MdFormatIndentDecrease } from "react-icons/md";
+import { FieldError } from "react-aria-components";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -39,8 +41,21 @@ const LoginForm = () => {
 
     if (!formData.email || !formData.password) {
       setFeedback("Please fill in all required fields.");
-      setIsLoading(false);
-      return;
+  
+    }
+    if(!formData.email || !formData.password){
+      const fieldErrors: {email?:string; password?:string}={};
+    if(!formData.email){
+      fieldErrors.email ="Email is required"
+    }
+    if(!formData.password){
+      fieldErrors.password ="Password is required"
+    }
+
+    setErrors(fieldErrors);
+    setIsLoading(false);
+    return;
+
     }
 
     try {
@@ -96,9 +111,11 @@ const LoginForm = () => {
             title="Login"
             className="mt-20 text-2xl lg:text-[28px] leading-[32px] font-kaiseiHarunoUmi font-bold text-[#252525]"
           />
+          
         </div>
 
         <div className="flex flex-col space-y-3 mx-auto w-full max-w-[598px] min-w-[343px]">
+          <div>
           <TextField
             label="Email*"
             className="w-full min-w-[343px] max-w-[598px] [&_input]:!text-[14px] font-arial [&_input]:leading-[20px] [&_input]:p-3 [&_label]:text-[16px] [&_label]:text-[#252525]"
@@ -108,8 +125,11 @@ const LoginForm = () => {
             type="email"
             value={formData.email}
             onChange={(value: string) => handleChange("email", value)}
+            
           />
-
+          {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
+          </div>
+          <div>
           <TextField
             type="password"
             isRevealable
@@ -119,6 +139,8 @@ const LoginForm = () => {
             value={formData.password}
             onChange={(value: string) => handleChange("password", value)}
           />
+          {errors.password && <p className="text-red-500 text-xs">{errors.password}</p>}
+          </div>
 
           <div className="flex items-center justify-between">
             <Checkbox
@@ -154,12 +176,12 @@ const LoginForm = () => {
             )}
           </Button>
 
-          <div className="flex items-center justify-center flex-col sm:flex-row space-x-2 font-arial">
-            <p className="text-black text-base sm:text-sm">
+          <div className="flex items-center justify-center flex-col sm:flex-row space-x-2 ">
+            <p className="text-black text-base font-arial leading-[24px] sm:leading-[20px] sm:text-sm">
               Don't have a CILUNA account yet?
             </p>
             <Link href="/register">
-              <p className="text-black cursor-pointer font-arialBold font-bold text-base sm:text-sm hover:opacity-75">
+              <p className="text-black cursor-pointer font-arialBold leading-[24px] sm:leading-[20px] text-base sm:text-sm hover:opacity-75">
                 Create Account
               </p>
             </Link>

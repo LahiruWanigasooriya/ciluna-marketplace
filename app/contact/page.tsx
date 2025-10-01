@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+//import Image from "next/image";
 import Title from "@/components/custom/Title";
 import { Phone, Mail } from "lucide-react";
 // import Contact from "@/public/assets/contact.png";
@@ -51,7 +51,7 @@ const ContactMethod = ({
 
 const ContactPage = () => {
   return (
-    <div className="flex flex-col gap-12 text-white">
+    <div className="hidden flex-col gap-12 text-white">
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-3 items-center md:items-start">
           <Title title="Get Started" />

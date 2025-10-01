@@ -11,12 +11,15 @@ export const forgotPasswordValidationSchema = Yup.object({
 
 export const signupValidationSchema = Yup.object().shape({
   titlelabel:Yup.string()
+  .matches(/^(Mr|Mrs|Ms|Dr|Prof)$/, "Select a valid title")
   .required("Title is required"),
   firstName: Yup.string()
     .min(3, "First Name must be at least 3 characters long")
+    .matches(/^[A-Za-z]+$/, "First Name can only contain letters")
     .required("First Name is required"),
   lastName: Yup.string()
     .min(3, "Last Name must be at least 3 characters long")
+    .matches(/^[A-Za-z]+$/, "Last Name can only contain letters")
     .required("Last Name is required"),
   dateofbirth:Yup.date()
   .nullable()
@@ -55,12 +58,12 @@ export const contactValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  phone: Yup.string()
-    .matches(
-      /^\+\d{1,4}\d{7,11}$/,
-      "Phone number must include a valid country code and contain 7 to 11 digits"
-    )
-    .required("Phone number is required"),
+//  phone: Yup.string()
+//    .matches(
+//      /^\+\d{1,4}\d{7,11}$/,
+//      "Phone number must include a valid country code and contain 7 to 11 digits"
+//    )
+//    .required("Phone number is required"),
   message: Yup.string()
     .min(10, "Message must be at least 10 characters long")
     .required("Message is required"),

@@ -17,17 +17,16 @@ import { ICategory } from "@/types/category";
 
 interface ConditionalLayoutProps {
   children: React.ReactNode;
-  categories: ICategory;
+  // categories: ICategory;
 }
 
 export default function ConditionalLayout({
   children,
-  categories,
 }: ConditionalLayoutProps) {
   const pathname = usePathname();
   const { isMenuOpen } = useMenuStore();
   const hiddenRoutes = ["/login", "/register", "/forgotpw"];
-  const WidthFullPages = ["/", "/product", "/order-shipping"];
+  const WidthFullPages = ["/", "/product", "/order-shipping", "/careguide"];
   const isHomePage = pathname === "/";
   const isHiddenRoute = hiddenRoutes.includes(pathname);
   const isWidthFullPages =

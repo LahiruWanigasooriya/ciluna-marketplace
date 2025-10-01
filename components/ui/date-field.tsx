@@ -75,7 +75,7 @@ const DateInput = ({ className, ...props }: Omit<DateInputProps, "children">) =>
   return (
     <DateInputPrimitive
       className={cn(
-        "bg-transparent p-3 text-base text-fg placeholder-muted-fg lg:text-sm",
+        "bg-transparent text-base text-fg placeholder-muted-fg lg:text-sm",
         className
       )}
       {...props}
