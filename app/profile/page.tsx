@@ -14,6 +14,8 @@ import { useWishlistStore } from "@/store/wishlist";
 import { useRouter } from "next/navigation";
 import HelpFAQ from "./HelpFAQ";
 import ContactForm from "../contact/ContactForm";
+import Settings from "./Settings";
+import { FormValues } from "@/types/profile";
 
 const sidebarItems = [
   "Overview",
@@ -36,6 +38,9 @@ export default function ProfilePage() {
   const { setCart } = useCartStore();
   const { setWishlist } = useWishlistStore();
   const router = useRouter();
+  const handleProfileUpdate = (updatedUser: FormValues) => {  // Callback to update userData after profile update
+    setUserData(updatedUser);
+  };
 
   const handleLogout = async () => {
     setTimeout(() => {
@@ -200,6 +205,8 @@ export default function ProfilePage() {
             <div className="overflow-x-auto">
               <Overview userData={userData} />
             </div>
+          ) : selected === "Account Setting" ? (
+            <Settings userData={userData} onProfileUpdate={handleProfileUpdate} />
           ) : selected === "Contact Us" ? (
             <ContactForm />
           ) : (

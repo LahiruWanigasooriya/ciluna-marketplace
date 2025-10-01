@@ -73,14 +73,31 @@ export const profileValidationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  contactNo: Yup.string()
-    .matches(
-      /^\+\d{1,4}\d{7,11}$/,
-      "Phone number must include a valid country code and contain 7 to 11 digits"
-    )
-    .required("Phone number is required"),
-  country: Yup.string().required("Country is required"),
-  gender: Yup.string().required("Gender is required"),
+  firstName: Yup.string()
+    .min(2, "First Name must be at least 2 characters long")
+    .max(50, "First Name cannot exceed 50 characters")
+    .matches(/^[a-zA-Z\s]+$/, ' First Name can only contain letters and spaces')
+    .required("First Name is required"),
+  lastName: Yup.string()
+    .min(2, "Last Name must be at least 2 characters long")
+    .max(50, "Last Name cannot exceed 50 characters")
+    .matches(/^[a-zA-Z\s]+$/, 'Last Name can only contain letters and spaces')
+    .required("Last Name is required"),
+  dateofbirth:Yup.date()
+    .nullable()
+    .required("Date of Birth is required"),
+  profileImage: Yup.string()
+    .url('Please enter a valid URL')
+    .matches(/\.(jpg|jpeg|png|gif|webp)$/i, 'URL must point to a valid image file')
+ 
+  //contactNo: Yup.string()
+  //  .matches(
+  //    /^\+\d{1,4}\d{7,11}$/,
+  //    "Phone number must include a valid country code and contain 7 to 11 digits"
+  //  )
+  //  .required("Phone number is required"),
+  //country: Yup.string().required("Country is required"),
+  //gender: Yup.string().required("Gender is required"),
 });
 
 export const passwordValidationSchema = Yup.object().shape({
