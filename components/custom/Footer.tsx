@@ -23,8 +23,8 @@ const legalLinks: Section[] = [
   {
     title: "Legal",
     links: [
-      { name: "Privacy Policy", href: "/" },
-      { name: "Terms of Services", href: "/" },
+      { name: "Privacy Policy", href: "/privacypolicy" },
+      { name: "Terms of Services", href: "/termsofservices" },
     ],
   },
 ];
@@ -38,7 +38,7 @@ const ServicesLinks: Section[] = [
       { name: "Help/ FAQ", href: "/" },
       { name: "Orders & Shipping", href: "/order-shipping" },
       { name: "Return & Refunds", href: "/" },
-      { name: "Track Your Order", href: "/" },
+      { name: "Track Your Order", href: "/trackyourorder" },
     ],
   },
 ];

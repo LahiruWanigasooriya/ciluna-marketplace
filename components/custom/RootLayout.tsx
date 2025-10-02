@@ -27,7 +27,15 @@ export default function ConditionalLayout({
   const pathname = usePathname();
   const { isMenuOpen } = useMenuStore();
   const hiddenRoutes = ["/login", "/register", "/forgotpw"];
-  const WidthFullPages = ["/", "/product", "/order-shipping", "/careguide","/trackyourorder"];
+  const WidthFullPages = [
+    "/",
+    "/product",
+    "/order-shipping",
+    "/careguide",
+    "/trackyourorder",
+    "/privacypolicy",
+    "/termsofservices",
+  ];
   const isHomePage = pathname === "/";
   const isHiddenRoute = hiddenRoutes.includes(pathname);
   const isWidthFullPages =
