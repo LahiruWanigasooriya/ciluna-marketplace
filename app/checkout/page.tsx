@@ -21,12 +21,17 @@ import { useCartStore } from "@/store/cart";
 import CilunaCards from "@/components/custom/CilunaCards";
 import PaymentCardForm from "./PaymentCardForm";
 import ShippingAddressForm from "./ShippingAddressForm";
-import { PaymentCardOption, Address, OrderFormFields } from "@/types/checkout";
+import {
+  PaymentCardOption,
+  Address,
+  OrderFormFields,
+  Checkout,
+} from "@/types/checkout";
 import { useAuthStore } from "@/store/authStore";
 import { getUserById } from "@/actions/users/user";
 import { createAddress } from "@/actions/users/address";
 import { createCard, getCardsByUser } from "@/actions/users/card";
-import { getCart } from "@/actions/carts/cart";
+import { addMultipleToCart, getCart } from "@/actions/carts/cart";
 import { createOrder } from "@/actions/orders/order";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -68,6 +73,8 @@ const CheckoutPage = () => {
   const token = getToken();
   const userId = useUserId();
 
+  const { cart: localCart } = useCartStore();
+
   // cards and addresses when previous information is available
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [cards, setCards] = useState<PaymentCardOption[]>([]);
@@ -78,7 +85,8 @@ const CheckoutPage = () => {
   const [isAddingNewCard, setIsAddingNewCard] = useState<boolean>(false);
 
   const { setCart } = useCartStore();
-  const { setValues } = useCheckoutStore();
+  const { setValues, setDraftFormData, clearDraftFormData, restoreDraftData } =
+    useCheckoutStore();
 
   const router = useRouter();
 
@@ -114,6 +122,7 @@ const CheckoutPage = () => {
     getValues,
     setValue,
     reset,
+    watch,
   } = useForm<OrderFormFields>({
     resolver: yupResolver(orderValidationSchema) as any,
     mode: "onBlur",
@@ -136,6 +145,35 @@ const CheckoutPage = () => {
       cilunaWallet: "",
     },
   });
+
+  useEffect(() => {
+    if (!token) {
+      const subscription = watch((formData) => {
+        setDraftFormData(formData as Partial<Checkout>);
+      });
+      return () => subscription.unsubscribe();
+    }
+  }, [watch, setDraftFormData, token]);
+
+  // Restore draft data when component mounts or when user logs in
+  useEffect(() => {
+    const savedDraft = restoreDraftData();
+    if (savedDraft && token) {
+      // User just logged in, restore their form data
+      Object.entries(savedDraft).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          setValue(key as keyof OrderFormFields, value, {
+            shouldValidate: false,
+          });
+        }
+      });
+
+      // Restore selected states if they exist
+      if (savedDraft.paymentMethod) {
+        setSelectedPaymentMethod(savedDraft.paymentMethod);
+      }
+    }
+  }, [token, restoreDraftData, setValue]);
 
   useDisableScroll(isOrderPlaced);
   useDisableScroll(isAddingNewAddress);
@@ -189,7 +227,7 @@ const CheckoutPage = () => {
 
   const onSubmit: SubmitHandler<OrderFormFields> = async (data) => {
     if (!token) {
-      toast.error("You must be logged in");
+      toast.error("You must be logged in to place an order");
       return;
     }
 
@@ -223,6 +261,22 @@ const CheckoutPage = () => {
     }
 
     try {
+      const cartResponse = await getCart(token);
+
+      if (cartResponse.cart === null) {
+        if (localCart && localCart.length > 0) {
+          const cartItems = localCart.map((item: any) => ({
+            productId: item.productId,
+            productVariantId: item.productVariantId || null,
+            quantity: item.quantity,
+            color: item.color || null,
+            size: item.size || null,
+          }));
+
+          await addMultipleToCart(cartItems, token);
+        }
+      }
+
       const { cart } = await getCart(token);
 
       const payload = {
@@ -237,6 +291,7 @@ const CheckoutPage = () => {
 
       await createOrder(payload);
       setValues(data); // set values in checkout store in order to display in order success page
+      clearDraftFormData();
       reset();
       setIsOrderPlaced(true);
     } catch (error: any) {
@@ -255,191 +310,185 @@ const CheckoutPage = () => {
           />
         </Link>
 
-        {token ? (
-          <div>
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-[32px] md:gap-[34px] lg:gap-[36px] recommend:gap-[40px] w-full bg-[#FFFFFF]/5 mt-2"
-            >
-              <div className="flex flex-col gap-[16px] md:gap-[24px] lg:flex-row w-full md:items-start">
-                <div className="flex flex-col w-full gap-4 text-gray">
-                  {/* shipping addresses */}
-                  <div className="bg-[#F5F5F5] p-4 md:p-6 rounded-[6px] flex flex-col gap-4">
-                    <div>
-                      <Title
-                        title="Shipping Address"
-                        className="!text-base md:!text-lg !leading-6 font-arialBold"
-                      />
-                    </div>
-
-                    <div className="h-[1px] bg-neutralGray-100" />
-
-                    {addresses.length === 0 ? (
-                      <InitialAddressForm
-                        control={control}
-                        errors={errors}
-                        setValue={setValue}
-                        getValues={getValues}
-                      />
-                    ) : (
-                      <div>
-                        <AddressCards
-                          options={addresses}
-                          onAddressSelect={handleAddressSelection}
-                          setIsAddingNewAddress={setIsAddingNewAddress}
-                          setSelectedAddressForEdit={setSelectedAddressForEdit}
-                          setIsEditingAddress={setIsEditingAddress}
-                          refetch={fetchData}
-                        />
-                      </div>
-                    )}
+        <div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-[32px] md:gap-[34px] lg:gap-[36px] recommend:gap-[40px] w-full bg-[#FFFFFF]/5 mt-2"
+          >
+            <div className="flex flex-col gap-[16px] md:gap-[24px] lg:flex-row w-full md:items-start">
+              <div className="flex flex-col w-full gap-4 text-gray">
+                {/* shipping addresses */}
+                <div className="bg-[#F5F5F5] p-4 md:p-6 rounded-[6px] flex flex-col gap-4">
+                  <div>
+                    <Title
+                      title="Shipping Address"
+                      className="!text-base md:!text-lg !leading-6 font-arialBold"
+                    />
                   </div>
 
-                  {/* payment methods */}
-                  <div className="bg-[#F5F5F5] p-4 md:p-6 rounded-[6px] flex flex-col gap-4">
+                  <div className="h-[1px] bg-neutralGray-100" />
+
+                  {addresses.length === 0 ? (
+                    <InitialAddressForm
+                      control={control}
+                      errors={errors}
+                      setValue={setValue}
+                      getValues={getValues}
+                    />
+                  ) : (
                     <div>
-                      <Title
-                        title="Payment Method"
-                        className="!text-base md:!text-lg !leading-6 font-arialBold"
+                      <AddressCards
+                        options={addresses}
+                        onAddressSelect={handleAddressSelection}
+                        setIsAddingNewAddress={setIsAddingNewAddress}
+                        setSelectedAddressForEdit={setSelectedAddressForEdit}
+                        setIsEditingAddress={setIsEditingAddress}
+                        refetch={fetchData}
                       />
                     </div>
+                  )}
+                </div>
 
-                    <hr className="border-t border-[#E1E1E1]" />
+                {/* payment methods */}
+                <div className="bg-[#F5F5F5] p-4 md:p-6 rounded-[6px] flex flex-col gap-4">
+                  <div>
+                    <Title
+                      title="Payment Method"
+                      className="!text-base md:!text-lg !leading-6 font-arialBold"
+                    />
+                  </div>
 
-                    <div className="flex flex-col md:flex-row gap-4">
-                      {[
-                        { icon: <CreditCard />, label: "Card" },
-                        { icon: <WalletCards />, label: "Ciluna Wallet" },
-                      ].map((payment, index) => (
-                        <div
-                          key={index}
-                          className="flex justify-between pl-3 pr-1 w-full bg-white h-[44px] items-center rounded-[8px]"
-                        >
-                          <div className="flex gap-2">
-                            {payment.icon} <p>{payment.label}</p>
-                          </div>
-                          <Checkbox
-                            isSelected={selectedPaymentMethod === payment.label}
-                            onChange={() =>
-                              handlePaymentSelection(payment.label)
-                            }
-                          ></Checkbox>
+                  <hr className="border-t border-[#E1E1E1]" />
+
+                  <div className="flex flex-col md:flex-row gap-4">
+                    {[
+                      { icon: <CreditCard />, label: "Card" },
+                      { icon: <WalletCards />, label: "Ciluna Wallet" },
+                    ].map((payment, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between pl-3 pr-1 w-full bg-white h-[44px] items-center rounded-[8px]"
+                      >
+                        <div className="flex gap-2">
+                          {payment.icon} <p>{payment.label}</p>
                         </div>
-                      ))}
-                    </div>
+                        <Checkbox
+                          isSelected={selectedPaymentMethod === payment.label}
+                          onChange={() => handlePaymentSelection(payment.label)}
+                        ></Checkbox>
+                      </div>
+                    ))}
+                  </div>
 
-                    {cards.length === 0 ? (
-                      // when there are no stored cards in db
-                      <>
-                        <AnimatePresence>
-                          {selectedPaymentMethod === "Card" && (
-                            <InitialCardForm
-                              control={control}
-                              errors={errors}
-                              setValue={setValue}
+                  {cards.length === 0 ? (
+                    // when there are no stored cards in db
+                    <>
+                      <AnimatePresence>
+                        {selectedPaymentMethod === "Card" && (
+                          <InitialCardForm
+                            control={control}
+                            errors={errors}
+                            setValue={setValue}
+                          />
+                        )}
+                      </AnimatePresence>
+                      <AnimatePresence>
+                        {selectedPaymentMethod === "Ciluna Wallet" && (
+                          <motion.div
+                            {...fadeInOut}
+                            className="grid grid-cols-1 md:grid-cols-3 gap-y-[14px] w-full gap-x-[32px] md:gap-x-4"
+                          >
+                            <CilunaCards
+                              options={cilunaOptions}
+                              selectedValue={selectedWallet}
+                              onChange={(val) => setSelectedWallet(val)}
+                              onCardSelect={handleWalletSelections}
                             />
-                          )}
-                        </AnimatePresence>
-                        <AnimatePresence>
-                          {selectedPaymentMethod === "Ciluna Wallet" && (
-                            <motion.div
-                              {...fadeInOut}
-                              className="grid grid-cols-1 md:grid-cols-3 gap-y-[14px] w-full gap-x-[32px] md:gap-x-4"
-                            >
-                              <CilunaCards
-                                options={cilunaOptions}
-                                selectedValue={selectedWallet}
-                                onChange={(val) => setSelectedWallet(val)}
-                                onCardSelect={handleWalletSelections}
-                              />
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </>
-                    ) : (
-                      <>
-                        <AnimatePresence>
-                          {selectedPaymentMethod === "Card" && (
-                            <motion.div
-                              {...fadeInOut}
-                              className="gap-y-[14px] w-full gap-x-[32px] md:gap-x-4"
-                            >
-                              <PaymentCards
-                                options={cards}
-                                selectedValue={selectedCard}
-                                onChange={(val) => setSelectedCard(val)}
-                                onCardSelect={handleCardSelection}
-                              />
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                        <AnimatePresence>
-                          {selectedPaymentMethod === "Ciluna Wallet" && (
-                            <motion.div
-                              {...fadeInOut}
-                              className="grid grid-cols-1 md:grid-cols-3 gap-y-[14px] w-full gap-x-[32px] md:gap-x-4"
-                            >
-                              <CilunaCards
-                                options={cilunaOptions}
-                                selectedValue={selectedWallet}
-                                onChange={(val) => setSelectedWallet(val)}
-                                onCardSelect={handleWalletSelections}
-                              />
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </>
-                    )}
-                  </div>
-                </div>
-                <div className="flex flex-col w-full lg:max-w-[400px] lg:gap-4">
-                  <Summary
-                    text="Place Order"
-                    handlePlaceOrder={setIsOrderPlaced}
-                    editCart={true}
-                  />
-                  <div className="flex flex-col p-4 md:p-6 bg-[#F5F5F5] gap-4 text-gray font-arial rounded-[6px]">
-                    <div className="flex gap-2 items-center">
-                      <h2 className="text-xl leading-6 font-arialBold font-bold">
-                        Ciluna
-                      </h2>
-                      <ShieldCheck className="w-5 h-5" />
-                    </div>
-                    <p>Ciluna keeps your information and payment safe</p>
-                  </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  ) : (
+                    <>
+                      <AnimatePresence>
+                        {selectedPaymentMethod === "Card" && (
+                          <motion.div
+                            {...fadeInOut}
+                            className="gap-y-[14px] w-full gap-x-[32px] md:gap-x-4"
+                          >
+                            <PaymentCards
+                              options={cards}
+                              selectedValue={selectedCard}
+                              onChange={(val) => setSelectedCard(val)}
+                              onCardSelect={handleCardSelection}
+                            />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                      <AnimatePresence>
+                        {selectedPaymentMethod === "Ciluna Wallet" && (
+                          <motion.div
+                            {...fadeInOut}
+                            className="grid grid-cols-1 md:grid-cols-3 gap-y-[14px] w-full gap-x-[32px] md:gap-x-4"
+                          >
+                            <CilunaCards
+                              options={cilunaOptions}
+                              selectedValue={selectedWallet}
+                              onChange={(val) => setSelectedWallet(val)}
+                              onCardSelect={handleWalletSelections}
+                            />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  )}
                 </div>
               </div>
-            </form>
-            {isAddingNewCard && (
-              <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
-                <PaymentCardForm onClose={handleCloseNewCard} />
-              </div>
-            )}
-
-            {isAddingNewAddress && (
-              <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
-                <ShippingAddressForm
-                  title="Add a Shipping Address"
-                  onClose={setIsAddingNewAddress}
-                  onSuccess={fetchData}
+              <div className="flex flex-col w-full lg:max-w-[400px] lg:gap-4">
+                <Summary
+                  text="Place Order"
+                  handlePlaceOrder={setIsOrderPlaced}
+                  editCart={true}
                 />
+                <div className="flex flex-col p-4 md:p-6 bg-[#F5F5F5] gap-4 text-gray font-arial rounded-[6px]">
+                  <div className="flex gap-2 items-center">
+                    <h2 className="text-xl leading-6 font-arialBold font-bold">
+                      Ciluna
+                    </h2>
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <p>Ciluna keeps your information and payment safe</p>
+                </div>
               </div>
-            )}
+            </div>
+          </form>
+          {isAddingNewCard && (
+            <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
+              <PaymentCardForm onClose={handleCloseNewCard} />
+            </div>
+          )}
 
-            {isEditingAddress && (
-              <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
-                <ShippingAddressForm
-                  title="Edit Shipping Address"
-                  selectedAddressForEdit={selectedAddressForEdit}
-                  onClose={setIsEditingAddress}
-                  onSuccess={fetchData}
-                />
-              </div>
-            )}
-          </div>
-        ) : (
-          <div>Please login or register to place an order</div>
-        )}
+          {isAddingNewAddress && (
+            <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
+              <ShippingAddressForm
+                title="Add a Shipping Address"
+                onClose={setIsAddingNewAddress}
+                onSuccess={fetchData}
+              />
+            </div>
+          )}
+
+          {isEditingAddress && (
+            <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
+              <ShippingAddressForm
+                title="Edit Shipping Address"
+                selectedAddressForEdit={selectedAddressForEdit}
+                onClose={setIsEditingAddress}
+                onSuccess={fetchData}
+              />
+            </div>
+          )}
+        </div>
 
         {isOrderPlaced && (
           <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4 overflow-y-auto">

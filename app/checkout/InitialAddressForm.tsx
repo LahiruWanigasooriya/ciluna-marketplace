@@ -1,5 +1,5 @@
 import SelectDropdown from "@/components/ui/select-dropdown";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactCountryFlag from "react-country-flag";
 import {
   Control,
@@ -37,6 +37,19 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
   const countryOptions = useMemo(() => countryList().getData(), []);
   const [selectedProvince, setSelectedProvince] = useState<string>();
   const [selectedDistrict, setSelectedDistrict] = useState<string>();
+
+  useEffect(() => {
+    const province = getValues("province");
+    const district = getValues("district");
+    
+    if (province && province !== selectedProvince) {
+      setSelectedProvince(province);
+    }
+    if (district && district !== selectedDistrict) {
+      setSelectedDistrict(district);
+    }
+  }, [getValues, selectedProvince, selectedDistrict]);
+  
   const districts =
     provinces.find((p) => p.value === selectedProvince)?.districts || [];
   const towns =
