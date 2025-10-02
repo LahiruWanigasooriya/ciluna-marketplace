@@ -24,7 +24,7 @@ const QuantitySelector: React.FC<QuantityProps> = ({
   const [quantity, setQuantity] = React.useState(() => {
     // Initialize from cart if it exists
     if (isCartContext && productId) {
-      const cartItem = cart.find((item) => item.productId._id === productId);
+      const cartItem = cart.find((item) => item._id === productId);
       return cartItem?.quantity || initialQuantity;
     }
     return initialQuantity;
@@ -47,7 +47,7 @@ const QuantitySelector: React.FC<QuantityProps> = ({
     if (cartItem && cartItem.quantity !== quantity) {
       setQuantity(cartItem.quantity);
     }
-  }, [cart.length]);
+  }, [cart, productId]);
 
   const increaseQuantity = () => {
     const newQuantity = quantity + 1;

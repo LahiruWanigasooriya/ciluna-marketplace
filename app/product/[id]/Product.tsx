@@ -79,7 +79,9 @@ const Product: React.FC<ProductProps> = ({
 
   const { cart, addToCartItem, setCart, updateQuantity } = useCartStore();
 
-  const [isCartContext, setIsCartContext] = useState<boolean>(cart.find((item) => item.productId._id === product._id) ? true : false);
+  const [isCartContext, setIsCartContext] = useState<boolean>(
+    cart.find((item) => item.productId === product._id) ? true : false
+  );
   // For color variant selection
   // const [selectColor, setSelectColor] = useState<string[]>([product.colorCode || ""]);
   const [selectColor, setSelectColor] = useState<ColorOption[]>(
@@ -91,8 +93,6 @@ const Product: React.FC<ProductProps> = ({
     selectColor[0]?.name || ""
   );
   const [selectSize, setSelectSize] = useState<string[]>([product.size || ""]);
-
-  console.log(product);
 
   const availableSizes = availableCombinations
     .filter((c) => c.color === selectedColor)
@@ -261,8 +261,8 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleAddToCart = async () => {
-    const cartItem = cart.find((item) => item.productId._id === product._id);
-     if (cartItem) {
+    const cartItem = cart.find((item) => item.productId === product._id);
+    if (cartItem) {
       toast.error("Product is already in the cart");
       return;
     }
@@ -287,7 +287,7 @@ const Product: React.FC<ProductProps> = ({
             size: selectedSize,
           };
 
-      console.log("cart data to add in prouct: ", cartData);
+      setQuantity(1);
 
       try {
         await addToCart(cartData);
@@ -648,7 +648,7 @@ const Product: React.FC<ProductProps> = ({
                 <div className="block xl:hidden mb-2">
                   <QuantitySelector
                     initialQuantity={1}
-                    productId={product._id}
+                    productId={isCartContext ? cart.find(item => item.productId === product._id)._id: product._id}
                     isCartContext={isCartContext}
                     onQuantityChange={(newQuantity) =>
                       handleQuantityUpdate(product, newQuantity)
@@ -674,7 +674,7 @@ const Product: React.FC<ProductProps> = ({
                 <div className="hidden xl:block">
                   <QuantitySelector
                     initialQuantity={1}
-                    productId={product._id}
+                    productId={isCartContext ? cart.find(item => item.productId === product._id)._id: product._id}
                     isCartContext={isCartContext}
                     onQuantityChange={(newQuantity) =>
                       handleQuantityUpdate(product, newQuantity)
