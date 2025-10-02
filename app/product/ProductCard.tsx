@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { FaCartPlus } from "react-icons/fa6";
 import { RiHeart3Fill, RiHeart3Line } from "react-icons/ri";
 import { IProduct } from "@/types/product";
 import Link from "next/link";
@@ -12,17 +11,20 @@ import { ColorDot } from "@/components/ui/color-dot";
 import { updateWishlist } from "@/actions/wishlists/wishlist";
 import { v4 as uuidv4 } from "uuid";
 import { useAuthStore } from "@/store/authStore";
-import { useQuantityStore } from "@/store/quantity";
 import { addToCart, getCart } from "@/actions/carts/cart";
 import { useCartStore } from "@/store/cart";
 import { toast } from "sonner";
 import { formatPrice } from "@/utils/getDiscountPrice";
 import { useUserId } from "@/hooks/useUserId";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
+import cartIcon from "@/public/assets/product/cartIcon.webp";
+import { AnimatePresence, motion } from "framer-motion";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { cart } = useCartStore();
+  const quantity = cart.find(item => item.productId === product._id)?.quantity ?? 0;
   const { getToken } = useAuthStore();
   const token = getToken();
   const userId = useUserId();
@@ -37,39 +39,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   // });
   const price = product.price;
   const discount = product.discount?.percentage || null;
-  const { quantity } = useQuantityStore();
   const { addToCartItem, setCart } = useCartStore();
   const discountPrice = getDiscountedPrice(price, discount);
-
-  // useEffect(() => {
-  //   const fetchPrices = async () => {
-  //     try {
-  //       const rate = await fetchExchangeRate();
-  //       const originalUSD = product.price / rate;
-  //       const discountedUSD =
-  //         getDiscountedPrice(product.price, product.discount?.percentage || 0) /
-  //         rate;
-
-  //       setUsdPrices({
-  //         original: formatPrice(originalUSD),
-  //         discounted: formatPrice(discountedUSD),
-  //       });
-  //     } catch (error) {
-  //       console.error("Failed to fetch exchange rate", error);
-  //       setUsdPrices({
-  //         original: formatPrice(product.price / 300),
-  //         discounted: formatPrice(
-  //           getDiscountedPrice(
-  //             product.price,
-  //             product.discount?.percentage || 0
-  //           ) / 300
-  //         ),
-  //       });
-  //     }
-  //   };
-
-  //   fetchPrices();
-  // }, [product.price, product.discount?.percentage]);
 
   // const isFavorited = false;
   const isFavorited = wishlist?.some((item) => item._id === product._id);
@@ -99,7 +70,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     }
   };
 
-  const handleAddToCart = async (event: React.MouseEvent<SVGElement>) => {
+  const handleAddToCart = async (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
     event.nativeEvent.stopImmediatePropagation();
@@ -109,7 +80,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     if (token) {
       const cartData = {
         productId: product._id,
-        quantity: quantity,
+        quantity: 1,
       };
 
       try {
@@ -145,7 +116,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         description: product.description,
         discount: product.discount?.percentage,
         stock: product.stock,
-        quantity: quantity,
+        quantity: 1,
         image: product.image,
         price: price,
         sold: product.sold,
@@ -245,11 +216,36 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               {isLoading ? (
                 <Skeleton className="w-6 h-6" />
               ) : (
-                <div className="rounded-full w-8 md:w-12 h-8 md:h-12 p-2 md:p-3 bg-[#252525] flex justify-center items-center">
-                  <FaCartPlus
-                    className="w-4 h-4 md:w-6 md:h-6 text-white"
-                    onClick={handleAddToCart}
+                <div
+                  onClick={handleAddToCart}
+                  className="rounded-full w-8 xl:w-12 h-8 xl:h-12 bg-[#252525] flex justify-center items-center hover:opacity-90 relative"
+                >
+                  <Image
+                    alt="cart icon"
+                    src={cartIcon}
+                    className="w-4 h-4 xl:w-6 xl:h-6 text-white"
+                    sizes="(max-width: 768px) 164px, 294px"
+                    placeholder="blur"
+                    blurDataURL="/placeholder-image.jpg"
                   />
+                  <AnimatePresence>
+                    {quantity > 0 && (
+                      <motion.div
+                        key={quantity} // re-triggers animation when number changes
+                        initial={{ x: 15, opacity: 0, scale: 0.5 }}
+                        animate={{ x: 10, opacity: 1, scale: 1 }}
+                        exit={{ x: 15, opacity: 0, scale: 0.5 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 20,
+                        }}
+                        className="absolute -top-1/4 right-1/4 xl:right-0 translate-x-1/4 -translate-y-1/4 bg-gray text-white text-xs xl:text-sm font-arial w-4 h-4 xl:w-6 xl:h-6 rounded-full flex items-center justify-center"
+                      >
+                        {quantity}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               )}
             </div>
