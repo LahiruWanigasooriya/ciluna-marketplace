@@ -306,7 +306,7 @@ const CheckoutPage = () => {
           <ArrowLeft />
           <Title
             title="Shopping Details"
-            className="!font-arialBold md:!font-dmSansBold !text-xl md:!text-2xl leading-[32px]"
+            className="!font-dmSansBold !text-xl md:!text-2xl leading-[32px]"
           />
         </Link>
 
