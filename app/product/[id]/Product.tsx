@@ -80,7 +80,7 @@ const Product: React.FC<ProductProps> = ({
   const { cart, addToCartItem, setCart, updateQuantity } = useCartStore();
 
   const [isCartContext, setIsCartContext] = useState<boolean>(
-    cart.find((item) => item.productId === product._id) ? true : false
+    cart.find((item) => item.productId._id === product._id) ? true : false
   );
   // For color variant selection
   // const [selectColor, setSelectColor] = useState<string[]>([product.colorCode || ""]);
@@ -261,7 +261,7 @@ const Product: React.FC<ProductProps> = ({
   };
 
   const handleAddToCart = async () => {
-    const cartItem = cart.find((item) => item.productId === product._id);
+    const cartItem = cart.find((item) => item.productId._id === product._id);
     if (cartItem) {
       toast.error("Product is already in the cart");
       return;
@@ -648,7 +648,7 @@ const Product: React.FC<ProductProps> = ({
                 <div className="block xl:hidden mb-2">
                   <QuantitySelector
                     initialQuantity={1}
-                    productId={isCartContext ? cart.find(item => item.productId === product._id)._id: product._id}
+                    productId={isCartContext ? cart.find(item => item.productId._id === product._id)._id: product._id}
                     isCartContext={isCartContext}
                     onQuantityChange={(newQuantity) =>
                       handleQuantityUpdate(product, newQuantity)
@@ -674,7 +674,7 @@ const Product: React.FC<ProductProps> = ({
                 <div className="hidden xl:block">
                   <QuantitySelector
                     initialQuantity={1}
-                    productId={isCartContext ? cart.find(item => item.productId === product._id)._id: product._id}
+                    productId={isCartContext ? cart.find(item => item.productId._id === product._id)._id: product._id}
                     isCartContext={isCartContext}
                     onQuantityChange={(newQuantity) =>
                       handleQuantityUpdate(product, newQuantity)

@@ -589,3 +589,169 @@ export async function clearCart(token?: string) {
     };
   }
 }
+
+// Add multiple items to cart
+export async function addMultipleToCart(
+  items: AddToCartParams[],
+  token?: string
+) {
+  try {
+    await dbConnectMarketPlace();
+
+    const authToken = token || (await cookies()).get("authToken")?.value;
+
+    if (!authToken) {
+      return {
+        status: 401,
+        success: false,
+        message: "Unauthorized: No token provided",
+      };
+    }
+
+    const tokenResponse = await verifyToken(authToken);
+    if (tokenResponse.status !== 200) {
+      return { success: false, message: tokenResponse.message };
+    }
+
+    const userId = tokenResponse.userId;
+
+    // Find or create cart
+    let cart = await CartModel.findOne({ userId, isDeleted: false });
+
+    if (!cart) {
+      cart = new CartModel({
+        userId,
+        items: [],
+        totalPrice: 0,
+        discountAmount: 0,
+        finalPrice: 0,
+      });
+    }
+
+    // Process each item
+    for (const item of items) {
+      // Validate product
+      const product = await ProductModel.findById(item.productId);
+      if (!product) continue;
+
+      let finalPrice = product.price;
+      let discount = product.discount?.percentage || 0;
+      let stockToCheck = product.stock;
+
+      // Handle variant
+      if (item.productVariantId) {
+        const variant = await ProductVariantModel.findById(
+          item.productVariantId
+        ).populate({
+          path: "subCategoryIds",
+          select: "value",
+        });
+
+        if (!variant || variant.productId.toString() !== item.productId) {
+          continue;
+        }
+
+        finalPrice = variant.price;
+        discount = variant.discount?.percentage || 0;
+        stockToCheck = variant.stock;
+      }
+
+      // Check if item already exists in cart
+      const existingItemIndex = cart.items.findIndex((cartItem: any) =>
+        item.productVariantId
+          ? cartItem.productId.toString() === item.productId &&
+            cartItem.productVariantId?.toString() === item.productVariantId
+          : cartItem.productId.toString() === item.productId &&
+            !cartItem.productVariantId
+      );
+
+      // Calculate totals
+      const itemTotal = finalPrice * item.quantity;
+      const discountAmount = (itemTotal * discount) / 100;
+      const finalTotal = itemTotal - discountAmount;
+
+      if (existingItemIndex !== -1) {
+        // Update existing item
+        const newQuantity = cart.items[existingItemIndex].quantity + item.quantity;
+        
+        // Check stock
+        if (newQuantity > stockToCheck) {
+          continue; // Skip if exceeds stock
+        }
+
+        cart.items[existingItemIndex].quantity = newQuantity;
+        cart.items[existingItemIndex].total = newQuantity * finalPrice;
+        cart.items[existingItemIndex].discount =
+          (cart.items[existingItemIndex].total * discount) / 100;
+        cart.items[existingItemIndex].finalTotal =
+          cart.items[existingItemIndex].total -
+          cart.items[existingItemIndex].discount;
+      } else {
+        // Check stock for new item
+        if (item.quantity > stockToCheck) {
+          continue;
+        }
+
+        // Add new item
+        cart.items.push({
+          productId: item.productId,
+          productVariantId: item.productVariantId || null,
+          quantity: item.quantity,
+          price: finalPrice,
+          discount,
+          discountAmount,
+          total: itemTotal,
+          finalTotal: finalTotal,
+          color: item.color,
+          size: item.size,
+        });
+      }
+    }
+
+    // Recalculate cart totals
+    cart.totalPrice = cart.items.reduce(
+      (sum: any, item: any) => sum + item.total,
+      0
+    );
+    cart.discountAmount = cart.items.reduce(
+      (sum: any, item: any) => sum + item.discount,
+      0
+    );
+    cart.finalPrice = cart.items.reduce(
+      (sum: any, item: any) => sum + item.finalTotal,
+      0
+    );
+
+    await cart.save();
+
+    // Populate cart
+    await cart.populate([
+      {
+        path: "items.productId",
+        select: "name image brand model price discount",
+      },
+      {
+        path: "items.productVariantId",
+        select: "price stock",
+        populate: {
+          path: "subCategoryIds",
+          model: "ProductVariantSubCategory",
+          select: "value subValue",
+        },
+      },
+    ]);
+
+    return {
+      success: true,
+      message: "Items added to cart successfully",
+      cart: JSON.parse(JSON.stringify(cart.toObject())),
+    };
+  } catch (error) {
+    console.error("Error adding multiple items to cart:", error);
+    return {
+      success: false,
+      message: "Failed to add items to cart",
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}

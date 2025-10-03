@@ -100,9 +100,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ onCancel }) => {
                 { label: "date", value: formattedDate },
                 { label: "reward points", value: rewardPoints },
                 { label: "payment method", value: order.paymentMethod },
-                { label: "total bill", value: `$${totalPrice.toFixed(2)}` },
+                { label: "total bill", value: `$${(totalPrice/rate).toFixed(2)}` },
                 { label: "tax (VAT)", value: tax },
-                { label: "discount", value: `- $${discount.toFixed(2)}` },
+                { label: "discount", value: `- $${(discount/rate).toFixed(2)}` },
                 { label: "shipping", value: shipping },
               ].map((item, index) => (
                 <div key={index} className="flex flex-col gap-3">
@@ -200,7 +200,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ onCancel }) => {
                       </div>
                       <div className="flex flex-col sm:flex-row sm:justify-between w-full">
                         <div>
-                          <p className="font-bold">{product.productId.name}</p>
+                          <p className="font-bold">{product.productId.name || product.name}</p>
                           {(product.color || product.size) && (
                             <div className="flex text-gray">
                               <h2 className="text-sm">
