@@ -266,7 +266,7 @@ const CheckoutPage = () => {
       if (cartResponse.cart === null) {
         if (localCart && localCart.length > 0) {
           const cartItems = localCart.map((item: any) => ({
-            productId: item.productId,
+            productId: item.productId._id,
             productVariantId: item.productVariantId || null,
             quantity: item.quantity,
             color: item.color || null,
@@ -306,7 +306,7 @@ const CheckoutPage = () => {
           <ArrowLeft />
           <Title
             title="Shopping Details"
-            className="!font-arialBold md:!font-dmSansBold !text-xl md:!text-2xl leading-[32px]"
+            className="!font-dmSansBold !text-xl md:!text-2xl leading-[32px]"
           />
         </Link>
 
