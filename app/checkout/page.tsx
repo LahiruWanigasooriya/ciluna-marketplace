@@ -266,7 +266,7 @@ const CheckoutPage = () => {
       if (cartResponse.cart === null) {
         if (localCart && localCart.length > 0) {
           const cartItems = localCart.map((item: any) => ({
-            productId: item.productId,
+            productId: item.productId._id,
             productVariantId: item.productVariantId || null,
             quantity: item.quantity,
             color: item.color || null,

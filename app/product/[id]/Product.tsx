@@ -304,7 +304,7 @@ const Product: React.FC<ProductProps> = ({
         ? {
             _id: cartItemId,
             product,
-            productId: product._id,
+            productId: product,
             name: product.name,
             description: product.description,
             productVariantId: variantId,
@@ -322,7 +322,7 @@ const Product: React.FC<ProductProps> = ({
         : {
             _id: cartItemId,
             product,
-            productId: product._id,
+            productId: product,
             name: product.name,
             description: product.description,
             discount: product.discount?.percentage,
