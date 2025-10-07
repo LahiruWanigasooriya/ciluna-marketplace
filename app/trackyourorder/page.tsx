@@ -1,4 +1,4 @@
-import imageBanner from "@/public/assets/trackYourOrder/ImageBanner.png";
+import imageBanner from "@/public/assets/trackYourOrder/ImageBanner.webp";
 import React from "react";
 import Image from "next/image";
 import TrackingDetails from "./trackingDetails"

@@ -33,12 +33,12 @@ const ServicesLinks: Section[] = [
   {
     title: "Client Services",
     links: [
-      { name: "Care Guides", href: "/" },
+      { name: "Care Guides", href: "/careguide" },
       { name: "Contact Us", href: "/" },
       { name: "Help/ FAQ", href: "/" },
       { name: "Orders & Shipping", href: "/order-shipping" },
       { name: "Return & Refunds", href: "/" },
-      { name: "Track Your Order", href: "/" },
+      { name: "Track Your Order", href: "/trackyourorder" },
     ],
   },
 ];
