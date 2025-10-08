@@ -129,6 +129,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
               <Tel
                 value={getValues("mobileNumber")}
                 onChange={(phone: string) => setValue("mobileNumber", phone)}
+                label="Mobile Number*"
               />
             )}
           />

@@ -132,6 +132,7 @@ const AskQuestions: React.FC<AskQuestionsProps> = ({ onClose }) => {
               onChange={(isSelected: boolean) =>
                 setValue("keepMeUpdated", isSelected)
               }
+              labelClassName="!gap-x-[6px]"
             >
               Keep me up to date on news and events.
             </Checkbox>

@@ -112,7 +112,7 @@ const PaymentCardForm: React.FC<PaymentCardFormProps> = ({ onClose }) => {
               control={control}
               render={({ field }) => (
                 <TextField
-                  label="Card Number"
+                  label="Card Number*"
                   className="custom-textfield"
                   inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray"
                   groupClassName="border border-[#E1E1E1]"
