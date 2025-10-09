@@ -200,7 +200,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ onCancel }) => {
                       </div>
                       <div className="flex flex-col sm:flex-row sm:justify-between w-full">
                         <div>
-                          <p className="font-bold">{product.productId.name || product.name}</p>
+                          <p className="font-arialBold">{product.productId.name || product.name}</p>
                           {(product.color || product.size) && (
                             <div className="flex text-gray">
                               <h2 className="text-sm">

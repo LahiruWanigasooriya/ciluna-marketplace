@@ -207,6 +207,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                       setValue("mobileNumber", phone)
                     }
                     className="border border-[#E1E1E1]"
+                    label="Mobile Number*"
                   />
                 )}
               />
@@ -225,7 +226,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                 control={control}
                 render={({ field }) => (
                   <TextField
-                    label="Street name and number"
+                    label="Street name and number*"
                     className="custom-textfield w-full"
                     inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray border border-[#E1E1E1]"
                     groupClassName="border border-[#E1E1E1]"

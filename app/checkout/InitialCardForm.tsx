@@ -70,7 +70,7 @@ const InitialCardForm: React.FC<InitialCardFormProps> = ({
           control={control}
           render={({ field }) => (
             <TextField
-              label="Card Number"
+              label="Card Number*"
               className="custom-textfield font-arial"
               inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray"
               groupClassName="border-none"

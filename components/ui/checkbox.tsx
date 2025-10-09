@@ -70,6 +70,7 @@ const boxStyles = tv({
 interface CheckboxProps extends CheckboxPrimitiveProps {
   description?: string
   label?: string
+  labelClassName?: string
 }
 
 const Checkbox = ({ className, ...props }: CheckboxProps) => {
@@ -81,7 +82,7 @@ const Checkbox = ({ className, ...props }: CheckboxProps) => {
       )}
     >
       {({ isSelected, isIndeterminate, ...renderProps }) => (
-        <div className={cn("flex gap-x-2", props.description ? "items-start" : "items-center")}>
+        <div className={cn(props.labelClassName, "flex gap-x-2", props.description ? "items-start" : "items-center")}>
           <div
             className={boxStyles({
               ...renderProps,
