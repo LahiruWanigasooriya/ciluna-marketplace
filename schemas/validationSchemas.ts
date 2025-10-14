@@ -225,26 +225,26 @@ export const paymentValidationSchema = Yup.object().shape({
     then: (schema) => schema.required("Name on card is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
-  cardNumber: Yup.string().when("paymentMethod", {
-    is: "Card",
-    then: (schema) => schema.required("Card number is required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  expireMonth: Yup.string().when("paymentMethod", {
-    is: "Card",
-    then: (schema) => schema.required("Month is required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  expireYear: Yup.string().when("paymentMethod", {
-    is: "Card",
-    then: (schema) => schema.required("Year is required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  cvv: Yup.string().when("paymentMethod", {
-    is: "Card",
-    then: (schema) => schema.required("CVV is required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  // cardNumber: Yup.string().when("paymentMethod", {
+  //   is: "Card",
+  //   then: (schema) => schema.required("Card number is required"),
+  //   otherwise: (schema) => schema.notRequired(),
+  // }),
+  // expireMonth: Yup.string().when("paymentMethod", {
+  //   is: "Card",
+  //   then: (schema) => schema.required("Month is required"),
+  //   otherwise: (schema) => schema.notRequired(),
+  // }),
+  // expireYear: Yup.string().when("paymentMethod", {
+  //   is: "Card",
+  //   then: (schema) => schema.required("Year is required"),
+  //   otherwise: (schema) => schema.notRequired(),
+  // }),
+  // cvv: Yup.string().when("paymentMethod", {
+  //   is: "Card",
+  //   then: (schema) => schema.required("CVV is required"),
+  //   otherwise: (schema) => schema.notRequired(),
+  // }),
   rememberCardDetails: Yup.boolean().when("paymentMethod", {
     is: "Card",
     then: (schema) => schema.required(),

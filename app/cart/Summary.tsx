@@ -3,9 +3,10 @@ import { useCartStore } from "@/store/cart";
 import { getDiscountedPrice } from "@/utils/getDiscountPrice";
 import { ChevronDown, ChevronUp, PencilLine } from "lucide-react";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
+import { useCheckoutStore } from "@/store/checkout";
 
 interface SummaryProps {
   text: string;
