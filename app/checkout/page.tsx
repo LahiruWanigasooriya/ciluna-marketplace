@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Title from "@/components/custom/Title";
 import { Checkbox } from "@/components/ui";
@@ -38,6 +44,12 @@ import { useRouter } from "next/navigation";
 import { useUserId } from "@/hooks/useUserId";
 import InitialAddressForm from "./InitialAddressForm";
 import InitialCardForm from "./InitialCardForm";
+import {
+  payWithSavedCard,
+} from "@/actions/utils/payment/stripePayment";
+import StripeProvider from "@/components/custom/payments/StripeProvider";
+import { getDiscountedPrice } from "@/utils/getDiscountPrice";
+import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 interface OptionType {
   value: string;
@@ -84,9 +96,27 @@ const CheckoutPage = () => {
   const [isEditingAddress, setIsEditingAddress] = useState<boolean>(false);
   const [isAddingNewCard, setIsAddingNewCard] = useState<boolean>(false);
 
+  const cardRef = useRef<any>(null);
+  const { rate } = useExchangeRate();
+
   const { setCart } = useCartStore();
   const { setValues, setDraftFormData, clearDraftFormData, restoreDraftData } =
     useCheckoutStore();
+
+  const calculateTotals = (items: any[]) => {
+    const totalPrice = items.reduce(
+      (acc, item) =>
+        acc +
+        getDiscountedPrice(item.price / rate, item.discount) * item.quantity,
+      0
+    );
+    const discount = totalPrice * 0.1; // 10% discount as per your logic
+    const finalPrice = totalPrice - discount;
+
+    return { totalPrice, discount, finalPrice };
+  };
+
+  const { finalPrice } = useMemo(() => calculateTotals(localCart), [localCart]);
 
   const router = useRouter();
 
@@ -136,10 +166,6 @@ const CheckoutPage = () => {
       town: "",
       paymentMethod: "Ciluna Wallet",
       holderName: "",
-      cardNumber: "",
-      expireMonth: "",
-      expireYear: "",
-      cvv: "",
       isDefault: false,
       rememberCardDetails: false,
       cilunaWallet: "",
@@ -200,11 +226,11 @@ const CheckoutPage = () => {
 
   const handleCardSelection = (card: PaymentCardOption) => {
     setValue("paymentMethod", "Card");
-    setValue("holderName", card.holderName);
-    setValue("cardNumber", card.cardNumber);
-    setValue("expireMonth", card.expireMonth);
-    setValue("expireYear", card.expireYear);
-    setValue("cvv", card.cvv);
+    setValue("holderName", card.cardHolderName);
+    // setValue("cardNumber", card.cardNumber);
+    // setValue("expireMonth", card.expireMonth);
+    // setValue("expireYear", card.expireYear);
+    // setValue("cvv", card.cvv);
   };
 
   const handleWalletSelections = (card: OptionType) => {
@@ -231,6 +257,27 @@ const CheckoutPage = () => {
       return;
     }
 
+    if (cards.length === 0) {
+      const result = await cardRef.current.submitPayment();
+
+      if (result.error) {
+        toast.error(`Stripe error: ${result.error.message}`);
+        return;
+      }
+    } else {
+      const selectedCardObj = cards.find(
+        (card) => card.stripeCustomerId === selectedCard
+      );
+      if (selectedCardObj) {
+        const result = await payWithSavedCard(
+          selectedCardObj.stripeCustomerId,
+          selectedCardObj.paymentMethodId,
+          finalPrice
+        );
+        console.log("result: ", result);
+      }
+    }
+
     const address = {
       contactName: data.contactName,
       mobileNumber: data.mobileNumber,
@@ -243,22 +290,22 @@ const CheckoutPage = () => {
       isDefault: data.isDefault,
     };
 
-    const card = {
-      holderName: data.holderName,
-      cardNumber: data.cardNumber,
-      expireMonth: data.expireMonth,
-      expireYear: data.expireYear,
-      cvv: data.cvv,
-      rememberCardDetails: data.rememberCardDetails,
-    };
+    // const card = {
+    //   holderName: data.holderName,
+    //   cardNumber: data.cardNumber,
+    //   expireMonth: data.expireMonth,
+    //   expireYear: data.expireYear,
+    //   cvv: data.cvv,
+    //   rememberCardDetails: data.rememberCardDetails,
+    // };
 
     if (addresses.length === 0) {
       await createAddress(userId, address);
     }
 
-    if (cards.length === 0 && data.paymentMethod === "Card") {
-      await createCard(userId, card);
-    }
+    // if (cards.length === 0 && data.paymentMethod === "Card") {
+    //   await createCard(userId, card);
+    // }
 
     try {
       const cartResponse = await getCart(token);
@@ -385,11 +432,21 @@ const CheckoutPage = () => {
                     <>
                       <AnimatePresence>
                         {selectedPaymentMethod === "Card" && (
-                          <InitialCardForm
-                            control={control}
-                            errors={errors}
-                            setValue={setValue}
-                          />
+                          <StripeProvider
+                            options={{
+                              mode: "payment",
+                              amount: Math.round(finalPrice * 100),
+                              currency: "usd",
+                            }}
+                          >
+                            <InitialCardForm
+                              control={control}
+                              errors={errors}
+                              setValue={setValue}
+                              getValues={getValues}
+                              ref={cardRef}
+                            />
+                          </StripeProvider>
                         )}
                       </AnimatePresence>
                       <AnimatePresence>
@@ -464,7 +521,15 @@ const CheckoutPage = () => {
           </form>
           {isAddingNewCard && (
             <div className="bg-black/50 backdrop-blur-sm fixed h-full w-full inset-0 z-30 flex justify-center items-center px-4">
-              <PaymentCardForm onClose={handleCloseNewCard} />
+              <StripeProvider
+                options={{
+                  mode: "payment",
+                  amount: Math.round(finalPrice * 100),
+                  currency: "usd",
+                }}
+              >
+                <PaymentCardForm onClose={handleCloseNewCard} />
+              </StripeProvider>
             </div>
           )}
 

@@ -45,7 +45,7 @@ export async function createOrder(orderData: any) {
     if (paymentResponse.success) {
       // Payment successful, update order
       savedOrder.payment.status = "completed";
-      savedOrder.payment.transactionId = paymentResponse.transactionId;
+      // savedOrder.payment.transactionId = paymentResponse.transactionId;
       savedOrder.status = "processing";
       await savedOrder.save();
 

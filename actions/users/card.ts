@@ -2,38 +2,45 @@
 
 import mongoose from "mongoose";
 import CardModel from "@/models/card";
+import UserModel from "@/models/user";
+import Stripe from "stripe";
+import { PaymentMethod } from "@stripe/stripe-js";
 
-interface CardInput {
-  holderName?: string;
-  cardNumber?: string;
-  expireMonth?: string;
-  expireYear?: string;
-  cvv?: string;
-  rememberCardDetails?: boolean;
+const stripeSecretKey = process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY;
+if (!stripeSecretKey) {
+  throw new Error("STRIPE_SECRET_KEY is not defined in environment variables.");
 }
 
-export async function createCard(userId: string, card: CardInput) {
-  try {
-    if (!card.rememberCardDetails) {
-      return {
-        success: false,
-        message: "Card not saved (rememberCardDetails is false)",
-      };
-    }
+const stripe = new Stripe(stripeSecretKey, {
+  apiVersion: "2023-10-16" as any,
+});
 
-    const newCard = new CardModel({
-      userId: new mongoose.Types.ObjectId(userId),
-      ...card,
-    });
+export const createCard = async (
+  userId: string,
+  stripeCustomerId: string,
+  cardHolderName: string,
+  paymentMethodId: string | PaymentMethod,
+) => {
+  const paymentMethodIdStr =
+    typeof paymentMethodId === "string" ? paymentMethodId : paymentMethodId.id;
 
-    await newCard.save();
+  const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodIdStr);
 
-    return { success: true, message: "Card saved successfully" };
-  } catch (error: any) {
-    console.error("Error saving card:", error);
-    return { success: false, message: error.message };
-  }
-}
+  const newCard = new CardModel({
+    userId,
+    stripeCustomerId,
+    paymentMethodId: paymentMethod.id,
+    brand: paymentMethod.card?.brand,
+    last4: paymentMethod.card?.last4,
+    expMonth: paymentMethod.card?.exp_month,
+    expYear: paymentMethod.card?.exp_year,
+    cardHolderName,
+  });
+
+  await newCard.save();
+
+  return {status: 200, success: true, messagee: "Card stored successfully", card: JSON.parse(JSON.stringify(newCard))};
+};
 
 export async function getCardsByUser(userId: string) {
   try {
