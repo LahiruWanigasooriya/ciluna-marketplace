@@ -464,7 +464,7 @@ const SubMenu: React.FC<{
                       {subsub.name}
                     </Link>
                   ))}
-                <div className="sm:hidden border-b my-[16px]"></div>
+                <div className="sm:hidden border-b-[0.5px] border-[#E1E1E1] my-[16px]"></div>
               </div>
             </div>
           ))
