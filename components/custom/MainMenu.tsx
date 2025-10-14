@@ -232,7 +232,7 @@ export default function MainMenu({
             {/* submenu */}
             {isMainMenuActive && activeMenu && (
               <motion.div
-                className="absolute left-0 top-full shadow-sm w-full z-10 bg-[#FFFFFFF5]"
+                className="absolute left-0 top-full shadow-sm w-full z-10 bg-[#FFFFFF]"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -282,7 +282,7 @@ export default function MainMenu({
                 <motion.button
                   type="button"
                   onClick={() => setActiveMenu(null)}
-                  className="text-[16px] text-gray-600"
+                  className="text-[16px] text-[#252525]"
                   whileTap={{ scale: 0.95 }}
                 >
                   ❮&nbsp;&nbsp; Back
@@ -346,7 +346,7 @@ export default function MainMenu({
                       >
                         <AiOutlineLoading3Quarters className="text-2xl text-gray-600" />
                       </motion.div>
-                      <span className="text-gray-600 text-sm font-medium">
+                      <span className="text-[#252525] text-sm font-medium">
                         Loading Categories...
                       </span>
                     </div>
@@ -358,7 +358,7 @@ export default function MainMenu({
                     categories.map((item) => (
                       <motion.div
                         key={item._id}
-                        className="flex justify-between items-center border-b pb-4 cursor-pointer"
+                        className="flex justify-between items-center border-b-[0.5px] border-[#E1E1E1] pb-4 cursor-pointer text-[16px] font-arialBold text-[#252525]"
                         onClick={() => setActiveMenu(item.name)}
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
@@ -425,7 +425,7 @@ const SubMenu: React.FC<{
 
   return (
     <div className="grid sm:grid-cols-[75%_25%] grid-cols-1 custom-container !py-[40px] max-sm:!px-0">
-      <h1 className="sm:hidden font-interBold text-[20px] mb-[16px]">
+      <h1 className="sm:hidden font-arialBold text-[20px] mb-[16px] text-[#252525]">
         {categoryName}
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-[16px] md:gap-y-[30px] w-full">
@@ -433,12 +433,12 @@ const SubMenu: React.FC<{
           filteredSubcategories.map((subcat) => (
             <div key={subcat._id}>
               <div className="mb-[8px] sm:mb-[12px]">
-                <span className="text-black hover:text-gray-600 font-interBold text-[16px]">
+                <span className="text-black hover:text-gray-600 font-arialBold text-[16px]">
                   {subcat.name}
                 </span>
               </div>
 
-              <div className="flex flex-col gap-[8px] font-inter font-light">
+              <div className="flex flex-col gap-[8px] font-arial text-[14px]">
                 <Link
                   href={`/product?subcategoryId=${subcat._id}`}
                   className={subItemClass}
@@ -464,7 +464,7 @@ const SubMenu: React.FC<{
                       {subsub.name}
                     </Link>
                   ))}
-                <div className="sm:hidden border-b my-[16px]"></div>
+                <div className="sm:hidden border-b-[0.5px] border-[#E1E1E1] my-[16px]"></div>
               </div>
             </div>
           ))
