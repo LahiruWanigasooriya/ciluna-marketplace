@@ -2,6 +2,7 @@
 import { create } from "zustand";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
+import { useUserStore } from "./userStore";
 
 interface DecodedToken {
   userId: string;
@@ -68,6 +69,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       userId,
       isAuthenticated,
     });
+
+    if (token && isAuthenticated) {
+      useUserStore.getState().fetchUser();
+    }
     return isAuthenticated;
   },
 

@@ -20,6 +20,7 @@ import { BiPencil } from "react-icons/bi";
 import { today, getLocalTimeZone, parseDate } from "@internationalized/date";
 import { formatDate } from "@/utils/formatTime";
 import { DatePicker } from "@/components/ui";
+import { useUserStore } from "@/store/userStore";
 
 // ✅ Define error state type
 type FormErrors = Partial<Record<keyof FormValues, string>>;
@@ -38,6 +39,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ initialData, onProf
   const [errors, setErrors] = useState<FormErrors>({});
   const [editing, setEditing] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
+  const { setUser } = useUserStore();
 
   const handleChange = (
     field: keyof FormValues,
@@ -95,6 +97,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ initialData, onProf
       if (response.success && response.user) {
         toast.success("Profile updated successfully!");
         setValues(response.user as FormValues);
+        setUser(response.user);
         onProfileUpdate(response.user as FormValues);
         setEditing(false);
       } else {

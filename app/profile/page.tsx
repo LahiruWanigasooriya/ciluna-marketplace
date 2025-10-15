@@ -16,6 +16,7 @@ import HelpFAQ from "./HelpFAQ";
 import ContactForm from "../contact/ContactForm";
 import Settings from "./Settings";
 import { FormValues } from "@/types/profile";
+import { useUserStore } from "@/store/userStore";
 
 const sidebarItems = [
   "Overview",
@@ -38,6 +39,7 @@ export default function ProfilePage() {
   const { setCart } = useCartStore();
   const { setWishlist } = useWishlistStore();
   const router = useRouter();
+  const { setUser, clearUser } = useUserStore();
   const handleProfileUpdate = (updatedUser: FormValues) => {  // Callback to update userData after profile update
     setUserData(updatedUser);
   };
@@ -45,6 +47,7 @@ export default function ProfilePage() {
   const handleLogout = async () => {
     setTimeout(() => {
       clearAuth();
+      clearUser();
       localStorage.removeItem("wishlist-storage");
       localStorage.removeItem("cart-storage");
       setCart([]);
@@ -71,6 +74,7 @@ export default function ProfilePage() {
         }
         // Store user data in state
         setUserData(response.user);
+        setUser(response.user);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -79,7 +83,7 @@ export default function ProfilePage() {
     }
 
     fetchUserProfile();
-  }, []);
+  }, [setUser]);
 
   if (loading) {
     return (

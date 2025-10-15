@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { ChevronRight, Menu, CircleX } from "lucide-react";
+import { ChevronRight, Menu, CircleX, ChevronLeft } from "lucide-react";
 import { ICategory } from "@/types/category";
 import { ISubCategory } from "@/types/subcategory";
 import { ISubSubCategory } from "@/types/subsubcategory";
@@ -10,10 +10,14 @@ import useDisableScroll from "@/hooks/useDisableScroll";
 import { motion, AnimatePresence } from "framer-motion";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
+import profileIcon from "@/public/assets/header/profileIcon.svg";
 import J1 from "@/app/assets/mainmenu-images/J1.webp";
 import J2 from "@/app/assets/mainmenu-images/J2.webp";
 import J3 from "@/app/assets/mainmenu-images/J3.webp";
 import J4 from "@/app/assets/mainmenu-images/J4.webp";
+import Image from "next/image";
+import { useAuthStore } from "@/store/authStore";
+import { useUserStore } from "@/store/userStore";
 
 // Categories Menu -----------------------------------------------------------------------
 
@@ -32,6 +36,8 @@ export default function MainMenu({
 }: MainMenuProps) {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { token } = useAuthStore();
+  const { user } = useUserStore();
   const [isMainMenuActive, setIsMainMenuActive] = useState<boolean>(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -45,6 +51,8 @@ export default function MainMenu({
   );
   const [error, setError] = useState<string | null>(null);
   const [isScrolled, setScroll] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -271,36 +279,86 @@ export default function MainMenu({
         {isMobileMenuOpen && (
           <motion.div
             ref={mobileMenuRef}
-            className="md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-[16px] overflow-y-auto"
+            className={`md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-[16px] overflow-y-auto ${
+              token ? "mt-0" : "mt-10"
+            }`}
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <div className="flex items-center justify-between mb-4 gap-[16px]">
-              {activeMenu ? (
+            <div className="flex flex-col items-center justify-between">
+              <div className="flex items-center justify-between w-full">
+                {mounted && token && !activeMenu ? (
+                  <div className="flex flex-col w-full">
+                    <div className="flex w-full space-x-4 items-center">
+                      <Link
+                        href="/profile"
+                        className={`flex items-center relative cursor-pointer justify-center rounded-full bg-lightGreen text-gray font-arial text-sm w-[52px] h-[52px] aspect-square `}
+                        onClick={() => {
+                          setMobileMenuOpen(!isMobileMenuOpen);
+                          setIsNavbarActive(true);
+                        }}
+                      >
+                        <Image
+                          src={user?.profileImage || profileIcon.src}
+                          alt="Profile Icon"
+                          className="object-contain hover:cursor-pointer max-w-[52px] max-h-[52px] rounded-full"
+                          width={48}
+                          height={48}
+                        />
+                      </Link>
+
+                      <div className="flex w-full flex-col font-[Arial] text-left">
+                        <div className="font-bold text-[16px] leading-[24px]">
+                          {user?.firstName} {user?.lastName}
+                        </div>
+                        <div className="text-[14px] leading-[20px] text-neutralGray-700">
+                          Last login : Yesterday 11.39am
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {activeMenu ? (
+                      <motion.button
+                        type="button"
+                        onClick={() => setActiveMenu(null)}
+                        className="text-[16px] text-gray-600 flex items-center gap-1"
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <ChevronLeft /> Back
+                      </motion.button>
+                    ) : (
+                      <div />
+                    )}
+                  </>
+                )}
                 <motion.button
                   type="button"
-                  onClick={() => setActiveMenu(null)}
-                  className="text-[16px] text-gray-600"
-                  whileTap={{ scale: 0.95 }}
+                  className=""
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setActiveMenu(null);
+                  }}
+                  whileTap={{ scale: 0.9 }}
                 >
-                  ❮&nbsp;&nbsp; Back
+                  <CircleX size={32} />
                 </motion.button>
-              ) : (
-                <div />
+              </div>
+              {mounted && token && !activeMenu && (
+                <div className="flex w-full flex-col bg-neutralGray-50 rounded-[8px] mt-4 font-[Arial] p-2 space-y-2 mb-2">
+                  <div className="text-[16px] leading-[24px] justify-between w-full flex">
+                    <span>C Cash</span>
+                    <span className="font-bold">1,209,436.26</span>
+                  </div>
+                  <div className="text-[16px] leading-[24px] justify-between w-full flex">
+                    <span>C USD</span>
+                    <span className="font-bold">4,000</span>
+                  </div>
+                </div>
               )}
-              <motion.button
-                type="button"
-                className="pb-[8px]"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setActiveMenu(null);
-                }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <CircleX size={32} />
-              </motion.button>
             </div>
 
             <AnimatePresence mode="wait">

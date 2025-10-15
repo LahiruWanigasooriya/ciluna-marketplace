@@ -12,10 +12,12 @@ import { toast } from "sonner";
 import { loginValidationSchema } from "@/schemas/validationSchemas";
 import { MdFormatIndentDecrease } from "react-icons/md";
 import { FieldError } from "react-aria-components";
+import { useUserStore } from "@/store/userStore";
 
 const LoginForm = () => {
   const router = useRouter();
   const { setAuth } = useAuthStore();
+  const { fetchUser } = useUserStore();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -68,6 +70,7 @@ const LoginForm = () => {
         setAuth(token, formData.remember);
         setFeedback(res.message);
         setIsSuccess(true);
+        fetchUser();
         router.push("/");
         router.refresh();
       } else {

@@ -48,6 +48,11 @@ export default function ConditionalLayout({
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    useAuthStore.getState().checkAuth();
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       if (token !== null) {
