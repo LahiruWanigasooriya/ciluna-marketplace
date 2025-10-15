@@ -8,10 +8,12 @@ export async function processPayment(method: string, amount: number, paymentMeth
       switch (method) {
         case "visa":
         case "stripe":
-          if (!paymentMethodId) {
-            return { success: false, message: "Missing payment method ID for Stripe/Visa" };
-          }
-          return await processStripePayment(amount, paymentMethodId);
+          return await processStripePayment(amount);
+        // case "stripe":
+        //   if (!paymentMethodId) {
+        //     return { success: false, message: "Missing payment method ID for Stripe/Visa" };
+        //   }
+        //   return await processStripePayment(amount, paymentMethodId);
         case "paypal":
           return await processPaypalPayment(amount);
         case "crypto":

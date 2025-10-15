@@ -24,7 +24,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const { wishlist, addToWishlist, removeFromWishlist } = useWishlistStore();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { cart } = useCartStore();
-  const quantity = cart.find(item => item.productId._id === product._id)?.quantity ?? 0;
+  const quantity = cart.find(item => item.productId?._id === product._id)?.quantity ?? 0;
   const { getToken } = useAuthStore();
   const token = getToken();
   const userId = useUserId();

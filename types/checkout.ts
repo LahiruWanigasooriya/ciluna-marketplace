@@ -23,14 +23,15 @@ export interface Checkout {
 }
 
 export interface PaymentCardOption {
-  img?: StaticImageData;
-  holderName: string;
-  cardNumber: string;
-  expireMonth: string;
-  expireYear: string;
-  cvv: string;
+  brand: string;
+  cardHolderName: string;
+  last4: string;
+  expMonth: string;
+  expYear: string;
   rememberCardDetails: boolean;
   isConfidential: boolean;
+  stripeCustomerId: string;
+  paymentMethodId: string;
 }
 
 export interface Address {

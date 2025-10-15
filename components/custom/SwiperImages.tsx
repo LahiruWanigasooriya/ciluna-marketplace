@@ -59,7 +59,7 @@ const SwiperImages: React.FC<SwiperImagesProps> = ({ images, products }) => {
                 <img
                   src={img}
                   alt={`Slide ${index}`}
-                  className="w-full h-auto object-cover rounded-xl"
+                  className="w-full h-[217px] sm:h-auto object-cover rounded-xl"
                 />
               </SwiperSlide>
             ))}

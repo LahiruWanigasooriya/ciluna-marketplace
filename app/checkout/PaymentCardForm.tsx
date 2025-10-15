@@ -14,11 +14,37 @@ import * as Yup from "yup";
 import Image from "next/image";
 import { createCard } from "@/actions/users/card";
 import { useUserId } from "@/hooks/useUserId";
+import {
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import { saveCardDetails } from "@/actions/utils/payment/stripePayment";
+import { useAuthStore } from "@/store/authStore";
 
 interface OptionType {
   value: string;
   label: string;
 }
+
+const cardNumberOptions = {
+  style: {
+    base: {
+      color: "#32325d",
+      fontFamily: "Arial, sans-serif",
+      fontSize: "16px",
+      "::placeholder": {
+        color: "#a0a0a0",
+      },
+    },
+    invalid: {
+      color: "#fa755a",
+    },
+  },
+  hidePostalCode: true,
+};
 
 type FormFields = Yup.InferType<typeof paymentValidationSchema>;
 
@@ -28,37 +54,63 @@ interface PaymentCardFormProps {
 
 const PaymentCardForm: React.FC<PaymentCardFormProps> = ({ onClose }) => {
   const userId = useUserId();
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const { getToken } = useAuthStore();
+  const token = getToken();
 
   const {
     formState: { errors, isSubmitting },
     control,
     setValue,
+    getValues,
     handleSubmit,
   } = useForm({
     resolver: yupResolver(paymentValidationSchema),
     defaultValues: {
       paymentMethod: "Card",
-      holderName: "",
-      cardNumber: "",
-      expireMonth: "",
-      expireYear: "",
-      cvv: "",
       rememberCardDetails: true,
     },
   });
+
+  const addCard = async () => {
+    if (!stripe || !elements) return;
+
+    const cardElement = elements.getElement(CardNumberElement);
+    const cardHolderName = getValues("holderName");
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement!,
+      billing_details: { name: cardHolderName },
+    });
+
+    if (error) {
+      console.error("Failed to create payment method:", error.message);
+      return;
+    }
+
+    const result = await saveCardDetails(
+      getValues("rememberCardDetails"),
+      paymentMethod.id,
+      getValues("holderName"),
+      token
+    );
+
+    console.log(result.message);
+  };
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     console.log("Data: ", data);
     let card = {
       paymentMethod: data.paymentMethod,
       holderName: data.holderName,
-      cardNumber: data.cardNumber,
-      expireMonth: data.expireMonth,
-      expireYear: data.expireYear,
-      cvv: data.cvv,
       rememberCardDetails: data.rememberCardDetails,
     };
-    await createCard(userId, card);
+
+    await addCard();
+    // await createCard(userId, card);
     onClose();
   };
 
@@ -107,125 +159,41 @@ const PaymentCardForm: React.FC<PaymentCardFormProps> = ({ onClose }) => {
             )}
           </div>
           <div className="w-full col-span-3">
-            <Controller
-              name="cardNumber"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  label="Card Number*"
-                  className="custom-textfield"
-                  inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray"
-                  groupClassName="border border-[#E1E1E1]"
-                  placeholder="Card Number"
-                  name="cardNumber"
-                  id="cardNumber"
-                  type="number"
-                  value={field.value}
-                  onChange={field.onChange}
-                  prefix={
-                    <div className=" bg-white p-[10px] rounded-l-[8px]">
-                      <div className="w-[40px] h-[24px] relative">
-                        <Image
-                          alt="option"
-                          src={Master.src}
-                          fill
-                          className="object-cover"
-                          placeholder="blur"
-                          blurDataURL="/placeholder-image.jpg"
-                        />
-                      </div>
-                    </div>
-                  }
+            <label className="font-arial text-gray">Card Number*</label>
+            <div className="flex items-center bg-white rounded-[8px] mt-2 p-[10px]">
+              <div className="w-[40px] h-[24px] relative mr-2">
+                <Image
+                  alt="card-logo"
+                  src={Master.src}
+                  fill
+                  className="object-cover"
                 />
-              )}
+              </div>
+              <div className="flex-1">
+                <CardNumberElement options={cardNumberOptions} />
+              </div>
+            </div>
+            <p
+              id="card-errors"
+              role="alert"
+              className="text-red-500 text-xs mt-1"
             />
-
-            {errors.cardNumber && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.cardNumber.message}
-              </p>
-            )}
           </div>
-          <div className="flex gap-2 md:gap-4 col-span-3 items-end">
-            <div className="w-full">
-              <Controller
-                name="expireMonth"
-                control={control}
-                render={({ field }) => (
-                  <SelectDropdown
-                    label="Expiry*"
-                    options={months}
-                    onChange={(selectedOption: SingleValue<OptionType>) => {
-                      const value = selectedOption ? selectedOption.value : "";
-                      setValue("expireMonth", value);
-                    }}
-                    placeholder="MM"
-                    borderColor="#E1E1E1"
-                  />
-                )}
+          <div className="gap-2 md:gap-4 col-span-3 items-end grid grid-cols-6">
+            <div className="w-full col-span-3 md:col-span-2">
+              <label className="font-arial text-gray">Expiry*</label>
+              <CardExpiryElement
+                options={cardNumberOptions}
+                className="mt-2 px-3 py-[10px] bg-white rounded-[0.5rem] h-[44px]"
               />
-
-              {errors.expireMonth && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.expireMonth.message}
-                </p>
-              )}
             </div>
 
-            <div className="w-full">
-              <Controller
-                name="expireYear"
-                control={control}
-                render={({ field }) => (
-                  <SelectDropdown
-                    options={years}
-                    onChange={(selectedOption: SingleValue<OptionType>) => {
-                      const value = selectedOption ? selectedOption.value : "";
-                      setValue("expireYear", value);
-                    }}
-                    placeholder="YY"
-                    borderColor="#E1E1E1"
-                  />
-                )}
+            <div className="w-full col-span-3 md:col-span-2">
+              <label className="font-arial text-gray">CVV*</label>
+              <CardCvcElement
+                options={cardNumberOptions}
+                className="h-[44px] mt-2 px-3 py-[10px] bg-white rounded-[0.5rem]"
               />
-              
-
-              {errors.expireYear && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.expireYear.message}
-                </p>
-              )}
-            </div>
-
-            <div className="w-full">
-              <Controller
-                name="cvv"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    label="CVV*"
-                    className="custom-textfield w-full"
-                    inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray"
-                    groupClassName="border border-[#E1E1E1]"
-                    name="cvv"
-                    id="cvv"
-                    type="number"
-                    value={field.value}
-                    onChange={field.onChange}
-                    suffix={
-                      <div className="bg-white p-[13px] rounded-r-[8px]">
-                        <Info className=" w-[18px] h-[18px]" />
-                      </div>
-                    }
-                  />
-                )}
-              />
-
-              {errors.cvv && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.cvv.message}
-                </p>
-              )}
             </div>
           </div>
           <div className="w-fit hover:cursor-pointer">
