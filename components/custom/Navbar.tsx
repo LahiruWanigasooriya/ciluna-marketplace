@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import { Heart, Menu, CircleX } from "lucide-react";
+import { Heart, Menu } from "lucide-react";
 import { BsHandbag } from "react-icons/bs";
 import Logo from "../../public/assets/logo.webp";
 import MobLogo from "../../public/assets/mobLogo.webp";
@@ -21,6 +21,9 @@ import { useAuthStore } from "@/store/authStore";
 import useDisableScroll from "@/hooks/useDisableScroll";
 import MainMenu from "./MainMenu";
 import BackButton from "./BackButton";
+import { useUserStore } from "@/store/userStore";
+import { Skeleton } from "../ui";
+import { getUserProfile } from "@/actions/users/user";
 //import { Skeleton } from "@/components/ui";
 //import AuthWrapper from "./AuthWrapper";
 //import Cookies from "js-cookie";
@@ -45,10 +48,29 @@ export default function Navbar() {
   const [mobProfileSelect, setmobProfileSelect] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isNavbarActive, setIsNavbarActive] = useState(false);
+  const { user, isLoading: isUserLoading, setUser, clearUser } = useUserStore();
+  useEffect(() => setMounted(true), []); // to fix hydration error
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    // this useEffect not running after login because of router.push("/")
+    async function fetchUserProfile() {
+      try {
+        const response = await getUserProfile();
+        if (response.status !== 200 || !response.user) {
+          throw new Error(response.message || "User data not available");
+        }
+        setUser(response.user);
+      } catch (err: any) {
+        throw new Error(
+          err.message || "An error occurred while fetching profile"
+        );
+      }
+    }
+    if (token && isAuthenticated) {
+      fetchUserProfile();
+    }
+  }, [setUser, token, isAuthenticated]);
+
   //  const [authPopup, setAuthPopup] = useState(false);
 
   const shadowIntensity = useTransform(scrollY, [0, 50], [0, 0.5]);
@@ -122,6 +144,7 @@ export default function Navbar() {
     setIsNavbarActive(true);
     setTimeout(() => {
       clearAuth();
+      clearUser();
       setProfileSelect(false);
       localStorage.removeItem("wishlist-storage");
       localStorage.removeItem("cart-storage");
@@ -168,7 +191,7 @@ export default function Navbar() {
     >
       <div
         className={`items-center justify-between w-full bg-lightBlack h-[40px] pt-[7px] pb-[12px] px-[24px] flex md:hidden ${
-          mounted && isAuthenticated ? "hidden" : "flex"
+          mounted && token ? "hidden" : "flex"
         }`}
       >
         <span className="text-neutralGray-600 font-[400] font-[Arial] text-[14px] leading-[20px] tracking-[0%]">
@@ -286,7 +309,7 @@ export default function Navbar() {
             </div>
 
             <div className="items-center justify-center hidden md:flex md:ml-[12px] lg:ml-[16px]">
-              {mounted && isAuthenticated ? (
+              {mounted && token ? (
                 <>
                   <div className="flex items-center w-full">
                     <span
@@ -305,16 +328,20 @@ export default function Navbar() {
                   </div>
                   <div
                     onClick={handleProfile}
-                    className="flex items-center relative cursor-pointer justify-center rounded-full bg-lightGreen text-gray font-arial text-sm w-[24px] aspect-square ml-[6px]"
+                    className="flex items-center relative cursor-pointer justify-center rounded-full bg-lightGreen text-gray font-arial text-sm w-[24px] h-[24px] aspect-square ml-[6px]"
                   >
-                    <Image
-                      src={profileIcon}
-                      alt="Profile Icon"
-                      loading="lazy"
-                      className="object-contain w-[24px] hover:cursor-pointer"
-                      width={24}
-                      height={24}
-                    />
+                    {isUserLoading ? (
+                      <Skeleton className="w-[24px] h-[24px] aspect-square rounded-full" />
+                    ) : (
+                      <Image
+                        src={user?.profileImage || profileIcon}
+                        alt="Profile Icon"
+                        loading="eager"
+                        className="object-contain hover:cursor-pointer h-full rounded-full"
+                        width={24}
+                        height={24}
+                      />
+                    )}
                     {profileSelect && (
                       <motion.div
                         ref={profileRef}
@@ -337,19 +364,6 @@ export default function Navbar() {
                           onClick={() => setProfileSelect(false)}
                         >
                           Profile
-                        </Link>
-                        <Link
-                          href="#"
-                          className={`cursor-pointer hover:bg-[#FFFFFF]/10 px-[13px] py-1 w-full leading-[24px] ${
-                            pathname === "/profile/history"
-                              ? "font-[Arial] font-bold"
-                              : isNavbarActive
-                              ? "text-gray"
-                              : "text-white"
-                          }`}
-                          onClick={() => setProfileSelect(false)}
-                        >
-                          Order History
                         </Link>
                         <div
                           onClick={handleLogout}
@@ -383,7 +397,7 @@ export default function Navbar() {
                   isNavbarActive ? "text-gray" : "text-white"
                 }`}
               >
-                {mounted && isAuthenticated ? "Sign out" : "Sign in"}
+                {mounted && token ? "Sign out" : "Sign in"}
               </p>
               <Menu
                 onClick={() => {
@@ -407,11 +421,12 @@ export default function Navbar() {
               >
                 <input
                   type="text"
+                  aria-label="Search"
                   className={`bg-[#190F30] focus:outline-none border-none w-full px-2 font-[400] text-xs ${
                     isNavbarActive ? "text-gray" : "text-white"
                   }`}
                 />
-                <button id="sendButton" className="pr-2">
+                <button id="sendButton" className="pr-2" aria-label="Send">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
