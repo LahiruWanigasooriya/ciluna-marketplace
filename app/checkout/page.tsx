@@ -146,7 +146,7 @@ const CheckoutPage = () => {
   }, [fetchData]);
 
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
     control,
     getValues,
@@ -431,7 +431,7 @@ const CheckoutPage = () => {
                     // when there are no stored cards in db
                     <>
                       <AnimatePresence>
-                        {selectedPaymentMethod === "Card" && (
+                        {selectedPaymentMethod === "Card" && finalPrice > 0 && (
                           <StripeProvider
                             options={{
                               mode: "payment",
@@ -506,6 +506,7 @@ const CheckoutPage = () => {
                   text="Place Order"
                   handlePlaceOrder={setIsOrderPlaced}
                   editCart={true}
+                  isSubmitting={isSubmitting}
                 />
                 <div className="flex flex-col p-4 md:p-6 bg-[#F5F5F5] gap-4 text-gray font-arial rounded-[6px]">
                   <div className="flex gap-2 items-center">

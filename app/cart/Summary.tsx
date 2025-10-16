@@ -13,9 +13,10 @@ interface SummaryProps {
   to?: string;
   handlePlaceOrder?: React.Dispatch<React.SetStateAction<boolean>>;
   editCart?: boolean;
+  isSubmitting?: boolean;
 }
 
-const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
+const Summary: React.FC<SummaryProps> = ({ text, to, editCart, isSubmitting }) => {
   const { cart } = useCartStore();
   const [isOpenSummary, setIsOpenSummary] = useState(false);
     const { rate, error } = useExchangeRate();
@@ -140,7 +141,10 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
                         console.log("Button clicked - form will submit");
                       }}
                     >
-                      {text}
+                      {text}{" "}
+                      {isSubmitting && (
+                        <span className="ml-2 inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      )}
                     </Button>
                   </div>
                 )}
@@ -273,7 +277,10 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart }) => {
                         console.log("Button clicked - form will submit");
                       }}
                     >
-                      {text}
+                      {text}{" "}
+                      {isSubmitting && (
+                        <span className="ml-2 inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      )}
                     </Button>
                   </div>
                 )}
