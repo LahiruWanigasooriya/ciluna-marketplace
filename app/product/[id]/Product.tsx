@@ -269,8 +269,6 @@ const Product: React.FC<ProductProps> = ({
 
     const cartItemId = uuidv4();
 
-    setIsCartContext(true);
-
     if (token) {
       const cartData = variantId
         ? {
@@ -339,6 +337,7 @@ const Product: React.FC<ProductProps> = ({
 
       // Add to local storage (Zustand store)
       await addToCartItem(cartData);
+      setIsCartContext(true);
 
       // Show success toast
       toast.success(`${product.name} added to cart!`);

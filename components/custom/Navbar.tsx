@@ -381,11 +381,20 @@ export default function Navbar() {
                 <>
                   <span
                     onClick={() => router.push("/login")}
-                    className={`text-xs md:text-sm cursor-pointer hidden md:flex ${
+                    className={`text-xs md:text-sm cursor-pointer hidden md:flex hover:opacity-90 ${
                       isNavbarActive ? "text-gray" : "text-white"
                     }`}
                   >
-                    Sign in / Register
+                    Sign in
+                  </span>
+                  <span className={`${isNavbarActive ? "text-gray" : "text-white"} px-1`}>/</span>
+                  <span
+                    onClick={() => router.push("/register")}
+                    className={`text-xs md:text-sm cursor-pointer hidden md:flex hover:opacity-90 ${
+                      isNavbarActive ? "text-gray" : "text-white"
+                    }`}
+                  >
+                    Register
                   </span>
                 </>
               )}
