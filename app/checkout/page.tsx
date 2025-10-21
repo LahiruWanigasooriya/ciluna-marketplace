@@ -257,7 +257,7 @@ const CheckoutPage = () => {
       return;
     }
 
-    if (cards.length === 0) {
+    if (cards.length === 0 && selectedPaymentMethod === "Card") {
       const result = await cardRef.current.submitPayment();
 
       if (result.error) {
