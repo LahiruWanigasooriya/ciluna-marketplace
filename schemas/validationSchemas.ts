@@ -201,6 +201,8 @@ export const reviewValidationSchema = Yup.object().shape({
 //   rememberCardDetails: Yup.boolean().required(),
 // });
 
+const postalCodeRegex = /^\d{5}$/;
+
 export const shippingValidationSchema = Yup.object().shape({
   country: Yup.string().required("Country is required"),
   contactName: Yup.string().required("Contact name is required"),
@@ -214,7 +216,7 @@ export const shippingValidationSchema = Yup.object().shape({
   province: Yup.string().required("Province is required"),
   district: Yup.string().required("District is required"),
   town: Yup.string().required("Town is required"),
-  zip: Yup.string().required("Zip code is required"),
+  zip: Yup.string().required("Zip code is required").matches(postalCodeRegex, "Please enter a valid zip code (e.g., 12345)."),
   isDefault: Yup.boolean().required(),
 });
 

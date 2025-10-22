@@ -127,7 +127,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
       className="relative bg-white rounded-[8px] md:w-[655px] w-full"
     >
       <div className="flex flex-col gap-4 max-h-[90vh] lg:max-h-none overflow-y-auto p-4 md:p-6">
-        <Title title={title} />
+        <Title title={title} className="font-arialBold !text-xl md:!text-2xl text-left leading-6 md:!leading-8"/>
 
         <div className="absolute top-0 right-0 p-2 z-10">
           <CircleX
