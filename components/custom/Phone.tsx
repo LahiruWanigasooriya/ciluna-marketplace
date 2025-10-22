@@ -68,7 +68,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className, label = "Mobile
   const [selectedCountry, setSelectedCountry] = useState({
     id: "Sri Lanka",
     code: "+94",
-    flag: "LK",
+    flag: "🇱🇰",
   });
 
   const modalRef = useRef<HTMLDivElement>(null);
