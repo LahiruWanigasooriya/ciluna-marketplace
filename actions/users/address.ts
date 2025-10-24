@@ -11,19 +11,33 @@ interface AddressInput {
   district: string;
   town: string;
   country: string;
-  zip?: string;
-  isDefault?: boolean;
+  zip: string;
+  isDefault: boolean;
 }
 
-export async function createAddress(userId: string, address: AddressInput) {
+export async function createAddress(userId: string, addressData: AddressInput) {
   try {
+    const { contactName, mobileNumber, street, province, district, town, country, zip, isDefault } = addressData;
+
     // Optionally, unset existing default if this is a new default
-    if (address.isDefault) {
+    if (isDefault) {
       await UserModel.updateOne(
         { _id: userId, "addresses.isDefault": true },
         { $set: { "addresses.$.isDefault": false } }
       );
     }
+
+    const address = {
+      contactName,
+      mobileNumber,
+      street,
+      province,
+      district,
+      town,
+      country,
+      zip,
+      isDefault,
+    };
 
     const newAddress = {
       _id: new mongoose.Types.ObjectId(), // unique ID for the address
@@ -36,7 +50,7 @@ export async function createAddress(userId: string, address: AddressInput) {
       { new: true } // return the updated document
     );
 
-    return { success: true, message: "Address added successfully" };
+    return { success: true, message: "Address added successfully", address: newAddress };
   } catch (error: any) {
     console.error("Error adding address:", error);
     return { success: false, message: error.message };

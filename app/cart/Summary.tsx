@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart";
-import { getDiscountedPrice } from "@/utils/getDiscountPrice";
+import { calculateTotals, getDiscountedPrice } from "@/utils/getDiscountPrice";
 import { ChevronDown, ChevronUp, PencilLine } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
@@ -23,21 +23,8 @@ const Summary: React.FC<SummaryProps> = ({ text, to, editCart, isSubmitting }) =
 
   {error && console.error("Failed to fetch rate:", error)}
 
-  const calculateTotals = (items: any[]) => {
-  const totalPrice = items.reduce(
-    (acc, item) =>
-      acc +
-      getDiscountedPrice((item.price/rate), item.discount) * item.quantity,
-    0
-  );
-  const discount = totalPrice * 0.1; // 10% discount as per your logic
-  const finalPrice = totalPrice - discount;
-
-  return { totalPrice, discount, finalPrice };
-};
-
   const { totalPrice, discount, finalPrice } = useMemo(
-    () => calculateTotals(cart),
+    () => calculateTotals(cart, rate),
     [cart]
   );
 

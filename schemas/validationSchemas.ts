@@ -223,7 +223,7 @@ export const shippingValidationSchema = Yup.object().shape({
 export const paymentValidationSchema = Yup.object().shape({
   paymentMethod: Yup.string().required("Payment method is required"),
   holderName: Yup.string().when("paymentMethod", {
-    is: "Card",
+    is: "card",
     then: (schema) => schema.required("Name on card is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
@@ -247,13 +247,14 @@ export const paymentValidationSchema = Yup.object().shape({
   //   then: (schema) => schema.required("CVV is required"),
   //   otherwise: (schema) => schema.notRequired(),
   // }),
-  rememberCardDetails: Yup.boolean().when("paymentMethod", {
-    is: "Card",
-    then: (schema) => schema.required(),
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  rememberCardDetails: Yup.boolean(),
+  // rememberCardDetails: Yup.boolean().when("paymentMethod", {
+  //   is: "card",
+  //   then: (schema) => schema.required(),
+  //   otherwise: (schema) => schema.notRequired(),
+  // }),
   cilunaWallet: Yup.string().when("paymentMethod", {
-    is: "Ciluna Wallet",
+    is: "ciluna_wallet",
     then: (schema) => schema.required(),
     otherwise: (schema) => schema.notRequired(),
   }),

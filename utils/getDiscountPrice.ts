@@ -1,7 +1,4 @@
-export const getDiscountedPrice = (
-  price: number,
-  discount: number | null
-): number => {
+export const getDiscountedPrice = (price: number, discount: number | null): number => {
   if (discount) {
     const discounted = price - (price * discount) / 100;
     return parseFloat(discounted.toFixed(2));
@@ -16,18 +13,29 @@ export const formatPrice = (price: number): string => {
   });
 };
 
-export const fetchExchangeRate = async(): Promise<number> => {
+export const fetchExchangeRate = async (): Promise<number> => {
   const response = await fetch(process.env.NEXT_PUBLIC_CURRENCY_API as string);
   const data = await response.json();
   return data.rates.LKR;
-}
+};
 
 export const getUSDPrices = (price: number, finalPrice: number, quantity: number, rate: number) => {
   const originalUSD = price / rate;
-  const discountedUSD = (finalPrice/quantity) / rate;
+  const discountedUSD = finalPrice / quantity / rate;
 
   return {
     original: formatPrice(originalUSD),
     discounted: formatPrice(discountedUSD),
   };
-}
+};
+
+export const calculateTotals = (items: any[], rate: number) => {
+  const totalPrice = items.reduce(
+    (acc, item) => acc + getDiscountedPrice(item.price / rate, item.discount) * item.quantity,
+    0
+  );
+  const discount = totalPrice * 0.1; // 10% discount as per your logic
+  const finalPrice = totalPrice - discount;
+
+  return { totalPrice, discount, finalPrice };
+};

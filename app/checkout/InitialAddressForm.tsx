@@ -1,67 +1,37 @@
 import SelectDropdown from "@/components/ui/select-dropdown";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import ReactCountryFlag from "react-country-flag";
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFormGetValues,
-  UseFormSetValue,
-} from "react-hook-form";
 import { SingleValue } from "react-select";
 import countryList from "react-select-country-list";
 import { TextField } from "@/components/ui/text-field";
 import { Checkbox } from "@/components/ui";
 import Tel from "@/components/custom/Phone";
 import { provinces } from "@/constants/dropdown-items";
-import { OrderFormFields } from "@/types/checkout";
 
 interface OptionType {
   value: string;
   label: string;
 }
 
-interface InitialAddressFormProps {
-  control: Control<OrderFormFields>;
-  errors: FieldErrors<OrderFormFields>;
-  getValues: UseFormGetValues<OrderFormFields>;
-  setValue: UseFormSetValue<OrderFormFields>;
-}
+const InitialAddressForm = () => {
+  const {
+    control,
+    formState: { errors },
+    getValues,
+    setValue,
+  } = useFormContext();
 
-const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
-  control,
-  errors,
-  getValues,
-  setValue,
-}) => {
   const countryOptions = useMemo(() => countryList().getData(), []);
   const [selectedProvince, setSelectedProvince] = useState<string>();
   const [selectedDistrict, setSelectedDistrict] = useState<string>();
 
-  useEffect(() => {
-    const province = getValues("province");
-    const district = getValues("district");
-    
-    if (province && province !== selectedProvince) {
-      setSelectedProvince(province);
-    }
-    if (district && district !== selectedDistrict) {
-      setSelectedDistrict(district);
-    }
-  }, [getValues, selectedProvince, selectedDistrict]);
-  
-  const districts =
-    provinces.find((p) => p.value === selectedProvince)?.districts || [];
-  const towns =
-    districts.find((d) => d.value === selectedDistrict)?.towns || [];
+  const districts = provinces.find((p) => p.value === selectedProvince)?.districts || [];
+  const towns = districts.find((d) => d.value === selectedDistrict)?.towns || [];
 
   const formatOptionLabel = ({ value, label }: OptionType) => (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <ReactCountryFlag
-        countryCode={value}
-        svg
-        style={{ marginRight: "8px" }}
-      />
+      <ReactCountryFlag countryCode={value} svg style={{ marginRight: "8px" }} />
       <span>{label}</span>
     </div>
   );
@@ -76,21 +46,15 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
               label="Country*"
               labelClassName="font-arial"
               options={countryOptions}
-              value={
-                countryOptions.find((opt) => opt.value === field.value) || null
-              }
-              onChange={(selected: SingleValue<OptionType>) =>
-                field.onChange(selected?.value || "")
-              }
+              value={countryOptions.find((opt) => opt.value === field.value) || null}
+              onChange={(selected: SingleValue<OptionType>) => field.onChange(selected?.value || "")}
               formatOptionLabel={formatOptionLabel}
               placeholder="Enter country name"
               showFlags={true}
             />
           )}
         />
-        {errors.country && (
-          <p className="text-red-500 text-xs mt-1">{errors.country.message}</p>
-        )}
+        {errors.country && <p className="text-red-500 text-xs mt-1">{String(errors.country.message)}</p>}
       </div>
 
       <div className="flex flex-col md:flex-row gap-4">
@@ -114,11 +78,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
               />
             )}
           />
-          {errors.contactName && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.contactName.message}
-            </p>
-          )}
+          {errors.contactName && <p className="text-red-500 text-xs mt-1">{String(errors.contactName.message)}</p>}
         </div>
 
         <div className="w-full">
@@ -133,11 +93,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
               />
             )}
           />
-          {errors.mobileNumber && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.mobileNumber.message}
-            </p>
-          )}
+          {errors.mobileNumber && <p className="text-red-500 text-xs mt-1">{String(errors.mobileNumber.message)}</p>}
         </div>
       </div>
 
@@ -162,9 +118,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
               />
             )}
           />
-          {errors.street && (
-            <p className="text-red-500 text-xs mt-1">{errors.street.message}</p>
-          )}
+          {errors.street && <p className="text-red-500 text-xs mt-1">{String(errors.street.message)}</p>}
         </div>
 
         <div className="w-full">
@@ -176,10 +130,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
                 label="Province*"
                 labelClassName="font-arial"
                 options={provinces}
-                value={
-                  provinces.find((option) => option.value === field.value) ||
-                  null
-                }
+                value={provinces.find((option) => option.value === field.value) || null}
                 onChange={(selectedOption: SingleValue<OptionType>) => {
                   const value = selectedOption ? selectedOption.value : "";
                   setSelectedProvince(value);
@@ -189,11 +140,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
               />
             )}
           />
-          {errors.province && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.province.message}
-            </p>
-          )}
+          {errors.province && <p className="text-red-500 text-xs mt-1">{String(errors.province.message)}</p>}
         </div>
       </div>
 
@@ -207,10 +154,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
                 label="District*"
                 labelClassName="font-arial"
                 options={districts}
-                value={
-                  districts.find((option) => option.value === field.value) ||
-                  null
-                }
+                value={districts.find((option) => option.value === field.value) || null}
                 onChange={(selectedOption: SingleValue<OptionType>) => {
                   const value = selectedOption ? selectedOption.value : "";
                   setSelectedDistrict(value);
@@ -220,11 +164,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
               />
             )}
           />
-          {errors.district && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.district.message}
-            </p>
-          )}
+          {errors.district && <p className="text-red-500 text-xs mt-1">{String(errors.district.message)}</p>}
         </div>
 
         <div className="w-full">
@@ -236,9 +176,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
                 label="Area/Town*"
                 labelClassName="font-arial"
                 options={towns}
-                value={
-                  towns.find((option) => option.value === field.value) || null
-                }
+                value={towns.find((option) => option.value === field.value) || null}
                 onChange={(selectedOption: SingleValue<OptionType>) => {
                   field.onChange(selectedOption?.value || "");
                 }}
@@ -246,9 +184,7 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
               />
             )}
           />
-          {errors.town && (
-            <p className="text-red-500 text-xs mt-1">{errors.town.message}</p>
-          )}
+          {errors.town && <p className="text-red-500 text-xs mt-1">{String(errors.town.message)}</p>}
         </div>
 
         <div className="w-full">
@@ -271,26 +207,16 @@ const InitialAddressForm: React.FC<InitialAddressFormProps> = ({
               />
             )}
           />
-          {errors.zip && (
-            <p className="text-red-500 text-xs mt-1">{errors.zip.message}</p>
-          )}
+          {errors.zip && <p className="text-red-500 text-xs mt-1">{String(errors.zip.message)}</p>}
         </div>
       </div>
 
       <div className="w-fit hover:cursor-pointer">
         <div>
-          <Checkbox
-            onChange={(isSelected: boolean) =>
-              setValue("isDefault", isSelected)
-            }
-          >
+          <Checkbox onChange={(isSelected: boolean) => setValue("isDefault", isSelected)}>
             <p className="font-arial">Set as a default shipping address</p>
           </Checkbox>
-          {errors.isDefault && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.isDefault.message}
-            </p>
-          )}
+          {errors.isDefault && <p className="text-red-500 text-xs mt-1">{String(errors.isDefault.message)}</p>}
         </div>
       </div>
     </div>
