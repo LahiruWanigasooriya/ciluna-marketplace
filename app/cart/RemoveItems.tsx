@@ -21,7 +21,7 @@ export const RemoveOne: React.FC<RemoveOneProps> = ({
           className="font-arialBold !text-lg md:!text-xl !leading-6"
         />
         <p className="font-arial text-base text-neutralGray-700 mt-2">
-          Remove item from cart?
+          Are you sure you want to remove this product from your cart?
         </p>
       </div>
       <hr className="bg-neutralGray-100 border-none h-[1px]" />{" "}
