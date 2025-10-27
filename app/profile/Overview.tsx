@@ -111,14 +111,16 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           />
           {/* Name */}
           <div className="py-[14px]">
-            <div className="font-arialBold text-[16px]">{fullName}</div>
+            <div className="font-arialBold text-[18px] text-black">
+              {fullName}
+            </div>
             <div className="font-arial text-[14px] lg:text-[14px]  md:text-[12px] md:min-w-[150px] lg:min-w-[200px] text-[#707070]">
               Last login : Yesterday 11.39am
             </div>
           </div>
         </div>
 
-        <div className="font-arialBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[16px] text-neutral-900 md:max-w-[800px] md:justify-end md:px-0">
+        <div className="font-arialBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[16px] text-black md:max-w-[800px] md:justify-end md:px-0">
           {[
             { icon: HeartIcon.src, alt: "Heart", label: "Wish List" },
             { icon: WalletIcon.src, alt: "Wallet", label: "Ciluna Wallet" },
@@ -141,10 +143,12 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         </div>
       </section>
       {/* Orders Card */}
-      <section className="rounded-xl   box-bg px-[16px] text-[#1E1E1E]  md:px-[24px]">
+      <section className="rounded-xl   box-bg px-[16px] text-black  md:px-[24px]">
         <div className="flex items-center justify-between border-b border-lightgrayBorders py-[12px] md:py-[16px]">
-          <div className="font-arialBold text-[18px]">My Orders</div>
-          <button className="font-arial cursor-pointer text-[14px] md:text-[16px] hover:underline">
+          <div className="font-arialBold text-[#1E1E1E] text-[18px]">
+            My Orders
+          </div>
+          <button className="font-arial cursor-pointer text-[#1E1E1E] text-[14px] md:text-[16px] hover:underline">
             View All
           </button>
         </div>
@@ -173,7 +177,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
                       className="w-[24px] h-[24px]"
                     />
                   </span>
-                  <div className="cursor-pointer text-[14px] md:text-[16px] font-medium">
+                  <div className="cursor-pointer text-black text-[14px] md:text-[16px] font-medium">
                     {item.label}
                   </div>
                 </div>
@@ -245,7 +249,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         <SwiperCards
           products={products}
           className="gap-[24px] md:gap-[24px]"
-          titleClassName="!text-[24px] md:leading-8"
+          titleClassName="!text-[28px] md:leading-8 mb-[-12px]"
           section={{
             title: "More to love",
             description: "A fleeting collection of rare beauty.",
