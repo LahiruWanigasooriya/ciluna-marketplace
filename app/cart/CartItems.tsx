@@ -36,20 +36,6 @@ import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 const paymentOptions = [visa, mastercard, amex, applePay];
 
-// Function to calculate totals based on cart items
-const calculateTotals = (items: any[]) => {
-  const totalPrice = items.reduce(
-    (acc, item) =>
-      acc +
-      getDiscountedPrice(item.priceUSD.original, item.discount) * item.quantity,
-    0
-  );
-  const discount = totalPrice * 0.1; // 10% discount as per your logic
-  const finalPrice = totalPrice - discount;
-
-  return { totalPrice, discount, finalPrice };
-};
-
 const CartItems = () => {
   const { cart, removeFromCart, setCart, updateQuantity } = useCartStore();
   const { getToken } = useAuthStore();
@@ -128,7 +114,7 @@ const CartItems = () => {
         {cart.length > 0 ? (
           <div className="flex flex-col gap-4">
             <div className="flex flex-col lg:flex-row gap-y-4 lg:gap-x-6">
-              <div className="relative h-fit overflow-x-hidden w-full bg-[#F5F5F5] recommend:min-w-[823px] p-4 md:p-6 rounded-[6px]">
+              <div className="relative h-fit overflow-x-hidden w-full bg-[#F5F5F5] recommend:min-w-[823px] p-4 pb-0 md:p-6 md:pb-2 rounded-[6px]">
                 <div className="pb-4 flex items-center justify-between font-arial gap-2">
                   <div className="flex gap-2">
                     <Checkbox
@@ -178,7 +164,7 @@ const CartItems = () => {
 
                     return (
                       <React.Fragment key={product._id}>
-                        <div className="flex flex-col md:flex-row items-start md:items-center gap-y-6 md:gap-x-8 py-4 justify-between bg-[#FFFFFF0D]/5 border-t-[1px] border-[#E8E8DA] relative transition-all duration-300 ease-in-out">
+                        <div className="flex flex-col md:flex-row items-start md:items-center md:gap-x-8 py-4 justify-between bg-[#FFFFFF0D]/5 border-t-[1px] border-[#E8E8DA] relative transition-all duration-300 ease-in-out">
                           <div className="flex flex-col md:flex-row gap-[14px] md:gap-[10px] relative w-full">
                             <div>
                               <div className="text-black">

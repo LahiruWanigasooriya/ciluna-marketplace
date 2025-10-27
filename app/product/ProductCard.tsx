@@ -267,16 +267,16 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         ) : (
           <div>
             <div className="flex items-center gap-1">
-              <p className="line-through text-[0.75rem] tracking-tight md:tracking-normal leading-[20px] text-[#909090]">
+              <p className="line-through text-xs md:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#707070] font-arial">
                 {formatPrice(price)} <span className="ml-[2px]">LKR</span>
               </p>
-              <p className="text-[0.875rem] md:text-[1rem] text-[#252525] font-bold leading-[20px] md:leading-[24px]">
+              <p className="text-[0.875rem] md:text-[1rem] text-[#252525] font-arialBold leading-[20px] md:leading-[24px]">
                 {formatPrice(discountPrice)}{" "}
                 <span className="ml-[2px]">LKR</span>
               </p>
             </div>
             <div className="flex items-center gap-1">
-              <p className="line-through text-xs md:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#909090] md:text-[#707070]  font-arial">
+              <p className="line-through text-xs md:text-sm tracking-tight md:tracking-normal leading-[20px] text-[#707070] font-arial">
                 {formatPrice(price / rate)}{" "}
                 <span className="ml-[2px]">USD</span>
               </p>

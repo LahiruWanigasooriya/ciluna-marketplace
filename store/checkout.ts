@@ -81,7 +81,7 @@ interface CheckoutStore {
   restoreDraftData: () => Partial<Checkout> | null;
 }
 
-const initialValues: Checkout = {
+export const initialValues: Checkout = {
   country: "",
   contactName: "",
   mobileNumber: "",
@@ -91,13 +91,10 @@ const initialValues: Checkout = {
   town: "",
   zip: "",
   isDefault: false,
-  paymentMethod: "",
+  paymentMethod: "Ciluna Wallet",
   holderName: "",
-  cardNumber: "",
-  expireMonth: "",
-  expireYear: "",
-  cvv: "",
   rememberCardDetails: true,
+  cilunaWallet: "",
 };
 
 export const useCheckoutStore = create<CheckoutStore>()(

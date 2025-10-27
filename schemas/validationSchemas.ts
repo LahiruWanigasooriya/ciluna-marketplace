@@ -201,6 +201,8 @@ export const reviewValidationSchema = Yup.object().shape({
 //   rememberCardDetails: Yup.boolean().required(),
 // });
 
+const postalCodeRegex = /^\d{5}$/;
+
 export const shippingValidationSchema = Yup.object().shape({
   country: Yup.string().required("Country is required"),
   contactName: Yup.string().required("Contact name is required"),
@@ -214,14 +216,14 @@ export const shippingValidationSchema = Yup.object().shape({
   province: Yup.string().required("Province is required"),
   district: Yup.string().required("District is required"),
   town: Yup.string().required("Town is required"),
-  zip: Yup.string().required("Zip code is required"),
+  zip: Yup.string().required("Zip code is required").matches(postalCodeRegex, "Please enter a valid zip code (e.g., 12345)."),
   isDefault: Yup.boolean().required(),
 });
 
 export const paymentValidationSchema = Yup.object().shape({
   paymentMethod: Yup.string().required("Payment method is required"),
   holderName: Yup.string().when("paymentMethod", {
-    is: "Card",
+    is: "card",
     then: (schema) => schema.required("Name on card is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
@@ -245,13 +247,14 @@ export const paymentValidationSchema = Yup.object().shape({
   //   then: (schema) => schema.required("CVV is required"),
   //   otherwise: (schema) => schema.notRequired(),
   // }),
-  rememberCardDetails: Yup.boolean().when("paymentMethod", {
-    is: "Card",
-    then: (schema) => schema.required(),
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  rememberCardDetails: Yup.boolean(),
+  // rememberCardDetails: Yup.boolean().when("paymentMethod", {
+  //   is: "card",
+  //   then: (schema) => schema.required(),
+  //   otherwise: (schema) => schema.notRequired(),
+  // }),
   cilunaWallet: Yup.string().when("paymentMethod", {
-    is: "Ciluna Wallet",
+    is: "ciluna_wallet",
     then: (schema) => schema.required(),
     otherwise: (schema) => schema.notRequired(),
   }),

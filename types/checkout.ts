@@ -23,6 +23,7 @@ export interface Checkout {
 }
 
 export interface PaymentCardOption {
+  _id: string;
   brand: string;
   cardHolderName: string;
   last4: string;
@@ -32,6 +33,13 @@ export interface PaymentCardOption {
   isConfidential: boolean;
   stripeCustomerId: string;
   paymentMethodId: string;
+}
+
+export interface PaymentCilunaOption {
+  _id: string;
+  label: string;
+  value: string;
+  cash: string;
 }
 
 export interface Address {
@@ -45,6 +53,13 @@ export interface Address {
   town: string;
   zip: string;
   isDefault: boolean;
+}
+
+export interface Card {
+  _id: string;
+  cardHolderName: string;
+  last4: string;
+  brand: string;
 }
 
 export type OrderFormFields = Yup.InferType<typeof orderValidationSchema>;

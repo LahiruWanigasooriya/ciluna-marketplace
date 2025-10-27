@@ -67,7 +67,7 @@ const OrderSchema = new mongoose.Schema(
         type: String,
         required: true,
         // enum: ["visa", "stripe", "paypal", "crypto", "gpay"], // Only first method will be used
-        enum: ["Card", "Ciluna Wallet"]
+        enum: ["card", "ciluna_wallet"]
       }, // Selected payment method
       status: {
         type: String,
