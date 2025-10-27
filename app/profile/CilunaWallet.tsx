@@ -9,7 +9,7 @@ const CilunaWallet = () => {
         <img
           src={Gold.src}
           alt="wallet"
-          className="h-full w-full hidden md:block min-w-[200px] object-cover md:max-h-[555px] lg:max-h-[328px] lg:max-w-[576px]"
+          className="h-full w-full hidden md:block min-w-[200px] object-cover md:max-h-[555px] lg:max-h-[328px] lg:max-w-[536px]"
         />
         <img
           src={Goldmb.src}
@@ -23,16 +23,16 @@ const CilunaWallet = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col items-center   justify-center  px-[16px] w-full md:w-[300px] lg:w-[380px] xl:w-[440px]  pb-[24px] md:px-[20px] xl:px-[32px]">
-        <div className="font-kaiseiBold pt-[24px] md:pt-0  text-center text-[28px] text-gray mb-[32px] md:text-[28px] lg:text-[28px]">
+      <div className="flex flex-col items-center   justify-center  px-[16px] w-full md:w-[300px] lg:w-[380px] xl:w-[440px]  pt-[19px] pb-[24px] md:px-[20px] xl:px-[32px]">
+        <div className="font-kaiseiBold    text-center text-[28px] text-gray mb-[27px] md:text-[28px] lg:text-[28px]">
           C Wallet
         </div>
-        <div className="flex w-full flex-col items-center gap-[16px]">
+        <div className="flex w-full flex-col items-center gap-[12px]">
           <div className="flex flex-col items-center gap-1">
             <div className="font-arialBold text-center text-[20px] text-gray">
               20,000 LKR
             </div>
-            <div className="font-arial text-center text-[14px] text-[#707070]">
+            <div className="font-arial text-center text-[14px] text-neutralGray-700">
               C Cash
             </div>
           </div>
@@ -42,7 +42,7 @@ const CilunaWallet = () => {
             <div className="font-arialBold text-center text-[20px] text-gray">
               2,000 USD
             </div>
-            <div className="font-arial text-center text-[14px] text-[#707070]">
+            <div className="font-arial text-center text-[14px] text-neutralGray-700">
               C USD
             </div>
           </div>
