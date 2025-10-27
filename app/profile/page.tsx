@@ -40,7 +40,8 @@ export default function ProfilePage() {
   const { setWishlist } = useWishlistStore();
   const router = useRouter();
   const { setUser, clearUser } = useUserStore();
-  const handleProfileUpdate = (updatedUser: FormValues) => {  // Callback to update userData after profile update
+  const handleProfileUpdate = (updatedUser: FormValues) => {
+    // Callback to update userData after profile update
     setUserData(updatedUser);
   };
 
@@ -103,7 +104,7 @@ export default function ProfilePage() {
     <div className="min-h-screen custom-container md:py-0 bg-white ">
       <div className="flex flex-col mt-[76px] md:mt-[132px]  gap-[24px] md:flex-row ">
         {/* Sidebar for md and up */}
-        <aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-lightgray px-[16px] text-[#1E1E1E]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
+        <aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-lightgray px-[16px] text-[#252525]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
           <div className="font-arialBold  border-b border-lightgrayBorders  pb-[16px] text-[16px]">
             Account
           </div>
@@ -116,7 +117,7 @@ export default function ProfilePage() {
                 <button
                   className={`cursor-pointer rounded-[8px] w-full px-[16px] py-[8px] text-left ${
                     selected === item
-                      ? "font-arial bg-neutral-900 text-white"
+                      ? "font-arial bg-black text-white"
                       : "font-arial hover:bg-[#a7a5a5]"
                   } ${item === "Ciluna Wallet" ? "py-[20px]" : ""}`}
                   onClick={() => handleSidebarClick(item)}
@@ -136,7 +137,7 @@ export default function ProfilePage() {
           <div className="relative z-10 w-full max-w-sm">
             {/* Header */}
             <div
-              className={` bg-lightgray text-[#1E1E1E] ${
+              className={` bg-lightgray text-[#252525] ${
                 mobileOpen ? "rounded-0" : "rounded-xl"
               }`}
             >
@@ -210,7 +211,10 @@ export default function ProfilePage() {
               <Overview userData={userData} />
             </div>
           ) : selected === "Account Setting" ? (
-            <Settings userData={userData} onProfileUpdate={handleProfileUpdate} />
+            <Settings
+              userData={userData}
+              onProfileUpdate={handleProfileUpdate}
+            />
           ) : selected === "Contact Us" ? (
             <ContactForm />
           ) : (
