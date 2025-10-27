@@ -12,7 +12,7 @@ interface FilterProps {
   maxPrice?: number;
 }
 
-const FilterComponent: React.FC<FilterProps> = ({
+const Filter: React.FC<FilterProps> = ({
   colors = ["Red", "Blue", "Green", "Black"],
   sizes = ["S", "M", "L", "XL"],
   minPrice = 0,
@@ -72,15 +72,15 @@ const FilterComponent: React.FC<FilterProps> = ({
 
   return (
     <div className="relative w-fit">
-   
       <button
+        disabled //disabled for now
         type="button"
         className="flex items-center justify-between gap-2 bg-[#FFFFFF]/20 rounded-[10px] cursor-pointer hover:bg-[#FFFFFF]/5 text-black px-4 h-[24px]"
         onClick={() => setSelectedCategory(selectedCategory ? null : "Filters")}
         aria-pressed={!!selectedCategory}
       >
         <Settings2 size={24} />
-        <p className="text-[#252525] font-arial leading-[19px] text-base">Filter</p>&nbsp;
+        <p className="text-[#252525] font-arial leading-[19px] text-base hidden md:inline">Filter</p>&nbsp;
       </button>
 
       
@@ -158,12 +158,14 @@ const FilterComponent: React.FC<FilterProps> = ({
                 <div className="flex gap-2">
                   <input
                     type="number"
+                    aria-label="Minimum Price"
                     className="w-1/2 border border-[#3f3f3f] rounded px-2 py-1 text-black"
                     value={priceRange.min}
                     onChange={(e) => handlePriceChange(e, "min")}
                   />
                   <input
                     type="number"
+                    aria-label="Maximum Price"
                     className="w-1/2 border border-[#3f3f3f] rounded px-2 py-1 text-black"
                     value={priceRange.max}
                     onChange={(e) => handlePriceChange(e, "max")}
@@ -177,9 +179,8 @@ const FilterComponent: React.FC<FilterProps> = ({
           </div>
         </motion.div>
       )}
-
     </div>
   );
 };
 
-export default FilterComponent;
+export default Filter;

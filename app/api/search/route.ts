@@ -4,6 +4,7 @@ import CategoryModel from "@/models/category";
 import ProductModel from "@/models/product";
 import { SearchResults } from "@/types/search";
 import SubcategoryModel from "@/models/subcategory";
+import SubSubCategoryModel from "@/models/subsubcategory";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const searchTerm = request.nextUrl.searchParams.get("query")?.toLowerCase() || "";
@@ -33,9 +34,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .limit(10)
         .lean();
 
+    const filteredSubSubCategories = await SubSubCategoryModel.find({
+      name: { $regex: searchTerm, $options: "i" },
+      isActive: true,
+    })
+      .limit(10)
+      .lean();
+
     const results: SearchResults = {
       products: filteredProducts as any[],
       subCategories: filteredSubCategories as any[],
+      subsubCategories: filteredSubSubCategories as any[],
       categories: filteredCategories as any[],
     };
 
@@ -45,6 +54,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const errorResponse: SearchResults = {
       products: [],
       subCategories: [],
+      subsubCategories: [],
       categories: [],
       error: "An error occurred while searching",
     };

@@ -4,6 +4,7 @@ import { dbConnectMarketPlace } from "@/lib/dbConnect";
 import CategoryModel from "@/models/category";
 import ProductModel from "@/models/product";
 import SubcategoryModel from "@/models/subcategory";
+import SubSubCategoryModel from "@/models/subsubcategory";
 import { SearchResults } from "@/types/search";
 
 export async function searchItems(formData: FormData): Promise<SearchResults> {
@@ -35,12 +36,19 @@ export async function searchItems(formData: FormData): Promise<SearchResults> {
     })
       .limit(10)
       .lean();
+    const filteredSubSubCategories = await SubSubCategoryModel.find({
+      name: { $regex: searchTerm, $options: "i" },
+      isActive: true,
+    })
+      .limit(10)
+      .lean();
 
     // Return combined results
     return {
-      products: filteredProducts as any[],
-      categories: filteredCategories as any[],
-      subCategories: filteredSubCategories as any[],
+      products: JSON.parse(JSON.stringify(filteredProducts)),
+      categories: JSON.parse(JSON.stringify(filteredCategories)),
+      subCategories: JSON.parse(JSON.stringify(filteredSubCategories)),
+      subsubCategories: JSON.parse(JSON.stringify(filteredSubSubCategories)),
     };
   } catch (error) {
     console.error("Search error in Server Action:", error);
@@ -48,6 +56,7 @@ export async function searchItems(formData: FormData): Promise<SearchResults> {
       products: [],
       categories: [],
       subCategories: [],
+      subsubCategories: [],
       error: "An error occurred while searching",
     };
   }
