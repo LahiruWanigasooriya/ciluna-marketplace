@@ -8,7 +8,7 @@ import Card from "@/public/assets/checkout/card.png";
 import { cn } from "@/lib/utils";
 import { useCheckoutStore } from "@/store/checkout";
 import { maskDigits } from "@/utils/maskDigits";
-import { getDiscountedPrice } from "@/utils/getDiscountPrice";
+import { calculateTotals, getDiscountedPrice } from "@/utils/getDiscountPrice";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
 
 interface OrderDetailsProps {
@@ -33,25 +33,11 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ onCancel }) => {
   // Format comes as "22 September 2025", so insert the comma
   const formattedDate = currentDate.replace(" ", ", ");
 
-  const calculateTotals = (items: any[]) => {
-    const totalPrice = items.reduce(
-      (acc, item) =>
-        acc +
-        getDiscountedPrice(item.price, item.discount) *
-          item.quantity,
-      0
-    );
-    const discount = totalPrice * 0.1; // 10% discount as per your logic
-    const finalPrice = (totalPrice - discount)/rate;
-
-    return { totalPrice, discount, finalPrice };
-  };
-
   const { cart } = useCartStore();
   const { values: order } = useCheckoutStore();
 
   const { totalPrice, discount, finalPrice } = useMemo(
-    () => calculateTotals(cart),
+    () => calculateTotals(cart, rate),
     [cart]
   );
 
@@ -110,7 +96,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ onCancel }) => {
                     <p className="capitalize font-arial">{item.label}</p>
                     <p>{item.value}</p>
                   </div>
-                  <div className="h-[1px] borer-none bg-neutralGray-100" />
+                  <div className="h-[1px] border-none bg-neutralGray-100" />
                 </div>
               ))}
             </div>

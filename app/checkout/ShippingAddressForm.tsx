@@ -1,6 +1,6 @@
 import Title from "@/components/custom/Title";
 import SelectDropdown from "@/components/ui/select-dropdown";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { TextField } from "@/components/ui/text-field";
 import Tel from "@/components/custom/Phone";
 
@@ -18,6 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Address } from "@/types/checkout";
 import { createAddress, updateAddress } from "@/actions/users/address";
 import { useUserId } from "@/hooks/useUserId";
+import { toast } from "sonner";
 
 interface OptionType {
   value: string;
@@ -28,104 +29,67 @@ type FormFields = Yup.InferType<typeof shippingValidationSchema>;
 
 interface ShippingAddressProps {
   title: string;
-  selectedAddressForEdit?: Address | null;
-  onClose: React.Dispatch<React.SetStateAction<boolean>>;
-  onSuccess?: () => void;
+  defaultData?: Address | null;
+  onSuccess: () => Promise<void>;
+  onCancel: () => void;
 }
 
-const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
-  title,
-  selectedAddressForEdit,
-  onClose,
-  onSuccess,
-}) => {
-  // console.log("selected address for edit: ", selectedAddressForEdit);
+const ShippingAddressForm: React.FC<ShippingAddressProps> = ({ title, defaultData, onSuccess, onCancel }) => {
   const countryOptions = useMemo(() => countryList().getData(), []);
-  const [selectedProvince, setSelectedProvince] = useState<string>(
-    selectedAddressForEdit?.province || ""
-  );
-  const [selectedDistrict, setSelectedDistrict] = useState<string>(
-    selectedAddressForEdit?.district || ""
-  );
+  const [selectedProvince, setSelectedProvince] = useState<string>(defaultData?.province || "");
+  const [selectedDistrict, setSelectedDistrict] = useState<string>(defaultData?.district || "");
 
   const userId = useUserId();
 
-  const districts =
-    provinces.find((p) => p.value === selectedProvince)?.districts || [];
-  const towns =
-    districts.find((d) => d.value === selectedDistrict)?.towns || [];
+  const districts = provinces.find((p) => p.value === selectedProvince)?.districts || [];
+  const towns = districts.find((d) => d.value === selectedDistrict)?.towns || [];
 
-  const {
-    formState: { errors, isSubmitting },
-    handleSubmit,
-    control,
-    getValues,
-    setValue,
-    reset,
-  } = useForm({
-    resolver: yupResolver(shippingValidationSchema),
-    mode: "onBlur",
-    defaultValues: selectedAddressForEdit ?? {
-      country: "",
-      contactName: "",
-      mobileNumber: "",
-      street: "",
-      province: "",
-      district: "",
-      town: "",
-      isDefault: false,
-    },
-  });
+ const {
+     handleSubmit,
+     control,
+     setValue,
+     getValues,
+     formState: { errors, isSubmitting },
+     reset,
+   } = useForm({
+     resolver: yupResolver(shippingValidationSchema),
+     mode: "onBlur",
+     defaultValues: defaultData ?? {
+       country: "",
+       contactName: "",
+       mobileNumber: "",
+       street: "",
+       province: "",
+       district: "",
+       town: "",
+       isDefault: false,
+     },
+   });
 
   const formatOptionLabel = ({ value, label }: OptionType) => (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <ReactCountryFlag
-        countryCode={value}
-        svg
-        style={{ marginRight: "8px" }}
-      />
+      <ReactCountryFlag countryCode={value} svg style={{ marginRight: "8px" }} />
       <span>{label}</span>
     </div>
   );
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    let address = {
-      contactName: data.contactName,
-      mobileNumber: data.mobileNumber,
-      street: data.street,
-      province: data.province,
-      district: data.district,
-      town: data.town,
-      country: data.country,
-      zip: data.zip,
-      isDefault: data.isDefault,
-    };
-
     try {
-      if (selectedAddressForEdit) {
-        await updateAddress(userId, selectedAddressForEdit._id, address);
+      if (defaultData) {
+        await updateAddress(userId, defaultData._id, data);
       } else {
-        await createAddress(userId, address);
+        await createAddress(userId, data);
       }
 
-      onClose(false);
+      onSuccess();
       reset();
-
-      // Call onSuccess to refetch addresses
-      if (onSuccess) {
-        onSuccess();
-      }
     } catch (error) {
-      console.error("Error saving address:", error);
-      // You might want to show an error message to the user here
+      toast.error("Error saving address");
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="relative bg-white rounded-[8px] md:w-[655px] w-full"
-    >
+    <div className="relative bg-white rounded-[8px] md:w-[655px] w-full">
       <div className="flex flex-col gap-4 max-h-[90vh] lg:max-h-none overflow-y-auto p-4 md:p-6">
         <Title title={title} className="font-arialBold !text-xl md:!text-2xl text-left leading-6 md:!leading-8"/>
 
@@ -135,7 +99,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
             color="#252525"
             strokeWidth={2}
             className="cursor-pointer h-5 w-5 hover:opacity-70"
-            onClick={() => onClose(false)}
+            onClick={() => onCancel()}
           />
         </div>
 
@@ -148,13 +112,8 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                 <SelectDropdown
                   label="Country*"
                   options={countryOptions}
-                  value={
-                    countryOptions.find((opt) => opt.value === field.value) ||
-                    null
-                  }
-                  onChange={(selected: SingleValue<OptionType>) =>
-                    field.onChange(selected?.value || "")
-                  }
+                  value={countryOptions.find((opt) => opt.value === field.value) || null}
+                  onChange={(selected: SingleValue<OptionType>) => field.onChange(selected?.value || "")}
                   formatOptionLabel={formatOptionLabel}
                   placeholder="Enter country name"
                   showFlags={true}
@@ -162,11 +121,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                 />
               )}
             />
-            {errors.country && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.country.message}
-              </p>
-            )}
+            {errors.country && <p className="text-red-500 text-xs mt-1">{errors.country.message}</p>}
           </div>
 
           <div className="flex flex-col md:flex-row gap-4">
@@ -190,11 +145,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                   />
                 )}
               />
-              {errors.contactName && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.contactName.message}
-                </p>
-              )}
+              {errors.contactName && <p className="text-red-500 text-xs mt-1">{errors.contactName.message}</p>}
             </div>
             <div className="w-full">
               <Controller
@@ -203,19 +154,13 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                 render={({ field }) => (
                   <Tel
                     value={getValues("mobileNumber")}
-                    onChange={(phone: string) =>
-                      setValue("mobileNumber", phone)
-                    }
+                    onChange={(phone: string) => setValue("mobileNumber", phone)}
                     className="border border-[#E1E1E1]"
                     label="Mobile Number*"
                   />
                 )}
               />
-              {errors.mobileNumber && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.mobileNumber.message}
-                </p>
-              )}
+              {errors.mobileNumber && <p className="text-red-500 text-xs mt-1">{errors.mobileNumber.message}</p>}
             </div>
           </div>
 
@@ -240,11 +185,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                   />
                 )}
               />
-              {errors.street && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.street.message}
-                </p>
-              )}
+              {errors.street && <p className="text-red-500 text-xs mt-1">{errors.street.message}</p>}
             </div>
 
             <div className="w-full">
@@ -255,11 +196,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                   <SelectDropdown
                     label="Province*"
                     options={provinces}
-                    value={
-                      provinces.find(
-                        (option) => option.value === field.value
-                      ) || null
-                    }
+                    value={provinces.find((option) => option.value === field.value) || null}
                     onChange={(selectedOption: SingleValue<OptionType>) => {
                       const value = selectedOption ? selectedOption.value : "";
                       setSelectedProvince(value);
@@ -270,11 +207,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                   />
                 )}
               />
-              {errors.province && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.province.message}
-                </p>
-              )}
+              {errors.province && <p className="text-red-500 text-xs mt-1">{errors.province.message}</p>}
             </div>
           </div>
 
@@ -287,11 +220,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                   <SelectDropdown
                     label="District*"
                     options={districts}
-                    value={
-                      districts.find(
-                        (option) => option.value === field.value
-                      ) || null
-                    }
+                    value={districts.find((option) => option.value === field.value) || null}
                     onChange={(selectedOption: SingleValue<OptionType>) => {
                       const value = selectedOption ? selectedOption.value : "";
                       setSelectedDistrict(value);
@@ -302,11 +231,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                   />
                 )}
               />
-              {errors.district && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.district.message}
-                </p>
-              )}
+              {errors.district && <p className="text-red-500 text-xs mt-1">{errors.district.message}</p>}
             </div>
 
             <div className="w-full">
@@ -317,10 +242,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                   <SelectDropdown
                     label="Area/Town*"
                     options={towns}
-                    value={
-                      towns.find((option) => option.value === field.value) ||
-                      null
-                    }
+                    value={towns.find((option) => option.value === field.value) || null}
                     onChange={(selectedOption: SingleValue<OptionType>) => {
                       field.onChange(selectedOption?.value || "");
                     }}
@@ -329,11 +251,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                   />
                 )}
               />
-              {errors.town && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.town.message}
-                </p>
-              )}
+              {errors.town && <p className="text-red-500 text-xs mt-1">{errors.town.message}</p>}
             </div>
             <div className="w-full">
               <Controller
@@ -355,11 +273,7 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                   />
                 )}
               />
-              {errors.zip && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.zip.message}
-                </p>
-              )}
+              {errors.zip && <p className="text-red-500 text-xs mt-1">{errors.zip.message}</p>}
             </div>
           </div>
 
@@ -371,45 +285,27 @@ const ShippingAddressForm: React.FC<ShippingAddressProps> = ({
                 render={({ field }) => (
                   <Checkbox
                     isSelected={field.value}
-                    onChange={(isSelected: boolean) =>
-                      setValue("isDefault", isSelected)
-                    }
+                    onChange={(isSelected: boolean) => setValue("isDefault", isSelected)}
                   >
                     Set as a default shipping address
                   </Checkbox>
                 )}
               />
 
-              {errors.isDefault && (
-                <p className="text-red-500 text-xs mt-1">
-                  {errors.isDefault.message}
-                </p>
-              )}
+              {errors.isDefault && <p className="text-red-500 text-xs mt-1">{errors.isDefault.message}</p>}
             </div>
           </div>
         </div>
         <div className="flex gap-3 md:gap-4 mt-4">
-          <Button
-            className="w-full border !border-gray text-lg"
-            size="extra-large"
-            onPress={() => onClose(false)}
-          >
+          <Button className="w-full border !border-gray text-lg" size="extra-large" onPress={() => onCancel()}>
             Cancel
           </Button>
-          <Button
-            className="w-full text-white bg-gray text-lg"
-            size="extra-large"
-            type="submit"
-          >
-            {isSubmitting
-              ? "Loading..."
-              : selectedAddressForEdit
-              ? "Update Details"
-              : "Save Details"}
+          <Button className="w-full text-white bg-gray text-lg" size="extra-large" onPress={() => handleSubmit(onSubmit)()}>
+            {isSubmitting ? "Loading..." : defaultData ? "Update Details" : "Save Details"}
           </Button>
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 

@@ -122,7 +122,7 @@ const Phone: React.FC<TelProps> = ({ value, onChange, className, label = "Mobile
           />
           <ChevronDown className={`${isOpen ? "rotate-180" : ""} text-black  !w-[18px] !h-[18px] min-w-[18px]`} />
         </div>
-        {!isValidPhoneNumber(value) && value.length > 0 && (
+        {value && !isValidPhoneNumber(value) && value.length > 0 && (
           <span className="text-xs text-red-500">Invalid phone number</span>
         )}
         
