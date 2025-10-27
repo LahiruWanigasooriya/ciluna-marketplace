@@ -16,6 +16,7 @@ export interface IProduct {
   images?: string[]; // Additional images for the product
   category: { _id: string; name: string }; // Category object containing ID and name
   subcategory?: { _id: string; name: string }; // Optional subcategory ID
+  subsubcategory?: { _id: string; name: string }; // Optional subsubcategory ID
   brand?: { _id: Types.ObjectId; name: string }; // Populated
   model?: { _id: Types.ObjectId; name: string };
   productVariantCategories?: any[]; // Array of product variant category IDs
