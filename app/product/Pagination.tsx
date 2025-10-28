@@ -66,7 +66,7 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full flex-col">
+    <div className="flex items-center justify-center w-full flex-col space-y-4 md:space-y-5 md:py-5">
       <p className="flex text-[#707070] text-base font-arial">{`${currentPage} - ${totalPages}`}</p>
 
       {currentPage < totalPages && (

@@ -165,13 +165,13 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     <Link
       key={product._id}
       href={`/product/${product._id}`}
-      className="flex flex-col gap-2 md:gap-5 font-inter border border-[#ffffff00] bg-white recommend:min-w-[294px] transition-all duration-300 ease-in-out min-w-[164px] sm:w-[calc(33%-0.75rem)] lg:w-[calc(23.33%-0.833rem)] xl:w-[calc(18.33%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
+      className="flex flex-col gap-2 md:gap-5 font-inter border border-[#ffffff00] bg-white min-w-[164px] sm:min-w-[200px] lg:min-w-[220px] xl:min-w-[270px] recommend:min-w-[294px] transition-all duration-300 ease-in-out sm:w-[calc(33%-0.75rem)] lg:w-[calc(24.45%-0.833rem)] xl:w-[calc(24.5%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
     >
-      <div className="h-[177px] recommend:h-[317px]">
+      <div className="h-[177px] sm:h-[220px] lg:h-[250px] xl:h-[290px] recommend:h-[317px]">
         {isLoading ? (
           <Skeleton className="h-[146px] w-[160px] md:w-full md:h-[212px]" />
         ) : (
-          <div className="relative bg-[#F5F5F5] w-full h-[177px] recommend:h-[317px] rounded-[0.5rem]">
+          <div className="relative bg-[#F5F5F5] w-full h-[177px] sm:h-[220px] lg:h-[250px] xl:h-[290px] recommend:h-[317px] rounded-[0.5rem]">
             <Image
               alt={product.name}
               src={product.image}
