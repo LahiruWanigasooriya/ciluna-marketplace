@@ -169,7 +169,7 @@ export default function ProfilePage() {
                   {sidebarItems.map((item) => (
                     <div key={item}>
                       {item === "C Wallet" && (
-                        <div className="col-span-2  h-px w-full bg-light-gray md:hidden"></div>
+                        <div className="col-span-2  h-px w-full bg-neutralGray-100 md:hidden"></div>
                       )}
                       <button
                         className={`w-full cursor-pointer rounded-md px-[12px] py-2 text-left ${
@@ -189,7 +189,7 @@ export default function ProfilePage() {
                         {item}
                       </button>
                       {item === "C Wallet" && (
-                        <div className="col-span-2  h-px w-full bg-light-gray md:hidden"></div>
+                        <div className="col-span-2  h-px w-full bg-neutralGray-100 md:hidden"></div>
                       )}
                     </div>
                   ))}

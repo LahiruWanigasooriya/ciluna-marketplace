@@ -121,6 +121,7 @@ const config = withTV({
         kaisei: ["KaiseiHarunoUmi-Regular", "sans-serif"],
         kaiseiBold: ["KaiseiHarunoUmi-Bold", "sans-serif"],
         playFairExtraBold: ["PlayFairDisplay-ExtraBold", "sans-serif"],
+        playFairBold: ["PlayFairDisplay-Bold", "sans-serif"],
         arial: ["Arial-Regular", "sans-serif"],
         arialBold: ["Arial-Bold", "sans-serif"],
         kaiseiHarunoUmi: ['"KaiseiHarunoUmi-Bold"', "sans-serif"],
@@ -170,8 +171,7 @@ const config = withTV({
   plugins: [
     tailwindcssAnimate,
     tailwindcssReactAriaComponents,
-    require("tailwind-scrollbar-hide")
-    
+    require("tailwind-scrollbar-hide"),
   ],
 });
 
