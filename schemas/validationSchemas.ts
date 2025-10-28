@@ -54,10 +54,11 @@ export const signupValidationSchema = Yup.object().shape({
 export const contactValidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Name must be at least 3 characters long")
-    .required("Full Name is required"),
+    .max(50, "Name cannot exceed 50 characters")
+    .required("Your Name is required"),
   email: Yup.string()
     .email("Invalid email address")
-    .required("Email is required"),
+    .required("Email Address is required"),
 //  phone: Yup.string()
 //    .matches(
 //      /^\+\d{1,4}\d{7,11}$/,
