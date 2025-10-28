@@ -93,7 +93,7 @@ export const getCategoryById = async (categoryId: string) => {
       success: true,
       message: "Category fetched successfully",
       data: {
-        product: JSON.parse(JSON.stringify(category)),
+        category: JSON.parse(JSON.stringify(category)),
       },
     };
   } catch (error: any) {
