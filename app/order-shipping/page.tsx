@@ -30,10 +30,10 @@ const ShipingPage = async () => {
           </div>
         </div>
       </div>
-      <div className="font-[Arial] space-y-6 md:space-y-[40px] custom-container py-4 md:py-10 text-black">
+      <div className="font-[Arial] space-y-6 md:space-y-[40px] custom-container pt-6 pb-8 md:py-10 text-black">
         {OrderShippingDetails.map((section, index) => (
           <div key={index} className="space-y-3 md:space-y-4">
-            <div className="text-[20px] leading-6 md:leading-8 font-arialBold">
+            <div className="text-[20px] leading-6 font-arialBold">
               {section.title}
             </div>
             <div className="font-[Arial] text-[14px] leading-5 md:text-[16px] md:leading-6 ">
