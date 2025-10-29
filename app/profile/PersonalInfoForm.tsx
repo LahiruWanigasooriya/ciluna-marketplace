@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { TextField } from "@/components/ui/text-field";
 import { FormValues } from "@/types/profile";
@@ -130,6 +130,25 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ initialData, onProf
     setProfileImageUrl(initialData?.profileImage || User);
     setErrors({});
   };
+
+  // A listner to catch email change from another tab immediately
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "current-email" && event.newValue) {
+        console.log("Storage event detected:", event.newValue);
+        setValues((prevValues) => ({
+          ...prevValues,
+          email: event.newValue || values.email,
+        }));
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   return (
     <form

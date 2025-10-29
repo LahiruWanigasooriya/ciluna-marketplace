@@ -63,3 +63,5 @@ export interface IUser {
       currentPage: number;
     };
   }
+
+  export type OtpType = "verify_current" | "verify_new";

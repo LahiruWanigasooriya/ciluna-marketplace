@@ -608,3 +608,8 @@
   pointer-events:none;
 
 }
+
+[data-input-otp="true"] {
+  width: 100% !important;
+  clip-path: inset(0px 0px 0px 0px) !important;
+}

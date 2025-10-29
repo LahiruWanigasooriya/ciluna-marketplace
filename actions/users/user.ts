@@ -4,12 +4,8 @@ import bcrypt from "bcryptjs";
 import { dbConnectMarketPlace } from "@/lib/dbConnect";
 import jwt from "jsonwebtoken";
 import UserModel from "@/models/user";
-import {
-  GetUserParams,
-  GetUsersResponse,
-  IUser,
-  UpdateUserResponse,
-} from "@/types/user";
+import UserVerificationModel from "@/models/userVerification";
+import { GetUserParams, GetUsersResponse, IUser, OtpType, UpdateUserResponse } from "@/types/user";
 import { verifyToken } from "../utils/auth";
 import { cookies } from "next/headers";
 import { emailTemplates } from "../utils/emailTemplates";
@@ -690,3 +686,193 @@ export const deleteUser = async (userId: string) => {
     };
   }
 };
+
+export const sendOtp = async (email: string, verifyEmail: string, type: OtpType) => {
+  try {
+    await dbConnectMarketPlace();
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return {
+        status: 404,
+        success: false,
+        message: "User not found send otp",
+      };
+    }
+
+    // Check if a recent OTP already exists (within last 15 seconds)
+    const recentOtp = await UserVerificationModel.findOne({
+      userId: user._id,
+      type,
+      createdAt: { $gte: new Date(Date.now() - 15 * 1000) },
+    });
+
+    if (recentOtp) {
+      return {
+        status: 429,
+        success: true,
+        message: "OTP already sent recently",
+      };
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const hashedOtp = await bcrypt.hash(otp, 10);
+
+    const newVerification = new UserVerificationModel({
+      userId: user._id,
+      otp: hashedOtp,
+      type,
+      newEmail: type === "verify_new" ? verifyEmail : null,
+      expiresAt: new Date(Date.now() + 45 * 1000), // 45 sec expiry
+    });
+
+    await newVerification.save();
+
+    try {
+      const name = `${user.firstName} ${user.lastName}`.trim() || "User";
+
+      const templates = {
+        verify_current: emailTemplates.verifyCurrentEmail(name, otp),
+        verify_new: emailTemplates.verifyNewEmail(name, verifyEmail, otp),
+      };
+
+      const template = templates[type];
+      if (!template) throw new Error(`Invalid email type: ${type}`);
+
+      const { subject, html } = template;
+      await sendEmail(verifyEmail, subject, html);
+    } catch (error) {
+      console.error("Error sending verification code:", error);
+    }
+
+    return {
+      status: 200,
+      success: true,
+      message: "OTP sent successfully",
+    };
+  } catch (error) {
+    console.log("Error: ", error);
+    return {
+      status: 500,
+      success: false,
+      message: "Error sending otp",
+    };
+  }
+};
+
+export const verifyOtp = async (email: string, otp: string, type: OtpType) => {
+  try {
+    await dbConnectMarketPlace();
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return {
+        status: 404,
+        success: false,
+        message: "User not found verify",
+      };
+    }
+
+    // Find the latest OTP for this user and type
+    const verification = await UserVerificationModel.findOne({
+      userId: user._id,
+      type,
+    }).sort({ createdAt: -1 });
+
+    if (!verification) {
+      return {
+        status: 404,
+        success: false,
+        message: "OTP not found or expired",
+      };
+    }
+
+    // Check expiry
+    if (verification.expiresAt < new Date()) {
+      await UserVerificationModel.deleteOne({ _id: verification._id });
+      return {
+        status: 400,
+        success: false,
+        message: "OTP expired",
+      };
+    }
+
+    // Compare OTP
+    const isMatch = await bcrypt.compare(otp, verification.otp);
+    if (!isMatch) {
+      return {
+        status: 400,
+        success: false,
+        message: "Invalid OTP",
+      };
+    }
+
+    // OTP verified successfully — delete the record
+    await UserVerificationModel.deleteOne({ _id: verification._id });
+
+    return {
+      status: 200,
+      success: true,
+      message: "OTP verified successfully",
+    };
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
+    return {
+      status: 500,
+      success: false,
+      message: "Error verifying OTP",
+    };
+  }
+};
+
+export async function verifyPassword(email: string, password: string) {
+  try {
+    await dbConnectMarketPlace();
+
+    // Find the user
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return {
+        status: 404,
+        success: false,
+        message: "User not found",
+      };
+    }
+
+    if (user.activeStatus === false) {
+      return {
+        status: 403,
+        success: false,
+        message: "You have no permission to access",
+      };
+    }
+
+    // Compare password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return {
+        status: 401,
+        success: false,
+        message: "Invalid password",
+      };
+    }
+
+    // Password correct
+    return {
+      status: 200,
+      success: true,
+      message: "Password verified successfully",
+    };
+  } catch (error: unknown) {
+    console.error("Error in verifyPassword:", error);
+    return {
+      status: 500,
+      success: false,
+      message: "Internal server error",
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}
+``;
