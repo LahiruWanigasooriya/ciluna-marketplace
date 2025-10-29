@@ -10,7 +10,7 @@ import User from "@/public/assets/user.png";
 
 import { IProduct } from "@/types/product";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { getAllProducts } from "@/actions/products/product";
 import SwiperCards from "@/components/custom/SwiperCards";
@@ -30,7 +30,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         if (response.status !== 200 || !response.data) {
           throw new Error(response.message || "No products found!");
         }
-        // Store user data in state
+
         setProducts(response.data.products);
       } catch (err: any) {
         throw new Error(err.message);
@@ -40,11 +40,10 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
     fetchUserProfile();
   }, []);
 
-  // Add interval to update time every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(Date.now());
-    }, 30000); // Update every 30 seconds
+    }, 30000);
 
     return () => clearInterval(interval);
   }, []);
@@ -54,7 +53,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
     if (!lastLogin) return "Never";
 
     const loginDate = new Date(lastLogin);
-    const now = new Date(currentTime); // Use currentTime state instead of creating new Date()
+    const now = new Date(currentTime);
     const diffMs = now.getTime() - loginDate.getTime();
     const diffMins = Math.floor(diffMs / 60000);
     const diffHours = Math.floor(diffMs / 3600000);
