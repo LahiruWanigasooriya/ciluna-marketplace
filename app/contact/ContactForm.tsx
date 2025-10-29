@@ -80,7 +80,7 @@ const ContactForm = () => {
 								label="Your Name*"
 								placeholder="Enter your name here..."
 								className="custom-textfield w-full"
-								inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray focus:outline-none focus:ring-2 border-none focus:ring-neutralGray-200 transition duration-300"
+								inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray border-none hover:ring-1 focus:ring-1 focus:ring-neutralGray-100 hover:ring-neutralGray-100"
 								groupClassName="border-none"
 								name="name"
 								id="name"
@@ -95,7 +95,7 @@ const ContactForm = () => {
 							<TextField
 								label="Email Address*"
 								className="custom-textfield w-full"
-								inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray focus:outline-none focus:ring-2 !border-none focus:border-none focus:ring-neutralGray-200 transition duration-300"
+								inputClassName="bg-white rounded-[8px] h-[44px] placeholder-[#707070] !text-gray border-none hover:ring-1 focus:ring-1 focus:ring-neutralGray-100 hover:ring-neutralGray-100"
 								groupClassName="border-none"
 								placeholder="Enter your email here..."
 								name="email"
@@ -111,7 +111,7 @@ const ContactForm = () => {
 							<Textarea
 								label="Message*"
 								placeholder="Type your message here..."
-								className="custom-textfield h-[141px] rounded-[8px] placeholder-[#707070] !text-gray focus:ring-2"
+								className="custom-textfield h-[141px] rounded-[8px] placeholder-[#707070] !text-gray border-none hover:ring-1 focus:ring-1 focus:ring-neutralGray-100 hover:ring-neutralGray-100"
 								name="message"
 								value={formData.message}
 								onChange={(value: string) => handleChange("message", value)}
