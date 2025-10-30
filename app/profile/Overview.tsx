@@ -10,7 +10,7 @@ import User from "@/public/assets/user.png";
 
 import { IProduct } from "@/types/product";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { getAllProducts } from "@/actions/products/product";
 import SwiperCards from "@/components/custom/SwiperCards";
@@ -20,10 +20,8 @@ interface OverviewProps {
 }
 
 const Overview: React.FC<OverviewProps> = ({ userData }) => {
-  // const scrollContainerRef = useRef<HTMLDivElement>(null);
-  // const [canScrollLeft, setCanScrollLeft] = useState(false);
-  // const [canScrollRight, setCanScrollRight] = useState(true);
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [currentTime, setCurrentTime] = useState(Date.now());
 
   useEffect(() => {
     async function fetchUserProfile() {
@@ -32,7 +30,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
         if (response.status !== 200 || !response.data) {
           throw new Error(response.message || "No products found!");
         }
-        // Store user data in state
+
         setProducts(response.data.products);
       } catch (err: any) {
         throw new Error(err.message);
@@ -42,49 +40,50 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
     fetchUserProfile();
   }, []);
 
-  // const updateScrollButtons = () => {
-  //   if (scrollContainerRef.current) {
-  //     const { scrollLeft, scrollWidth, clientWidth } =
-  //       scrollContainerRef.current;
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 30000);
 
-  //     if (scrollWidth <= clientWidth) {
-  //       setCanScrollLeft(false);
-  //       setCanScrollRight(false);
-  //       return;
-  //     }
+    return () => clearInterval(interval);
+  }, []);
 
-  //     setCanScrollLeft(scrollLeft > 0);
-  //     setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
-  //   }
-  // };
+  // Format last login time
+  const formatLastLogin = (lastLogin?: Date | string) => {
+    if (!lastLogin) return "Never";
 
-  // const scrollLeft = () => {
-  //   if (scrollContainerRef.current) {
-  //     scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
-  //     setTimeout(updateScrollButtons, 300);
-  //   }
-  // };
+    const loginDate = new Date(lastLogin);
+    const now = new Date(currentTime);
+    const diffMs = now.getTime() - loginDate.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
 
-  // const scrollRight = () => {
-  //   if (scrollContainerRef.current) {
-  //     scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
-  //     setTimeout(updateScrollButtons, 300);
-  //   }
-  // };
+    if (diffMins < 1) return "Just now";
+    if (diffMins < 60)
+      return `${diffMins} minute${diffMins > 1 ? "s" : ""} ago`;
+    if (diffHours < 24) {
+      const minutes = diffMins % 60;
+      return `${diffHours} hour${diffHours > 1 ? "s" : ""} ${
+        minutes > 0 ? `${minutes} min` : ""
+      } ago`;
+    }
+    if (diffDays === 1) {
+      return `Yesterday ${loginDate.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      })}`;
+    }
+    if (diffDays < 7) return `${diffDays} days ago`;
 
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     updateScrollButtons();
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   updateScrollButtons();
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
+    return loginDate.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year:
+        loginDate.getFullYear() !== now.getFullYear() ? "numeric" : undefined,
+    });
+  };
 
   // Get profile image with fallback
   const profileImage = userData?.profileImage || User;
@@ -115,7 +114,7 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
               {fullName}
             </div>
             <div className="font-arial text-[14px] lg:text-[14px]  md:text-[12px] md:min-w-[150px] lg:min-w-[200px] text-[#707070]">
-              Last login : Yesterday 11.39am
+              Last login: {formatLastLogin(userData?.lastLogin)}
             </div>
           </div>
         </div>

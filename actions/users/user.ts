@@ -4,7 +4,12 @@ import bcrypt from "bcryptjs";
 import { dbConnectMarketPlace } from "@/lib/dbConnect";
 import jwt from "jsonwebtoken";
 import UserModel from "@/models/user";
-import { GetUserParams, GetUsersResponse, IUser, UpdateUserResponse } from "@/types/user";
+import {
+  GetUserParams,
+  GetUsersResponse,
+  IUser,
+  UpdateUserResponse,
+} from "@/types/user";
 import { verifyToken } from "../utils/auth";
 import { cookies } from "next/headers";
 import { emailTemplates } from "../utils/emailTemplates";
@@ -12,19 +17,16 @@ import { sendEmail } from "../utils/sendEmail";
 
 const secretKey: string = process.env.JWT_SECRET_KEY || "";
 
-
 if (!secretKey) {
   throw new Error("JWT_SECRET_KEY is not defined in environment variables.");
 }
 
-const passwordCriteria = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+const passwordCriteria =
+  /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
 
 const contactNoCriteria = /^\+\d{1,4}\d{7,11}$/;
 
 const emailCriteria = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-
 
 export const getUserById = async (userId: string) => {
   try {
@@ -39,7 +41,7 @@ export const getUserById = async (userId: string) => {
     }
 
     // Find the product and populate related fields
-    const user = await UserModel.findById(userId)
+    const user = await UserModel.findById(userId);
     if (!user) {
       return {
         status: 404,
@@ -48,13 +50,12 @@ export const getUserById = async (userId: string) => {
       };
     }
 
-
     return {
       status: 200,
       success: true,
       message: "User fetched successfully",
       data: {
-        user: JSON.parse(JSON.stringify(user)), 
+        user: JSON.parse(JSON.stringify(user)),
       },
     };
   } catch (error: any) {
@@ -92,7 +93,8 @@ export async function createNewUser(user: IUser) {
     if (!passwordCriteria.test(user.password)) {
       return {
         status: 400,
-        message: "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character.",
+        message:
+          "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character.",
       };
     }
 
@@ -100,7 +102,8 @@ export async function createNewUser(user: IUser) {
     if (!contactNoCriteria.test(user.contactNo)) {
       return {
         status: 400,
-        message: "Contact number must start with '+' followed by a valid country code and 7-11 digits.",
+        message:
+          "Contact number must start with '+' followed by a valid country code and 7-11 digits.",
       };
     }
 
@@ -193,9 +196,11 @@ export async function checkUserAndGenerateToken({
       };
     }
 
-
     // Compare the password
-    const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
 
     if (!isPasswordValid) {
       return {
@@ -204,17 +209,23 @@ export async function checkUserAndGenerateToken({
       };
     }
 
+    // Update last login timestamp
+    await UserModel.findByIdAndUpdate(existingUser._id, {
+      lastLogin: new Date(),
+    });
+
     // Generate a JWT token
     const token = jwt.sign(
       {
         userId: existingUser?._id,
-        name: `${existingUser?.firstName || ''} ${existingUser?.lastName || ''}`.trim(),
+        name: `${existingUser?.firstName || ""} ${
+          existingUser?.lastName || ""
+        }`.trim(),
         email: existingUser?.email,
       },
       secretKey,
       { expiresIn: "1h" }
     );
-
 
     return {
       status: 200,
@@ -222,31 +233,29 @@ export async function checkUserAndGenerateToken({
       message: "User authenticated successfully",
       data: {
         token,
-        userName: `${existingUser?.firstName || ''} ${existingUser?.lastName || ''}`.trim(),
+        userName: `${existingUser?.firstName || ""} ${
+          existingUser?.lastName || ""
+        }`.trim(),
       },
     };
   } catch (error: unknown) {
     console.error("Error in checkUserAndGenerateToken:", error);
 
-    // Check if error is an instance of Error
     if (error instanceof Error) {
       return {
         status: 500,
         message: "Internal server error",
-        error: error.message, // Safe to access error.message because we checked the type
+        error: error.message,
       };
     }
 
-    // Handle case where error is not an instance of Error
     return {
       status: 500,
       message: "Internal server error",
-      error: "An unknown error occurred", // Provide a generic message
+      error: "An unknown error occurred",
     };
   }
-
 }
-
 
 export async function resetPassword(email: string, tempPassword: string) {
   try {
@@ -284,9 +293,11 @@ export async function resetPassword(email: string, tempPassword: string) {
   }
 }
 
-
-
-export async function changePassword(oldPassword: string, newPassword: string, token?: string,) {
+export async function changePassword(
+  oldPassword: string,
+  newPassword: string,
+  token?: string
+) {
   try {
     await dbConnectMarketPlace();
 
@@ -377,9 +388,6 @@ export async function changePassword(oldPassword: string, newPassword: string, t
     };
   }
 }
-
-
-
 
 export async function getUserProfile(token?: string) {
   try {
@@ -530,9 +538,10 @@ export const getAllUsers = async (
   }
 };
 
-
-
-export async function updateUserProfile(updateData: Partial<IUser>, token?: string): Promise<UpdateUserResponse> {
+export async function updateUserProfile(
+  updateData: Partial<IUser>,
+  token?: string
+): Promise<UpdateUserResponse> {
   try {
     await dbConnectMarketPlace();
     const authToken = token || (await cookies()).get("authToken")?.value;
@@ -594,7 +603,10 @@ export async function updateUserProfile(updateData: Partial<IUser>, token?: stri
 
     // ✅ If the user wants to update their email, check if it's already in use
     if (sanitizedUpdateData.email) {
-      const existingUser = await UserModel.findOne({ email: sanitizedUpdateData.email, _id: { $ne: userId } });
+      const existingUser = await UserModel.findOne({
+        email: sanitizedUpdateData.email,
+        _id: { $ne: userId },
+      });
       if (existingUser) {
         return {
           status: 409, // Conflict
@@ -663,7 +675,6 @@ export const deleteUser = async (userId: string) => {
     // Delete the product
     await UserModel.findByIdAndDelete(userId);
 
-
     return {
       status: 200,
       success: true,
@@ -678,6 +689,4 @@ export const deleteUser = async (userId: string) => {
       error: error.message,
     };
   }
-}
-
-
+};

@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const AddressSchema = new mongoose.Schema({
-  _id: { type: mongoose.Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    default: () => new mongoose.Types.ObjectId(),
+  },
   contactName: { type: String, required: true },
   mobileNumber: { type: String, required: true },
   street: { type: String, required: true },
@@ -11,9 +14,9 @@ const AddressSchema = new mongoose.Schema({
   country: { type: String, required: true },
   zip: { type: String },
   isDefault: { type: Boolean, default: false },
-})
+});
 
-const UserSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -65,14 +68,14 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isDeleted: { 
-      type: Boolean, 
-      default: false 
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
-    role: { 
-      type: String, 
-      enum: ["user", "admin"], 
-      default: "user" 
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
     },
     addresses: [AddressSchema],
     activeStatus: {
@@ -86,11 +89,15 @@ const UserSchema = new mongoose.Schema(
       orderStatusChanged: { type: Boolean, default: true },
       emailNotification: { type: Boolean, default: true },
     },
+    lastLogin: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );
 
 // Avoid model overwrite error in development
-const UserModel = mongoose.models.User || mongoose.model("User", UserSchema);
+const UserModel = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default UserModel;
