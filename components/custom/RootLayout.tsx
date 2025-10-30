@@ -35,6 +35,7 @@ export default function ConditionalLayout({
     "/trackyourorder",
     "/privacypolicy",
     "/termsofservices",
+    "/return-refund",
   ];
   const isHomePage = pathname === "/";
   const isHiddenRoute = hiddenRoutes.includes(pathname);
