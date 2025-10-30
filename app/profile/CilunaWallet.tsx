@@ -4,7 +4,7 @@ import { CirclePlus } from "lucide-react";
 
 const CilunaWallet = () => {
   return (
-    <section className="mx-auto mb-[759px] flex min-h-[328px] border-custom max-w-[976px]  flex-col overflow-hidden rounded-3xl bg-white  md:flex-row">
+    <section className="mx-auto mb-[81px] flex min-h-[328px] border-custom max-w-[976px]  flex-col overflow-hidden rounded-3xl bg-white md:mb-[400px] md:flex-row">
       <div className="flex-1 relative z-0">
         <img
           src={Gold.src}
@@ -18,7 +18,7 @@ const CilunaWallet = () => {
         />
         <div className="absolute inset-0 px-[24px]  gap-[2px] py-[24px] flex flex-col items-start justify-end  text-white">
           <h2 className="font-kaiseiBold text-[28px]">C Wallet</h2>
-          <p className="font-inter text-[14px]">
+          <p className="font-arial text-[14px]">
             All your C balances in one place
           </p>
         </div>
@@ -47,7 +47,7 @@ const CilunaWallet = () => {
             </div>
           </div>
 
-          <button className="font-kaiseiBold mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-gray py-[16px] text-[18px] text-white  hover:bg-gray-800">
+          <button className="font-playFairBold  mt-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-gray py-[16px] text-[18px] text-white  hover:bg-gray-800">
             <CirclePlus />
             Top-up
           </button>
