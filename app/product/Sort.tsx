@@ -13,8 +13,7 @@ interface SortOption {
 }
 
 const sortOptions: SortOption[] = [
-  { label: "Default Sorting", value: "default" },
-  { label: "Newest First", value: "latest" },
+  { label: "Newest Arrivals", value: "default" },
   { label: "Price: Low to High", value: "price_low_high" },
   { label: "Price: High to Low", value: "price_high_low" },
   { label: "Popularity", value: "popularity" },
@@ -80,7 +79,7 @@ const Sort: React.FC<SortProps> = ({ disabled = false }) => {
       <div className="flex flex-col gap-[16px]">
         <div className="flex items-center">
           <div
-            className={`flex items-center ${
+            className={`flex items-center space-x-1 ${
               disabled
                 ? "cursor-not-allowed opacity-50"
                 : "cursor-pointer hover:opacity-75"

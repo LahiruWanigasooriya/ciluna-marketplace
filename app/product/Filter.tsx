@@ -75,16 +75,16 @@ const Filter: React.FC<FilterProps> = ({
       <button
         disabled //disabled for now
         type="button"
-        className="flex items-center justify-between gap-2 bg-[#FFFFFF]/20 rounded-[10px] cursor-pointer hover:bg-[#FFFFFF]/5 text-black px-4 h-[24px]"
+        className="flex items-center justify-between space-x-1 bg-[#FFFFFF]/20 rounded-[10px] cursor-pointer hover:bg-[#FFFFFF]/5 text-black h-[24px]"
         onClick={() => setSelectedCategory(selectedCategory ? null : "Filters")}
         aria-pressed={!!selectedCategory}
       >
         <Settings2 size={24} />
-        <p className="text-[#252525] font-arial leading-[19px] text-base hidden md:inline">Filter</p>&nbsp;
+        <p className="text-[#252525] font-arial leading-[19px] text-base hidden md:inline">Filters</p>&nbsp;
       </button>
 
       
-         <div className="flex gap-2 mt-2 flex-wrap">
+         <div className="flex gap-2 flex-wrap">
         {Object.entries(activeFilters)
           .filter(([_, v]) => v !== "" && v !== minPrice && v !== maxPrice)
           .map(([key, value]) => (

@@ -153,6 +153,13 @@ const applyFiltersAndSort = (
 		if (sortBy === "price") {
 			return sortOrder === "asc" ? a.price - b.price : b.price - a.price;
 		}
+		if (sortBy === "popularity") {
+			return sortOrder === "asc" ? (a.wishCount || 0) - (b.wishCount || 0) : (b.wishCount || 0) - (a.wishCount || 0);
+		}
+		if (sortBy === "bestsellers") {
+			return sortOrder === "asc" ? (a.sold || 0) - (b.sold || 0) : (b.sold || 0) - (a.sold || 0);
+		}
+
 		const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
 		const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
 		return sortOrder === "asc" ? aTime - bTime : bTime - aTime;
@@ -222,7 +229,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ searchParams: searchPar
 	paginatedProducts = filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
 	return (
-		<div className="flex flex-col pb-8 md:pb-9">
+		<div className="flex flex-col pb-8 md:pb-4">
 			<div className="relative">
 				<Image
 					src={bannerImage}
@@ -231,7 +238,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ searchParams: searchPar
 					style={{ objectPosition: "center 10%" }}
 					priority
 				/>
-				<div className="absolute bottom-0 w-full h-3/5 sm:h-1/2 recommend:h-[244px] backdrop-blur-[2px]" />
+				<div className="absolute bottom-0 w-full h-3/5 sm:h-1/2 recommend:h-[244px] backdrop-blur-[2px] blur-banner-hero" />
 				<div className="absolute inset-0 md:top-1/4 flex items-end md:items-center justify-center">
 					<div className="text-white text-center max-w-2xl p-4 md:max-w-[866px] w-full">
 						<h2 className="text-2xl md:text-[40px] md:leading-[48px] font-kaiseiHarunoUmi mb-3">
@@ -253,10 +260,10 @@ const ProductPage: React.FC<ProductPageProps> = async ({ searchParams: searchPar
 			<ProductVarientTab subcategoryId={productData.subcategoryId} />
 
 			<div className="flex flex-col gap-5 max-w-[1440px] mx-auto w-full custom-container md:py-0">
-				<div className="flex flex-col pb-5">
+				<div className="flex flex-col">
 					<div className="flex flex-row min-h-[34px] justify-between items-center font-arial pt-6 pb-5 md:pt-8 md:pb-6">
 						<h3 className="font-arialBold text-base md:text-lg leading-6">{paginatedProducts.length} Products</h3>
-						<div className="flex flex-row gap-4">
+						<div className="flex flex-row space-x-6 md:space-x-8 h-[24px] justify-center items-center">
 							<Sort aria-label="Sort products" />
 							<Filter aria-label="Filter products" />
 						</div>
@@ -266,8 +273,8 @@ const ProductPage: React.FC<ProductPageProps> = async ({ searchParams: searchPar
 							{query && searchResults?.products?.length === 0 ? "No search Products found" : "No Products Found"}
 						</p>
 					) : (
-						<div className="flex flex-col gap-4">
-							<div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:justify-start">
+						<div className="flex flex-col gap-5 md:gap-9">
+							<div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-y-5 gap-x-[15px] lg:gap-x-6 lg:gap-y-10 sm:justify-start">
 								{paginatedProducts.map((product) => (
 									<ProductCard key={product._id.toString()} product={product} />
 								))}
