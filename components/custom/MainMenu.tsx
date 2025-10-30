@@ -287,7 +287,7 @@ export default function MainMenu({
             exit={{ y: -50, opacity: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            <div className="flex flex-col items-center justify-between">
+            <div className="flex flex-col items-center justify-between text-black">
               <div className="flex items-center justify-between w-full">
                 {mounted && token && !activeMenu ? (
                   <div className="flex flex-col w-full">
