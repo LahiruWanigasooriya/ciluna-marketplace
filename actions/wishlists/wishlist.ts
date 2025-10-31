@@ -54,7 +54,7 @@ export const getUserWishlist = async (token?: string) => {
             status: 200,
             success: true,
             message: "WishProductList fetched successfully",
-            data: { wishProductList: wishlist.products }, // Return only product details
+            data: { wishProductList: JSON.parse(JSON.stringify(wishlist.products)) }, // Return only product details
         };
     } catch (error: any) {
         return {

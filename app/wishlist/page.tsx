@@ -1,36 +1,36 @@
 import React from "react";
-import Image from "next/image";
-import BannerImg from "@/public/assets/wishlist/bannerImg.webp";
-import MobBannerImg from "@/public/assets/wishlist/mobBannerImg.webp";
 import WishlistList from "./WishlistList";
+import SwiperCards from "@/components/custom/SwiperCards";
+import { getAllProducts } from "@/actions/products/product";
+import { IProduct } from "@/types/product";
 // import { getCilunaPrice } from "@/lib/cilunaService";
 //import toFixed from "@/functions/cilunaPrice";
 
 const WishlistPage = async () => {
-  // const price = await getCilunaPrice();
-  const cilunaPrice = 0;
-  // toFixed(Number(price));
-  return (
-    <div className="flex flex-col mt-28 md:mt-[120px] lg:mt-[140px] md:gap-12 w-full justify-between">
-      <div className="custom-container md:max-w-[1440px] pt-[96px] md:py-0">
-        {/* Wishlist Client Component */}
-        <WishlistList cilunaPrice={cilunaPrice} />
-      </div>
+	// const price = await getCilunaPrice();
+	const productres = await getAllProducts();
+	const products: IProduct[] = productres.data?.products || [];
 
-      <div className="mt-5 md:mt-0 w-full h-full custom-container md:max-w-[1440px] md:py-0">
-        <Image
-          src={BannerImg}
-          alt="img"
-          className="hidden md:block w-full h-full"
-        />
-        <Image
-          src={MobBannerImg}
-          alt="imgm"
-          className="block md:hidden w-full h-full"
-        />
-      </div>
-    </div>
-  );
+	const cilunaPrice = 0;
+	// toFixed(Number(price));
+	return (
+		<div className="flex flex-col pt-[60px] md:mt-[108px] w-full custom-container md:py-0 text-black">
+			<div className="py-6 md:pt-[80px] md:pb-12">
+				<WishlistList cilunaPrice={cilunaPrice} />
+			</div>
+
+			<div className="py-8 md:pt-12 md:pb-20">
+				<SwiperCards
+					products={products}
+					section={{
+						category: "Flash Deals",
+						title: "Recent Viewed",
+						description: "A fleeting collection of rare beauty.",
+					}}
+				/>
+			</div>
+		</div>
+	);
 };
 
 export default WishlistPage;
