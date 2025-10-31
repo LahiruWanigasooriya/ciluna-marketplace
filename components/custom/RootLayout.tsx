@@ -12,9 +12,11 @@ import { useCartStore } from "@/store/cart";
 import { useAuthStore } from "@/store/authStore";
 import { getCart } from "@/actions/carts/cart";
 import { useWishlistStore } from "@/store/wishlist";
+import { useUserStore } from "@/store/userStore";
 import { getUserWishlist } from "@/actions/wishlists/wishlist";
 import { ICategory } from "@/types/category";
 import trackyourorder from "@/app/trackyourorder/page";
+import { getUserProfile } from "@/actions/users/user";
 
 interface ConditionalLayoutProps {
   children: React.ReactNode;
@@ -42,6 +44,7 @@ export default function ConditionalLayout({
     WidthFullPages.includes(pathname) || pathname.startsWith("/product/");
   const { setCart } = useCartStore();
   const { setWishlist } = useWishlistStore();
+  const { setUser } = useUserStore();
   const { token, isAuthenticated } = useAuthStore();
   const [mounted, setMounted] = useState(false);
 
@@ -50,13 +53,13 @@ export default function ConditionalLayout({
   }, []);
 
   useEffect(() => {
-    useAuthStore.getState().checkAuth();
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
+      await useAuthStore.getState().checkAuth();
       if (token !== null) {
         try {
+          const userResponse = await getUserProfile(token);
+          const user = userResponse?.user || null;
+          setUser(user);
           const cartResponse = await getCart(token);
           const userCart = cartResponse?.cart?.items || [];
           setCart(userCart);

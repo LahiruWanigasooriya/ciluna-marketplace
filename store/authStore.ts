@@ -3,6 +3,7 @@ import { create } from "zustand";
 import Cookies from 'js-cookie';
 import { jwtDecode } from "jwt-decode";
 import { useUserStore } from "./userStore";
+import { verifyToken } from "@/actions/utils/auth";
 
 interface DecodedToken {
   userId: string;
@@ -15,7 +16,7 @@ interface AuthState {
   isAuthenticated: boolean;
   setAuth: (token: string, remember: boolean) => void;
   clearAuth: () => void;
-  checkAuth: () => boolean;
+  checkAuth: () => Promise<boolean>;
   getToken: () => string | null;
   getUserId: () => string | null;
 }
@@ -23,7 +24,7 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set, get) => ({
   token: null,
   userId: null,
-  isAuthenticated: !!Cookies.get('authToken'),
+  isAuthenticated: false,
 
   setAuth: (token: string, remember: boolean) => {
     const options = {
@@ -54,9 +55,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     });
   },
 
-  checkAuth: () => {
+  checkAuth: async () => {
     const token = Cookies.get("authToken");
-    const isAuthenticated = !!token;
+    const tokenVerification = await verifyToken(token || "");
+    if (tokenVerification.status !== 200) {
+      get().clearAuth();
+      return false;
+    }
+    const isAuthenticated = tokenVerification.status === 200;
 
     let userId = null;
     if (token) {
@@ -70,9 +76,6 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       isAuthenticated,
     });
 
-    if (token && isAuthenticated) {
-      useUserStore.getState().fetchUser();
-    }
     return isAuthenticated;
   },
 
