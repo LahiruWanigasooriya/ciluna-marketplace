@@ -37,7 +37,7 @@ const ServicesLinks: Section[] = [
       { name: "Contact Us", href: "/" },
       { name: "Help/ FAQ", href: "/" },
       { name: "Orders & Shipping", href: "/order-shipping" },
-      { name: "Return & Refunds", href: "/" },
+      { name: "Return & Refunds", href: "/return-refund" },
       { name: "Track Your Order", href: "/trackyourorder" },
     ],
   },
