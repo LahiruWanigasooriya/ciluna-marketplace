@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { verifyToken } from "./actions/utils/auth";
+import { clearAuthToken, verifyToken } from "./actions/utils/auth";
 
 
 export async function middleware(request: NextRequest) {
@@ -35,6 +35,7 @@ export async function middleware(request: NextRequest) {
       // Invalid or expired token
       const url = new URL('/login', request.url);
       url.searchParams.set('from', request.nextUrl.pathname);
+      await clearAuthToken(); // Clear invalid token
       return NextResponse.redirect(url);
     }
   }

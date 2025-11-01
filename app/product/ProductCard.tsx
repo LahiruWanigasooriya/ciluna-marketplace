@@ -57,7 +57,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       } else {
         addToWishlist(product);
         await updateWishlist({ userId, productIds: [product._id] });
-        // toast.success(`${product.name} Added to wishlist!`);
+        toast.success(`${product.name} Added to wishlist!`);
       }
     } else {
       if (isFavorited) {
@@ -65,7 +65,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         // toast.error(`${product.name} Removed from wishlist!`);
       } else {
         addToWishlist(product);
-        // toast.success(`${product.name} Added to wishlist!`);
+        toast.success(`${product.name} Added to wishlist!`);
       }
     }
   };
@@ -165,7 +165,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     <Link
       key={product._id}
       href={`/product/${product._id}`}
-      className="flex flex-col gap-2 md:gap-5 font-inter border border-[#ffffff00] bg-white min-w-[164px] sm:min-w-[200px] lg:min-w-[220px] xl:min-w-[270px] recommend:min-w-[294px] transition-all duration-300 ease-in-out sm:w-[calc(33%-0.75rem)] lg:w-[calc(24.45%-0.833rem)] xl:w-[calc(24.5%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
+      className="flex flex-col gap-2 md:gap-5 font-inter border border-[#ffffff00] bg-white min-w-[164px] sm:min-w-[192px] md:min-w-[223px] lg:min-w-[200px] xl:min-w-[260px] recommend:min-w-[294px] transition-all duration-300 ease-in-out sm:w-[calc(33%-0.75rem)] lg:w-[calc(24.45%-0.833rem)] xl:w-[calc(24.5%-0.833rem)] recommend:w-[calc(13.33%-0.833rem)] 2xl:w-[calc(10.33%-0.833rem)]"
     >
       <div className="h-[177px] sm:h-[220px] lg:h-[250px] xl:h-[290px] recommend:h-[317px]">
         {isLoading ? (
