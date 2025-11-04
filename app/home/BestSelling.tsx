@@ -28,7 +28,7 @@ const BestSelling = async () => {
         section={{
           category: "Jewellery",
           title: "Best Seller",
-          description: "A fleeting collection of rare beauty.",
+          description: "Chosen again and again for elegance that endures",
         }}
       />
     </div>

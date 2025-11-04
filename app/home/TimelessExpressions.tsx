@@ -28,7 +28,7 @@ const TimelessExpressions = () => {
 
       <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-x-[24px] gap-y-[14px] w-full h-[400vw] sm:h-[42vw] xl:max-h-[536px] recommend:h-[38vw] mb-[24px] md:mb-[48px]">
         {/* New In - Left Column */}
-        <div className="flex flex-col w-full sm:w-1/3 h-1/3 sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#F1EADA] to-[#DBC99B] px-[16px] py-[24px] sm:px-[14px] sm:py-[14px] xl:py-[24px] xl:px-[24px] relative overflow-hidden cursor-pointer transition-all duration-300">
+        <div className="flex flex-col w-full sm:w-1/3 h-[580px] sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#F1EADA] to-[#DBC99B] px-[16px] py-[24px] sm:px-[14px] sm:py-[14px] xl:py-[24px] xl:px-[24px] relative overflow-hidden cursor-pointer transition-all duration-300">
           <div>
             <h2 className="text-[20px] lg:text-[24px] font-kaiseiBold mb-1">
               New In
@@ -111,7 +111,7 @@ const TimelessExpressions = () => {
         </div>
 
         {/* Scents - Right Column */}
-        <div className="flex flex-col w-full sm:w-1/3 h-1/3 sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#CEDCE9] to-[#7DA1C4] relative overflow-hidden transition-all duration-300 cursor-pointer">
+        <div className="flex flex-col w-full sm:w-1/3 h-[636px] sm:h-auto justify-between rounded-lg bg-gradient-to-br from-[#CEDCE9] to-[#7DA1C4] relative overflow-hidden transition-all duration-300 cursor-pointer">
           <div className="px-[16px] py-[24px] sm:px-[14px] sm:py-[14px] xl:py-[24px] xl:px-[24px]">
             <h2 className="text-[20px] mt-[0px] lg:text-[24px] font-kaiseiBold mb-1">
               Scents
