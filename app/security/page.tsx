@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { IoKeyOutline, IoMailOutline } from "react-icons/io5";
 import { SlSocialGoogle } from "react-icons/sl";
 import VerifyUsingEmail from "./VerifyUsingEmail";
 import VerifyUsingPwd from "./VerifyUsingPwd";
+import { getUserProfile } from "@/actions/users/user";
 
 type VerificationMethod = "password" | "email" | "google";
 
@@ -100,10 +101,8 @@ const SecurityCheck: React.FC<SecurityCheckProps> = ({ onSelectMethod }) => {
 
 export default function Security() {
   const [screen, setScreen] = useState<Screen>("security-check");
-  const [currentEmail, setCurrentEmail] =
-    useState<string>("shshi***@gmail.com");
-  const [verificationMethod, setVerificationMethod] =
-    useState<VerificationMethod | null>(null);
+  const [currentEmail, setCurrentEmail] = useState<string>("shshi***@gmail.com");
+  const [verificationMethod, setVerificationMethod] = useState<VerificationMethod | null>(null);
 
   const handleSelectMethod = (method: VerificationMethod): void => {
     setVerificationMethod(method);
@@ -116,21 +115,35 @@ export default function Security() {
     }
   };
 
+  const fetchUserProfile = async () => {
+    try {
+      const response = await getUserProfile();
+      if (response.status !== 200 || !response.user) {
+        throw new Error(response.message || "User data not available");
+      }
+      // Store user data in state
+      console.log("User: ", response.user);
+      localStorage.setItem("current-email", response.user.email);
+      setCurrentEmail(response.user.email);
+    } catch (err: any) {
+      console.log("Error fetching user: ", err.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
   return (
     <div className="font-arial text-black">
-      {screen === "security-check" && (
-        <SecurityCheck onSelectMethod={handleSelectMethod} />
-      )}
+      {screen === "security-check" && <SecurityCheck onSelectMethod={handleSelectMethod} />}
 
       {screen === "email-verify" && (
-        <VerifyUsingEmail
-          email={currentEmail}
-          onOtherMethods={() => setScreen("security-check")}
-        />
+        <VerifyUsingEmail email={currentEmail} onOtherMethods={() => setScreen("security-check")} onEditEmail={fetchUserProfile}/>
       )}
 
       {screen === "password" && (
-        <VerifyUsingPwd onOtherMethods={() => setScreen("security-check")} />
+        <VerifyUsingPwd email={currentEmail} onOtherMethods={() => setScreen("security-check")} onEditEmail={fetchUserProfile}/>
       )}
     </div>
   );

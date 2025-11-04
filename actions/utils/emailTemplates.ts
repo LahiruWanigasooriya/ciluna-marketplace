@@ -33,5 +33,33 @@ export const emailTemplates = {
     `,
   }),
 
-  // Add more email templates as needed...
+   verifyCurrentEmail: (userName: string, otp: string) => ({
+    subject: "Verify Your Current Email",
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333;">
+        <h2 style="color: #4CAF50;">Email Verification Required</h2>
+        <p>Dear ${userName || "User"},</p>
+        <p>You are attempting to update your email address. Please verify your current email by entering the following OTP code:</p>
+        <p style="font-size: 20px; font-weight: bold; color: #555;">${otp}</p>
+        <p>This OTP is valid for 5 minutes. Do not share it with anyone.</p>
+        <p>If you did not request this, please ignore this email.</p>
+        <p>Best Regards,<br /><strong>The CilunaMarket Place Team</strong></p>
+      </div>
+    `,
+  }),
+
+   verifyNewEmail: (userName: string, newEmail: string, otp: string) => ({
+    subject: "Verify Your New Email Address",
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333;">
+        <h2 style="color: #4CAF50;">New Email Verification</h2>
+        <p>Dear ${userName || "User"},</p>
+        <p>You have requested to change your email to <strong>${newEmail}</strong>. Please verify this new email by entering the following OTP code:</p>
+        <p style="font-size: 20px; font-weight: bold; color: #555;">${otp}</p>
+        <p>This OTP is valid for 5 minutes. Do not share it with anyone.</p>
+        <p>If you did not request this change, please contact our support immediately.</p>
+        <p>Best Regards,<br /><strong>The CilunaMarket Place Team</strong></p>
+      </div>
+    `,
+  }),
 };
