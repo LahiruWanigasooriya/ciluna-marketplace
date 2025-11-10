@@ -7,7 +7,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import React, { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import QuantitySelector from "@/app/product/[id]/QuantitySelector";
+import QuantitySelector from "../product/[id]/QuantitySelector";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
 import { IProduct } from "@/types/product";

@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import React, { useState } from "react";
 import Link from "next/link";
-import QuantitySelector from "@/app/product/[id]/QuantitySelector";
+import QuantitySelector from "../product/[id]/QuantitySelector";
 import { useCartStore } from "@/store/cart";
 import { useAuthStore } from "@/store/authStore";
 import {

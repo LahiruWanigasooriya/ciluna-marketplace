@@ -11,7 +11,6 @@ const Settings: React.FC<SettingsProps> = ({ userData, onProfileUpdate }) => {
   const [activeTab, setActiveTab] = useState<string>("Profile");
   const handleTabClick = (tab: string) => {
     if (tab === "Security") {
-      window.open("/security", "_blank", "noopener,noreferrer");
     } else {
       setActiveTab(tab);
     }

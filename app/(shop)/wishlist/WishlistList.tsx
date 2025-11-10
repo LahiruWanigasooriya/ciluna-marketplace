@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ProductCard from "@/app/product/ProductCard";
+import ProductCard from "../product/ProductCard";
 import { useWishlistStore } from "@/store/wishlist";
 import { IProduct } from "@/types/product";
 import { Button } from "@/components/ui";

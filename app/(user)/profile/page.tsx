@@ -1,0 +1,210 @@
+"use client";
+
+// import PersonalInfoForm from "./PersonalInfoForm";
+// import AccountInfoForm from "./AccountInfoForm";
+// import NotificationSettings from "./NotificationSettings";
+import { getUserProfile } from "@/actions/users/user";
+import { useState, useEffect } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import Overview from "./Overview";
+import CilunaWallet from "./CilunaWallet";
+import { useAuthStore } from "@/store/authStore";
+import { useCartStore } from "@/store/cart";
+import { useWishlistStore } from "@/store/wishlist";
+import { useRouter } from "next/navigation";
+import HelpFAQ from "./HelpFAQ";
+import ContactForm from "@/app/(shop)/contact/ContactForm";
+import Settings from "./Settings";
+import { FormValues } from "@/types/profile";
+import { useUserStore } from "@/store/userStore";
+
+const sidebarItems = [
+	"Overview",
+	"Orders",
+	"Refund & Return",
+	"Account Setting",
+	"C Wallet",
+	"Contact Us",
+	"Help / FAQ",
+	"Logout",
+];
+
+export default function ProfilePage() {
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+	const [selected, setSelected] = useState("Overview");
+	const [mobileOpen, setMobileOpen] = useState(false);
+	const [userData, setUserData] = useState<any>(null);
+	const { clearAuth } = useAuthStore();
+	const { setCart } = useCartStore();
+	const { setWishlist } = useWishlistStore();
+	const router = useRouter();
+	const { setUser, clearUser } = useUserStore();
+	const handleProfileUpdate = (updatedUser: FormValues) => {
+		// Callback to update userData after profile update
+		setUserData(updatedUser);
+	};
+
+	const handleLogout = async () => {
+		setTimeout(() => {
+			clearAuth();
+			clearUser();
+			localStorage.removeItem("wishlist-storage");
+			localStorage.removeItem("cart-storage");
+			setCart([]);
+			setWishlist([]);
+			router.push("/");
+		}, 1000);
+	};
+
+	// Update the onClick handler for sidebar items
+	const handleSidebarClick = (item: string) => {
+		if (item === "Logout") {
+			handleLogout();
+		} else {
+			setSelected(item);
+		}
+	};
+
+	useEffect(() => {
+		async function fetchUserProfile() {
+			try {
+				const response = await getUserProfile();
+				if (response.status !== 200 || !response.user) {
+					throw new Error(response.message || "User data not available");
+				}
+				// Store user data in state
+				setUserData(response.user);
+				setUser(response.user);
+			} catch (err: any) {
+				setError(err.message);
+			} finally {
+				setLoading(false);
+			}
+		}
+
+		fetchUserProfile();
+	}, [setUser]);
+
+	if (loading) {
+		return (
+			<div className="flex min-h-screen items-center justify-center">
+				<p className="text-lightgray">Loading...</p>
+			</div>
+		);
+	}
+
+	if (error) {
+		return <p className="text-red-500 p-5">Error: Unauthorized. Please log in.</p>;
+	}
+
+	return (
+		<div className="min-h-screen custom-container md:py-0 bg-white ">
+			<div className="flex flex-col mt-[76px] md:mt-[132px]  gap-[24px] md:flex-row ">
+				{/* Sidebar for md and up */}
+				<aside className="hidden w-full h-full max-w-[248px]  min-w-[150px] flex-col py-[24px] gap-[16px] rounded-xl bg-lightgray px-[16px] text-[#252525]  md:flex md:w-[150px] lg:w-[248px] xl:w-[248px]">
+					<div className="font-arialBold  border-b border-lightgrayBorders  pb-[16px] text-[16px]">Account</div>
+					<nav className="flex flex-col text-[14px] gap-[8px]">
+						{sidebarItems.map((item) => (
+							<div key={item}>
+								{item === "C Wallet" && (
+									<div className="col-span-2 my-0.5 mb-[8px] h-px w-full bg-lightgrayBorders"></div>
+								)}
+								<button
+									className={`cursor-pointer rounded-[8px] w-full px-[16px] py-[8px] text-left ${
+										selected === item ? "font-arial bg-black text-white" : "font-arial hover:bg-[#a7a5a5]"
+									} ${item === "Ciluna Wallet" ? "py-[20px]" : ""}`}
+									onClick={() => handleSidebarClick(item)}
+								>
+									{item}
+								</button>
+								{item === "C Wallet" && (
+									<div className="col-span-2 my-0.5 mt-[8px] h-px w-full bg-lightgrayBorders "></div>
+								)}
+							</div>
+						))}
+					</nav>
+				</aside>
+
+				{/* Mobile Dropdown */}
+				<div className="flex w-full items-start justify-center md:hidden">
+					<div className="relative z-10 w-full max-w-sm">
+						{/* Header */}
+						<div className={` bg-lightgray text-[#252525] ${mobileOpen ? "rounded-0" : "rounded-xl"}`}>
+							<button
+								className={`font-arialBold flex w-full items-center justify-between px-[12px] bg-transparent py-[0] text-[16px] z-10`}
+								onClick={() => setMobileOpen((open) => !open)}
+							>
+								<div
+									className={`flex w-full cursor-pointer items-center justify-between py-[12px] text-black text-[16px]`}
+								>
+									{selected}
+									{mobileOpen ? <FaChevronUp className="ml-2" /> : <FaChevronDown className="ml-2" />}
+								</div>
+							</button>
+							{mobileOpen && (
+								<div className="px-[12px]">
+									<div className="col-span-2 h-px w-full bg-light-gray md:hidden"></div>
+								</div>
+							)}
+						</div>
+						{/* Dropdown List */}
+						{mobileOpen && (
+							<div className="absolute flex-col top-full left-0 z-0 flex w-full text-[14px] gap-[147px] items-center justify-center bg-white">
+								<nav className="relative z-0 flex w-full  max-w-sm flex-col gap-2 bg-lightgray px-[16px] py-4 ">
+									{sidebarItems.map((item) => (
+										<div key={item}>
+											{item === "C Wallet" && (
+												<div className="col-span-2  h-px w-full bg-neutralGray-100 md:hidden"></div>
+											)}
+											<button
+												className={`w-full cursor-pointer rounded-md px-[12px] py-2 text-left ${
+													selected === item ? "font-arial bg-gray text-white" : "font-arial hover:bg-[#a7a5a5]"
+												} ${item === "C Wallet" ? "my-2" : ""}`}
+												onClick={() => {
+													if (item === "Logout") {
+														handleLogout();
+													} else {
+														setSelected(item);
+														setMobileOpen(false);
+													}
+												}}
+											>
+												{item}
+											</button>
+											{item === "C Wallet" && (
+												<div className="col-span-2  h-px w-full bg-neutralGray-100 md:hidden"></div>
+											)}
+										</div>
+									))}
+								</nav>
+								{/* Black Line */}
+								<div className=" flex mb-[8px] w-[134px] h-[5px] bg-[#2D2D2D]"></div>
+							</div>
+						)}
+					</div>
+				</div>
+				{/* Main Content */}
+				<main className="flex flex-1 flex-col gap-6 overflow-hidden">
+					{selected === "C Wallet" ? (
+						<CilunaWallet />
+					) : selected === "Help / FAQ" ? (
+						<HelpFAQ />
+					) : selected === "Overview" ? (
+						<div className="overflow-x-auto">
+							<Overview userData={userData} />
+						</div>
+					) : selected === "Account Setting" ? (
+						<Settings userData={userData} onProfileUpdate={handleProfileUpdate} />
+					) : selected === "Contact Us" ? (
+						<ContactForm />
+					) : (
+						<section className="flex h-full items-center justify-center text-xl text-gray-400">
+							Select a menu item to view details.
+						</section>
+					)}
+				</main>
+			</div>
+		</div>
+	);
+}

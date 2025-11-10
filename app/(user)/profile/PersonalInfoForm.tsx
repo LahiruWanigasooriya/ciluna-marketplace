@@ -287,7 +287,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({ initialData, onProf
             <Button
               className="!px-[12px] md:!px-[20px] !py-[10px] !text-[18px] !leading-6 h-auto bg-black text-white hover:bg-obsidian-900 border-none"
               intent="primary"
-              onClick={() => window.open("/security", "_blank", "noopener,noreferrer")}
+              onClick={() => window.open("/change-email", "_blank", "noopener,noreferrer")}
             >
               <BiPencil className="!w-6 !h-6 md:hidden" />
               <div className="hidden md:block">Change</div>

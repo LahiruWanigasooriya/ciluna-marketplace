@@ -1,5 +1,5 @@
 "use client";
-import ProductCard from "@/app/product/ProductCard";
+import ProductCard from "@/app/(shop)/product/ProductCard";
 import { IProduct } from "@/types/product";
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";

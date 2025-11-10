@@ -34,10 +34,11 @@ export default function ConditionalLayout({
     "/product",
     "/order-shipping",
     "/careguide",
-    "/trackyourorder",
-    "/privacypolicy",
-    "/termsofservices",
+    "/track-your-order",
+    "/privacy-policy",
+    "/terms-of-services",
     "/return-refund",
+    "/change-email",
   ];
   const isHomePage = pathname === "/";
   const isHiddenRoute = hiddenRoutes.includes(pathname);
