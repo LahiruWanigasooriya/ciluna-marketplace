@@ -15,7 +15,7 @@ import { useWishlistStore } from "@/store/wishlist";
 import { useUserStore } from "@/store/userStore";
 import { getUserWishlist } from "@/actions/wishlists/wishlist";
 import { ICategory } from "@/types/category";
-import trackyourorder from "@/app/trackyourorder/page";
+import trackyourorder from "@/app/(footer)/track-your-order/page";
 import { getUserProfile } from "@/actions/users/user";
 
 interface ConditionalLayoutProps {
