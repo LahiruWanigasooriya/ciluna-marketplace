@@ -11,6 +11,7 @@ interface ICartItem {
   finalTotal: number; // Final price after discount for this item
   color: string;
   size: string;
+  stock: number;
 }
 
 interface ICart {
@@ -68,6 +69,10 @@ const CartItemSchema = new mongoose.Schema<ICartItem>(
       type: String,
       required: false,
     },
+    stock: {
+      type: Number,
+      required: true,
+    }
   },
   { timestamps: true }
 );

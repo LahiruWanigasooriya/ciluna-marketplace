@@ -36,6 +36,7 @@ export interface AddToCartParams {
   quantity: number;
   color?: string;
   size?: string;
+  stock: number;
 }
 
 export interface UpdateCartItemParams {
