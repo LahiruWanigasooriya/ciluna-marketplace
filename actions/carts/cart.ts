@@ -128,6 +128,7 @@ export async function addToCart(params: AddToCartParams, token?: string) {
             discountAmount,
             total: itemTotal,
             finalTotal: finalTotal,
+            stock: params.stock,
           },
         ],
         totalPrice: itemTotal,
@@ -169,6 +170,7 @@ export async function addToCart(params: AddToCartParams, token?: string) {
           finalTotal: finalTotal,
           color,
           size,
+          stock: params.stock,
         });
       }
 

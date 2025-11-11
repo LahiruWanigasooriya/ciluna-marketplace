@@ -267,6 +267,11 @@ const Product: React.FC<ProductProps> = ({
       return;
     }
 
+    if(stock < quantity){
+      toast.error(`Out of stock, maximum you can add is ${stock}`);
+      return;
+    }
+
     const cartItemId = uuidv4();
 
     if (token) {
@@ -277,18 +282,24 @@ const Product: React.FC<ProductProps> = ({
             quantity: quantity,
             color: selectedColor,
             size: selectedSize,
+            stock: stock,
           }
         : {
             productId: product._id,
             quantity: quantity,
             color: selectedColor,
             size: selectedSize,
+            stock: stock,
           };
 
       setQuantity(1);
 
       try {
-        await addToCart(cartData);
+        const response = await addToCart(cartData);
+        if(!response.success) {
+          console.log("Error: ", response.message );
+          return;
+        }
         const cartResponse = await getCart(token);
         const updatedCart = cartResponse?.cart?.items || [];
         setCart(updatedCart);
@@ -652,6 +663,7 @@ const Product: React.FC<ProductProps> = ({
                     onQuantityChange={(newQuantity) =>
                       handleQuantityUpdate(product, newQuantity)
                     }
+                    stock={stock}
                   />
                 </div>
               </div>
@@ -678,6 +690,7 @@ const Product: React.FC<ProductProps> = ({
                     onQuantityChange={(newQuantity) =>
                       handleQuantityUpdate(product, newQuantity)
                     }
+                    stock={stock}
                   />
                 </div>
                 <div className="hidden xl:block">

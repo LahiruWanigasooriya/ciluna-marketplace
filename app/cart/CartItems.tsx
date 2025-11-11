@@ -235,7 +235,13 @@ const CartItems = () => {
                                   <div className="col-span-7">
                                     <div className="flex flex-col gap-1">
                                       <div className="flex items-center justify-between">
-                                        <Link href={`/product/${product._id}`}>
+                                        <Link
+                                          href={`/product/${
+                                            typeof product.productId === "object"
+                                              ? product.productId._id
+                                              : product.productId
+                                          }`}
+                                        >
                                           <p className="font-arialBold text-base leading-[24px] text-gray">
                                             {typeof product.productId ===
                                             "object"
@@ -289,12 +295,8 @@ const CartItems = () => {
                                           initialQuantity={product.quantity}
                                           countShow={false}
                                           isCartContext={true}
-                                          onQuantityChange={(newQuantity) =>
-                                            handleQuantityUpdate(
-                                              product,
-                                              newQuantity
-                                            )
-                                          }
+                                          onQuantityChange={(newQuantity) => handleQuantityUpdate(product, newQuantity)}
+                                          stock={product.stock}
                                         />
                                       </div>
                                     </div>
@@ -312,9 +314,8 @@ const CartItems = () => {
                                   initialQuantity={product.quantity}
                                   countShow={false}
                                   isCartContext={true}
-                                  onQuantityChange={(newQuantity) =>
-                                    handleQuantityUpdate(product, newQuantity)
-                                  }
+                                  onQuantityChange={(newQuantity) => handleQuantityUpdate(product, newQuantity)}
+                                  stock={product.stock}
                                 />
                               </div>
 
