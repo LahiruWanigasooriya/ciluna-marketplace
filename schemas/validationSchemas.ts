@@ -54,7 +54,8 @@ export const signupValidationSchema = Yup.object().shape({
 export const contactValidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Name must be at least 3 characters long")
-    .max(50, "Name cannot exceed 50 characters")
+    .max(100, "Name cannot exceed 100 characters")
+    .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces')
     .required("Your Name is required"),
   email: Yup.string()
     .email("Invalid email address")
