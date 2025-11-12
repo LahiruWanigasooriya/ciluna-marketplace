@@ -6,7 +6,7 @@ import Title from "@/components/custom/Title";
 import { TextField, Button } from "@/components/ui";
 import Link from "next/link";
 import { toast } from "sonner";
-import { resendTemporaryPassword } from "@/actions/users/resendTempPassword";
+import { resendTemporaryPassword } from "@/backend/actions/users/resendTempPassword";
 import bgpattern from "@/public/assets/login/bgpattern.png";
 import Image from "next/image";
 

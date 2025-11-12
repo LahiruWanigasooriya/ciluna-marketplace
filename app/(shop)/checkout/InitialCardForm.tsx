@@ -15,9 +15,9 @@ import { CardNumberElement, CardExpiryElement, CardCvcElement, useStripe, useEle
 import { useCartStore } from "@/store/cart";
 import { calculateTotals, getDiscountedPrice } from "@/utils/getDiscountPrice";
 import { useExchangeRate } from "@/hooks/useExchangeRate";
-import { processStripePayment } from "@/actions/utils/payment/stripePayment";
+import { processStripePayment } from "@/backend/actions/utils/payment/stripePayment";
 import { useAuthStore } from "@/store/authStore";
-import { createCard } from "@/actions/users/card";
+import { createCard } from "@/backend/actions/users/card";
 import { cardNumberOptions } from "@/utils/styles";
 import { Controller, useFormContext } from "react-hook-form";
 import { usePaymentStore } from "@/store/paymentStore";

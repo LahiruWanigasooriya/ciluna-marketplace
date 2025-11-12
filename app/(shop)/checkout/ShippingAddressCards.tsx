@@ -2,7 +2,7 @@ import AddressCard from "@/components/custom/AddressCard";
 import { Address } from "@/types/checkout";
 import { CirclePlus } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { updateAddress } from "@/actions/users/address";
+import { updateAddress } from "@/backend/actions/users/address";
 import { useUserId } from "@/hooks/useUserId";
 import { useFormContext } from "react-hook-form";
 

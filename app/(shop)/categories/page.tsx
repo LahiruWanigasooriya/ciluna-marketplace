@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Img from "@/public/assets/product/img.png";
 import ImgM from "@/public/assets/product/imgm.jpg";
-import { getAllCategories } from "@/actions/categories/category";
+import { getAllCategories } from "@/backend/actions/categories/category";
 import { ICategory } from "@/types/category";
 import CategoryCard from "../category/CategoryCard";
 import Pagination from "../product/Pagination";

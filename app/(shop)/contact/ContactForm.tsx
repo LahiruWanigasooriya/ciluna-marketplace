@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button, Checkbox, TextField, Textarea } from "@/components/ui";
-import { createInquiry } from "@/actions/inquiries/inquiry";
+import { createInquiry } from "@/backend/actions/inquiries/inquiry";
 import { Loader2 } from "lucide-react";
 import * as Yup from "yup";
 import { contactValidationSchema } from "@/schemas/validationSchemas";

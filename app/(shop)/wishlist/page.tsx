@@ -1,7 +1,7 @@
 import React from "react";
 import WishlistList from "./WishlistList";
 import SwiperCards from "@/components/custom/SwiperCards";
-import { getAllProducts } from "@/actions/products/product";
+import { getAllProducts } from "@/backend/actions/products/product";
 import { IProduct } from "@/types/product";
 // import { getCilunaPrice } from "@/lib/cilunaService";
 //import toFixed from "@/functions/cilunaPrice";

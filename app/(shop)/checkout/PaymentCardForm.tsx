@@ -10,7 +10,7 @@ import { CircleX, Info } from "lucide-react";
 import * as Yup from "yup";
 import Image from "next/image";
 import { CardNumberElement, CardExpiryElement, CardCvcElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { saveCardDetails } from "@/actions/utils/payment/stripePayment";
+import { saveCardDetails } from "@/backend/actions/utils/payment/stripePayment";
 import { useAuthStore } from "@/store/authStore";
 import { cardNumberOptions } from "@/utils/styles";
 import { toast } from "sonner";

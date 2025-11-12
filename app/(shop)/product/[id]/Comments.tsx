@@ -9,7 +9,7 @@ import User3 from "@/public/assets/product/user3.svg";
 import User5 from "@/public/assets/product/user5.svg";
 import { Button, Skeleton } from "@/components/ui";
 import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
-import { getProductReviews } from "@/actions/reviews/action";
+import { getProductReviews } from "@/backend/actions/reviews/action";
 import { formatTimeAgo } from "@/utils/formatTime";
 //import Comment from "@/components/custom/product/Comment";
 //import Rating from "../Ratings";

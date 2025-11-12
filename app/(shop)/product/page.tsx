@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 import Image from "next/image";
 import bannerImage from "@/public/assets/product/bannerImage.webp";
-import { getAllProducts } from "@/actions/products/product";
+import { getAllProducts } from "@/backend/actions/products/product";
 import { IProduct } from "@/types/product";
-import { getAllBrands } from "@/actions/brands/brand";
-import { getAllModels } from "@/actions/model/model";
-import { getSubSubCategoryById } from "@/actions/subsubcategories/subsubcategory";
-import { getSubcategoryById } from "@/actions/subcategories/subcategory";
+import { getAllBrands } from "@/backend/actions/brands/brand";
+import { getAllModels } from "@/backend/actions/model/model";
+import { getSubSubCategoryById } from "@/backend/actions/subsubcategories/subsubcategory";
+import { getSubcategoryById } from "@/backend/actions/subcategories/subcategory";
 import { ISubSubCategory } from "@/types/subsubcategory";
 import { ISubCategory } from "@/types/subcategory";
 import { ICategory } from "@/types/category";
@@ -15,8 +15,8 @@ import ProductCard from "./ProductCard";
 import Filter from "./Filter";
 import Sort from "./Sort";
 import ProductVarientTab from "./ProductVarientTab";
-import { getCategoryById } from "@/actions/categories/category";
-import { searchItems } from "@/actions/search/search";
+import { getCategoryById } from "@/backend/actions/categories/category";
+import { searchItems } from "@/backend/actions/search/search";
 
 interface ProductPageProps {
 	searchParams: Promise<{ [key: string]: string | undefined }>;

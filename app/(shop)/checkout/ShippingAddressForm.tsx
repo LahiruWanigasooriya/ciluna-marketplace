@@ -16,7 +16,7 @@ import * as Yup from "yup";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Address } from "@/types/checkout";
-import { createAddress, updateAddress } from "@/actions/users/address";
+import { createAddress, updateAddress } from "@/backend/actions/users/address";
 import { useUserId } from "@/hooks/useUserId";
 import { toast } from "sonner";
 

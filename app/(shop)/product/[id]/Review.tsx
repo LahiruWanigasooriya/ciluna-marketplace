@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import React, { useState, useRef } from "react";
 import { IoIosClose, IoIosCloseCircleOutline, IoIosStar } from "react-icons/io";
 import { GrCloudUpload } from "react-icons/gr";
-import { addReview } from "@/actions/reviews/action";
+import { addReview } from "@/backend/actions/reviews/action";
 import { toast } from "sonner";
 import { reviewValidationSchema } from "@/schemas/validationSchemas";
 import { ValidationError } from "yup";

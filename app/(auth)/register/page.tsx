@@ -10,7 +10,7 @@ import { TextField, DatePicker,Button, Checkbox } from "@/components/ui";
 import Link from "next/link";
 import Tel from "@/components/custom/Phone";
 import { signupValidationSchema } from "@/schemas/validationSchemas";
-import { createNewUser } from "@/actions/users/user";
+import { createNewUser } from "@/backend/actions/users/user";
 import { useRouter } from "next/navigation";
 import { ValidationError } from "yup";
 import { toast } from "sonner";

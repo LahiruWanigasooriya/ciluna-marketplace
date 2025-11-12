@@ -16,7 +16,7 @@ import {
   getCart,
   removeCartItem,
   updateCartItem,
-} from "@/actions/carts/cart";
+} from "@/backend/actions/carts/cart";
 import { toast } from "sonner";
 import { UpdateCartItemParams } from "@/types/cart";
 import {

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getProductReviewSummary } from "@/actions/reviews/action";
+import { getProductReviewSummary } from "@/backend/actions/reviews/action";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { FaStar } from "react-icons/fa6";
 import Rating from "../Ratings";

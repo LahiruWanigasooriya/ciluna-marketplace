@@ -12,185 +12,161 @@ import { IProduct } from "@/types/product";
 
 import { useEffect, useState } from "react";
 import React from "react";
-import { getAllProducts } from "@/actions/products/product";
+import { getAllProducts } from "@/backend/actions/products/product";
 import SwiperCards from "@/components/custom/SwiperCards";
 
 interface OverviewProps {
-  userData?: FormValues;
+	userData?: FormValues;
 }
 
 const Overview: React.FC<OverviewProps> = ({ userData }) => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [currentTime, setCurrentTime] = useState(Date.now());
+	const [products, setProducts] = useState<IProduct[]>([]);
+	const [currentTime, setCurrentTime] = useState(Date.now());
 
-  useEffect(() => {
-    async function fetchUserProfile() {
-      try {
-        const response = await getAllProducts();
-        if (response.status !== 200 || !response.data) {
-          throw new Error(response.message || "No products found!");
-        }
+	useEffect(() => {
+		async function fetchUserProfile() {
+			try {
+				const response = await getAllProducts();
+				if (response.status !== 200 || !response.data) {
+					throw new Error(response.message || "No products found!");
+				}
 
-        setProducts(response.data.products);
-      } catch (err: any) {
-        throw new Error(err.message);
-      }
-    }
+				setProducts(response.data.products);
+			} catch (err: any) {
+				throw new Error(err.message);
+			}
+		}
 
-    fetchUserProfile();
-  }, []);
+		fetchUserProfile();
+	}, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(Date.now());
-    }, 30000);
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setCurrentTime(Date.now());
+		}, 30000);
 
-    return () => clearInterval(interval);
-  }, []);
+		return () => clearInterval(interval);
+	}, []);
 
-  // Format last login time
-  const formatLastLogin = (lastLogin?: Date | string) => {
-    if (!lastLogin) return "Never";
+	// Format last login time
+	const formatLastLogin = (lastLogin?: Date | string) => {
+		if (!lastLogin) return "Never";
 
-    const loginDate = new Date(lastLogin);
-    const now = new Date(currentTime);
-    const diffMs = now.getTime() - loginDate.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMs / 3600000);
-    const diffDays = Math.floor(diffMs / 86400000);
+		const loginDate = new Date(lastLogin);
+		const now = new Date(currentTime);
+		const diffMs = now.getTime() - loginDate.getTime();
+		const diffMins = Math.floor(diffMs / 60000);
+		const diffHours = Math.floor(diffMs / 3600000);
+		const diffDays = Math.floor(diffMs / 86400000);
 
-    if (diffMins < 1) return "Just now";
-    if (diffMins < 60)
-      return `${diffMins} minute${diffMins > 1 ? "s" : ""} ago`;
-    if (diffHours < 24) {
-      const minutes = diffMins % 60;
-      return `${diffHours} hour${diffHours > 1 ? "s" : ""} ${
-        minutes > 0 ? `${minutes} min` : ""
-      } ago`;
-    }
-    if (diffDays === 1) {
-      return `Yesterday ${loginDate.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      })}`;
-    }
-    if (diffDays < 7) return `${diffDays} days ago`;
+		if (diffMins < 1) return "Just now";
+		if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? "s" : ""} ago`;
+		if (diffHours < 24) {
+			const minutes = diffMins % 60;
+			return `${diffHours} hour${diffHours > 1 ? "s" : ""} ${minutes > 0 ? `${minutes} min` : ""} ago`;
+		}
+		if (diffDays === 1) {
+			return `Yesterday ${loginDate.toLocaleTimeString("en-US", {
+				hour: "2-digit",
+				minute: "2-digit",
+				hour12: true,
+			})}`;
+		}
+		if (diffDays < 7) return `${diffDays} days ago`;
 
-    return loginDate.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year:
-        loginDate.getFullYear() !== now.getFullYear() ? "numeric" : undefined,
-    });
-  };
+		return loginDate.toLocaleDateString("en-US", {
+			month: "short",
+			day: "numeric",
+			year: loginDate.getFullYear() !== now.getFullYear() ? "numeric" : undefined,
+		});
+	};
 
-  // Get profile image with fallback
-  const profileImage = userData?.profileImage || User;
+	// Get profile image with fallback
+	const profileImage = userData?.profileImage || User;
 
-  // Get full name with fallback
-  const fullName =
-    userData?.firstName && userData?.lastName
-      ? `${userData.firstName} ${userData.lastName}`
-      : userData?.nickName || "User";
+	// Get full name with fallback
+	const fullName =
+		userData?.firstName && userData?.lastName
+			? `${userData.firstName} ${userData.lastName}`
+			: userData?.nickName || "User";
 
-  return (
-    <>
-      {/* Profile Card */}
-      <section className="flex  flex-col items-center mb-[16px] rounded-xl box-bg px-[16px] py-[16px]  md:min-w-[530px] md:flex-row md:justify-between md:px-[24px]">
-        <div className="flex items-center gap-[16px]">
-          {" "}
-          {/* Profile Image */}
-          <img
-            src={
-              typeof profileImage === "string" ? profileImage : profileImage.src
-            }
-            alt="Profile"
-            className="h-[52px] w-[52px] rounded-full object-cover"
-          />
-          {/* Name */}
-          <div className="py-[14px]">
-            <div className="font-arialBold text-[16px] md:text-[18px] text-black">
-              {fullName}
-            </div>
-            <div className="font-arial text-[14px] lg:text-[14px]  md:text-[12px] md:min-w-[150px] lg:min-w-[200px] text-[#707070]">
-              Last login: {formatLastLogin(userData?.lastLogin)}
-            </div>
-          </div>
-        </div>
+	return (
+		<>
+			{/* Profile Card */}
+			<section className="flex  flex-col items-center mb-[16px] rounded-xl box-bg px-[16px] py-[16px]  md:min-w-[530px] md:flex-row md:justify-between md:px-[24px]">
+				<div className="flex items-center gap-[16px]">
+					{" "}
+					{/* Profile Image */}
+					<img
+						src={typeof profileImage === "string" ? profileImage : profileImage.src}
+						alt="Profile"
+						className="h-[52px] w-[52px] rounded-full object-cover"
+					/>
+					{/* Name */}
+					<div className="py-[14px]">
+						<div className="font-arialBold text-[16px] md:text-[18px] text-black">{fullName}</div>
+						<div className="font-arial text-[14px] lg:text-[14px]  md:text-[12px] md:min-w-[150px] lg:min-w-[200px] text-[#707070]">
+							Last login: {formatLastLogin(userData?.lastLogin)}
+						</div>
+					</div>
+				</div>
 
-        <div className="font-arialBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[14px] md:text-[16px] text-black md:max-w-[800px] md:justify-end md:px-0">
-          {[
-            { icon: HeartIcon.src, alt: "Heart", label: "Wish List" },
-            { icon: WalletIcon.src, alt: "Wallet", label: "Ciluna Wallet" },
-            { icon: CouponIcon.src, alt: "CouponIcon", label: "Coupons" },
-          ].map((item, index) => (
-            <React.Fragment key={index}>
-              <div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
-                <img
-                  src={item.icon}
-                  alt={item.alt}
-                  className="h-[24px] w-[24px]"
-                />
-                {item.label}
-              </div>
-              {index < 2 && (
-                <div className="mx-0 h-[80px] w-px line-color self-center" />
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-      </section>
-      {/* Orders Card */}
-      <section className="rounded-xl   box-bg px-[16px] text-black  md:px-[24px]">
-        <div className="flex items-center justify-between border-b border-lightgrayBorders py-[12px] md:py-[16px]">
-          <div className="font-arialBold text-[#1E1E1E] text-[16px] md:text-[18px]">
-            My Orders
-          </div>
-          <button className="font-arial cursor-pointer text-[#1E1E1E] text-[14px] md:text-[16px] hover:underline">
-            View All
-          </button>
-        </div>
-        <div className="grid grid-cols-2 font-arialBold justify-between gap-y-[12px] divide-lightgrayBorders py-[12px] md:py-[16px] text-center md:flex md:gap-y-0 md:divide-x">
-          {[
-            { icon: PurseIcon.src, alt: "Purse", label: "Unpaid" },
-            { icon: ShopCartIcon.src, alt: "Cart", label: "To be Shipped" },
-            { icon: TruckIcon.src, alt: "Truck", label: "Shipped" },
-            {
-              icon: HeartRoundIcon.src,
-              alt: "Round Heart",
-              label: "To be reviewed",
-            },
-          ].map((item, index) => (
-            <React.Fragment key={index}>
-              <div
-                className={`flex-1 flex justify-center py-[8px] md:py-[14px] ${
-                  index % 2 === 0 ? "border-r border-lightgrayBorders" : ""
-                }`}
-              >
-                <div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
-                  <span className="mb-1 flex cursor-pointer items-center justify-center">
-                    <img
-                      src={item.icon}
-                      alt={item.alt}
-                      className="w-[24px] h-[24px]"
-                    />
-                  </span>
-                  <div className="cursor-pointer text-black text-[14px] md:text-[16px] font-medium">
-                    {item.label}
-                  </div>
-                </div>
-              </div>
-              {/* Horizontal divider between rows in mobile view only */}
-              {index === 1 && (
-                <div className="col-span-2  h-px w-full bg-lightgrayBorders md:hidden"></div>
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-      </section>
-      {/* More to love */}
-      {/* <section className="flex flex-col mb-[158px] mt-[48px] gap-0 overflow-hidden">
+				<div className="font-arialBold flex w-full max-w-[400px] justify-between px-[2px] text-center text-[14px] md:text-[16px] text-black md:max-w-[800px] md:justify-end md:px-0">
+					{[
+						{ icon: HeartIcon.src, alt: "Heart", label: "Wish List" },
+						{ icon: WalletIcon.src, alt: "Wallet", label: "Ciluna Wallet" },
+						{ icon: CouponIcon.src, alt: "CouponIcon", label: "Coupons" },
+					].map((item, index) => (
+						<React.Fragment key={index}>
+							<div className="flex cursor-pointer hover:opacity-70 flex-col items-center gap-1 px-[10px] py-[16px] sm:px-[15px] md:px-[10px] lg:px-[20px] xl:px-[30px]">
+								<img src={item.icon} alt={item.alt} className="h-[24px] w-[24px]" />
+								{item.label}
+							</div>
+							{index < 2 && <div className="mx-0 h-[80px] w-px line-color self-center" />}
+						</React.Fragment>
+					))}
+				</div>
+			</section>
+			{/* Orders Card */}
+			<section className="rounded-xl   box-bg px-[16px] text-black  md:px-[24px]">
+				<div className="flex items-center justify-between border-b border-lightgrayBorders py-[12px] md:py-[16px]">
+					<div className="font-arialBold text-[#1E1E1E] text-[16px] md:text-[18px]">My Orders</div>
+					<button className="font-arial cursor-pointer text-[#1E1E1E] text-[14px] md:text-[16px] hover:underline">
+						View All
+					</button>
+				</div>
+				<div className="grid grid-cols-2 font-arialBold justify-between gap-y-[12px] divide-lightgrayBorders py-[12px] md:py-[16px] text-center md:flex md:gap-y-0 md:divide-x">
+					{[
+						{ icon: PurseIcon.src, alt: "Purse", label: "Unpaid" },
+						{ icon: ShopCartIcon.src, alt: "Cart", label: "To be Shipped" },
+						{ icon: TruckIcon.src, alt: "Truck", label: "Shipped" },
+						{
+							icon: HeartRoundIcon.src,
+							alt: "Round Heart",
+							label: "To be reviewed",
+						},
+					].map((item, index) => (
+						<React.Fragment key={index}>
+							<div
+								className={`flex-1 flex justify-center py-[8px] md:py-[14px] ${
+									index % 2 === 0 ? "border-r border-lightgrayBorders" : ""
+								}`}
+							>
+								<div className="max-w-[140px] hover:opacity-70 flex flex-col items-center justify-center">
+									<span className="mb-1 flex cursor-pointer items-center justify-center">
+										<img src={item.icon} alt={item.alt} className="w-[24px] h-[24px]" />
+									</span>
+									<div className="cursor-pointer text-black text-[14px] md:text-[16px] font-medium">{item.label}</div>
+								</div>
+							</div>
+							{/* Horizontal divider between rows in mobile view only */}
+							{index === 1 && <div className="col-span-2  h-px w-full bg-lightgrayBorders md:hidden"></div>}
+						</React.Fragment>
+					))}
+				</div>
+			</section>
+			{/* More to love */}
+			{/* <section className="flex flex-col mb-[158px] mt-[48px] gap-0 overflow-hidden">
         <span className="font-kaiseiBold text-[12px] tracking-[2px] mb-[0px]  md:hidden text-[#C19F32]">
           FLASH DEALS
         </span>
@@ -244,19 +220,19 @@ const Overview: React.FC<OverviewProps> = ({ userData }) => {
           ))}
         </div>
       </section> */}
-      <div className="py-[36px] lg:py-[48px]">
-        <SwiperCards
-          products={products}
-          className="gap-[24px] md:gap-[24px]"
-          titleClassName="!text-[24px] md:!text-[28px] md:leading-8 mb-0  sm:mb-[-12px]"
-          section={{
-            title: "More to love",
-            description: "A fleeting collection of rare beauty.",
-          }}
-        />
-      </div>
-    </>
-  );
+			<div className="py-[36px] lg:py-[48px]">
+				<SwiperCards
+					products={products}
+					className="gap-[24px] md:gap-[24px]"
+					titleClassName="!text-[24px] md:!text-[28px] md:leading-8 mb-0  sm:mb-[-12px]"
+					section={{
+						title: "More to love",
+						description: "A fleeting collection of rare beauty.",
+					}}
+				/>
+			</div>
+		</>
+	);
 };
 
 export default Overview;

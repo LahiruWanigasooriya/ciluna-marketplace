@@ -1,7 +1,7 @@
 import CartItems from "./CartItems";
 import Title from "@/components/custom/Title";
 import SwiperCards from "@/components/custom/SwiperCards";
-import { getAllProducts } from "@/actions/products/product";
+import { getAllProducts } from "@/backend/actions/products/product";
 import { IProduct } from "@/types/product";
 
 const CartPage = async () => {

@@ -6,7 +6,7 @@ import Title from "@/components/custom/Title";
 import { TextField, Checkbox, Button } from "@/components/ui";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { checkUserAndGenerateToken } from "@/actions/users/user";
+import { checkUserAndGenerateToken } from "@/backend/actions/users/user";
 import { useAuthStore } from "@/store/authStore";
 import { toast } from "sonner";
 import { loginValidationSchema } from "@/schemas/validationSchemas";

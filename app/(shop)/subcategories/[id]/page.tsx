@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Img from "@/public/assets/product/img.png";
 import ImgM from "@/public/assets/product/imgm.jpg";
-import { getAllSubCategories } from "@/actions/subcategories/subcategory";
+import { getAllSubCategories } from "@/backend/actions/subcategories/subcategory";
 import { ISubCategory } from "@/types/subcategory";
 import Pagination from "@/app/(shop)/product/Pagination";
 import SubCategoryCard from "@/app/(shop)/category/SubCategotyCard";

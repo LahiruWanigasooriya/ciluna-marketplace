@@ -1,7 +1,7 @@
 import Title from "@/components/custom/Title";
 import React from "react";
 import CategoryCard from "@/app/(shop)/category/CategoryCard";
-import { getAllCategories } from "@/actions/categories/category";
+import { getAllCategories } from "@/backend/actions/categories/category";
 import { ICategory } from "@/types/category";
 
 const CategorySection = async () => {

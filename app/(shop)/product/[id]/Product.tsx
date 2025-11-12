@@ -23,7 +23,7 @@ import { Skeleton } from "@/components/ui";
 // import { ProductVariantCategory } from "@/types/productVariantCategory";
 import { IProductVariant } from "@/types/productVariant";
 import { useAuthStore } from "@/store/authStore";
-import { addToCart, getCart, updateCartItem } from "@/actions/carts/cart";
+import { addToCart, getCart, updateCartItem } from "@/backend/actions/carts/cart";
 import { useQuantityStore } from "@/store/quantity";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "sonner";

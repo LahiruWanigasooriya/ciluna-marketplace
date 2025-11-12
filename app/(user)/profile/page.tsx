@@ -3,7 +3,7 @@
 // import PersonalInfoForm from "./PersonalInfoForm";
 // import AccountInfoForm from "./AccountInfoForm";
 // import NotificationSettings from "./NotificationSettings";
-import { getUserProfile } from "@/actions/users/user";
+import { getUserProfile } from "@/backend/actions/users/user";
 import { useState, useEffect } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Overview from "./Overview";

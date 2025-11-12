@@ -4,7 +4,7 @@ import Img from "@/public/assets/product/img.png";
 import ImgM from "@/public/assets/product/imgm.jpg";
 import ProductCard from "../product/ProductCard";
 import CategoryCard from "../category/CategoryCard";
-import { searchItems } from "@/actions/search/search";
+import { searchItems } from "@/backend/actions/search/search";
 import { IProduct } from "@/types/product";
 import { ICategory } from "@/types/category";
 import { ISubCategory } from "@/types/subcategory";
