@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { dbConnectMarketPlace } from "@/lib/dbConnect";
-import CategoryModel from "@/models/category";
-import ProductModel from "@/models/product";
+import CategoryModel from "@/backend/models/category";
+import ProductModel from "@/backend/models/product";
 import { SearchResults } from "@/types/search";
-import SubcategoryModel from "@/models/subcategory";
-import SubSubCategoryModel from "@/models/subsubcategory";
+import SubcategoryModel from "@/backend/models/subcategory";
+import SubSubCategoryModel from "@/backend/models/subsubcategory";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const searchTerm = request.nextUrl.searchParams.get("query")?.toLowerCase() || "";

@@ -1,7 +1,7 @@
 "use server";
 
 import { dbConnectMarketPlace } from "@/lib/dbConnect";
-import Log from "@/models/log";
+import Log from "../backend/models/log";
 import { getSession } from "@/lib/session";
 
 export async function logAction(action: string, details: Record<string, any> = {}) {
