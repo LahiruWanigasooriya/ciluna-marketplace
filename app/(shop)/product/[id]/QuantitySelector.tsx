@@ -3,6 +3,7 @@
 import React from "react";
 import { Minus, Plus } from "lucide-react";
 import { useCartStore } from "@/store/cart";
+import { toast } from "sonner";
 
 interface QuantityProps {
   productId: string | undefined;
@@ -10,6 +11,7 @@ interface QuantityProps {
   countShow?: boolean;
   isCartContext?: boolean;
   onQuantityChange?: (newQuantity: number) => void;
+  stock: number;
 }
 
 const QuantitySelector: React.FC<QuantityProps> = ({
@@ -18,6 +20,7 @@ const QuantitySelector: React.FC<QuantityProps> = ({
   countShow = true,
   isCartContext = false,
   onQuantityChange,
+  stock,
 }) => {
   const { cart, updateQuantity } = useCartStore();
   // const [quantity, setQuantity] = React.useState(initialQuantity); // Local state per item
@@ -51,6 +54,10 @@ const QuantitySelector: React.FC<QuantityProps> = ({
 
   const increaseQuantity = () => {
     const newQuantity = quantity + 1;
+    if (stock < newQuantity) {
+      toast.error(`Out of stock, maximum you can add is ${stock}`);
+      return;
+    }
     setQuantity(newQuantity);
     if (isCartContext && productId) {
       updateQuantity(productId, newQuantity);

@@ -18,8 +18,6 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({
 }) => {
   const [selectedColor, setSelectedColor] = useState<ColorOption>(colors[0] || "");
 
-  console.log("colors: ", colors);
-
   useEffect(() => {
     if (colors.length > 0) {
       setSelectedColor(colors[0]);

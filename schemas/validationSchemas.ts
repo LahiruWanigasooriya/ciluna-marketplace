@@ -54,7 +54,8 @@ export const signupValidationSchema = Yup.object().shape({
 export const contactValidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, "Name must be at least 3 characters long")
-    .max(50, "Name cannot exceed 50 characters")
+    .max(100, "Name cannot exceed 100 characters")
+    .matches(/^[a-zA-Z\s]+$/, 'Name can only contain letters and spaces')
     .required("Your Name is required"),
   email: Yup.string()
     .email("Invalid email address")
@@ -206,7 +207,12 @@ const postalCodeRegex = /^\d{5}$/;
 
 export const shippingValidationSchema = Yup.object().shape({
   country: Yup.string().required("Country is required"),
-  contactName: Yup.string().required("Contact name is required"),
+  contactName: Yup.string()
+    .required("Contact name is required")
+    .matches(
+      /^[A-Za-z\s]+$/,
+      "Contact name should only contain letters and spaces"
+    ),
   mobileNumber: Yup.string()
     .required("Mobile number is required")
     .matches(

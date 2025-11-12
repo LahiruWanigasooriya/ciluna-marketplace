@@ -180,6 +180,7 @@ const CheckoutPage = () => {
 						quantity: item.quantity,
 						color: item.color || null,
 						size: item.size || null,
+						stock: item.stock,
 					}));
 
 					await addMultipleToCart(cartItems, token);
@@ -198,9 +199,11 @@ const CheckoutPage = () => {
 				shippingAddress: address,
 			};
 
-			await createOrder(payload);
 			const result = await createOrder(payload);
-			if (!result.success) toast.error(result.error);
+			if (!result.success) {
+				toast.error(result.message);
+				return;
+			}
 			setValues(data); // set values in checkout store in order to display in order success page
 			clearDraftFormData();
 			reset();

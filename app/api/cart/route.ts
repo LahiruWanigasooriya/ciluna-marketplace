@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
 			productId: body.productId,
 			productVariantId: body.productVariantId || null,
 			quantity: body.quantity,
+			stock: body.stock,
 		};
 
 		const response = await addToCart(cartItem, token);

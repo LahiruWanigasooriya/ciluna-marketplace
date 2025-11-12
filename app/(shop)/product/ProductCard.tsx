@@ -81,6 +81,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       const cartData = {
         productId: product._id,
         quantity: 1,
+        stock: product.stock,
       };
 
       try {

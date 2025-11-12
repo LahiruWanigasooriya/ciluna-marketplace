@@ -4,6 +4,7 @@ import { dbConnectMarketPlace } from "@/lib/dbConnect";
 import OrderModel from "../../models/order";
 import { processPayment } from "../utils/payment/payment";
 import CartModel from "../../models/cart";
+import ProductModel from "../../models/product";
 import { generateOrderId } from "@/utils/order";
 
 export async function createOrder(orderData: any) {
@@ -14,6 +15,17 @@ export async function createOrder(orderData: any) {
 
 		if (!userId || !items || !payment || !shippingAddress) {
 			return { status: 400, success: false, message: "Missing required fields" };
+		}
+
+		// check for stock availability
+		const stockCheck = await validateStock(items);
+		if (!stockCheck.success) {
+			return {
+				status: 400,
+				success: false,
+				message: stockCheck.message,
+				productId: stockCheck.productId,
+			};
 		}
 
 		const orderId = generateOrderId();
@@ -63,6 +75,31 @@ export async function createOrder(orderData: any) {
 			return { status: 400, success: false, message: "Payment failed", data: savedOrder };
 		}
 	} catch (error: any) {
-		return { status: 500, success: false, message: "Error processing checkout", error: error.message };
+		return { status: 500, success: false, message: error.message };
 	}
+}
+
+// check stock avialability
+async function validateStock(items: any[]) {
+	for (const item of items) {
+		const product = await ProductModel.findById(item.productId);
+
+		if (!product) {
+			return {
+				success: false,
+				message: `Product with ID ${item.productId} not found.`,
+				productId: item.productId,
+			};
+		}
+
+		if (item.quantity > product.stock) {
+			return {
+				success: false,
+				message: `Only ${product.stock} items left for ${product.name}.`,
+				productId: item.productId,
+			};
+		}
+	}
+
+	return { success: true };
 }
