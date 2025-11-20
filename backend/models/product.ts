@@ -42,5 +42,20 @@ const ProductSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+ProductSchema.index(
+  { 
+    name: "text", 
+    description: "text" 
+  },
+  {
+    weights: {
+      name: 10,        // strong weight on title
+      description: 2   // weaker on description
+    },
+    name: "ProductTextIndex"
+  }
+);
+
+
 const ProductModel = mongoose.models.Product || mongoose.model("Product", ProductSchema);
 export default ProductModel;

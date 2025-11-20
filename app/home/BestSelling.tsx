@@ -1,14 +1,10 @@
 import React from "react";
-//import ProductCard from "@/app/product/ProductCard";
 import { IProduct } from "@/types/product";
-import Product1 from "@/public/assets/product/product1.webp";
-import Product2 from "@/public/assets/product/product2.webp";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import SwiperCards from "@/components/custom/SwiperCards";
-import { getAllProducts } from "@/backend/actions/products/product";
+import { getTrendingProducts } from "@/backend/actions/products/product";
 
 const BestSelling = async () => {
-	const productres = await getAllProducts();
+	const productres = await getTrendingProducts();
 
 	if (!productres.success || !productres.data) {
 		return (
