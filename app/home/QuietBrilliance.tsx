@@ -12,7 +12,7 @@ const QuietBrilliance: React.FC = () => {
 
       <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-8 xl:gap-[103px] max-w-[1920px] mx-auto font-inter ">
         {/* Text Content */}
-        <div className="flex-1 text-center md:text-start z-10">
+        <div className="flex-1 text-center md:text-start">
           <p className="text-[12px] sm:text-[14px] font-kaiseiBold text-[#C19F32] sm:mb-[5px] uppercase leading-[16px] md:leading-[20px] tracking-[0.2em]">
             About Us
           </p>
@@ -38,7 +38,7 @@ const QuietBrilliance: React.FC = () => {
           <Image
             src={womanImage}
             alt="Quiet Brilliance"
-            className="relative w-full h-auto object-cover rounded-2xl z-10"
+            className="relative w-full h-auto object-cover rounded-2xl z-0"
             placeholder="blur"
           />
 
@@ -59,14 +59,14 @@ const QuietBrilliance: React.FC = () => {
           <Image
             src={BgImg}
             alt="BG Image"
-            className="absolute w-[60%] h-auto object-cover rounded-2xl bottom-3 -left-[220px] z-0"
+            className="absolute w-[60%] h-auto object-cover rounded-2xl bottom-3 -left-[220px] -z-10"
             placeholder="blur"
           />
 
           <Image
             src={BgImg}
             alt="BG Image"
-            className="absolute w-[60%] h-auto object-cover rounded-2xl -top-[120px] -right-[170px] -scale-x-100 z-0"
+            className="absolute w-[60%] h-auto object-cover rounded-2xl -top-[120px] -right-[170px] -scale-x-100 -z-10"
             placeholder="blur"
           />
         </div>

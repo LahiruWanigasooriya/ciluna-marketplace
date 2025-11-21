@@ -212,9 +212,6 @@ export default function MainMenu({
             className="relative flex justify-center w-full"
             onMouseLeave={() => {
               setActiveMenu(null);
-              if (isHomePage && !isScrolled) {
-                setIsNavbarActive(false);
-              }
             }}
           >
             {/* categories row */}
@@ -279,7 +276,7 @@ export default function MainMenu({
         {isMobileMenuOpen && (
           <motion.div
             ref={mobileMenuRef}
-            className={`md:hidden fixed top-0 left-0 w-full h-full bg-white z-50 p-[16px] overflow-y-auto ${
+            className={`md:hidden fixed top-0 left-0 w-full h-full bg-white z-40 p-[16px] overflow-y-auto ${
               token ? "mt-0" : "mt-10"
             }`}
             initial={{ y: -50, opacity: 0 }}

@@ -13,6 +13,7 @@ import "../../models/subsubcategory";
 import ProductModel from "../../models/product";
 import ProductVariantModel from "../../models/productVariant";
 import { logAction } from "@/lib/logger";
+import OrderModel from "@/backend/models/order";
 
 interface GetProductsResponse {
 	status: number;
@@ -324,6 +325,58 @@ export const getRelatedProducts = async (productID: string, limit: number = 10) 
 		};
 	}
 };
+
+//get trending products based on orders from last 30 days, most ordered products
+export const getTrendingProducts = async (limit: number = 8) => {
+	try {
+		await dbConnectMarketPlace();
+		const thirtyDaysAgo = new Date();
+		thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+		// Aggregate to find trending products by total quantity in the last 30 days
+		const trendingProducts = await OrderModel.aggregate([
+			{ $match: { createdAt: { $gte: thirtyDaysAgo } } },
+			{ $unwind: "$items" },
+			{
+				$group: {
+					_id: "$items.productId",
+					totalQuantity: { $sum: "$items.quantity" },
+				},
+			},
+			{ $sort: { totalQuantity: -1 } },
+			{ $limit: limit },
+			{
+				$lookup: {
+					from: "products",
+					localField: "_id",
+					foreignField: "_id",
+					as: "productDetails",
+				},
+			},
+			{ $unwind: "$productDetails" }, // get the full product document
+			{
+				$replaceRoot: { newRoot: "$productDetails" } // Replace the root with productDetails
+			},
+		]);
+
+		return {
+			status: 200,
+			success: true,
+			message: "Trending products fetched successfully",
+			data: {
+				products: JSON.parse(JSON.stringify(trendingProducts)),
+			},
+		};
+	} catch (error: any) {
+		return {
+			status: 500,
+			success: false,
+			message: "An error occurred while fetching trending products",
+			error: error.message,
+		};
+	}
+};
+
 
 export const getProductById = async (productId: string) => {
 	try {

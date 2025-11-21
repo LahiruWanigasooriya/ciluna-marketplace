@@ -109,7 +109,6 @@ const Thumbnail = ({
       src={hero.thumbnail}
       alt={hero.title}
       fill
-      quality={90}
       className="w-full h-auto object-cover p-[2px] lg:p-[4px] rounded-[9px] "
     />
   </div>
@@ -155,7 +154,7 @@ export default function Hero() {
         />
       ))}
       {!isLoaded && <Skeleton />}
-      <div className="absolute hidden md:flex flex-col gap-4 w-full text-white md:top-1/4 lg:top-[12%] px-4 custom-container z-20">
+      <div className="absolute hidden md:flex flex-col gap-4 w-full text-white md:top-1/4 lg:top-[12%] px-4 custom-container">
         <h1 className="font-kaiseiBold text-[28px] leading-[32px] md:text-[42px] md:leading-[48px] lg:text-[48px] lg:leading-[48px] xl:text-[58px] recommend:text-[68px] recommend:leading-[60px]">
           Where Grace Becomes Legacy
         </h1>
@@ -165,9 +164,9 @@ export default function Hero() {
         </p>
       </div>
 
-      <div className="absolute flex w-full z-10 bottom-0 md:max-w-full items-center ">
+      <div className="absolute flex w-full bottom-0 md:max-w-full items-center ">
         <div className="absolute bottom-0 w-full h-full blur-banner-hero backdrop-blur-[5px] "></div>
-        <div className="flex justify-between w-full z-10 pb-0 md:py-[16px] xl:py-[32px] custom-container items-center">
+        <div className="flex justify-between w-full z-0 pb-0 md:py-[16px] xl:py-[32px] custom-container items-center">
           <div className="flex flex-col gap-[16px] md:gap-[12px] lg:gap-[18px] xl:gap-[24px] md:max-w-[495px] md:w-[80%] justify-center md:items-start items-center w-full">
             <div className="hidden md:flex flex-col gap-[12px] md:w-[75%] xl:w-[495px] ">
               <h1 className="text-white font-kaiseiBold text-[20px] leading-[26px] tracking-normal md:text-[22px] md:leading-[28px] lg:text-[24px] lg:leading-[30px] xl:text-[28px] xl:leading-[32px]">

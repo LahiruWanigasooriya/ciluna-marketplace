@@ -11,9 +11,8 @@ import profileIcon from "@/public/assets/header/profileIcon.svg";
 import flag from "@/public/assets/header/flag.svg";
 import Link from "next/link";
 import useClickOutside from "@/hooks/useClickOutside";
-import { motion, useTransform, useMotionValue } from "framer-motion";
+import { motion, useTransform, useMotionValue, AnimatePresence } from "framer-motion";
 import useMenuStore from "@/store/useMenuStore";
-import { SearchField } from "@/components/ui/search-field";
 import { useCartStore } from "@/store/cart";
 import { useWishlistStore } from "@/store/wishlist";
 //import { clearAuthToken } from "@/backend/actions/utils/auth";
@@ -24,6 +23,8 @@ import BackButton from "./BackButton";
 import { useUserStore } from "@/store/userStore";
 import { Skeleton } from "../ui";
 import { getUserProfile } from "@/backend/actions/users/user";
+import { FiSearch } from "react-icons/fi";
+import SearchModal from "./Search";
 //import { Skeleton } from "@/components/ui";
 //import AuthWrapper from "./AuthWrapper";
 //import Cookies from "js-cookie";
@@ -49,6 +50,23 @@ export default function Navbar() {
 	const [mounted, setMounted] = useState(false);
 	const [isNavbarActive, setIsNavbarActive] = useState(false);
 	const { user, isLoading: isUserLoading, setUser, clearUser } = useUserStore();
+	const [isSearchModalOpen, setSearchModalOpen] = useState(false);
+
+	useDisableScroll(isSearchModalOpen);
+	const handleSearchToggle = () => {
+		if (isSearchModalOpen) {
+			router.back();
+		} else {
+			router.push("?search");
+		}
+		setSearchModalOpen(!isSearchModalOpen); // Toggle modal visibility
+	};
+	useEffect(() => {
+		const searchParams = new URLSearchParams(window.location.search);
+		if (searchParams.has("search")) {
+			setSearchModalOpen(true); // keep search open on page refresh
+		}
+	}, [pathname]);
 	useEffect(() => setMounted(true), []); // to fix hydration error
 
 	useEffect(() => {
@@ -177,7 +195,13 @@ export default function Navbar() {
 
 	return (
 		<div
-			className={`fixed top-0 left-0 w-full z-30 transition-all font-arial leading-[20px] ${
+			onMouseEnter={() => setIsNavbarActive(true)}
+			onMouseLeave={() => {
+				if (isHomePage && !isMenuOpen && !profileSelect && window.scrollY <= 10) {
+					setIsNavbarActive(false);
+				}
+			}}
+			className={`fixed top-0 left-0 w-full z-40 transition-all font-arial leading-[20px] ${
 				isNavbarActive ? "bg-white transition-all border-b border-black/5" : "bg-[rgba(255,255,255,0.02)] glass-navbar"
 			} ${shadow ? "shadow-md" : ""}`}
 			style={{ boxShadow: shadow ? shadowStyle.get() : "none" }}
@@ -222,15 +246,25 @@ export default function Navbar() {
 					</div>
 
 					<div className="flex items-center justify-end w-full">
-						<div className="flex flex-1 justify-end w-full">
-							<SearchField
-								aria-label="Search"
-								isNavbarActive={isNavbarActive}
-								className={`w-full h-[26px] flex justify-end text-left ${isNavbarActive ? "text-gray" : "text-white"}`}
-							/>
-						</div>
-
 						<div className="flex items-center gap-[12px] lg:gap-[24px] w-fit">
+							<button
+								type="button"
+								aria-label="Search"
+								onClick={handleSearchToggle}
+								className="items-center justify-center"
+							>
+								<FiSearch className={`h-[24px] w-[24px] ${isNavbarActive ? "text-black" : "text-white"}`} />
+							</button>
+							<AnimatePresence>
+								{isSearchModalOpen && (
+									<SearchModal
+										key="search-modal"
+										onClose={() => {
+											setSearchModalOpen(false);
+										}}
+									/>
+								)}
+							</AnimatePresence>
 							<div className="flex md:min-w-fit">
 								<Image
 									width={24}
@@ -238,7 +272,7 @@ export default function Navbar() {
 									src={flag.src}
 									loading="lazy"
 									alt="Language Flag"
-									className="min-w-[24px] w-[24px] flex h-[24px] ml-[12px] lg:ml-[24px] md:mr-[8px]"
+									className="min-w-[24px] w-[24px] flex h-[24px] md:mr-[8px]"
 								/>
 								<p
 									className={`text-xs lg:text-sm font-inter hidden md:flex font-light leading-[24px] ${
