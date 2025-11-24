@@ -9,7 +9,7 @@ import Image from "next/image";
 import { getTrendingProducts } from "@/backend/actions/products/product";
 import { IProduct } from "@/types/product";
 import ProductCard from "@/app/(shop)/product/ProductCard";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import useClickOutside from "@/hooks/useClickOutside";
 import { addSearchQuery, getPopularSearchQueries, searchItems } from "@/backend/actions/search/search";
 import { motion } from "framer-motion";
@@ -25,7 +25,9 @@ interface SearchModalProps {
 }
 
 const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
-	const [searchQuery, setSearchQuery] = useState("");
+	const searchParams = useSearchParams();
+	const pathname = usePathname();
+	const [searchQuery, setSearchQuery] = useState<string>(() => searchParams?.get("search")?.trim() ?? "");
 	const [suggestions, setSuggestions] = useState<SearchQuery[]>([]);
 	const [products, setProducts] = useState<IProduct[]>([]);
 	const [trendingProducts, setTrendingProducts] = useState<IProduct[]>([]);
@@ -80,6 +82,18 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 
 		fetchTrendingSearches();
 	}, []);
+
+	useEffect(() => {
+		const query = debouncedQuery.trim();
+		const params = new URLSearchParams(searchParams);
+		if (query === "") {
+			params.set("search", "");
+		} else if (query.length > 1) {
+			params.set("search", query);
+		}
+		const newUrl = `${pathname}?${params.toString()}`;
+		router.replace(newUrl, { scroll: false });
+	}, [debouncedQuery, pathname, router, searchParams]);
 
 	useEffect(() => {
 		const query = debouncedQuery.trim();
@@ -176,7 +190,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 	};
 
 	const submitSearchQuery = async (query: string) => {
-		const trimmedQuery = query.trim();
+		const trimmedQuery = query.toLowerCase().trim();
 		if (trimmedQuery.length < 4 || !hasSearchResults) {
 			return;
 		}
