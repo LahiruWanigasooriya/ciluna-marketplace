@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Heart, Menu } from "lucide-react";
 import { BsHandbag } from "react-icons/bs";
@@ -36,7 +36,6 @@ export default function Navbar() {
 	const { isMenuOpen, toggleMenu } = useMenuStore();
 	const router = useRouter();
 	const pathname = usePathname();
-	const searchParams = useSearchParams();
 	const isHomePage = pathname === "/";
 	const scrollY = useMotionValue(0);
 	const [shadow, setShadow] = useState<boolean>(false);
@@ -52,10 +51,20 @@ export default function Navbar() {
 	const [isSearchModalOpen, setSearchModalOpen] = useState(false);
 
 	useDisableScroll(isSearchModalOpen);
+	const handleSearchToggle = () => {
+		if (isSearchModalOpen) {
+			router.back();
+		} else {
+			router.push("?search");
+		}
+		setSearchModalOpen(!isSearchModalOpen); // Toggle modal visibility
+	};
 	useEffect(() => {
-		const hasSearch = searchParams.has("search");
-		setSearchModalOpen(hasSearch);
-	}, [searchParams]);
+		const searchParams = new URLSearchParams(window.location.search);
+		if (searchParams.has("search")) {
+			setSearchModalOpen(true); // keep search open on page refresh
+		}
+	}, [pathname]);
 	useEffect(() => setMounted(true), []); // to fix hydration error
 
 	useEffect(() => {
@@ -98,7 +107,7 @@ export default function Navbar() {
 	useEffect(() => {
 		const handleScroll = () => {
 			const scrolled = window.scrollY > 10;
-			if (scrolled || !isHomePage || isMenuOpen || profileSelect) {
+			if (scrolled || !isHomePage || isMenuOpen || profileSelect || !isSearchModalOpen) {
 				setIsNavbarActive(true);
 			} else {
 				setIsNavbarActive(false);
@@ -164,13 +173,6 @@ export default function Navbar() {
 	const popupVariants = {
 		hidden: { opacity: 0, y: -20 },
 		visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-	};
-	
-	const handleSearchToggle = () => {
-		if (!isSearchModalOpen) {
-			router.push("?search");
-		}
-		setSearchModalOpen(!isSearchModalOpen); // Toggle modal visibility
 	};
 	//  const popupVariants2 = {
 	//    hidden: { opacity: 0, x: 20 },
