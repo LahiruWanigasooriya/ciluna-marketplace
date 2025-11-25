@@ -9,7 +9,7 @@ import Image from "next/image";
 import { getTrendingProducts } from "@/backend/actions/products/product";
 import { IProduct } from "@/types/product";
 import ProductCard from "@/app/(shop)/product/ProductCard";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import useClickOutside from "@/hooks/useClickOutside";
 import { addSearchQuery, getPopularSearchQueries, searchItems } from "@/backend/actions/search/search";
 import { motion } from "framer-motion";
@@ -25,7 +25,9 @@ interface SearchModalProps {
 }
 
 const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
-	const [searchQuery, setSearchQuery] = useState("");
+	const searchParams = useSearchParams();
+	const pathname = usePathname();
+	const [searchQuery, setSearchQuery] = useState<string>(() => searchParams?.get("search")?.trim() ?? "");
 	const [suggestions, setSuggestions] = useState<SearchQuery[]>([]);
 	const [products, setProducts] = useState<IProduct[]>([]);
 	const [trendingProducts, setTrendingProducts] = useState<IProduct[]>([]);
@@ -83,14 +85,24 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 
 	useEffect(() => {
 		const query = debouncedQuery.trim();
+		const params = new URLSearchParams(searchParams?.toString() || "");
+		const currentSearch = params.get("search") || "";
+		if (query === currentSearch) return;
+		params.set("search", query);
+		const newUrl = `${pathname}?${params.toString()}`;
+		router.replace(newUrl, { scroll: false });
+	}, [debouncedQuery]);
+
+	useEffect(() => {
+		const query = debouncedQuery.trim();
 
 		if (!query) {
 			setSuggestions([]);
 			setShowSuggestions(false);
 			setProducts(trendingProducts);
-			setDebouncedQuery("");
 			setHasSearchResults(false);
 			setHasSearched(false);
+			setIsLoading(false);
 			return;
 		}
 
@@ -98,15 +110,15 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 			setSuggestions([]);
 			setShowSuggestions(false);
 			setHasSearched(false);
+			setIsLoading(false);
 			return;
 		}
 
 		let cancelled = false;
 
 		const runSearch = async () => {
+			setIsLoading(true);
 			try {
-				setIsLoading(true);
-
 				const formData = new FormData();
 				formData.append("query", query);
 				const searchResponse = await searchItems(formData);
@@ -125,16 +137,23 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 
 				setHasSearched(true);
 
-				const pastQueries: SearchQuery[] = await getPopularSearchQueries(3, query);
-				if (cancelled) return;
+				try {
+					const pastQueries: SearchQuery[] = await getPopularSearchQueries(3, query);
+					if (cancelled) return;
 
-				const filtered = pastQueries
-					.filter((item) => item.query.toLowerCase().includes(query.toLowerCase()))
-					.slice(0, 6);
+					const filtered = pastQueries
+						.filter((item) => item.query.toLowerCase().includes(query.toLowerCase()))
+						.slice(0, 6);
 
-				setSuggestions(filtered);
-				setShowSuggestions(!lockSuggestions && filtered.length > 0);
-				if (!cancelled) setIsLoading(false);
+					setSuggestions(filtered);
+					setShowSuggestions(!lockSuggestions && filtered.length > 0);
+				} catch (e) {
+					console.error("Error fetching search suggestions:", e);
+					if (!cancelled) {
+						setSuggestions([]);
+						setShowSuggestions(false);
+					}
+				}
 			} catch (error) {
 				if (cancelled) return;
 				console.error("Error executing search action:", error);
@@ -144,7 +163,9 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 				setShowSuggestions(false);
 				setHasSearched(true);
 			} finally {
-				if (!cancelled) setIsLoading(false);
+				if (!cancelled) {
+					setIsLoading(false);
+				}
 			}
 		};
 
@@ -152,13 +173,11 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 
 		return () => {
 			cancelled = true;
-			setIsLoading(false);
 		};
-	}, [debouncedQuery, trendingProducts, lockSuggestions]);
+	}, [debouncedQuery]);
 
 	const handleClear = () => {
 		setSearchQuery("");
-		setDebouncedQuery("");
 		setSuggestions([]);
 		setShowSuggestions(false);
 		setProducts(trendingProducts);
@@ -169,14 +188,13 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 
 	const handleSuggestionClick = (suggestion: SearchQuery) => {
 		setSearchQuery(suggestion.query);
-		setDebouncedQuery(suggestion.query);
 		setShowSuggestions(false);
 		setLockSuggestions(true);
 		submitSearchQuery(suggestion.query);
 	};
 
 	const submitSearchQuery = async (query: string) => {
-		const trimmedQuery = query.trim();
+		const trimmedQuery = query.toLowerCase().trim();
 		if (trimmedQuery.length < 4 || !hasSearchResults) {
 			return;
 		}
@@ -199,7 +217,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 
 	const handleTrendingClick = (query: string) => {
 		setSearchQuery(query);
-		setDebouncedQuery(query);
 		setShowSuggestions(false);
 		setLockSuggestions(true);
 	};
@@ -299,7 +316,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 						</div>
 
 						{showSuggestions && highlightedSuggestions.length > 0 && (
-							<div className="absolute space-y-3 bg-white px-3 w-full z-20 border border-t-0 border-neutralGray-100 pb-3 rounded-b-[8px]">
+							<div className="absolute space-y-3 bg-white px-3 w-full z-40 border border-t-0 border-neutralGray-100 pb-3 rounded-b-[8px]">
 								{highlightedSuggestions.map((s) => (
 									<button
 										key={s._id}
@@ -372,7 +389,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ onClose }) => {
 						))}
 					</div>
 					{isLoading && (
-						<div className="absolute w-full h-full inset-0 bg-white/70 z-40 flex justify-center rounded-[0.5rem]">
+						<div className="absolute w-full h-full inset-0 bg-white/70 z-30 flex justify-center rounded-[0.5rem]">
 							<Loader2 size={16} className="animate-spin text-neutral-400 w-10 h-10 mt-40" />
 						</div>
 					)}

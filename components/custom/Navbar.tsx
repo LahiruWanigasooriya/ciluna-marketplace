@@ -30,7 +30,6 @@ import SearchModal from "./Search";
 //import Cookies from "js-cookie";
 
 export default function Navbar() {
-	const modalRef = useRef<HTMLDivElement>(null);
 	//  const authRef = useRef<HTMLDivElement>(null);
 	const profileRef = useRef<HTMLDivElement>(null);
 	const menuRef = useRef<HTMLDivElement>(null);
@@ -38,7 +37,6 @@ export default function Navbar() {
 	const router = useRouter();
 	const pathname = usePathname();
 	const isHomePage = pathname === "/";
-	const [searchOpen, setSearchOpen] = React.useState(false);
 	const scrollY = useMotionValue(0);
 	const [shadow, setShadow] = useState<boolean>(false);
 	const wishlist = useWishlistStore((state) => state.wishlist);
@@ -92,7 +90,6 @@ export default function Navbar() {
 	const shadowIntensity = useTransform(scrollY, [0, 50], [0, 0.5]);
 	const shadowStyle = useTransform(shadowIntensity, (value) => `rgba(0, 0, 0, ${value})`);
 
-	useClickOutside(modalRef, () => setSearchOpen(false));
 	//  useClickOutside(authRef, () => setAuthPopup(false));
 	useClickOutside(menuRef, () => toggleMenu());
 	useClickOutside(profileRef, () => setProfileSelect(false));
@@ -110,7 +107,7 @@ export default function Navbar() {
 	useEffect(() => {
 		const handleScroll = () => {
 			const scrolled = window.scrollY > 10;
-			if (scrolled || !isHomePage || isMenuOpen || profileSelect) {
+			if (scrolled || !isHomePage || isMenuOpen || profileSelect || !isSearchModalOpen) {
 				setIsNavbarActive(true);
 			} else {
 				setIsNavbarActive(false);
@@ -177,7 +174,6 @@ export default function Navbar() {
 		hidden: { opacity: 0, y: -20 },
 		visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 	};
-
 	//  const popupVariants2 = {
 	//    hidden: { opacity: 0, x: 20 },
 	//    visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
@@ -197,7 +193,7 @@ export default function Navbar() {
 		<div
 			onMouseEnter={() => setIsNavbarActive(true)}
 			onMouseLeave={() => {
-				if (isHomePage && !isMenuOpen && !profileSelect && window.scrollY <= 10) {
+				if (isHomePage && !isMenuOpen && !profileSelect && window.scrollY <= 10 && !isSearchModalOpen) {
 					setIsNavbarActive(false);
 				}
 			}}
@@ -425,43 +421,6 @@ export default function Navbar() {
 								className={isNavbarActive ? "text-gray" : "text-white"}
 							/>
 						</div>
-						{searchOpen && (
-							<motion.div
-								ref={modalRef}
-								initial={{ width: 0, opacity: 0 }}
-								animate={searchOpen ? { width: "84vw", opacity: 1 } : { width: 0, opacity: 0 }}
-								transition={{ duration: 0.2 }}
-								className="absolute top-0 z-40 flex items-center justify-between w-[84vw] border border-solid rounded-[8px] h-8"
-							>
-								<input
-									type="text"
-									aria-label="Search"
-									className={`bg-[#190F30] focus:outline-none border-none w-full px-2 font-[400] text-xs ${
-										isNavbarActive ? "text-gray" : "text-white"
-									}`}
-								/>
-								<button id="sendButton" className="pr-2" aria-label="Send">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 664 663"
-										className={isNavbarActive ? "text-gray" : "text-white"}
-									>
-										<path
-											fill="none"
-											d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
-										></path>
-										<path
-											strokeLinejoin="round"
-											strokeLinecap="round"
-											strokeWidth="33.67"
-											stroke={isNavbarActive ? "#000000" : "#6c6c6c"}
-											d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
-										></path>
-									</svg>
-								</button>
-							</motion.div>
-						)}
 
 						{/* {authPopup && (
               <div className="fixed inset-0 flex justify-center items-center py-4 bg-fg/80 z-50">
